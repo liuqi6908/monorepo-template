@@ -1,1 +1,1 @@
-# Zhejiang Future Intelligent Research Cloud (ZJF-IRC)
+# 智能云科研 —— 浙江大学 (ZJF-IRC-ZJU)
