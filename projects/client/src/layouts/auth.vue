@@ -7,7 +7,7 @@ const $router = useRouter()
     <div class="col-grow confirmation-bgImg">
       <header flex="~ row items-center" text-grey-1 absolute cursor-pointer gap-2 left-12 top-10 @click="$router.push('/')">
         <img h-12 w-12 src="../assets/auth/couldTitle.png">
-        <span text-7 font-600>智能云科研平台</span>
+        <span text-7 font-600>数智三农云科研平台</span>
         <span text-7 font-600>|</span>
         <span text-lg relative font-400 top-3px>CloudResearch</span>
       </header>

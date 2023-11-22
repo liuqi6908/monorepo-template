@@ -90,7 +90,7 @@ if (typeof document !== 'undefined') {
           <img mr-2 h-6 src="../assets/layout/cloud.png">
           <div>
             <span font-600 text-xl text-primary-1>
-              智能云科研平台 |
+              数智三农云科研平台 |
             </span>
             <span text-primary-1>CloudResearch</span>
           </div>

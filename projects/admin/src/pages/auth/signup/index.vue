@@ -49,7 +49,7 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
   <div w-full flex="~ col" text="14px grey-8" font-500>
     <header flex="~ flex items-center justify-center" mb-10 relative>
       <div i-mingcute:left-line cursor-pointer absolute left-0 text-xl top-0.5 @click="$router.replace({ path: 'login' })" />
-      <span text-5 font-600>智能云科研平台</span>
+      <span text-5 font-600>数智三农云科研平台</span>
     </header>
 
     <span mb-1 v-text="'用户名称'" />
