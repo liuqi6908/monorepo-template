@@ -107,9 +107,6 @@ importers:
       nprogress:
         specifier: ^0.2.0
         version: registry.npmmirror.com/nprogress@0.2.0
-      pinia:
-        specifier: ^2.1.4
-        version: registry.npmmirror.com/pinia@2.1.4(typescript@5.1.6)(vue@3.3.4)
       quasar:
         specifier: ^2.12.3
         version: registry.npmmirror.com/quasar@2.12.3

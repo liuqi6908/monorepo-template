@@ -28,10 +28,10 @@ export default ({ mode }: any) => {
     },
     server: {
       host: '0.0.0.0',
-      port: Number.parseInt((process.env.VITE_DEV_PORT as string) || '3333', 10),
+      port: Number.parseInt((process.env.VITE_PORT as string) || '3333', 10),
       proxy: {
         [process.env.VITE_API_BASE as string]: {
-          target: process.env.VITE_DEV_PROXY_TARGET,
+          target: process.env.VITE_PROXY_TARGET,
           changeOrigin: true,
           rewrite: path => path.replace(new RegExp(`^${process.env.VITE_API_BASE}`), ''),
           secure: false,
