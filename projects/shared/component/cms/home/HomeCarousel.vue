@@ -55,6 +55,5 @@ watch(() => props.list, () => {
   text-align: center;
   height: 100%;
   width: 100%;
-  background-color: rgba(2, 92, 185, 0.70)
 }
 </style>
