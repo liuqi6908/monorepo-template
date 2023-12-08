@@ -1,8 +1,7 @@
 {
   "name": "zjf-types",
-  "version": "0.0.0",
-  "description": "Types for Zif",
-  "author": "CatsJuice",
+  "version": "1.0.0",
+  "description": "类型定义合集",
   "main": "./dist/cjs/index.js",
   "types": "./dist/esm/index.js",
   "exports": {

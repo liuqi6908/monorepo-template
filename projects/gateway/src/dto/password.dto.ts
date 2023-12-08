@@ -2,10 +2,10 @@ import { decorate } from 'ts-mixer'
 import { ApiProperty } from '@nestjs/swagger'
 import { Transform } from 'class-transformer'
 import { IsString, MaxLength, MinLength } from 'class-validator'
+import type { IPasswordDto, IPasswordOptionalDto } from 'zjf-types/types/dto/password.interface'
 import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
 import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
 import { IsValidPassword } from 'src/decorators/validators/is-valid-password'
-import type { IPasswordDto, IPasswordOptionalDto } from 'zjf-types/types/dto/password.interface'
 
 import {
   PASSWORD_MAX_LENGTH,
@@ -14,7 +14,7 @@ import {
   decryptPasswordInHttp,
 } from 'zjf-utils'
 
-export function PasswordDecorator(isOptional = false) {
+export function Decorator(optional = false) {
   return GenerateParamsDecorator(
     [
       ApiProperty({
@@ -32,16 +32,16 @@ export function PasswordDecorator(isOptional = false) {
       IsString({ message: '密码必须是字符串' }),
       Transform(({ value }) => decryptPasswordInHttp(value)),
     ],
-    isOptional,
+    optional,
   )
 }
 
 export class PasswordDto implements IPasswordDto {
-  @decorate(PasswordDecorator())
+  @decorate(Decorator())
   password: string
 }
 
 export class PasswordOptionalDto implements IPasswordOptionalDto {
-  @decorate(PasswordDecorator(true))
+  @decorate(Decorator(true))
   declare password?: string
 }

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { cmsConfig } from 'shared/constants'
-import { getCms } from '~/api/cms/getCms'
+import { getCms } from '~/api/cms'
 
 const cmsId = ref('homeUpdateDescribe')
 const list = ref<any>([])

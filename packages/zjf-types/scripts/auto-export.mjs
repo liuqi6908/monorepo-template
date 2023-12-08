@@ -1,4 +1,4 @@
-import { glob } from "glob"
+import { glob } from 'glob'
 import path from 'path'
 import fs from 'fs'
 
@@ -19,7 +19,7 @@ function exportCode(p) {
 }
 function filter(p) {
   const name = path.basename(p, '.ts')
-  if (name.startsWith("_")) return false
+  if (name.startsWith('_')) return false
   return true
 }
 function sort(a, b) {
@@ -31,18 +31,18 @@ const interfaceImports = interfaces.filter(filter).map(exportCode).sort(sort)
 const constantImports = constants.filter(filter).map(exportCode).sort(sort)
 
 const imports = [
-  "/** ",
-  " * This file is auto generated, do not modify directly.",
-  " * @author CatsJuice",
-  " */",
-  "",
-  "// Enums",
+  '/**',
+  ' * This file is auto generated, do not modify directly.',
+  ' * @author CatsJuice',
+  ' */',
+  '',
+  '// Enums',
   ...enumImports,
-  "",
-  "// Interfaces",
+  '',
+  '// Interfaces',
   ...interfaceImports,
-  "",
-  "// Constants",
+  '',
+  '// Constants',
   ...constantImports,
 ]
 

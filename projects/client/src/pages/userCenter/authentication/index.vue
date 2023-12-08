@@ -10,7 +10,7 @@ import { changeEmail } from '~/api/auth/user/changeEmail'
 import { changePassword } from '~/api/user/changePassword'
 import { cancelVerification } from '~/api/auth/verification/cancelVerification'
 
-const { useGetProfile, userInfo, getVerify, latestVerifiy } = useUser()
+const { useGetProfile, userInfo, useGetVerify, latestVerify } = useUser()
 
 const showVeri = ref(false)
 
@@ -121,29 +121,29 @@ async function cancel(id: string) {
  */
 async function checkoutVerify() {
   await useGetProfile()
-  await getVerify()
+  await useGetVerify()
 
   for (const key in userInfo.value) {
     const obj = baseInfoList.find(i => i.id === key)
     const value = userInfo.value[key as keyof IUser]
     if (obj && typeof value === 'string') {
       if (key === 'email')
-        obj.inputVal = hideSensitiveInfo(value)
+        obj.inputVal = hideSensitiveInfo(value) as string
       else
         obj.inputVal = value
     }
   }
 
-  if (latestVerifiy.value?.status !== VerificationStatus.APPROVED)
+  if (latestVerify.value?.status !== VerificationStatus.APPROVED)
     return
 
   // 认证
-  for (const key in latestVerifiy.value) {
+  for (const key in latestVerify.value) {
     const obj = authInfoList.find(i => i.id === key)
-    const value = latestVerifiy.value[key as keyof IVerificationHistory]
+    const value = latestVerify.value[key as keyof IVerificationHistory]
     if (obj && typeof value === 'string') {
       if (key === 'idCard')
-        obj.inputVal = hideSensitiveInfo(value)
+        obj.inputVal = hideSensitiveInfo(value) as string
       else
         obj.inputVal = value
     }
@@ -208,9 +208,9 @@ onBeforeMount(() => {
     <!-- 用户状态 -->
     <div flex="~ row" w-full justify-center items-center mt-10 gap-5>
       <!-- 已拒绝 -->
-      <div v-if="latestVerifiy?.status === VerificationStatus.REJECTED" flex="~ col items-center" w-full>
+      <div v-if="latestVerify?.status === VerificationStatus.REJECTED" flex="~ col items-center" w-full>
         <div flex="~ row" justify-center items-center gap-5>
-          <VerifyStatus :status="latestVerifiy?.status" />
+          <VerifyStatus :status="latestVerify?.status" />
           <Btn1
             label="前往认证" icon w-53
             @click="showVeri = true"
@@ -220,21 +220,21 @@ onBeforeMount(() => {
           <div mb-2 font-600>
             驳回理由
           </div>
-          <div break-all v-text="latestVerifiy?.rejectReason" />
+          <div break-all v-text="latestVerify?.rejectReason" />
         </div>
       </div>
       <!-- 其他状态 -->
       <div v-else flex="~ row" justify-center items-center gap-5 w-full>
-        <VerifyStatus :status="latestVerifiy?.status" />
+        <VerifyStatus :status="latestVerify?.status" />
         <Btn1
-          v-if="latestVerifiy?.status === VerificationStatus.CANCELLED || !latestVerifiy"
+          v-if="latestVerify?.status === VerificationStatus.CANCELLED || !latestVerify"
           label="前往认证" icon w-53
           @click="showVeri = true"
         />
         <Btn1
-          v-else-if="latestVerifiy?.status === VerificationStatus.PENDING"
+          v-else-if="latestVerify?.status === VerificationStatus.PENDING"
           w-53
-          @click="cancel(latestVerifiy.id)"
+          @click="cancel(latestVerify.id)"
         >
           取消认证
           <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" ml-3>

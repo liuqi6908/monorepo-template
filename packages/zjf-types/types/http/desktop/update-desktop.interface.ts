@@ -1,4 +1,8 @@
-import { ICreateDesktopBodyDto } from "./create-desktop.interface";
+import { ICreateDesktopBodyDto } from './create-desktop.interface'
 
-export interface IUpdateDesktopInterface
-extends Partial<Omit<ICreateDesktopBodyDto, 'id'>> {}
+/**
+ * 更新云桌面
+ * 请求参数
+ */
+export interface IUpdateDesktopBodyDto extends
+  Partial<Omit<ICreateDesktopBodyDto, 'id'>> {}

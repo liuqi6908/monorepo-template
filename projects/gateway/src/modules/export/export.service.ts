@@ -1,14 +1,9 @@
 import type { Buffer } from 'node:buffer'
 import { Injectable } from '@nestjs/common'
-import type { User } from 'src/entities/user'
 import { objectOmit } from '@catsjuice/utils'
-import { MoreThan, Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
-import { responseError } from 'src/utils/response'
-import { readable2buffer } from 'src/utils/readable2buffer'
-import { FileExportLarge } from 'src/entities/export/file-export-large.entity'
-import { FileExportSmall } from 'src/entities/export/file-export-small.entity'
-
+import { MoreThan, Repository } from 'typeorm'
+import { formatFileSize } from 'zjf-utils'
 import {
   EXPORT_DFT_LG_SIZE_LIMIT,
   EXPORT_DFT_SM_DAILY_LIMIT,
@@ -16,7 +11,13 @@ import {
   ErrorCode,
   FileExportLargeStatus,
 } from 'zjf-types'
-import { formatFileSize } from 'zjf-utils'
+
+import type { User } from 'src/entities/user'
+import { responseError } from 'src/utils/response'
+import { readable2buffer } from 'src/utils/readable2buffer'
+import { FileExportLarge } from 'src/entities/export/file-export-large.entity'
+import { FileExportSmall } from 'src/entities/export/file-export-small.entity'
+
 import { FileService } from '../file/file.service'
 import { EmailService } from '../email/email.service'
 import { NotifyService } from '../notify/notify.service'
@@ -60,7 +61,7 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig()
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'file' })
     const {
       sizeLimitSm = EXPORT_DFT_SM_SIZE_LIMIT,
       dailyLimit = EXPORT_DFT_SM_DAILY_LIMIT,
@@ -136,7 +137,7 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig()
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'file' })
     const { sizeLimitLg = EXPORT_DFT_LG_SIZE_LIMIT } = sysCfg?.export || {}
     // 检查文件尺寸
     if (fileSize > sizeLimitLg)
@@ -177,9 +178,9 @@ export class ExportService {
     const feLg = await this._feLgRepo.findOne({ where: { id } })
     if (!feLg)
       responseError(ErrorCode.EXPORT_NOT_EXISTS)
-    if (feLg.status !== FileExportLargeStatus.Pending)
+    if (feLg.status !== FileExportLargeStatus.PENDING)
       responseError(ErrorCode.EXPORT_HANDLED)
-    feLg.status = FileExportLargeStatus.Approved
+    feLg.status = FileExportLargeStatus.APPROVED
     feLg.handler = handler
     feLg.handleAt = new Date()
     const readable = await this._fileSrv.download('pri', feLg.path)
@@ -210,10 +211,10 @@ export class ExportService {
     const feLg = await this._feLgRepo.findOne({ where: { id } })
     if (!feLg)
       responseError(ErrorCode.EXPORT_NOT_EXISTS)
-    if (feLg.status !== FileExportLargeStatus.Pending)
+    if (feLg.status !== FileExportLargeStatus.PENDING)
       responseError(ErrorCode.EXPORT_HANDLED)
 
-    feLg.status = FileExportLargeStatus.Rejected
+    feLg.status = FileExportLargeStatus.REJECTED
     feLg.handler = handler
     feLg.handleAt = new Date()
     feLg.rejectReason = reason

@@ -10,7 +10,7 @@ export class RejectVerificationBodyDto implements IRejectVerificationBodyDto {
     maxLength: VERIFICATION_REJECT_REASON_MAX,
   })
   @IsString()
-  @MaxLength(VERIFICATION_REJECT_REASON_MAX)
   @MinLength(VERIFICATION_REJECT_REASON_MIN)
+  @MaxLength(VERIFICATION_REJECT_REASON_MAX)
   reason: string
 }

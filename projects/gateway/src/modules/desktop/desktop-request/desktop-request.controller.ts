@@ -1,14 +1,15 @@
-import { getQuery } from 'src/utils/query'
-import { UserIdDto } from 'src/dto/user-id.dto'
-import { IsLogin } from 'src/guards/login.guard'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { QueryDto, QueryResDto } from 'src/dto/query.dto'
-import { HasPermission } from 'src/guards/permission.guard'
-import type { DesktopQueue } from 'src/entities/desktop-queue'
-import { VerifiedRequired } from 'src/guards/verify-required.guard'
-import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common'
 import { DesktopQueueHistoryStatus, DesktopQueueStatus, ErrorCode, PermissionType } from 'zjf-types'
+
+import { QueryDto, QueryResDto } from 'src/dto/query.dto'
+import { UserIdDto } from 'src/dto/id/user.dto'
+import type { DesktopQueue } from 'src/entities/desktop-queue'
+import { IsLogin } from 'src/guards/login.guard'
+import { HasPermission } from 'src/guards/permission.guard'
+import { VerifiedRequired } from 'src/guards/verify-required.guard'
+import { getQuery } from 'src/utils/query'
+import { ApiSuccessResponse, responseError } from 'src/utils/response'
 
 import { DesktopService } from '../desktop.service'
 import { DesktopQueueHistoryService } from '../desktop-queue-history/desktop-queue-history.service'
@@ -27,6 +28,7 @@ export class DesktopRequestController {
   ) {}
 
   @ApiOperation({ summary: '发起一个云桌面使用申请' })
+  @IsLogin()
   @VerifiedRequired()
   @Put()
   async requestDesktop(
@@ -41,43 +43,31 @@ export class DesktopRequestController {
   @HasPermission(PermissionType.DESKTOP_REQUEST_APPROVE)
   @Post('approve/:userId')
   async approveRequest(@Param() param: UserIdDto) {
-    const updateRes = await this._desktopReqSrv.repo().update(
-      { userId: param.userId, status: DesktopQueueStatus.Pending },
-      { status: DesktopQueueStatus.Queueing, queueAt: new Date() },
-    )
-    return updateRes.affected > 0
+    return await this._desktopReqSrv.approveRequest(param)
   }
 
   @ApiOperation({ summary: '驳回一个云桌面申请' })
   @HasPermission(PermissionType.DESKTOP_REQUEST_REJECT)
   @Post('reject/:userId')
-  async rejectRequest(@Param() param: UserIdDto, @Body() body: RejectDesktopReqBodyDto) {
+  async rejectRequest(
+    @Param() param: UserIdDto,
+    @Body() body: RejectDesktopReqBodyDto,
+  ) {
     const queue = await this._desktopReqSrv.repo().findOne({
       where: { userId: param.userId },
     })
     if (!queue)
       return false
 
-    if (queue.status !== DesktopQueueStatus.Pending)
+    if (queue.status !== DesktopQueueStatus.PENDING)
       responseError(ErrorCode.DESKTOP_REQUEST_PENDING_ONLY)
 
     return await this._desktopReqHistorySrv.mv2history(
       queue,
-      DesktopQueueHistoryStatus.Rejected,
+      DesktopQueueHistoryStatus.REJECTED,
       { rejectReason: body.reason },
     )
   }
-
-  @ApiOperation({
-    deprecated: true,
-    summary: '取消当前用户正待审核/排队中的桌面使用申请',
-  })
-  @Post('cancel/own')
-  async cancelRequestDesktop() {}
-
-  // @ApiOperation({ summary: '获取在当前用户前面等待的人数' })
-  // @Get('request/queue/length')
-  // async getQueueLength() {}
 
   @ApiOperation({ summary: '获取当前用户的云桌面使用申请情况' })
   @ApiSuccessResponse(GetOwnDesktopReqResDto)
@@ -90,7 +80,7 @@ export class DesktopRequestController {
     const lastRejected = queue
       ? null
       : await this._desktopReqHistorySrv.repo().findOne({
-        where: { userId: user.id, status: DesktopQueueHistoryStatus.Rejected },
+        where: { userId: user.id, status: DesktopQueueHistoryStatus.REJECTED },
         order: { createdAt: 'DESC' },
       }) ?? null
     const lastExpired = queue

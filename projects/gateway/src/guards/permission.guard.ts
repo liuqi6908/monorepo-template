@@ -1,18 +1,17 @@
 import { Reflector } from '@nestjs/core'
 import { ErrorCode, type PermissionType } from 'zjf-types'
+import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
+
 import { RoleService } from 'src/modules/role/role.service'
 import { getReflectorValue } from 'src/utils/reflector-value'
-import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import { ApiErrorResponse, responseError } from 'src/utils/response'
-import { Injectable, Logger, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
-
 import { IsLoginApis, LoginGuard } from './login.guard'
 
 type PermissionRelation = 'OR' | 'AND'
 
 @Injectable()
 export class PermissionGuard extends LoginGuard implements CanActivate {
-  private readonly _logger: Logger = new Logger(PermissionGuard.name)
   constructor(
     public readonly reflector: Reflector,
     public readonly roleSrv: RoleService,
@@ -57,9 +56,9 @@ export class PermissionGuard extends LoginGuard implements CanActivate {
   ) {
     const user = req.raw.user
 
-    const role = user?.roleName
+    const role = user?.roleId
       ? await this.roleSrv.repo().findOne({
-        where: { name: user.roleName },
+        where: { id: user.roleId },
         relations: { permissions: true },
       })
       : null
@@ -85,7 +84,7 @@ export class PermissionGuard extends LoginGuard implements CanActivate {
 }
 
 /**
- *
+ * 对用户权限进行校验
  * @param permissions 如果为空数组，则表示不需要权限，但是需要登录，会在用户信息上添加 `role` 字段
  * @param relation
  * @returns

@@ -77,6 +77,6 @@ onBeforeMount(() => {
 
 <style scoped lang="scss">
 .userCenter {
-  background: no-repeat center / cover url("../assets/layout/userCenter.png");
+  background: no-repeat center / cover url("~/assets/bg/user.webp");
 }
 </style>

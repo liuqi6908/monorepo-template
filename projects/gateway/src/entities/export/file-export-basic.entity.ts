@@ -1,13 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger'
-import type { IFileExportBasic } from 'zjf-types'
 import { Column, PrimaryGeneratedColumn } from 'typeorm'
-
+import type { IFileExportBasic } from 'zjf-types'
 import { User } from '../user'
 import { CreatedAt } from '../_timestamp'
 
-export class FileExportBasic
-  extends CreatedAt
-  implements IFileExportBasic {
+export class FileExportBasic extends CreatedAt implements IFileExportBasic {
   @ApiProperty({ description: '外发记录的唯一标识' })
   @PrimaryGeneratedColumn('uuid')
   id: string
@@ -42,7 +39,4 @@ export class FileExportBasic
   @ApiProperty({ description: '在 minio 中保存的完整路径' })
   @Column({ default: '' })
   path: string
-
-  // // 非数据实体
-  // desktop?: Desktop
 }

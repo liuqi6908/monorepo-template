@@ -1,13 +1,5 @@
-import type { IUserDeleted } from 'zjf-types/types/entities/user-deleted.interface'
-
-import {
-  Column,
-  Entity,
-  JoinColumn,
-  OneToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm'
-
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import type { IUserDeleted } from 'zjf-types'
 import { User } from './user'
 import { CreatedAt } from './_timestamp'
 

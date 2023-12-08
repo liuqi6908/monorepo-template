@@ -18,6 +18,12 @@ export class EsAnalyzerService {
     return client
   }
 
+  /**
+   * dsl查询
+   * @param dsl
+   * @param mapping
+   * @returns
+   */
   public dsl2query(dsl: string, mapping: EsMapping) {
     const expParser = new CustomDslParser(mapping)
     return expParser.parse(dsl)
@@ -28,6 +34,7 @@ export class EsAnalyzerService {
    * @param dsl
    * @param pagination
    * @param options
+   * @returns
    */
   public async queryByDsl(
     dsl: string,
@@ -50,7 +57,6 @@ export class EsAnalyzerService {
     const body = { query, from, size: paginationOpt.pageSize }
     const esSearchRes = await client.search({ index: options.index, body })
     return {
-      // dsl: query,
       ...(await this._resolveSearchResult(
         esSearchRes,
         paginationOpt,
@@ -59,6 +65,12 @@ export class EsAnalyzerService {
     }
   }
 
+  /**
+   * 代理查询
+   * @param index
+   * @param body
+   * @returns
+   */
   public async proxyQuery(index: string, body: any) {
     return await this.getClient().search({
       index,
@@ -67,10 +79,12 @@ export class EsAnalyzerService {
   }
 
   /**
-     * 处理查询结果
-     * @param res
-     * @returns
-     */
+   * 处理查询结果
+   * @param res
+   * @param paginationOpt
+   * @param select
+   * @returns
+   */
   private async _resolveSearchResult(
     res,
     paginationOpt: { page?: number; pageSize?: number },

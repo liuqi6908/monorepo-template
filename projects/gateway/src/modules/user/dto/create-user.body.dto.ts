@@ -1,13 +1,15 @@
 import { Mixin } from 'ts-mixer'
-import { PasswordDto } from 'src/dto/password.dto'
-import { NicknameDto } from 'src/dto/nickname.dto'
-import { EmailOptionalDto } from 'src/dto/email.dto'
 import type { ICreateUserBodyDto } from 'zjf-types'
-import { AccountOptionalDto } from 'src/dto/account.dto'
+import { AccountDto } from 'src/dto/account.dto'
+import { PasswordDto } from 'src/dto/password.dto'
+import { EmailOptionalDto } from 'src/dto/email.dto'
+import { NicknameOptionalDto } from 'src/dto/nickname.dto'
 
-export class CreateUserBodyDto extends Mixin(
-  AccountOptionalDto,
-  EmailOptionalDto,
-  PasswordDto,
-  NicknameDto,
-) implements ICreateUserBodyDto {}
+export class CreateUserBodyDto
+  extends Mixin(
+    AccountDto,
+    PasswordDto,
+    EmailOptionalDto,
+    NicknameOptionalDto,
+  )
+  implements ICreateUserBodyDto {}

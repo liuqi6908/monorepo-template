@@ -1,8 +1,9 @@
 import { Mixin } from 'ts-mixer'
-import { UserIdDto } from 'src/dto/user-id.dto'
-import { DataRoleNameOptionalDto } from 'src/dto/id/data-role.dto'
+import { UserIdDto } from 'src/dto/id/user.dto'
+import { DataRoleIdOptionalDto } from 'src/dto/id/data-role.dto'
 
-export class UpdateUserDataRoleParamDto extends Mixin(
-  UserIdDto,
-  DataRoleNameOptionalDto,
-) {}
+export class UpdateUserDataRoleParamDto extends
+  Mixin(
+    UserIdDto,
+    DataRoleIdOptionalDto,
+  ) {}

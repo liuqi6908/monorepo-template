@@ -19,5 +19,5 @@ export class DataRootIdDto implements IDataRootIdDto {
 
 export class DataRootIdOptionalDto implements IDataRootIdOptionalDto {
   @Decorator(true)
-  dataRootId?: string
+  dataRootId?: DataRootIdDto['dataRootId']
 }

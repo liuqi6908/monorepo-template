@@ -1,19 +1,17 @@
 import * as path from 'node:path'
-import { NestFactory } from '@nestjs/core'
-import compression from '@fastify/compress'
-import { ConfigService } from '@nestjs/config'
 import { validatePath } from '@catsjuice/utils'
 import { Logger, ValidationPipe } from '@nestjs/common'
-import type { NestFastifyApplication } from '@nestjs/platform-fastify'
+import { ConfigService } from '@nestjs/config'
+import { NestFactory } from '@nestjs/core'
+import { FastifyAdapter } from '@nestjs/platform-fastify'
+import compression from '@fastify/compress'
 import fmp from '@fastify/multipart'
+import { parseBoolRaw } from 'zjf-utils'
 
-import {
-  FastifyAdapter,
-} from '@nestjs/platform-fastify'
+import type { NestFastifyApplication } from '@nestjs/platform-fastify'
+
 import registerSwagger from './bootstrap/register-swagger'
-
 import { AppModule } from './app.module'
-import { parseBoolRaw } from './utils/parser'
 import { getExceptionFactory } from './utils/response/validate-exception-factory'
 
 async function bootstrap() {

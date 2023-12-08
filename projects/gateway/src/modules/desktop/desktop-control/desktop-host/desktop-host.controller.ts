@@ -1,14 +1,16 @@
 import { Controller, Get, Param } from '@nestjs/common'
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
-import { VerifiedRequired } from 'src/guards/verify-required.guard'
 
+import { VerifiedRequired } from 'src/guards/verify-required.guard'
 import { ZstackService } from '../../zstack/zstack.service'
 
 @VerifiedRequired()
 @ApiTags('DesktopHost | 云桌面物理机')
 @Controller('desktop-host')
 export class DesktopHostController {
-  constructor(private readonly _zstackSrv: ZstackService) {}
+  constructor(
+    private readonly _zstackSrv: ZstackService,
+  ) {}
 
   @ApiOperation({ summary: '获取云桌面物理机列表' })
   @Get()

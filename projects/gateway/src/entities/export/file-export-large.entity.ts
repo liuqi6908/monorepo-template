@@ -1,16 +1,13 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { FileExportLargeStatus } from 'zjf-types'
-import type { IFileExportLarge } from 'zjf-types'
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
-
+import type { IFileExportLarge } from 'zjf-types'
 import { User } from '../user'
 import { Desktop } from '../desktop'
 import { FileExportBasic } from './file-export-basic.entity'
 
 @Entity()
-export class FileExportLarge
-  extends FileExportBasic
-  implements IFileExportLarge {
+export class FileExportLarge extends FileExportBasic implements IFileExportLarge {
   @ManyToOne(() => User, user => user.exportsLarge, { eager: true })
   @JoinColumn()
   founder: User
@@ -32,7 +29,7 @@ export class FileExportLarge
   @Column({
     type: 'enum',
     enum: FileExportLargeStatus,
-    default: FileExportLargeStatus.Pending,
+    default: FileExportLargeStatus.PENDING,
   })
   status: FileExportLargeStatus
 

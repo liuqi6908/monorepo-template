@@ -1,8 +1,7 @@
 import { PermissionType } from 'zjf-types'
-import type { IPermission } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, ManyToMany, PrimaryColumn } from 'typeorm'
-
+import type { IPermission } from 'zjf-types'
 import { Role } from './role'
 
 @Entity()

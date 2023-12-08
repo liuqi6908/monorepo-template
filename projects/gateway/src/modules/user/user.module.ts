@@ -1,7 +1,7 @@
-import { User } from 'src/entities/user'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { Module, forwardRef } from '@nestjs/common'
 import { UserDeleted } from 'src/entities/user-deleted'
+import { User } from 'src/entities/user'
 
 import { CodeModule } from '../code/code.module'
 import { AuthModule } from '../auth/auth.module'

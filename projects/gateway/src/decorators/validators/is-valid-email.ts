@@ -1,6 +1,6 @@
 import { registerDecorator } from 'class-validator'
-import type { ValidationOptions } from 'class-validator'
 import { EMAIL_REQUIREMENTS_DESC, validateEmail } from 'zjf-utils'
+import type { ValidationOptions } from 'class-validator'
 
 export function isValidEmail(value: any) {
   return !validateEmail(value)

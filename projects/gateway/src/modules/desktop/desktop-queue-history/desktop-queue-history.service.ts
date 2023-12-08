@@ -2,9 +2,9 @@ import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { objectOmit } from '@catsjuice/utils'
 import { InjectRepository } from '@nestjs/typeorm'
+
 import type { DesktopQueue } from 'src/entities/desktop-queue'
 import { DesktopQueueHistory } from 'src/entities/desktop-queue-history'
-
 import { DesktopRequestService } from '../desktop-request/desktop-request.service'
 
 @Injectable()

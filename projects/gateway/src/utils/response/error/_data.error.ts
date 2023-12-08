@@ -22,6 +22,10 @@ const _dataErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '角色已被分配',
   },
+  [ErrorCode.DATA_ROLE_NAME_IS_EXIST]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '角色名称已存在',
+  },
 }
 
 export default _dataErrors

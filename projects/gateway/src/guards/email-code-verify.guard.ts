@@ -1,11 +1,12 @@
 import { ErrorCode } from 'zjf-types'
 import { Reflector } from '@nestjs/core'
+import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
+import type { CodeAction, ICodeVerifyDto, IEmailDto } from 'zjf-types'
+
 import { ApiErrorResponse } from 'src/utils/response'
 import { CodeService } from 'src/modules/code/code.service'
 import { getReflectorValue } from 'src/utils/reflector-value'
-import type { CanActivate, ExecutionContext } from '@nestjs/common'
-import type { CodeAction, ICodeVerifyDto, IEmailDto } from 'zjf-types'
-import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 
 interface BasicBody extends ICodeVerifyDto, IEmailDto {}
 
@@ -20,7 +21,6 @@ export class EmailCodeVerifyGuard implements CanActivate {
     const req: FastifyRequest = context.switchToHttp().getRequest()
     const action = getReflectorValue<CodeAction>(this.reflector, context, 'action', null)
 
-    // TODO: 切换成可配置的以提升扩展性
     const body = req.body as any as BasicBody
 
     if (!action)

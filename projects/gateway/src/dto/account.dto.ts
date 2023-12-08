@@ -1,13 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
-import type { IAccountDto, IAccountOptionalDto } from 'zjf-types/types/dto/account.interface'
-import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
 import { ACCOUNT_MAX_LENGTH, ACCOUNT_MIN_LENGTH, ACCOUNT_REQUIREMENTS_DESC } from 'zjf-utils'
-import { IsValidAccount } from 'src/decorators/validators/is-valid-account'
 import { IsString, MaxLength, MinLength } from 'class-validator'
 import { decorate } from 'ts-mixer'
+import type { IAccountDto, IAccountOptionalDto } from 'zjf-types/types/dto/account.interface'
+import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
+import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
+import { IsValidAccount } from 'src/decorators/validators/is-valid-account'
 
-function AccountDecorator(isOptional = false) {
+function Decorator(optional = false) {
   return GenerateParamsDecorator(
     [
       ApiProperty({
@@ -23,18 +23,18 @@ function AccountDecorator(isOptional = false) {
       MaxLength(ACCOUNT_MAX_LENGTH, { message: `账号长度不能大于${ACCOUNT_MAX_LENGTH}` }),
       IsString({ message: '账号必须是字符串' }),
     ],
-    isOptional,
+    optional,
   )
 }
 
 export class AccountDto implements IAccountDto {
   /** 账号 */
-  @decorate(AccountDecorator(false))
+  @decorate(Decorator(false))
   account: string
 }
 
 export class AccountOptionalDto implements IAccountOptionalDto {
   /** 账号 */
-  @decorate(AccountDecorator(true))
+  @decorate(Decorator(true))
   account?: string
 }

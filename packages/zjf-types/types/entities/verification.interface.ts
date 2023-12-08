@@ -1,60 +1,45 @@
-import { IUser } from './user.interface';
-import { VerificationIdentify, VerificationStatus } from '../verification.enum';
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface';
+import { IUser } from './user.interface'
+import { IDataRole } from './data-role.interface'
+import { VerificationStatus } from '../enum/verification.enum'
+import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
-
+/**
+ * 认证信息历史记录
+ */
 export interface IVerificationHistory extends ICreatedAt, IUpdatedAt {
   /** 认证记录的唯一标识 */
-  id: string;
-  
-  // 基础信息
+  id: string
   /** 真实姓名 */
-  name: string;
-
+  name: string
   /** 学校名称 */
-  school: string;
-
+  school: string
   /** 学院名称 */
-  college: string;
-
+  college: string
   /** 学号或工号 */
-  number: string;
-
+  number: string
   /** 身份证号码 */
-  idCard: string;
-
+  idCard: string
   /** 身份 */
-  identify: VerificationIdentify;
-
+  dataRole?: IDataRole['name']
   /** 上传的附件列表，oss 相对地址列表  */
-  attachments: string[];
+  attachments: string[]
 
-
-  // 与用户的关联
   /** 创建者 */
-  founder: IUser;
-
+  founder: IUser
   /** 创建者的 id */
-  founderId: IUser['id'];
-
+  founderId: IUser['id']
   /** 处理者 */
-  handler?: IUser;
-
+  handler?: IUser
   /** 处理者的 id */
-  handlerId?: IUser['id'];
-
+  handlerId?: IUser['id']
   /** 当前激活的用户 */
-  user?: IUser;
-
+  user?: IUser
   /** 当前激活的用户 id */
-  userId?: IUser['id'];
-
+  userId?: IUser['id']
   /** 处理时间： 通过/驳回/取消 */
-  handledAt?: Date;
-  
+  handledAt?: Date
   /** 认证状态 */
-  status: VerificationStatus;
-
+  status: VerificationStatus
   /** 驳回原因（仅当状态为驳回时存在）*/
-  rejectReason?: string;
+  rejectReason?: string
 }

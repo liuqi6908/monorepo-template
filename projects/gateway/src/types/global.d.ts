@@ -2,8 +2,8 @@
 
 declare global {
   /** 服务版本号 */
-  var version: string;
+  var version: string
   /** 全局路由前缀 */
-  var prefix: string;
+  var prefix: string
 }
-export {};
+export {}

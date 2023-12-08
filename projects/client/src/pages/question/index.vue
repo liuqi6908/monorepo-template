@@ -3,7 +3,7 @@ import { computed, ref, watch } from 'vue'
 import { cmsConfig } from 'shared/constants/cms.constant'
 import { useRoute } from 'vue-router'
 import type { ICms } from 'zjf-types'
-import { getCms } from '../../api/cms/getCms'
+import { getCms } from '../../api/cms'
 
 const route = useRoute()
 
@@ -61,7 +61,7 @@ watch(() => route.name, async () => {
 
 <style lang="scss" scoped>
 .questionTitle {
-    background: no-repeat center / cover url("../../assets/layout/questionTitle.png");
+    background: no-repeat center / cover url("~/assets/bg/question.webp");
 }
 </style>
 

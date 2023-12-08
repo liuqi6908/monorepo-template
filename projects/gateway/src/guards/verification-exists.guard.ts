@@ -1,10 +1,11 @@
 import { ErrorCode } from 'zjf-types'
 import { Reflector } from '@nestjs/core'
-import { getReflectorValue } from 'src/utils/reflector-value'
+import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
+
+import { getReflectorValue } from 'src/utils/reflector-value'
 import { ApiErrorResponse, responseError } from 'src/utils/response'
 import { VerificationService } from 'src/modules/verification/verification.service'
-import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 
 @Injectable()
 export class VerificationExistsGuard implements CanActivate {

@@ -1,15 +1,14 @@
-import { ErrorCode } from 'zjf-types'
+import { Inject, Injectable, forwardRef } from '@nestjs/common'
+import { ConfigService } from '@nestjs/config'
 import { JwtService } from '@nestjs/jwt'
 import { objectPick } from '@catsjuice/utils'
-import { ConfigService } from '@nestjs/config'
-import { responseError } from 'src/utils/response'
-import { Inject, Injectable, forwardRef } from '@nestjs/common'
+import { ErrorCode } from 'zjf-types'
 
+import { responseError } from 'src/utils/response'
 import { md5 } from 'src/utils/encrypt/md5'
+import type { User } from 'src/entities/user'
 import { AuthService } from '../auth/auth.service'
 import { RedisService } from '../redis/redis.service'
-
-import type { User } from '../../entities/user'
 
 @Injectable()
 export class JwtAuthService {
@@ -39,7 +38,7 @@ export class JwtAuthService {
     client.setEx(access_token, expiresIn, `${expiresIn}`)
 
     // 存储token
-    this._authSrv.loginRepo().insert({
+    this._authSrv.repo().insert({
       id: md5(access_token),
       token: access_token,
       userId: user.id,
@@ -85,7 +84,7 @@ export class JwtAuthService {
         throw new Error('AccessToken not exists in cache')
 
       // 删除数据库中存储的 token
-      this._authSrv.loginRepo().delete({ id: md5(token) })
+      this._authSrv.repo().delete({ id: md5(token) })
     }
     catch (err) {
       responseError(ErrorCode.AUTH_LOGIN_EXPIRED)

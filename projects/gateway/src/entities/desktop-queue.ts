@@ -2,7 +2,6 @@ import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn } from 'typeorm'
 import { ApiProperty } from '@nestjs/swagger'
 import { DesktopQueueStatus } from 'zjf-types'
 import type { IDesktopQueue } from 'zjf-types'
-
 import { User } from './user'
 import { BaseTimeStamp } from './_timestamp'
 
@@ -26,12 +25,12 @@ export class DesktopQueue
     description: '队列状态',
     type: 'enum',
     enum: DesktopQueueStatus,
-    default: DesktopQueueStatus.Pending,
+    default: DesktopQueueStatus.PENDING,
   })
   @Column({
     type: 'enum',
     enum: DesktopQueueStatus,
-    default: DesktopQueueStatus.Pending,
+    default: DesktopQueueStatus.PENDING,
   })
   status: DesktopQueueStatus
 

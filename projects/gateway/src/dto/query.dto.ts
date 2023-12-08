@@ -2,7 +2,6 @@ import { decorate } from 'ts-mixer'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import type { IQueryConfig, IQueryResDto, IQuerySort } from 'zjf-types'
 import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
-
 import { SuccessDto } from './success.dto'
 import { PaginatedResData, PaginationDto } from './pagination.dto'
 

@@ -1,9 +1,10 @@
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import type { IGetOwnDesktopReqResData, IGetOwnDesktopReqResDto } from 'zjf-types'
+
 import { Desktop } from 'src/entities/desktop'
 import { SuccessDto } from 'src/dto/success.dto'
 import { DesktopQueue } from 'src/entities/desktop-queue'
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { DesktopQueueHistory } from 'src/entities/desktop-queue-history'
-import type { IGetOwnDesktopReqResData, IGetOwnDesktopReqResDto } from 'zjf-types'
 
 export class GetOwnDesktopReqResData implements IGetOwnDesktopReqResData {
   @ApiPropertyOptional({

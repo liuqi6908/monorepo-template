@@ -1,6 +1,5 @@
 import { HttpModule } from '@nestjs/axios'
 import { Global, Module } from '@nestjs/common'
-
 import { RequestService } from './request.service'
 
 @Global()

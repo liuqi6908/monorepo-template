@@ -16,12 +16,12 @@ import { getDesktopVmStatus } from '~/api/desktopVm/getDesktopVmStatus'
 import DesktopStatus from '~/view/userCenter/myDesktop/DesktopStatus.vue'
 import Cloud from '~/view/request/cloud/index.vue'
 
-const { isVerify, isLogin, useGetProfile, getVerify, latestVerifiy } = useUser()
+const { isVerify, isLogin, useGetProfile, useGetVerify, latestVerify } = useUser()
 const $router = useRouter()
 const { pause, resume } = useIntervalFn(() => getVmInfo(), 3000, { immediate: false })
 
 /** 用户认证状态 */
-const userStatus = computed(() => latestVerifiy.value?.status)
+const userStatus = computed(() => latestVerify.value?.status)
 const loading = ref(true)
 /** 云桌面申请信息 */
 const requestInfo = reactive({
@@ -68,12 +68,12 @@ const vmStatus = computed(() => vmInfo.state.value)
 onMounted(async () => {
   try {
     if (!isLogin.value) {
-      latestVerifiy.value = undefined
+      latestVerify.value = undefined
     }
     else {
       await useGetProfile()
       if (!isVerify.value) {
-        await getVerify()
+        await useGetVerify()
       }
       else {
         await getRequestInfo()
@@ -291,14 +291,14 @@ function copyText(text: string) {
       <!-- 未认证 -->
       <template v-if="!isVerify">
         <template v-if="!userStatus">
-          <EmptyVeri label="您还未进行身份认证" captions="用户认证通过后，才能申请使用" />
+          <Empty label="您还未进行身份认证" captions="用户认证通过后，才能申请使用" icon="verify" />
           <Btn1
             label="前往认证" icon w-53
             @click="$router.push('/userCenter/authentication')"
           />
         </template>
         <template v-else>
-          <EmptyVeri label="您的身份认证尚未通过审核" captions="用户认证通过后，才能申请使用" />
+          <Empty label="您的身份认证尚未通过审核" captions="用户认证通过后，才能申请使用" icon="verify" />
           <div flex gap-6>
             <VerifyStatus :status="userStatus" />
             <Btn1
@@ -310,27 +310,30 @@ function copyText(text: string) {
       </template>
       <template v-else>
         <!-- 未申请 -->
-        <EmptyCloud
+        <Empty
           v-if="!requestInfo.status"
           label="您还未申请云桌面"
+          icon="desktop"
         />
         <!-- 待审核 -->
-        <EmptyCloud
+        <Empty
           v-else-if="requestInfo.status === DesktopQueueStatus.Pending"
           label="您的云桌面使用申请正在审核中，请耐心等待"
+          icon="desktop"
         />
         <!-- 排队中 -->
-        <EmptyCloud
+        <Empty
           v-else-if="requestInfo.status === DesktopQueueStatus.Queueing"
           :label="
             requestInfo.queueLength
               ? `云桌面排队情况：前面有 ${requestInfo.queueLength}人 在排队`
               : '管理员正在为您创建云桌面，请耐心等待并留意邮件通知'
           "
+          icon="desktop"
         />
         <!-- 已驳回 -->
         <div v-else-if="requestInfo.status === DesktopQueueHistoryStatus.Rejected">
-          <EmptyCloud label="您的申请已被驳回，请重新提交" />
+          <Empty label="您的申请已被驳回，请重新提交" icon="desktop" />
           <div flex="~ col" text="sm left" bg-grey-2 p-4 mt-2 font-500 w-80>
             <div mb-2>
               驳回理由
@@ -339,14 +342,16 @@ function copyText(text: string) {
           </div>
         </div>
         <!-- 已取消 -->
-        <EmptyCloud
+        <Empty
           v-else-if="requestInfo.status === DesktopQueueHistoryStatus.Canceled"
           label="您的申请已取消，请重新提交"
+          icon="desktop"
         />
         <!-- 已过期 -->
-        <EmptyCloud
+        <Empty
           v-else-if="requestInfo.status === DesktopQueueHistoryStatus.Expired"
           label="您的云桌面已过期，请重新提交申请"
+          icon="desktop"
         />
         <Btn1
           label="前往申请" icon w-53

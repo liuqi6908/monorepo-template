@@ -1,9 +1,9 @@
 import { decorate } from 'ts-mixer'
 import { IsEnum } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
-import type { ICodeActionDto } from 'zjf-types'
 import { objectEntries } from '@catsjuice/utils'
 import { CodeAction, codeActionDescriptions } from 'zjf-types'
+import type { ICodeActionDto } from 'zjf-types'
 import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
 
 export class CodeActionDto implements ICodeActionDto {

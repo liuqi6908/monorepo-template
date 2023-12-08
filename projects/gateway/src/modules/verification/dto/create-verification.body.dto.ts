@@ -1,31 +1,18 @@
-import { enumMarkdown } from 'zjf-utils'
 import { ApiProperty } from '@nestjs/swagger'
-import type { ICreateVerificationBodyDto } from 'zjf-types'
-import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
-import { ArrayNotEmpty, IsEnum, IsString, MaxLength, MinLength } from 'class-validator'
-
+import { ArrayNotEmpty, IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
 import {
   VERIFICATION_COLLEGE_MAX,
   VERIFICATION_ID_CARD_MAX,
   VERIFICATION_ID_CARD_MIN,
   VERIFICATION_NUMBER_MAX,
   VERIFICATION_SCHOOL_MAX,
-  VerificationIdentify,
-  verificationIdentifyDescriptions,
 } from 'zjf-types'
+import type { ICreateVerificationBodyDto } from 'zjf-types'
+import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
 
 export class CreateVerificationBodyDto implements ICreateVerificationBodyDto {
   @ApiProperty({ description: '真实姓名' })
   name: string
-
-  @ApiProperty({
-    description: `身份类型, 可用值：\n${
-    enumMarkdown(verificationIdentifyDescriptions)}\n${
-    sharedVariableMarkdown('VerificationIdentify', 'zjf-types', '身份类型枚举')}`,
-    enum: VerificationIdentify,
-  })
-  @IsEnum(VerificationIdentify)
-  identify: VerificationIdentify
 
   @ApiProperty({
     description: `学校\n${sharedVariableMarkdown('VERIFICATION_SCHOOL_MAX', 'zjf-types', '最大长度')}`,
@@ -60,6 +47,11 @@ export class CreateVerificationBodyDto implements ICreateVerificationBodyDto {
   @MaxLength(VERIFICATION_ID_CARD_MAX)
   @MinLength(VERIFICATION_ID_CARD_MIN)
   idCard: string
+
+  @ApiProperty({ description: '身份类型' })
+  @IsString()
+  @IsOptional()
+  dataRole?: string
 
   @ApiProperty({
     description: '附件列表',

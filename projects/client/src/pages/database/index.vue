@@ -1,8 +1,7 @@
 <script lang="ts" setup>
 import CurrentData from './CurrentData.vue'
-import EmptyData from '~/components/empty/EmptyData.vue'
 
-const { geRootData, rootData, loading } = useDataBase()
+const { geRootData, rootData, loading } = useDatabase()
 
 const databaseId = ref('')
 const $router = useRouter()
@@ -50,9 +49,7 @@ const empty = computed(() => !rootData.value || !rootData.value.length)
           label-class="text-primary-1"
           label-style="font-size: 1.1em"
         />
-        <div v-else-if="empty">
-          <EmptyData label="暂无数据" />
-        </div>
+        <Empty v-else-if="empty" label="暂无数据" icon="database" />
         <CurrentData v-else :db-id="databaseId" />
       </div>
     </div>
@@ -61,7 +58,7 @@ const empty = computed(() => !rootData.value || !rootData.value.length)
 
 <style lang="scss" scoped>
 .database {
-    background: no-repeat center / cover url("../../assets/layout/database.jpg");
+  background: no-repeat center / cover url("~/assets/bg/database.webp");
 }
 </style>
 

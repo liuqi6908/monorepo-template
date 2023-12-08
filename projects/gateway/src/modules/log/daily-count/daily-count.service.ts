@@ -11,6 +11,11 @@ export class DailyCountService {
     private readonly _dailyCountRepo: Repository<DailyCount>,
   ) {}
 
+  /**
+   * 获取日期
+   * @param src
+   * @returns
+   */
   private _getDate(src = new Date()) {
     const year = src.getFullYear()
     const month = src.getMonth() + 1
@@ -20,6 +25,9 @@ export class DailyCountService {
     return { id, year, month, date }
   }
 
+  /**
+   * 记录访问量
+   */
   async recordAccess() {
     const { id, year, month, date } = this._getDate()
     try {
@@ -33,6 +41,10 @@ export class DailyCountService {
     }
   }
 
+  /**
+   * 获取最近7天的访问量
+   * @returns
+   */
   async getAccessLast7Days() {
     const infos = []
     for (let i = 0; i < 7; i++) {
@@ -45,6 +57,10 @@ export class DailyCountService {
     return infos.map(info => counts.find(c => c.id === info.id) || { ...info, access: 0 })
   }
 
+  /**
+   * 获取当天的访问量
+   * @returns
+   */
   async getAccessToday() {
     const { id } = this._getDate()
     return Number(
@@ -52,6 +68,10 @@ export class DailyCountService {
     )
   }
 
+  /**
+   * 获取总的访问量
+   * @returns
+   */
   async getAccessTotal() {
     return await this._dailyCountRepo.sum('access') || 0
   }

@@ -1,7 +1,6 @@
-import type { IDesktop } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn } from 'typeorm'
-
+import type { IDesktop } from 'zjf-types'
 import { User } from './user'
 import { BaseTimeStamp } from './_timestamp'
 import { FileExportLarge } from './export/file-export-large.entity'

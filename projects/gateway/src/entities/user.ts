@@ -1,6 +1,6 @@
-import type { IUser } from 'zjf-types'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
+import type { IUser } from 'zjf-types'
 
 import { Role } from './role'
 import { Work } from './work'
@@ -61,19 +61,19 @@ export class User extends BaseTimeStamp implements IUser {
   @OneToOne(() => UserDeleted, deleted => deleted.user)
   deletedRecord?: UserDeleted
 
-  @ManyToOne(() => Role, role => role.users, { onDelete: 'SET NULL' })
-  @JoinColumn()
-  role?: Role
-
   @ManyToOne(() => DataRole, dataRole => dataRole.users)
   @JoinColumn()
   dataRole?: DataRole
 
   @Column({ nullable: true })
-  dataRoleName?: string
+  dataRoleId?: DataRole['id']
+
+  @ManyToOne(() => Role, role => role.users)
+  @JoinColumn()
+  role?: Role
 
   @Column({ nullable: true })
-  roleName?: string
+  roleId?: Role['id']
 
   @OneToOne(() => VerificationHistory, vh => vh.user, { eager: true })
   @JoinColumn()

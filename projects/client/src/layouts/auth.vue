@@ -3,23 +3,27 @@ const $router = useRouter()
 </script>
 
 <template>
-  <div class="confirmation" full flex="~ row">
-    <div class="col-grow confirmation-bgImg">
-      <header flex="~ row items-center" text-grey-1 absolute cursor-pointer gap-2 left-12 top-10 @click="$router.push('/')">
-        <img h-12 w-12 src="../assets/auth/couldTitle.png">
-        <span text-7 font-600>数智三农云科研平台</span>
-        <span text-7 font-600>|</span>
-        <span text-lg relative font-400 top-3px>CloudResearch</span>
+  <div class="confirmation" absolute inset-0 flex="~ row justify-end">
+    <div class="confirmation-bgImg" absolute inset-y-0 left-0 w-1290px>
+      <header flex="~ items-center gap-2" text-grey-1 absolute cursor-pointer left-12 top-10 @click="$router.push('/')">
+        <img w-12 src="../assets/logo/logo-white.png">
+        <div text-7 font-600>
+          数智三农云科研平台
+        </div>
+        <div w-3px h-8 bg-grey-1 />
+        <div text-lg>
+          CloudResearch
+        </div>
       </header>
     </div>
 
     <!-- auth card  -->
-    <div class="flex-center col-5" mr-40>
+    <div class="flex-center" mr-40>
       <div
-        flex="~ col" class="confirmation-card"
-        min-w-sm p-10 backdrop-blur-md
+        class="confirmation-card"
+        w-26rem p-10 backdrop-blur-md
       >
-        <RouterView />
+        <RouterView w-full flex="~ col" text="sm grey-1" font-500 />
       </div>
     </div>
   </div>
@@ -40,8 +44,9 @@ $linear: linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 25
         width:100%
     }
     &-bgImg {
-      background: no-repeat url(~/assets/auth/authBgRect.svg);
+      background: no-repeat url(~/assets/bg/auth.webp);
       background-size: cover;
+      background-position: center;
     }
     &-card {
       border: 1px solid transparent;
@@ -56,4 +61,7 @@ $linear: linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 25
   --q-primary: white
   .q-field__control::after
     border-width: 1px
+
+  .q-field__label
+    color: rgba(255, 255, 255, 0.7) !important
 </style>

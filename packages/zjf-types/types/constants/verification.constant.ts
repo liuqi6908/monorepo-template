@@ -6,7 +6,7 @@ export const VERIFICATION_REJECT_REASON_MIN = 3
 /** 学校的最大长度 */
 export const VERIFICATION_SCHOOL_MAX = 60
 /** 学院的最大长度 */
-export const VERIFICATION_COLLEGE_MAX = 60  
+export const VERIFICATION_COLLEGE_MAX = 60
 /** 学号的最大长度 */
 export const VERIFICATION_NUMBER_MAX = 20
 /** 身份证号的最大长度 */

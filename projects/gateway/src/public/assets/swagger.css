@@ -1,12 +1,8 @@
 .swagger-ui table tbody tr td,
 .swagger-ui table tbody tr td:first-of-type {
   padding: none;
-  /* vertical-align: middle; */
 }
 #swagger-ui .topbar {
-  /* position: sticky; */
-  /* top: 0; */
-  /* z-index: 999; */
   background: linear-gradient(43.68deg, #234 25.58%, #345 96%);
 }
 
@@ -96,12 +92,6 @@ svg.arrow {
 .content-menu.active {
   left: 0;
 }
-/* .content-menu:hover {
-  left: 0;
-}
-.swagger-ui .topbar:hover ~ .content-menu {
-  left: 0;
-} */
 
 .content-menu > a {
   display: block;
@@ -134,7 +124,6 @@ svg.arrow {
 td.response-col_status {
   color: #034166 !important;
   font-weight: bold;
-  /* padding: 0 !important; */
 }
 td.response-col_description {
   padding: 0 !important;
@@ -150,7 +139,7 @@ td.response-col_description p {
 
 td.parameters-col_description .renderedMarkdown:nth-child(2) p {
   font-size: 0.8rem !important;
-  color: #535a6a !important;  
+  color: #535a6a !important;
 }
 
 .swagger-ui .opblock .opblock-summary-description {

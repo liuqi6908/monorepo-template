@@ -1,8 +1,7 @@
 import { IUser } from 'zjf-types'
-import type { ILogin } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryColumn } from 'typeorm'
-
+import type { ILogin } from 'zjf-types'
 import { User } from './user'
 import { CreatedAt } from './_timestamp'
 

@@ -1,5 +1,5 @@
-import { ISysConfig } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
+import { ISysConfig } from 'zjf-types'
 import { SuccessDto } from 'src/dto/success.dto'
 import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
 

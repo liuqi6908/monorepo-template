@@ -1,22 +1,23 @@
 import { decorate } from 'ts-mixer'
 import { IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
+import type { IDataRoleIdDto, IDataRoleIdOptionalDto } from 'zjf-types'
 import type { DataRole } from 'src/entities/data-role'
 import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
 
 function Decorator(optional = false) {
   return GenerateParamsDecorator([
-    ApiProperty({ description: '角色名称' }),
+    ApiProperty({ description: '数据角色的唯一标识' }),
     IsString(),
   ], optional)
 }
 
-export class DataRoleNameDto {
+export class DataRoleIdDto implements IDataRoleIdDto {
   @decorate(Decorator())
-  dataRoleName: DataRole['name']
+  dataRoleId: DataRole['id']
 }
 
-export class DataRoleNameOptionalDto {
+export class DataRoleIdOptionalDto implements IDataRoleIdOptionalDto {
   @decorate(Decorator(true))
-  dataRoleName?: DataRoleNameDto['dataRoleName']
+  dataRoleId?: DataRoleIdDto['dataRoleId']
 }

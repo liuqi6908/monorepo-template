@@ -1,7 +1,8 @@
 import { Module, forwardRef } from '@nestjs/common'
 import { HttpModule } from '@nestjs/axios'
-import { Desktop } from 'src/entities/desktop'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
+import { Desktop } from 'src/entities/desktop'
 import { DesktopQueue } from 'src/entities/desktop-queue'
 import { DesktopQueueHistory } from 'src/entities/desktop-queue-history'
 

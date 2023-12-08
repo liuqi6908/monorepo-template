@@ -1,16 +1,18 @@
-import { ErrorCode } from 'zjf-types'
-import { Cron } from '@nestjs/schedule'
-import { In, Repository } from 'typeorm'
-import { objectPick } from '@catsjuice/utils'
-import { Desktop } from 'src/entities/desktop'
+import { Inject, Injectable, Logger, forwardRef } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { Cron } from '@nestjs/schedule'
+import { objectPick } from '@catsjuice/utils'
+import { In, IsNull, Not, Repository } from 'typeorm'
+import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
+
+import { Desktop } from 'src/entities/desktop'
 import { responseError } from 'src/utils/response'
-import { Injectable, Logger } from '@nestjs/common'
 
 import { RedisService } from '../redis/redis.service'
 import { NotifyService } from '../notify/notify.service'
-
+import type { AssignDesktopParamDto } from './dto/assign-desktop.param.dto'
 import type { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
+import { DesktopRequestService } from './desktop-request/desktop-request.service'
 
 @Injectable()
 export class DesktopService {
@@ -23,6 +25,8 @@ export class DesktopService {
 
     private readonly _redisSrv: RedisService,
     private readonly _notifySrv: NotifyService,
+    @Inject(forwardRef(() => DesktopRequestService))
+    private readonly _desktopReqSrv: DesktopRequestService,
   ) {}
 
   // 每小时检查一次即将过期的云桌面
@@ -83,6 +87,11 @@ export class DesktopService {
     }
   }
 
+  /**
+   * 创建云桌面
+   * @param body
+   * @returns
+   */
   public async createDesktop(body: CreateDesktopBodyDto) {
     const insertRes = await this._desktopRepo.insert({
       ...objectPick(body, [
@@ -93,6 +102,53 @@ export class DesktopService {
     return insertRes.identifiers[0].id
   }
 
+  /**
+   * 分配云桌面
+   * @param param
+   * @param duration
+   */
+  public async allocationDesktop(param: AssignDesktopParamDto, duration = 180) {
+    const { desktopId, userId } = param
+    const [desktopAssigned, userAssigned] = await Promise.all([
+      // 确认云桌面是否已被分配
+      this._desktopRepo.exist({
+        where: { id: desktopId, userId: Not(IsNull()) },
+      }),
+      // 确认用户是否已分配了其他的云桌面
+      this._desktopRepo.exist({
+        where: { userId },
+      }),
+    ])
+    if (desktopAssigned)
+      responseError(ErrorCode.DESKTOP_ALREADY_ASSIGNED)
+    if (userAssigned)
+      responseError(ErrorCode.DESKTOP_USER_ASSIGNED_OTHERS)
+
+    await this._desktopRepo.update(
+      { id: desktopId, disabled: false },
+      {
+        userId,
+        expiredAt: new Date(Date.now() + duration * 1000 * 60 * 60 * 24),
+      },
+    )
+    await this._desktopReqSrv.repo().update(
+      { userId },
+      { status: DesktopQueueStatus.USING },
+    )
+    setTimeout(async () => {
+      const desktop = await this._desktopRepo.findOne({
+        where: { id: desktopId },
+        relations: { user: { verification: true } },
+      })
+      this._notifySrv.notifyUserDesktopAssigned(desktop)
+    })
+  }
+
+  /**
+   * 通过ip获取使用中的云桌面
+   * @param ip
+   * @returns
+   */
   public findActiveDesktopByIP(ip: string) {
     return this._desktopRepo.findOne({
       where: { internalIp: ip, disabled: false },

@@ -1,18 +1,18 @@
-import { In, IsNull, Not } from 'typeorm'
-import { getQuery } from 'src/utils/query'
-import { IsLogin } from 'src/guards/login.guard'
-import type { Desktop } from 'src/entities/desktop'
-import { DesktopIdDto } from 'src/dto/id/desktop.dto'
-import { QueryDto, QueryResDto } from 'src/dto/query.dto'
-import { HasPermission } from 'src/guards/permission.guard'
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
-import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
-import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req } from '@nestjs/common'
+import { In } from 'typeorm'
 import { DesktopQueueHistoryStatus, DesktopQueueStatus, ErrorCode, PermissionType } from 'zjf-types'
 
+import type { Desktop } from 'src/entities/desktop'
+import { QueryDto, QueryResDto } from 'src/dto/query.dto'
+import { DesktopIdDto } from 'src/dto/id/desktop.dto'
+import { IsLogin } from 'src/guards/login.guard'
+import { HasPermission } from 'src/guards/permission.guard'
+import { getQuery } from 'src/utils/query'
+import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
+import { ApiSuccessResponse, responseError } from 'src/utils/response'
+
 import { NotifyService } from '../notify/notify.service'
-import { ExportService } from '../export/export.service'
 import { DesktopService } from './desktop.service'
 import { DesktopResDto } from './dto/desktop.res.dto'
 import { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
@@ -28,7 +28,6 @@ export class DesktopController {
   constructor(
     private readonly _notifySrv: NotifyService,
     private readonly _desktopSrv: DesktopService,
-    private readonly _exportSrv: ExportService,
     private readonly _desktopReqSrv: DesktopRequestService,
     private readonly _desktopHisSrv: DesktopQueueHistoryService,
     private readonly _zstackSrv: ZstackService,
@@ -70,7 +69,7 @@ export class DesktopController {
         return
       await this._desktopHisSrv.mv2history(
         queue,
-        DesktopQueueHistoryStatus.Expired,
+        DesktopQueueHistoryStatus.EXPIRED,
         {},
       )
     }
@@ -119,14 +118,13 @@ export class DesktopController {
   @HasPermission(PermissionType.DESKTOP_DELETE)
   @Delete('delete/batch')
   public async batchDeleteDesktop(@Body() body: DesktopIdDto[]) {
-    const deleteRes = await this._desktopSrv.repo()
-      .createQueryBuilder()
+    const deleteRes = await this._desktopSrv.qb()
       .delete()
       .where({ disabled: true })
       .andWhere({ id: In(body) })
       .execute()
 
-    return deleteRes.affected > 0
+    return deleteRes.affected
   }
 
   @ApiOperation({ summary: '分配云桌面给指定的用户' })
@@ -137,39 +135,10 @@ export class DesktopController {
   ) {
     const request = await this._desktopReqSrv.repo().findOne({ where: { userId: param.userId } })
     // 确认是否已是排队状态
-    if (request.status !== DesktopQueueStatus.Queueing)
+    if (request.status !== DesktopQueueStatus.QUEUEING)
       responseError(ErrorCode.DESKTOP_REQUEST_QUEUE_ONLY)
-    const [desktopAssigned, userAssigned] = await Promise.all([
-      // 确认云桌面是否已被分配
-      this._desktopSrv.repo().exist({
-        where: { id: param.desktopId, userId: Not(IsNull()) },
-      }),
-      // 确认用户是否已分配了其他的云桌面
-      this._desktopSrv.repo().exist({ where: { userId: param.userId } }),
-    ])
-    if (desktopAssigned)
-      responseError(ErrorCode.DESKTOP_ALREADY_ASSIGNED)
-    if (userAssigned)
-      responseError(ErrorCode.DESKTOP_USER_ASSIGNED_OTHERS)
     // 将云桌面分配，并更新用户的状态
-    await this._desktopSrv.repo().update(
-      { id: param.desktopId, disabled: false },
-      {
-        userId: param.userId,
-        expiredAt: new Date(Date.now() + request.duration * 1000 * 60 * 60 * 24),
-      },
-    )
-    await this._desktopReqSrv.repo().update(
-      { userId: param.userId },
-      { status: DesktopQueueStatus.Using },
-    )
-    setTimeout(async () => {
-      const desktop = await this._desktopSrv.repo().findOne({
-        where: { id: param.desktopId },
-        relations: { user: { verification: true } },
-      })
-      this._notifySrv.notifyUserDesktopAssigned(desktop)
-    })
+    await this._desktopSrv.allocationDesktop(param, request.duration)
     return true
   }
 
@@ -201,7 +170,10 @@ export class DesktopController {
     return await this._desktopSrv.repo().findOne({ where: { userId: user.id } })
   }
 
-  @ApiOperation({ summary: '获取云桌面虚拟机列表', description: '返回所有云桌面虚拟机的 id、name、ip' })
+  @ApiOperation({
+    summary: '获取云桌面虚拟机列表',
+    description: '返回所有云桌面虚拟机的 id、name、ip',
+  })
   @HasPermission(PermissionType.DESKTOP_CREATE)
   @Get('vm-list')
   public async getVMList() {

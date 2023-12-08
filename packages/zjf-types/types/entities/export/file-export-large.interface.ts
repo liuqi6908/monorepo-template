@@ -1,24 +1,19 @@
-import { IUser } from "../user.interface";
-import { IFileExportBasic } from "./file-export-basic.interface";
+import { FileExportLargeStatus } from '../../enum/file-export.enum'
+import { IUser } from '../user.interface'
+import { IFileExportBasic } from './file-export-basic.interface'
 
-export enum FileExportLargeStatus {
-  /** 待处理 */
-  Pending = 'pending',
-  /** 已通过 */
-  Approved = 'approved',
-  /** 已拒绝 */
-  Rejected = 'rejected',
-}
-
+/**
+ * 大文件外发的信息
+ */
 export interface IFileExportLarge extends IFileExportBasic {
   /** 处理者 */
-  handler: IUser;
+  handler: IUser
   /** 处理者的唯一标识 */
-  handlerId: string;
+  handlerId: string
   /** 处理时间 */
-  handleAt: Date;
+  handleAt: Date
   /** 状态 */
-  status: FileExportLargeStatus;
+  status: FileExportLargeStatus
   /** 驳回原因 */
-  rejectReason?: string;
+  rejectReason?: string
 }

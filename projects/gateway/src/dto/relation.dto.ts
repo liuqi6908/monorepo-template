@@ -1,8 +1,8 @@
 import { decorate } from 'ts-mixer'
 import { IRelation } from 'zjf-types'
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import type { IRelationDto, IRelationRawDto } from 'zjf-types'
 import { Transform } from 'class-transformer'
+import type { IRelationDto, IRelationRawDto } from 'zjf-types'
 
 export class RelationDto implements IRelationDto {
   @ApiPropertyOptional({

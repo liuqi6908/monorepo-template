@@ -1,15 +1,12 @@
-import type { IFileExportSmall } from 'zjf-types'
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
-
+import type { IFileExportSmall } from 'zjf-types'
 import { User } from '../user'
 import { Desktop } from '../desktop'
 import { FileExportBasic } from './file-export-basic.entity'
 
 @Entity()
-export class FileExportSmall
-  extends FileExportBasic
-  implements IFileExportSmall {
+export class FileExportSmall extends FileExportBasic implements IFileExportSmall {
   @ManyToOne(() => User, user => user.exportsSmall, { eager: true })
   @JoinColumn()
   founder: User

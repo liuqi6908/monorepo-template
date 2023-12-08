@@ -1,7 +1,7 @@
 <script lang="ts" setup>
-import { onMounted, ref, reactive, nextTick, computed } from 'vue';
-import { useRoute,useRouter }  from 'vue-router'
-import { RichTextProcessor } from '../../../utils/rich-text.processor';
+import { onMounted, ref, reactive, nextTick, computed } from 'vue'
+import { useRoute, useRouter }  from 'vue-router'
+import { RichTextProcessor } from '../../../utils/rich-text.processor'
 
 interface Question {
   title: string
@@ -52,12 +52,12 @@ const processedList = computed(() => props.list.map(q => ({
     <q-list text-grey-8>
       <div sticky top-10 flex="~ col" gap2>
         <q-item
-          w-50 v-for="(item, index) in processedList" 
-          class="ellipsis" 
-          flex="~ col" 
+          w-50 v-for="(item, index) in processedList"
+          class="ellipsis"
+          flex="~ col"
           text-4
           justify-center items-start font-600
-          clickable @click="scrollTo(item.title, index)" 
+          clickable @click="scrollTo(item.title, index)"
           :active="link === item.title"
           active-class="text-primary-1 bg-gray-2"
 
@@ -76,7 +76,7 @@ const processedList = computed(() => props.list.map(q => ({
         v-for="(item, index) in processedList" :key="index" relative
       >
         <q-item clickable flex="~" items-center gap-2 @click="openState[item.title] = !openState[item.title]">
-          <div 
+          <div
             w6 h6 transition-all flex-center
             :style="{ transform: openState[item.title] ? 'rotate(0deg)' : 'rotate(-90deg)' }"
           >
@@ -90,7 +90,7 @@ const processedList = computed(() => props.list.map(q => ({
           v-model="openState[item.title]"
           header-class="display-none"
         >
-          <div w-150 pl12 pt4>
+          <div w-full overflow-hidden pl12 pt4>
             <div relative full pl4>
               <div absolute w2px left-0 top="1/2" translate-y="-1/2" bg="primary-1/70" style="height: calc(100% - 10px)"></div>
               <div class="question-content" w-150 v-html="item.richText" />

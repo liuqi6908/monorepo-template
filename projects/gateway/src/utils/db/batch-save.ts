@@ -1,5 +1,14 @@
 import type { Repository } from 'typeorm'
 
+/**
+ * 批量保存实体对象
+ * @param repo 实体存储库
+ * @param list 实体对象列表
+ * @param idKey 标识属性的键
+ * @param chunkSize 切片大小 `50`
+ * @param restore 失败时进行恢复 `false`
+ * @returns 保存的数量
+ */
 export async function batchSave<T>(
   repo: Repository<T>,
   list: T[],

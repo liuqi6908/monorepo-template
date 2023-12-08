@@ -1,11 +1,12 @@
 import { Reflector } from '@nestjs/core'
+import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
+import { CodeAction, ErrorCode, codeActionDescriptions } from 'zjf-types'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
+
 import { UserService } from 'src/modules/user/user.service'
 import { getReflectorValue } from 'src/utils/reflector-value'
-import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import { ApiErrorResponse, responseError } from 'src/utils/response'
-import { CodeAction, ErrorCode, codeActionDescriptions } from 'zjf-types'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
-import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 
 @Injectable()
 export class EmailCodeSendableGuard implements CanActivate {
@@ -32,8 +33,7 @@ export class EmailCodeSendableGuard implements CanActivate {
       CodeAction.UNBIND_EMAIL,
     ]
     const emailNotExistsRequiredActions = [
-      // TODO: 目前，允许用户在存在邮箱的情况下，绑定新邮箱，但是不允许用户在不存在邮箱的情况下，解绑邮箱
-      // CodeAction.BIND_EMAIL
+      // 目前，允许用户在存在邮箱的情况下，绑定新邮箱，但是不允许用户在不存在邮箱的情况下，解绑邮箱
     ]
 
     const actionIn = getReflectorValue(this.reflector, context, 'actionIn', 'body')

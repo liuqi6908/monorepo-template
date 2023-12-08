@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import Tree from '~/components/tree/Tree.vue'
-import EmptyData from '~/components/empty/EmptyData.vue'
 
 interface Props {
   dbId: string
@@ -9,7 +8,7 @@ const props = defineProps<Props>()
 
 const route = useRoute()
 
-const { getDataByRootId, databaseTab, loading } = useDataBase()
+const { getDataByRootId, databaseTab, loading } = useDatabase()
 
 const currentTab = ref('')
 
@@ -39,7 +38,7 @@ watch(
     full min-h-3xl flex="~ col" class="col-grow"
   >
     <div v-if="!databaseTab || !databaseTab.length" mt-20 full>
-      <EmptyData label="暂无数据" />
+      <Empty label="暂无数据" icon="database" />
     </div>
 
     <div v-else w-full>

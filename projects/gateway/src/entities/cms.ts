@@ -1,7 +1,6 @@
-import type { ICms } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, PrimaryColumn } from 'typeorm'
-
+import type { ICms } from 'zjf-types'
 import { BaseTimeStamp } from './_timestamp'
 
 @Entity()

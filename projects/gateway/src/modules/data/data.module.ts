@@ -1,6 +1,7 @@
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { DataRole } from 'src/entities/data-role'
 import { Module, forwardRef } from '@nestjs/common'
+
+import { DataRole } from 'src/entities/data-role'
 import { DataField } from 'src/entities/data-field'
 import { DataDirectory } from 'src/entities/data-directory'
 

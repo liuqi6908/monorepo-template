@@ -1,8 +1,8 @@
 import { Repository } from 'typeorm'
-import { Cms } from 'src/entities/cms'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import type { User } from 'src/entities/user'
+import { Cms } from 'src/entities/cms'
 
 @Injectable()
 export class CmsService<T> {

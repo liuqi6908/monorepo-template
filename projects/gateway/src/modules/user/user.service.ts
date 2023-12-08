@@ -1,25 +1,17 @@
-import { ErrorCode } from 'zjf-types'
-import { User } from 'src/entities/user'
-import { Injectable } from '@nestjs/common'
 import { objectPick } from '@catsjuice/utils'
-import { ConfigService } from '@nestjs/config'
-import { mergeDeep } from 'src/utils/mergeDeep'
-import type { OnModuleInit } from '@nestjs/common'
+import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { ConfigService } from '@nestjs/config'
+import { In, Not, Repository } from 'typeorm'
+import { ErrorCode } from 'zjf-types'
+import type { OnModuleInit } from '@nestjs/common'
+import type { FindManyOptions, FindOneOptions, FindOptionsWhere } from 'typeorm'
+
+import { User } from 'src/entities/user'
+import { mergeDeep } from 'src/utils/mergeDeep'
 import { responseError } from 'src/utils/response'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { encryptPassword } from 'src/utils/encrypt/encrypt-password'
-
-import type {
-  FindManyOptions,
-  FindOneOptions,
-  FindOptionsWhere,
-} from 'typeorm'
-import {
-  In,
-  Not,
-  Repository,
-} from 'typeorm'
 import type { SysAdmin } from '../../config/_sa.config'
 
 const defaultQueryUserOptions = {
@@ -38,6 +30,9 @@ export class UserService implements OnModuleInit {
     this.initSysAdmin()
   }
 
+  /**
+   * 初始化系统管理员
+   */
   public async initSysAdmin() {
     const superAdminList = this._cfgSrv.get<SysAdmin[]>('sa.list')
     // 删除无效的超级管理员
@@ -81,24 +76,10 @@ export class UserService implements OnModuleInit {
   }
 
   /**
-   * 查找指定 id 列表的用户
-   * @param ids
+   * 自定义查询单个用户
    * @param options
    * @returns
    */
-  public async findByIds(ids: string[], options?: FindManyOptions<User>) {
-    const defaultOptions: FindManyOptions<User> = {
-      ...defaultQueryUserOptions,
-    }
-    const requiredOptions: FindManyOptions<User> = {
-      where: { id: In(ids) },
-    }
-    return this._userRepo.find(
-      mergeDeep(defaultOptions, options, requiredOptions),
-    )
-  }
-
-  /** 自定义查询单个用户 */
   public async queryUser(options: FindOneOptions<User>) {
     const defaultOptions: FindOneOptions<User> = {
       ...defaultQueryUserOptions,
@@ -128,37 +109,17 @@ export class UserService implements OnModuleInit {
         }),
       )
     }
-    catch (err) {
-      const error = parseSqlError(err)
+    catch (e) {
+      const error = parseSqlError(e)
       if (error === SqlError.DUPLICATE_ENTRY) {
-        const value = err.message.match(/Duplicate entry\s+'(.*?)'/)?.[1]
+        const value = e.message.match(/Duplicate entry\s+'(.*?)'/)?.[1]
         if (value === user.account)
           responseError(ErrorCode.USER_ACCOUNT_REGISTERED)
         else if (value === user.email)
           responseError(ErrorCode.USER_EMAIL_REGISTERED)
       }
-      throw err
+      throw e
     }
-  }
-
-  /**
-   * 删除指定的账户
-   * @param where
-   * @returns
-   */
-  public async deleteUser(where: FindOptionsWhere<User>) {
-    await this._userRepo.update(where, {
-      isDeleted: true,
-      account: null,
-      email: null,
-    })
-  }
-
-  /**
-   * 更新指定用户的手机号
-   */
-  public async updateUserPhone() {
-    throw new Error('Not implemented')
   }
 
   /**

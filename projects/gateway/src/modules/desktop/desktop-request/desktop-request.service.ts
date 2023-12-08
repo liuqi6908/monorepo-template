@@ -1,13 +1,14 @@
 import { LessThan, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
-import type { User } from 'src/entities/user'
 import { InjectRepository } from '@nestjs/typeorm'
+import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
+
+import type { User } from 'src/entities/user'
 import { responseError } from 'src/utils/response'
 import { DesktopQueue } from 'src/entities/desktop-queue'
-import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
-
 import { NotifyService } from 'src/modules/notify/notify.service'
+import type { UserIdDto } from 'src/dto/id/user.dto'
 import type { CreateDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
 
 @Injectable()
@@ -53,15 +54,28 @@ export class DesktopRequestService {
           where: { userId },
         })
         if (desktopQueue) {
-          desktopQueue.status === DesktopQueueStatus.Pending
+          desktopQueue.status === DesktopQueueStatus.PENDING
             ? responseError(ErrorCode.DESKTOP_REQUEST_PENDING_EXISTS)
-            : desktopQueue.status === DesktopQueueStatus.Queueing
+            : desktopQueue.status === DesktopQueueStatus.QUEUEING
               ? responseError(ErrorCode.DESKTOP_REQUEST_QUEUE_EXISTS)
               : responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
         }
         responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
       }
     }
+  }
+
+  /**
+   * 通过一个云桌面申请
+   * @param param
+   * @returns
+   */
+  public async approveRequest(param: UserIdDto) {
+    const updateRes = await this._desktopQueueRepo.update(
+      { userId: param.userId, status: DesktopQueueStatus.PENDING },
+      { status: DesktopQueueStatus.QUEUEING, queueAt: new Date() },
+    )
+    return updateRes.affected > 0
   }
 
   /**
@@ -72,7 +86,7 @@ export class DesktopRequestService {
   public async getLengthAheadOfQueue(queue?: DesktopQueue) {
     return await this._desktopQueueRepo.count({
       where: {
-        status: DesktopQueueStatus.Queueing,
+        status: DesktopQueueStatus.QUEUEING,
         ...(
           queue
             ? { queueAt: LessThan(queue?.queueAt ?? new Date()) }

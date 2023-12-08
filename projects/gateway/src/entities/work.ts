@@ -1,7 +1,6 @@
-import type { IWork } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-
+import type { IWork } from 'zjf-types'
 import { User } from './user'
 import { BaseTimeStamp } from './_timestamp'
 

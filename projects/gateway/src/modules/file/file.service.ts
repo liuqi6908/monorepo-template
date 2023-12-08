@@ -1,12 +1,13 @@
 import type internal from 'node:stream'
 import * as Minio from 'minio'
-import { ErrorCode } from 'zjf-types'
 import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { responseError } from 'src/utils/response'
-import type { MinioConfig } from 'src/config/_minio.config'
-import { responseParamsError } from 'src/utils/response/validate-exception-factory'
 import { randomString } from '@catsjuice/utils'
+import { ErrorCode } from 'zjf-types'
+
+import type { MinioConfig } from 'src/config/_minio.config'
+import { responseError } from 'src/utils/response'
+import { responseParamsError } from 'src/utils/response/validate-exception-factory'
 
 @Injectable()
 export class FileService {
@@ -18,7 +19,9 @@ export class FileService {
     process: Record<string, boolean>
   }>()
 
-  constructor(private readonly _cfgSrv: ConfigService) {
+  constructor(
+    private readonly _cfgSrv: ConfigService,
+  ) {
     this._cfg = this._cfgSrv.get<MinioConfig>('minio')
   }
 
@@ -33,6 +36,12 @@ export class FileService {
     })
   }
 
+  /**
+   * 上传文件
+   * @param bucket
+   * @param path
+   * @param file
+   */
   public async upload(bucket: keyof MinioConfig['bucket'], path: string, file: any) {
     if (!path) {
       responseParamsError([{
@@ -57,6 +66,12 @@ export class FileService {
     await client.putObject(this._cfg.bucket[bucket], path, file, metaData)
   }
 
+  /**
+   * 判断文件是否存在
+   * @param bucket
+   * @param path
+   * @returns
+   */
   public async stat(bucket: keyof MinioConfig['bucket'], path: string) {
     const client = this.getClient()
     try {
@@ -79,6 +94,13 @@ export class FileService {
       return await client.getObject(this._cfg.bucket[bucket], path)
   }
 
+  /**
+   * 下载文件
+   * @param bucket
+   * @param path
+   * @param range
+   * @returns
+   */
   public async download(
     bucket: keyof MinioConfig['bucket'],
     path: string,
@@ -114,28 +136,34 @@ export class FileService {
     }
   }
 
+  /**
+   * 签发url
+   * @param bucket
+   * @param path
+   * @param expires
+   * @returns
+   */
   public async signUrl(bucket: keyof MinioConfig['bucket'], path: string, expires = 60 * 10) {
     // 如果是下载数据，仅允许签发内网链接
     const client = this.getClient(bucket === 'data')
 
     // 检查文件是否存在
-    try {
-      await client.statObject(this._cfg.bucket[bucket], path)
+    if (await this.stat(bucket, path)) {
+      // 签发链接
+      const filename = path.split('/').pop()
+      const ext = filename.split('.').pop()
+      return await client.presignedGetObject(this._cfg.bucket[bucket], path, expires, {
+        'Content-Type': `application/${ext}`,
+        'Content-Disposition': `attachment; filename="${filename}"`,
+      })
     }
-    catch (err) {
-      if (err.message.match(/Not Found/))
-        responseError(ErrorCode.FILE_NOT_FOUND)
-    }
-
-    // 签发链接
-    const filename = path.split('/').pop()
-    const ext = filename.split('.').pop()
-    return await client.presignedGetObject(this._cfg.bucket[bucket], path, expires, {
-      'Content-Type': `application/${ext}`,
-      'Content-Disposition': `attachment; filename="${filename}"`,
-    })
   }
 
+  /**
+   * 删除文件
+   * @param bucket
+   * @param path
+   */
   public async delete(bucket: keyof MinioConfig['bucket'], path: string) {
     const client = this.getClient()
     await client.removeObject(this._cfg.bucket[bucket], path)

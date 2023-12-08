@@ -9,7 +9,7 @@ const email = ref('')
 const smsCode = ref('')
 const bizId = ref('')
 const password = ref('')
-const repeatPassword = ref ('')
+const repeatPassword = ref('')
 
 const $router = useRouter()
 
@@ -50,13 +50,13 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
 </script>
 
 <template>
-  <div w-full flex="~ col" text="14px grey-1" font-500>
-    <header flex="~ flex items-center justify-center" mb-10 relative>
-      <div cursor-pointer absolute left-0 text-xl i-mingcute:left-line top-2.5 w-5.5 @click="$router.replace({ path: 'login' })" />
-      <span font-600 text-7>邮箱找回</span>
+  <div>
+    <header flex="~ items-center" mb-14 relative>
+      <div cursor-pointer text-xl i-mingcute:left-line w-5.5 @click="$router.replace({ path: 'login' })" />
+      <div font-600 text-7 absolute-x-center>邮箱找回</div>
     </header>
 
-    <span mb-2 v-text="'邮箱'" />
+    <div mb-2 v-text="'邮箱'" />
     <UserCodeInput
       v-model:userCode="email"
       label="请输入邮箱"
@@ -65,7 +65,7 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
       @update:accept="(val) => acceptObj.email = val"
     />
 
-    <span mb-2 v-text="'邮箱验证'" />
+    <div mb-2 v-text="'邮箱验证'" />
     <SMSInput
       v-model:smsCode="smsCode"
       :action="CodeAction.CHANGE_PASSWORD"
@@ -76,14 +76,14 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
       @update:accept="(val) => acceptObj.sms = val"
     />
 
-    <span mb-2 v-text="'密码'" />
+    <div mb-2 v-text="'密码'" />
     <PasswordInput
       v-model:password="password"
       :rules="[(val: string) => passwordRules(val)]"
       @update:accept="(val) => acceptObj.password = val"
     />
 
-    <span mb-2 v-text="'确认密码'" />
+    <div mb-2 v-text="'确认密码'" />
     <PasswordInput
       v-model:password="repeatPassword"
       reactive-rules
@@ -92,16 +92,12 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
     />
 
     <client-only>
-      <Btn color="primary-1" bg-color="grey-1" w-full mt-5 label="完成" :disable="disable" @click="finish" />
+      <Btn color="primary-1" bg-color="grey-1" h="12!" mt-20 :disable="disable" @click="finish">
+        <div text-base font-600>完成</div>
+      </Btn>
     </client-only>
   </div>
 </template>
-
-<style scoped>
-:deep(.q-field__label) {
-  color: rgba(255, 255, 255, 0.7) !important;
-}
-</style>
 
 <route lang="yaml">
 meta:

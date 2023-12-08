@@ -1,12 +1,8 @@
 import { validatePath } from '@catsjuice/utils'
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import type { ConfigService } from '@nestjs/config'
 import type { INestApplication } from '@nestjs/common'
 import type { SwaggerCustomOptions } from '@nestjs/swagger'
-
-import {
-  DocumentBuilder,
-  SwaggerModule,
-} from '@nestjs/swagger'
 
 /**
  * 注册

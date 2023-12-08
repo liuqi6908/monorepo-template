@@ -1,15 +1,15 @@
+import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ErrorCode, PermissionType } from 'zjf-types'
+
+import type { DataSuggestion } from 'src/entities/data-suggestion'
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
 import { IsLogin } from 'src/guards/login.guard'
 import { responseError } from 'src/utils/response'
-import { ErrorCode, PermissionType } from 'zjf-types'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { HasPermission } from 'src/guards/permission.guard'
 import { DataDirectoryIdDto } from 'src/dto/id/data-directory.dto'
-import type { DataSuggestion } from 'src/entities/data-suggestion'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
-import { Body, Controller, Delete, Get, Param, Post, Put, Req } from '@nestjs/common'
-
 import { DataSuggestService } from './data-suggest.service'
 import { CreateSuggestBodyDto } from './dto/create-suggest.body.dto'
 
@@ -86,20 +86,11 @@ export class DataSuggestController {
 
   @ApiOperation({
     summary: '查询采购建议（微观数据）',
-    description: '一期的功能后端这边暂时不统计建议采购，可以前端自行做统计（不分页）',
+    description: '一期的功能后端这边暂时不统计建议采购，可以前端自行做统计',
   })
   @HasPermission(PermissionType.DATA_SUGGEST_QUERY_ALL)
   @Post('query')
   public async query(@Body() body: QueryDto<DataSuggestion>) {
-    const res = await getQuery(this._dataSuggestSrv.repo(), body || {})
-
-    // if (body?.relations?.dataDirectory) {
-    //   for (const el of res.data) {
-    //     const { dataDirectory } = el
-    //     if (!dataDirectory)
-    //       continue
-    //   }
-    // }
-    return res
+    return await getQuery(this._dataSuggestSrv.repo(), body || {})
   }
 }

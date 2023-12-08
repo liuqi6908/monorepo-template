@@ -1,8 +1,8 @@
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { IsDateString, IsOptional, IsString } from 'class-validator'
-import type { IUpdateDesktopInterface } from 'zjf-types'
+import type { IUpdateDesktopBodyDto } from 'zjf-types'
 
-export class UpdateDesktopBodyDto implements IUpdateDesktopInterface {
+export class UpdateDesktopBodyDto implements IUpdateDesktopBodyDto {
   @ApiPropertyOptional({ description: '内网地址' })
   @IsString()
   @IsOptional()

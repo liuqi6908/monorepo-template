@@ -1,12 +1,12 @@
-import { Repository } from 'typeorm'
-import { Injectable } from '@nestjs/common'
-import type { User } from 'src/entities/user'
-import { InjectRepository } from '@nestjs/typeorm'
-import { responseError } from 'src/utils/response'
-import { ErrorCode, VerificationStatus } from 'zjf-types'
-import { VerificationHistory } from 'src/entities/verification'
-
 import { objectPick } from '@catsjuice/utils'
+import { Injectable } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
+import { ErrorCode, VerificationStatus } from 'zjf-types'
+
+import type { User } from 'src/entities/user'
+import { responseError } from 'src/utils/response'
+import { VerificationHistory } from 'src/entities/verification'
 import { UserService } from '../user/user.service'
 import { NotifyService } from '../notify/notify.service'
 import type { CreateVerificationBodyDto } from './dto/create-verification.body.dto'
@@ -35,7 +35,7 @@ export class VerificationService {
     await qr.startTransaction()
     try {
       const info = objectPick(verificationBasicInfo, [
-        'attachments', 'college', 'idCard', 'identify', 'name', 'number', 'school',
+        'attachments', 'college', 'idCard', 'dataRole', 'name', 'number', 'school',
       ])
       const vh = this._vhRepo.create({
         ...info,
@@ -56,9 +56,9 @@ export class VerificationService {
       await qr.commitTransaction()
       return vh
     }
-    catch (err) {
+    catch (e) {
       await qr.rollbackTransaction()
-      if (err.message === String(ErrorCode.VERIFICATION_PENDING_EXISTS))
+      if (e.message === String(ErrorCode.VERIFICATION_PENDING_EXISTS))
         responseError(ErrorCode.VERIFICATION_PENDING_EXISTS)
       responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
     }
@@ -120,14 +120,6 @@ export class VerificationService {
       where: { founderId },
       order: { createdAt: 'DESC' },
     })
-  }
-
-  public async getVerificationHistoryOfUser(founderId: User['id']) {
-    return await this._vhRepo.find({ where: { founderId } })
-  }
-
-  public async getAllVerificationHistory() {
-    return await this._vhRepo.find()
   }
 
   public repo() {

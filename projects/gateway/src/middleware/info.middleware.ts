@@ -1,5 +1,5 @@
-import type { NestMiddleware } from '@nestjs/common'
 import { Injectable } from '@nestjs/common'
+import type { NestMiddleware } from '@nestjs/common'
 
 @Injectable()
 export class InfoMiddleware implements NestMiddleware {

@@ -1,16 +1,25 @@
 import { IBasicResponse } from '../basic.interface';
-import { IVerificationHistory } from '../../entities/verification.interface';
+import { IVerificationHistory } from '../../entities/verification.interface'
 
-export interface ICreateVerificationBodyDto 
-  extends Pick<IVerificationHistory, 
-    | 'name' 
-    | 'identify' 
-    | 'attachments' 
-    | 'school' 
-    | 'college' 
-    | 'number' 
+/**
+ * 创建认证申请
+ * 请求参数
+ */
+export interface ICreateVerificationBodyDto extends
+  Pick<
+    IVerificationHistory,
+    | 'name'
+    | 'school'
+    | 'college'
+    | 'number'
     | 'idCard'
+    | 'dataRole'
+    | 'attachments'
   > {}
 
-export interface IVerificationResDto
-  extends IBasicResponse<IVerificationHistory> {}
+/**
+ * 认证申请
+ * 响应数据
+ */
+export interface IVerificationResDto extends
+  IBasicResponse<IVerificationHistory> {}

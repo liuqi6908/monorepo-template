@@ -9,7 +9,7 @@ declare global {
   const EffectScope: typeof import('vue')['EffectScope']
   const api: typeof import('./api/index')['default']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
-  const authToken: typeof import('./composables/auth-token')['authToken']
+  const authToken: typeof import('./composables/authToken')['authToken']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
@@ -136,7 +136,7 @@ declare global {
   const useCached: typeof import('@vueuse/core')['useCached']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
   const useCloned: typeof import('@vueuse/core')['useCloned']
-  const useCms: typeof import('./composables/useCms')['useCms']
+  const useCms: typeof import('./composables/cms')['useCms']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCounter: typeof import('@vueuse/core')['useCounter']
@@ -146,7 +146,8 @@ declare global {
   const useCurrentElement: typeof import('@vueuse/core')['useCurrentElement']
   const useCycleList: typeof import('@vueuse/core')['useCycleList']
   const useDark: typeof import('@vueuse/core')['useDark']
-  const useDataBase: typeof import('./composables/useDataBase')['useDataBase']
+  const useDataBase: typeof import('./composables/database')['useDataBase']
+  const useDatabase: typeof import('./composables/database')['useDatabase']
   const useDateFormat: typeof import('@vueuse/core')['useDateFormat']
   const useDebounce: typeof import('@vueuse/core')['useDebounce']
   const useDebounceFn: typeof import('@vueuse/core')['useDebounceFn']
@@ -263,7 +264,7 @@ declare global {
   const useToggle: typeof import('@vueuse/core')['useToggle']
   const useTransition: typeof import('@vueuse/core')['useTransition']
   const useUrlSearchParams: typeof import('@vueuse/core')['useUrlSearchParams']
-  const useUser: typeof import('./composables/useUser')['useUser']
+  const useUser: typeof import('./composables/user')['useUser']
   const useUserMedia: typeof import('@vueuse/core')['useUserMedia']
   const useUserStore: typeof import('./stores/user')['useUserStore']
   const useVModel: typeof import('@vueuse/core')['useVModel']
@@ -278,7 +279,7 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
-  const userInfo: typeof import('./composables/user-info')['userInfo']
+  const userInfo: typeof import('./composables/userInfo')['userInfo']
   const vmStatus: typeof import('./constants/desktop.constants')['vmStatus']
   const vmStatusList: typeof import('./constants/desktop.constants')['vmStatusList']
   const watch: typeof import('vue')['watch']
@@ -309,7 +310,7 @@ declare module 'vue' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
-    readonly authToken: UnwrapRef<typeof import('./composables/auth-token')['authToken']>
+    readonly authToken: UnwrapRef<typeof import('./composables/authToken')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
@@ -340,7 +341,6 @@ declare module 'vue' {
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly isDark: UnwrapRef<typeof import('./composables/dark')['isDark']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
@@ -369,7 +369,6 @@ declare module 'vue' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
-    readonly preferredDark: UnwrapRef<typeof import('./composables/dark')['preferredDark']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
@@ -400,7 +399,6 @@ declare module 'vue' {
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
-    readonly toggleDark: UnwrapRef<typeof import('./composables/dark')['toggleDark']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly tryOnBeforeMount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeMount']>
     readonly tryOnBeforeUnmount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeUnmount']>
@@ -436,7 +434,7 @@ declare module 'vue' {
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
-    readonly useCms: UnwrapRef<typeof import('./composables/useCms')['useCms']>
+    readonly useCms: UnwrapRef<typeof import('./composables/cms')['useCms']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
@@ -446,7 +444,7 @@ declare module 'vue' {
     readonly useCurrentElement: UnwrapRef<typeof import('@vueuse/core')['useCurrentElement']>
     readonly useCycleList: UnwrapRef<typeof import('@vueuse/core')['useCycleList']>
     readonly useDark: UnwrapRef<typeof import('@vueuse/core')['useDark']>
-    readonly useDataBase: UnwrapRef<typeof import('./composables/useDataBase')['useDataBase']>
+    readonly useDatabase: UnwrapRef<typeof import('./composables/database')['useDatabase']>
     readonly useDateFormat: UnwrapRef<typeof import('@vueuse/core')['useDateFormat']>
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
@@ -562,7 +560,7 @@ declare module 'vue' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
-    readonly useUser: UnwrapRef<typeof import('./composables/useUser')['useUser']>
+    readonly useUser: UnwrapRef<typeof import('./composables/user')['useUser']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>
     readonly useVModels: UnwrapRef<typeof import('@vueuse/core')['useVModels']>
@@ -576,7 +574,7 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly userInfo: UnwrapRef<typeof import('./composables/user-info')['userInfo']>
+    readonly userInfo: UnwrapRef<typeof import('./composables/userInfo')['userInfo']>
     readonly vmStatusList: UnwrapRef<typeof import('./constants/desktop.constants')['vmStatusList']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
@@ -600,7 +598,7 @@ declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
-    readonly authToken: UnwrapRef<typeof import('./composables/auth-token')['authToken']>
+    readonly authToken: UnwrapRef<typeof import('./composables/authToken')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
@@ -631,7 +629,6 @@ declare module '@vue/runtime-core' {
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
-    readonly isDark: UnwrapRef<typeof import('./composables/dark')['isDark']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
@@ -660,7 +657,6 @@ declare module '@vue/runtime-core' {
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
-    readonly preferredDark: UnwrapRef<typeof import('./composables/dark')['preferredDark']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
@@ -691,7 +687,6 @@ declare module '@vue/runtime-core' {
     readonly toRef: UnwrapRef<typeof import('vue')['toRef']>
     readonly toRefs: UnwrapRef<typeof import('vue')['toRefs']>
     readonly toValue: UnwrapRef<typeof import('vue')['toValue']>
-    readonly toggleDark: UnwrapRef<typeof import('./composables/dark')['toggleDark']>
     readonly triggerRef: UnwrapRef<typeof import('vue')['triggerRef']>
     readonly tryOnBeforeMount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeMount']>
     readonly tryOnBeforeUnmount: UnwrapRef<typeof import('@vueuse/core')['tryOnBeforeUnmount']>
@@ -727,7 +722,7 @@ declare module '@vue/runtime-core' {
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
-    readonly useCms: UnwrapRef<typeof import('./composables/useCms')['useCms']>
+    readonly useCms: UnwrapRef<typeof import('./composables/cms')['useCms']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
@@ -737,7 +732,7 @@ declare module '@vue/runtime-core' {
     readonly useCurrentElement: UnwrapRef<typeof import('@vueuse/core')['useCurrentElement']>
     readonly useCycleList: UnwrapRef<typeof import('@vueuse/core')['useCycleList']>
     readonly useDark: UnwrapRef<typeof import('@vueuse/core')['useDark']>
-    readonly useDataBase: UnwrapRef<typeof import('./composables/useDataBase')['useDataBase']>
+    readonly useDatabase: UnwrapRef<typeof import('./composables/database')['useDatabase']>
     readonly useDateFormat: UnwrapRef<typeof import('@vueuse/core')['useDateFormat']>
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
@@ -853,7 +848,7 @@ declare module '@vue/runtime-core' {
     readonly useToggle: UnwrapRef<typeof import('@vueuse/core')['useToggle']>
     readonly useTransition: UnwrapRef<typeof import('@vueuse/core')['useTransition']>
     readonly useUrlSearchParams: UnwrapRef<typeof import('@vueuse/core')['useUrlSearchParams']>
-    readonly useUser: UnwrapRef<typeof import('./composables/useUser')['useUser']>
+    readonly useUser: UnwrapRef<typeof import('./composables/user')['useUser']>
     readonly useUserMedia: UnwrapRef<typeof import('@vueuse/core')['useUserMedia']>
     readonly useVModel: UnwrapRef<typeof import('@vueuse/core')['useVModel']>
     readonly useVModels: UnwrapRef<typeof import('@vueuse/core')['useVModels']>
@@ -867,7 +862,7 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly userInfo: UnwrapRef<typeof import('./composables/user-info')['userInfo']>
+    readonly userInfo: UnwrapRef<typeof import('./composables/userInfo')['userInfo']>
     readonly vmStatusList: UnwrapRef<typeof import('./constants/desktop.constants')['vmStatusList']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>

@@ -1,6 +1,6 @@
 import { registerDecorator } from 'class-validator'
-import type { ValidationOptions } from 'class-validator'
 import { ACCOUNT_REQUIREMENTS_DESC, validateAccount } from 'zjf-utils'
+import type { ValidationOptions } from 'class-validator'
 
 export function isValidAccount(value: any) {
   return !validateAccount(value)

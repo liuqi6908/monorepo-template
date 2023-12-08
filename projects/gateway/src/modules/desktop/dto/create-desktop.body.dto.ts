@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import type { ICreateDesktopBodyDto } from 'zjf-types'
 import { IsDateString, IsOptional, IsString } from 'class-validator'
+import type { ICreateDesktopBodyDto } from 'zjf-types'
 
 export class CreateDesktopBodyDto implements ICreateDesktopBodyDto {
   @ApiProperty({ description: '云桌面 id' })

@@ -1,10 +1,10 @@
-import { PasswordDecorator } from 'src/dto/password.dto'
+import { Decorator } from 'src/dto/password.dto'
 import type { IUpdatePasswordByOldBodyDto } from 'zjf-types'
 
 export class UpdatePasswordByOldBodyDto implements IUpdatePasswordByOldBodyDto {
-  @PasswordDecorator(false)
+  @Decorator(false)
   newPassword: string
 
-  @PasswordDecorator(false)
+  @Decorator(false)
   oldPassword: string
 }

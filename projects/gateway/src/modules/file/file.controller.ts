@@ -1,14 +1,15 @@
-import { IsLogin } from 'src/guards/login.guard'
+import { Body, Controller, Get, Headers, Param, Put, Query, Req, Res, StreamableFile } from '@nestjs/common'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { SkipThrottle } from '@nestjs/throttler'
+import { ErrorCode, PermissionType } from 'zjf-types'
+
+import { IsLogin } from 'src/guards/login.guard'
 import { FilenameDto } from 'src/dto/filename.dto'
 import { FilePathDto } from 'src/dto/file-path.dto'
-import { ErrorCode, PermissionType } from 'zjf-types'
 import { SuccessStringDto } from 'src/dto/success.dto'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { HasPermission } from 'src/guards/permission.guard'
 import { DataRoleCheck } from 'src/guards/data-role-permission.guard'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
-import { Body, Controller, Get, Headers, Param, Put, Query, Req, Res, StreamableFile } from '@nestjs/common'
 
 import { ApiFormData } from '../../decorators/api/api-form-data'
 import { FileService } from './file.service'
@@ -76,7 +77,7 @@ export class FileController {
   public async uploadVerifyAttachments(
     @Param() param: FilenameDto,
     @Req() req: FastifyRequest,
-      @Body() body: any,
+    @Body() body: any,
   ) {
     const user = req.raw.user!
     const buffer = await body?.file?.toBuffer()

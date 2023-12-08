@@ -1,15 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { DesktopQueueHistoryStatus } from 'zjf-types'
-import type { IDesktopQueueHistory } from 'zjf-types'
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm'
-
+import type { IDesktopQueueHistory } from 'zjf-types'
 import { User } from './user'
 import { BaseTimeStamp } from './_timestamp'
 
 @Entity()
-export class DesktopQueueHistory
-  extends BaseTimeStamp
-  implements IDesktopQueueHistory {
+export class DesktopQueueHistory extends BaseTimeStamp implements IDesktopQueueHistory {
   @ApiProperty({ description: '历史记录的唯一标识，UUID 自动生成' })
   @PrimaryGeneratedColumn('uuid')
   id: string
@@ -43,7 +40,7 @@ export class DesktopQueueHistory
   @Column({
     type: 'enum',
     enum: DesktopQueueHistoryStatus,
-    default: DesktopQueueHistoryStatus.Rejected,
+    default: DesktopQueueHistoryStatus.REJECTED,
   })
   status: DesktopQueueHistoryStatus
 

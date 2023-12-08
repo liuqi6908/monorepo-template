@@ -1,16 +1,17 @@
 /**
  * 隐藏敏感信息
- * @param input
+ * @param info 需处理的信息（邮箱/身份证号）
+ * @returns 隐藏后的信息
  */
-export function hideSensitiveInfo(input?: string): string | undefined {
+export function hideSensitiveInfo(info?: string) {
   let result = ''
 
   // 邮箱
-  if (input?.includes('@')) {
-    const atIndex = input.indexOf('@')
+  if (info?.includes('@')) {
+    const atIndex = info.indexOf('@')
     if (atIndex) {
-      const username = input.slice(0, atIndex)
-      const domain = input.slice(atIndex + 1)
+      const username = info.slice(0, atIndex)
+      const domain = info.slice(atIndex + 1)
       let hiddenUsername
       if (atIndex > 4)
         hiddenUsername = username.slice(0, 3) + '*'.repeat(username.length - 3)
@@ -22,9 +23,9 @@ export function hideSensitiveInfo(input?: string): string | undefined {
     }
   }
   // 身份证号
-  else if (input && input.length > 7) {
-    result = `${input.slice(0, 3)}${'*'.repeat(input.length - 7)}${input.slice(input.length - 4)}`
+  else if (info && info.length > 7) {
+    result = `${info.slice(0, 3)}${'*'.repeat(info.length - 7)}${info.slice(info.length - 4)}`
   }
 
-  return result || input
+  return result || info
 }

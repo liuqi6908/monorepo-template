@@ -79,7 +79,7 @@ export class HtmlTag {
 
   raw() {
     const styleRaw = Object.keys(this._style).length ? `style="${Object.entries(this._style).map(([k, v]) => `${camel2Dash(k)}: ${v}`).join('; ')}"` : ''
-    return `<${this.tagName} 
+    return `<${this.tagName}
       ${styleRaw}
       ${Object.entries(this.attrs).map(([k, v]) => `${k}="${v}"`).join(' ')}
     >

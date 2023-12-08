@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
-import { Work } from 'src/entities/work'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { Work } from 'src/entities/work'
 import { FileModule } from '../file/file.module'
 import { WorkService } from './work.service'
 import { WorkController } from './work.controller'

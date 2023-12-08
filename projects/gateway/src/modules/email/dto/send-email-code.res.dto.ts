@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import { SuccessDto } from 'src/dto/success.dto'
 import type { ISendEmailCodeResData, ISendEmailCodeResDto } from 'zjf-types'
+import { SuccessDto } from 'src/dto/success.dto'
 
 export class SendEmailCodeResData implements ISendEmailCodeResData {
   @ApiProperty({

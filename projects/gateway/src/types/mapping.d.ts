@@ -16,17 +16,17 @@ declare type EsFieldTypes =
   | 'double'
   | 'geo_point'
   | 'integer'
-  | 'nested';
+  | 'nested'
 
 declare interface EsProperty {
-  type: EsFieldType | EsFieldTypes;
-  index?: boolean;
-  ignore_above?: number;
-  format?: string;
-  fields?: Record<string, EsProperty>;
-  properties?: Record<string, EsProperty>;
+  type: EsFieldType | EsFieldTypes
+  index?: boolean
+  ignore_above?: number
+  format?: string
+  fields?: Record<string, EsProperty>
+  properties?: Record<string, EsProperty>
 }
 
 declare interface EsMapping<K extends string = string> {
-  properties: Record<K, EsProperty>;
+  properties: Record<K, EsProperty>
 }

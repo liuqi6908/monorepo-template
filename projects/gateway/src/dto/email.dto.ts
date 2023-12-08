@@ -2,11 +2,11 @@ import { decorate } from 'ts-mixer'
 import { ApiProperty } from '@nestjs/swagger'
 import { EMAIL_MAX_LENGTH, EMAIL_MIN_LENGTH } from 'zjf-utils'
 import { MaxLength, MinLength } from 'class-validator'
-
+import type { IEmailDto, IEmailOptionalDto } from 'zjf-types'
 import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
-import { IsValidEmail } from '../decorators/validators/is-valid-email'
+import { IsValidEmail } from 'src/decorators/validators/is-valid-email'
 
-function EmailDecorator(isOptional = false) {
+function Decorator(optional = false) {
   return GenerateParamsDecorator(
     [
       ApiProperty({
@@ -20,16 +20,16 @@ function EmailDecorator(isOptional = false) {
       MaxLength(EMAIL_MAX_LENGTH, { message: `邮箱长度不能大于${EMAIL_MAX_LENGTH}` }),
       IsValidEmail(),
     ],
-    isOptional,
+    optional,
   )
 }
 
-export class EmailDto {
-  @decorate(EmailDecorator())
+export class EmailDto implements IEmailDto {
+  @decorate(Decorator())
   email: string
 }
 
-export class EmailOptionalDto {
-  @decorate(EmailDecorator(true))
+export class EmailOptionalDto implements IEmailOptionalDto {
+  @decorate(Decorator(true))
   declare email?: string
 }

@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger'
+import type { IGetDataFieldListResDto } from 'zjf-types'
 import { SuccessDto } from 'src/dto/success.dto'
 import { DataField } from 'src/entities/data-field'
-import type { IGetDataFieldListResDto } from 'zjf-types'
 
 export class GetDataFieldListResDto
   extends SuccessDto<DataField[]>

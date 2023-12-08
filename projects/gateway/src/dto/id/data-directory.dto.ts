@@ -1,5 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString } from 'class-validator'
+import type { DataDirectory } from 'src/entities/data-directory'
 
 export class DataDirectoryIdDto {
   @ApiProperty({
@@ -7,5 +8,5 @@ export class DataDirectoryIdDto {
     example: 'd0b0d0b0-d0b0-d0b0-d0b0-d0b0d0b0d0b0',
   })
   @IsString()
-  dataDirectoryId: string
+  dataDirectoryId: DataDirectory['id']
 }

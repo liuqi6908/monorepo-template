@@ -1,6 +1,6 @@
-import type { ValidationOptions } from 'class-validator'
 import { registerDecorator } from 'class-validator'
 import { PASSWORD_REQUIREMENTS_DESC, validatePassword } from 'zjf-utils'
+import type { ValidationOptions } from 'class-validator'
 
 export function isValidPassword(value: any) {
   return !validatePassword(value)

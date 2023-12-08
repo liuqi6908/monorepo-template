@@ -1,17 +1,16 @@
-import { CodeAction } from 'zjf-types'
 import * as nodemailer from 'nodemailer'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { CodeAction } from 'zjf-types'
 import type { OnModuleInit } from '@nestjs/common'
+
 import { getLoginCodeHTML } from 'src/utils/html/templates/login-code'
 import { getRegisterCodeHTML } from 'src/utils/html/templates/register-code'
 import { getBindEmailCodeHTML } from 'src/utils/html/templates/bind-email-code'
 import { getChangePswdCodeHTML } from 'src/utils/html/templates/change-pswd-code'
 import { getChangeEmailCodeHTML } from 'src/utils/html/templates/change-email-code'
-
 import { APP_NAME } from 'src/utils/html/assets/constants'
 import { CodeService } from '../code/code.service'
-
 import type { LoginByEmailLinkDto } from '../auth/dto/login-by-email-link.body.dto'
 import type { SendEmailCodeBodyDto } from './dto/send-email-code.body.dto'
 
@@ -34,6 +33,11 @@ export class EmailService implements OnModuleInit {
     return this.transporter
   }
 
+  /**
+   * 发送邮件
+   * @param mailOptions
+   * @returns
+   */
   send(mailOptions: nodemailer.SendMailOptions) {
     return this.transporter.sendMail({
       ...mailOptions,
@@ -41,6 +45,11 @@ export class EmailService implements OnModuleInit {
     })
   }
 
+  /**
+   * 发送验证码
+   * @param body
+   * @returns
+   */
   public async sendCode(body: SendEmailCodeBodyDto) {
     const expInMin = 5
     const { email, action } = body
@@ -84,6 +93,11 @@ export class EmailService implements OnModuleInit {
     return { bizId }
   }
 
+  /**
+   * 发送登录魔法链接
+   * @param body
+   * @param token
+   */
   public async sendMagicLink(body: LoginByEmailLinkDto, token: string) {
     const href = `${body.redirect}${body.redirect.includes('?') ? '&' : '?'}${body.queryName || 'token'}=${token}`
     this.send({

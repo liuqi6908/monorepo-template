@@ -1,8 +1,13 @@
-import { IsOptional, IsString } from 'class-validator'
+import { IsBoolean, IsNumber, IsOptional, IsString } from 'class-validator'
 import type { IUpsertDataRoleBodyDto } from 'zjf-types'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class UpsertDataRoleBodyDto implements IUpsertDataRoleBodyDto {
+  @ApiPropertyOptional({ description: '数据角色的唯一标识' })
+  @IsString()
+  @IsOptional()
+  id?: string
+
   @ApiProperty({ description: '数据角色名称', example: '测试角色' })
   @IsString()
   name: string
@@ -11,6 +16,16 @@ export class UpsertDataRoleBodyDto implements IUpsertDataRoleBodyDto {
   @IsString()
   @IsOptional()
   description?: string
+
+  @ApiPropertyOptional({ description: '是否可选', example: true })
+  @IsBoolean()
+  @IsOptional()
+  select?: boolean
+
+  @ApiPropertyOptional({ description: '排序', example: 0 })
+  @IsNumber()
+  @IsOptional()
+  sort?: number
 
   @ApiPropertyOptional({ description: '数据角色可查看的目录id列表 **需要传入全部的**' })
   @IsString({ each: true })

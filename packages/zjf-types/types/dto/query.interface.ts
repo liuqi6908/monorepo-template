@@ -1,5 +1,5 @@
-import { IBasicResponse } from '../http/basic.interface';
-import { IPaginatedResData, IPaginationDto } from './pagination.interface';
+import { IBasicResponse } from '../http/basic.interface'
+import { IPaginatedResData, IPaginationDto } from './pagination.interface'
 
 export type IQueryFilter<T> = {
   field: keyof T | string
@@ -29,13 +29,10 @@ export interface IQuerySort<T> {
 export interface IQueryConfig<Entity> {
    /** 分页信息 */
    pagination?: IPaginationDto
-
    /** 过滤条件 */
    filters?: IQueryFilter<Entity>[]
- 
    /** 排序信息 */
    sort?: IQuerySort<Entity>[]
- 
    /** 关联信息，传入字符串数组 */
    relations?: RelationSet<Entity>
 }

@@ -1,14 +1,9 @@
 /**
  * 生成指定区间内的随机整数
- * @param start
- * @param end
- * @return {number} 随机整数
+ * @param start 最小值
+ * @param end 最大值
+ * @return 随机整数
  */
-export function randomInt(
-  /** 最小值 */
-  start = 0,
-  /** 最大值 */
-  end = 100
-) {
-  return Math.ceil(Math.random() * (end - start) + start);
+export function randomInt(start = 0, end = 100) {
+  return Math.ceil(Math.random() * (end - start) + start)
 }

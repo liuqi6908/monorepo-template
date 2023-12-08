@@ -1,5 +1,4 @@
 <script lang="ts" setup>
-import { onMounted, ref } from 'vue'
 import { DesktopQueueHistoryStatus, DesktopQueueStatus } from 'zjf-types'
 
 import { getOwnDesktopQuery } from '~/api/desktop/getOwnDesktopQuery'
@@ -11,14 +10,16 @@ import DesktopRequestDialog from '~/view/request/DesktopRequestDialog.vue'
 import HostPercent from '~/view/request/host/HostPercent.vue'
 import HostTiming from '~/view/request/host/HostTiming.vue'
 
-const { isLogin, isVerify, getVerify, latestVerifiy } = useUser()
+import requestFlow from '~/assets/desktop/requestFlow.svg?raw'
+
+const { isLogin, isVerify, useGetVerify, latestVerify } = useUser()
 const $router = useRouter()
 /** 滚动至页面顶部 */
 const { y } = useScroll(document)
 y.value = 0
 
 /** 用户认证状态 */
-const userStatus = computed(() => latestVerifiy.value?.status)
+const userStatus = computed(() => latestVerify.value?.status)
 /** 云桌面申请信息 */
 const requestInfo = reactive({
   status: '',
@@ -55,7 +56,7 @@ onMounted(async () => {
   if (!isLogin.value)
     return
   loading.value = true
-  await getVerify()
+  await useGetVerify()
   await getRequestInfo()
   const { running, stopped } = await getDesktopVm()
   vmInfo.running = running
@@ -117,7 +118,7 @@ watch(desktopList, (newVal) => {
     <div v-if="!isVerify" flex="~ col items-center" bg-grey-1 w-limited-1 min-h-4xl pt-32>
       <!-- 未登录 -->
       <template v-if="!isLogin">
-        <EmptyVeri label="您还未登录系统" captions="用户登录并通过认证后，才能申请使用" />
+        <Empty label="您还未登录系统" captions="用户登录并通过认证后，才能申请使用" icon="verify" />
         <Btn1
           label="前往登录" icon
           mt-10 w-53
@@ -126,7 +127,7 @@ watch(desktopList, (newVal) => {
       </template>
       <!-- 未申请 -->
       <template v-else-if="!userStatus">
-        <EmptyVeri label="您还未进行身份认证" captions="用户认证通过后，才能申请使用" />
+        <Empty label="您还未进行身份认证" captions="用户认证通过后，才能申请使用" icon="verify" />
         <Btn1
           label="前往认证" icon
           mt-10 w-53
@@ -135,7 +136,7 @@ watch(desktopList, (newVal) => {
       </template>
       <!-- 其他状态 -->
       <template v-else>
-        <EmptyVeri label="您的身份认证尚未通过审核" captions="用户认证通过后，才能申请使用" />
+        <Empty label="您的身份认证尚未通过审核" captions="用户认证通过后，才能申请使用" icon="verify" />
         <div mt-10 flex gap-6>
           <VerifyStatus :status="userStatus" />
           <Btn1
@@ -151,11 +152,10 @@ watch(desktopList, (newVal) => {
       <!-- 申请使用云桌面 -->
       <div w-limited-1>
         <div w-full flex="~ col items-center" bg-grey-1 py-10>
-          <div class="request-flow" w-full h-80 />
+          <div w-full h-86 v-html="requestFlow" />
           <!-- 申请状态 -->
           <div
             flex="~ row" style="background:rgba(2, 92, 185, 0.08);"
-
             mt-10 w-full items-center justify-between font-600 px-6 py-4 text="lg grey-8"
           >
             <!-- 使用中 -->
@@ -285,13 +285,10 @@ watch(desktopList, (newVal) => {
 
 <style lang="scss" scoped>
 .request {
-    background: no-repeat center / cover url("../../assets/layout/desktopRequest.png");
-}
-.request-flow {
-    background: no-repeat center / contain url("../../assets/layout/requestFlow.svg");
+  background: no-repeat center / cover url("~/assets/bg/desktop.webp");
 }
 .desktopCode {
-    background: no-repeat center / contain url("../../assets/layout/desktopCode.png");
+  background: no-repeat center / contain url("~/assets/desktop/cloudHost.png");
 }
 table,
 td {

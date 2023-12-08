@@ -1,6 +1,6 @@
 import { registerDecorator } from 'class-validator'
-import type { ValidationOptions } from 'class-validator'
 import { PHONE_NUMBER_REQUIREMENTS_DESC, validatePhone } from 'zjf-utils'
+import type { ValidationOptions } from 'class-validator'
 
 export function isValidPhone(value: any) {
   return !validatePhone(value)

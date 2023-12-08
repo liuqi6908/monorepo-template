@@ -7,4 +7,5 @@ const _permissionErrors: ErrorMessageCollection = {
     message: '没有权限执行此操作',
   },
 }
+
 export default _permissionErrors

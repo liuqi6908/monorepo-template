@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import type { IDataDirectory } from 'zjf-types'
 import { Column, DeleteDateColumn, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryColumn } from 'typeorm'
-
+import type { IDataDirectory } from 'zjf-types'
 import { DataRole } from './data-role'
 import { DataField } from './data-field'
 import { DataSuggestion } from './data-suggestion'
@@ -23,8 +22,6 @@ export class DataDirectory implements IDataDirectory {
 
   @ApiProperty({ description: '父目录', type: () => DataDirectory })
   @ManyToOne(() => DataDirectory, directory => directory.children, {
-    // 不创建外键约束，以方便删除和创建
-    // createForeignKeyConstraints: false,
     onDelete: 'CASCADE',
   })
   parent?: DataDirectory
@@ -62,14 +59,12 @@ export class DataDirectory implements IDataDirectory {
 
   @ApiProperty({ description: '拥有查看权限的数据角色列表' })
   @ManyToMany(() => DataRole, role => role.viewDirectories, {
-    // createForeignKeyConstraints: false,
     onDelete: 'CASCADE',
   })
   viewDataRoles?: DataRole[]
 
   @ApiProperty({ description: '拥有下载权限的数据角色列表' })
   @ManyToMany(() => DataRole, role => role.downloadDirectories, {
-    // createForeignKeyConstraints: false,
     onDelete: 'CASCADE',
   })
   downloadDataRoles?: DataRole[]

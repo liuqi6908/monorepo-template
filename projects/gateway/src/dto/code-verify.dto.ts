@@ -1,9 +1,13 @@
 import { decorate } from 'ts-mixer'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString, MaxLength, MinLength } from 'class-validator'
+import type { ICodeVerifyDto } from 'zjf-types'
 
-export class CodeVerifyDto {
-  @decorate(ApiProperty({ description: '获取验证码时获取到的唯一标识', type: () => String }))
+export class CodeVerifyDto implements ICodeVerifyDto {
+  @decorate(ApiProperty({
+    description: '获取验证码时获取到的唯一标识',
+    type: () => String,
+  }))
   @decorate(IsString())
   bizId: string
 

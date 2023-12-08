@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import type { IFilePathDto } from 'zjf-types'
 import { IsString, MinLength } from 'class-validator'
+import type { IFilePathDto } from 'zjf-types'
 
 export class FilePathDto implements IFilePathDto {
   @ApiProperty({

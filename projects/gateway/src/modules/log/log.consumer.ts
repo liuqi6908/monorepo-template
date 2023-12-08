@@ -3,7 +3,6 @@ import { Injectable } from '@nestjs/common'
 import { Process, Processor } from '@nestjs/bull'
 
 import { LogService } from './log.service'
-
 import type { DataLog } from './log.service'
 
 @Injectable()

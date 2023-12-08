@@ -1,16 +1,19 @@
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req } from '@nestjs/common'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ErrorCode, PermissionType, VerificationStatus } from 'zjf-types'
+
+import type { VerificationHistory } from 'src/entities/verification'
 import { getQuery } from 'src/utils/query'
 import { IsLogin } from 'src/guards/login.guard'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { HasPermission } from 'src/guards/permission.guard'
 import { VerificationIdDto } from 'src/dto/id/verification.dto'
-import type { VerificationHistory } from 'src/entities/verification'
-import { ErrorCode, PermissionType, VerificationStatus } from 'zjf-types'
 import { VerificationExists } from 'src/guards/verification-exists.guard'
 import { ApiErrorResponse, ApiSuccessResponse, responseError } from 'src/utils/response'
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req } from '@nestjs/common'
 
 import { QueryDto, QueryResDto } from '../../dto/query.dto'
 import { NotifyService } from '../notify/notify.service'
+import { UserService } from '../user/user.service'
+import { DataPermissionService } from '../data/data-permission/data-permission.service'
 import { VerificationService } from './verification.service'
 import { VerificationResDto } from './dto/verification.res.dto'
 import { CreateVerificationBodyDto } from './dto/create-verification.body.dto'
@@ -22,6 +25,8 @@ export class VerificationController {
   constructor(
     private readonly _verificationSrv: VerificationService,
     private readonly _notifySrv: NotifyService,
+    private readonly _userSrv: UserService,
+    private readonly _dataPerSrc: DataPermissionService,
   ) {}
 
   @ApiOperation({ summary: '发起一个认证申请' })
@@ -52,7 +57,7 @@ export class VerificationController {
 
   @ApiOperation({ summary: '查询所有用户的认证申请' })
   @ApiSuccessResponse(QueryResDto)
-  @HasPermission([PermissionType.VERIFICATION_LIST_ALL])
+  @HasPermission(PermissionType.VERIFICATION_LIST_ALL)
   @Post('query')
   public async queryAllVerifications(
     @Body() body: QueryDto<VerificationHistory>,
@@ -60,7 +65,7 @@ export class VerificationController {
     return await getQuery(this._verificationSrv.repo(), body)
   }
 
-  @ApiOperation({ summary: '取消一个认证申请（仅当该申请待处理时有效）' })
+  @ApiOperation({ summary: '取消一个认证申请' })
   @ApiSuccessResponse(VerificationResDto)
   @HasPermission()
   @ApiErrorResponse(ErrorCode.PERMISSION_DENIED)
@@ -89,34 +94,10 @@ export class VerificationController {
     )
   }
 
-  @ApiOperation({
-    summary: '重置一个认证申请（仅当该申请已通过时有效），统一使用 cancel 接口',
-    deprecated: true,
-  })
-  @ApiSuccessResponse(VerificationResDto)
-  @ApiErrorResponse(ErrorCode.PERMISSION_DENIED)
-  @VerificationExists()
-  @IsLogin()
-  @Delete('reset/:verificationId')
-  public async resetVerification(
-    @Param() _: VerificationIdDto,
-    @Req() req: FastifyRequest,
-  ) {
-    responseError(ErrorCode.COMMON_DEPRECATED)
-    const verification = req.verificationExistsGuardVerification!
-    if (verification.status !== VerificationStatus.APPROVED)
-      responseError(ErrorCode.VERIFICATION_NOT_APPROVED)
-
-    const user = req.raw.user
-    return this._verificationSrv.updateVerificationStatus(
-      verification, user, VerificationStatus.CANCELLED,
-    )
-  }
-
   @ApiOperation({ summary: '通过一个认证申请' })
   @ApiErrorResponse(ErrorCode.VERIFICATION_NOT_PENDING)
   @VerificationExists()
-  @HasPermission([PermissionType.VERIFICATION_APPROVE])
+  @HasPermission(PermissionType.VERIFICATION_APPROVE)
   @Patch('approve/:verificationId')
   public async approveVerification(
     @Param() _: VerificationIdDto,
@@ -126,17 +107,24 @@ export class VerificationController {
     const user = req.raw.user!
     if (verification.status !== VerificationStatus.PENDING)
       responseError(ErrorCode.VERIFICATION_NOT_PENDING)
-    return await this._verificationSrv.updateVerificationStatus(
+    const res = await this._verificationSrv.updateVerificationStatus(
       verification,
       user,
       VerificationStatus.APPROVED,
     )
+    // 自动为用户分配数据角色
+    try {
+      const dataRole = await this._dataPerSrc.repo().findOne({ where: { name: verification.dataRole } })
+      this._userSrv.repo().update({ id: verification.founderId }, { dataRoleId: dataRole?.id ?? null })
+    }
+    catch (_) {}
+    return res
   }
 
   @ApiOperation({ summary: '驳回一个认证申请' })
   @ApiErrorResponse(ErrorCode.VERIFICATION_NOT_PENDING, ErrorCode.VERIFICATION_REJECT_REASON_REQUIRED)
   @VerificationExists()
-  @HasPermission([PermissionType.VERIFICATION_REJECT])
+  @HasPermission(PermissionType.VERIFICATION_REJECT)
   @Patch('reject/:verificationId')
   public async rejectVerification(
     @Param() _: VerificationIdDto,

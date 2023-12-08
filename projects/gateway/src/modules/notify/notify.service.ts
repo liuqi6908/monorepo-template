@@ -1,11 +1,12 @@
 import { In } from 'typeorm'
 import { Injectable } from '@nestjs/common'
-import type { Desktop } from 'src/entities/desktop'
-import { getUserName } from 'src/utils/get-user-name'
 import { PermissionType, VerificationStatus } from 'zjf-types'
+
+import type { Desktop } from 'src/entities/desktop'
 import type { DesktopQueue } from 'src/entities/desktop-queue'
 import type { VerificationHistory } from 'src/entities/verification'
 import type { FileExportLarge } from 'src/entities/export/file-export-large.entity'
+import { getUserName } from 'src/utils/get-user-name'
 import { getDesktopExpireAdminHTML } from 'src/utils/html/templates/desktop-expire-admin'
 import { getVerificationApprovedHTML } from 'src/utils/html/templates/verification-approved'
 import { getVerificationRejectedHTML } from 'src/utils/html/templates/verification-rejected'
@@ -28,6 +29,11 @@ export class NotifyService {
     private readonly _userSrv: UserService,
   ) {}
 
+  /**
+   * 获取有权限的用户邮箱
+   * @param permissionNames
+   * @returns
+   */
   public async getUserEmailsThatHasPermission(
     permissionNames: PermissionType | PermissionType[],
   ) {
@@ -110,6 +116,10 @@ export class NotifyService {
     })
   }
 
+  /**
+   * 通知用户云桌面信息已更改
+   * @param desktop
+   */
   public async notifyUserDesktopInfoChanged(desktop: Desktop) {
     this._emailSrv.send({
       to: desktop.user.email,
@@ -118,7 +128,7 @@ export class NotifyService {
   }
 
   /**
-   * 当认证状态改变时通知用户
+   * 通知用户认证状态已更改
    * @param verification
    * @returns
    */
@@ -145,6 +155,11 @@ export class NotifyService {
     })
   }
 
+  /**
+   * 新的大文件外发通知
+   * @param info
+   * @returns
+   */
   public async notifyNewFileExportLg(info: FileExportLarge) {
     const { desktop } = info
     const emails = await this.getUserEmailsThatHasPermission([

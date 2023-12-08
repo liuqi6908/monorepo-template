@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { cmsConfig } from 'shared/constants/cms.constant'
-import { getCms } from '~/api/cms/getCms'
+import { getCms } from '~/api/cms'
 
 const cmsId = ref('home')
 const homeList = ref<any>([])
@@ -14,6 +14,7 @@ function currCom(id: string) {
   if (item)
     return item.component
 }
+
 const comProps = computed(() => (currId: string) => {
   const json: any[] = []
   if (homeList.value.length) {
@@ -37,8 +38,9 @@ const comProps = computed(() => (currId: string) => {
 })
 
 onMounted(async () => {
-  questionProps.value = await cmsProps('questionItem')
+  questionProps.value = await cmsProps('questionItem') as any
 })
+
 watch(() => route.name, async () => {
   // Do something here...
   const list = cmsConfig.find(i => i.id === cmsId.value)?.children

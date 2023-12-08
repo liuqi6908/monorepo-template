@@ -1,6 +1,6 @@
-export interface IRoleNameDto {
-  /** 业务角色的唯一标识 */
-  roleName: string
+export interface IRoleIdDto {
+  /** 角色权限的唯一标识 */
+  roleId: string
 }
 
-export interface IRoleNameOptionalDto extends Partial<IRoleNameDto> {}
+export interface IRoleIdOptionalDto extends Partial<IRoleIdDto> {}

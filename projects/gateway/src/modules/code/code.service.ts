@@ -1,6 +1,5 @@
 import { Injectable } from '@nestjs/common'
 import { type CodeAction, ErrorCode } from 'zjf-types'
-import { ConfigService } from '@nestjs/config'
 import { randomString } from '@catsjuice/utils'
 
 import { responseError } from 'src/utils/response'
@@ -9,7 +8,6 @@ import { RedisService } from '../redis/redis.service'
 @Injectable()
 export class CodeService {
   constructor(
-    private readonly _cfgSrv: ConfigService,
     private readonly _redisSrv: RedisService,
   ) {}
 

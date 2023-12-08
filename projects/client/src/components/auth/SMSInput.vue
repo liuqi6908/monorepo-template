@@ -4,9 +4,9 @@ import { Notify, QInput } from 'quasar'
 import { smsCodeByEmail } from '~/api/auth/email/smsCodeByEmail'
 
 interface Props {
-  smsCode: string
-  email: string
-  action: CodeAction
+  smsCode?: string
+  email?: string
+  action?: CodeAction
   dark?: boolean
 }
 
@@ -19,6 +19,8 @@ const inputRef = ref<typeof QInput>()
 const wait = ref(0)
 
 async function getCode() {
+  if (!props.email || !props.action)
+    return
   const res = await smsCodeByEmail(props.email, props.action)
   if (res) {
     Notify.create({
@@ -66,7 +68,7 @@ watch(
             ...(
               dark ? {
                 'bg-white/20': true,
-                'text-white': true,
+                'text-grey-1': true,
                 'hover:bg-white/30': true,
               } : {
                 'bg-primary-1/12': true,
@@ -75,8 +77,7 @@ watch(
               }
             ),
           }"
-          label="发送验证码"
-          cursor-pointer px2 py1 text-sm
+          cursor-pointer px3 py2 text-sm
           @click="getCode()"
         >
           发送验证码

@@ -2,7 +2,7 @@
 import { QInput } from 'quasar'
 
 interface Props {
-  userCode: string
+  userCode?: string
   accept?: boolean
   rule?: Array<any>
   disable?: boolean

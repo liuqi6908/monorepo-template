@@ -34,6 +34,7 @@ export function esInRangeAndAliveNow(
     esHelper.not(esHelper.exists(deadateField)),
   ])
 }
+
 export function esBeforeAndAliveInRange(
   _rangeStart: string,
   rangeEnd: string,

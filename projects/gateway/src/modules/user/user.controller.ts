@@ -1,12 +1,14 @@
-import { getQuery } from 'src/utils/query'
-import { Throttle } from '@nestjs/throttler'
-import { QueryDto } from 'src/dto/query.dto'
 import { objectOmit } from '@catsjuice/utils'
-import type { User } from 'src/entities/user'
-import { IsLogin } from 'src/guards/login.guard'
+import { Throttle } from '@nestjs/throttler'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { HasPermission } from 'src/guards/permission.guard'
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Query, Req, forwardRef } from '@nestjs/common'
 import { CodeAction, ErrorCode, PermissionType } from 'zjf-types'
+
+import type { User } from 'src/entities/user'
+import { getQuery } from 'src/utils/query'
+import { QueryDto } from 'src/dto/query.dto'
+import { IsLogin } from 'src/guards/login.guard'
+import { HasPermission } from 'src/guards/permission.guard'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { EmailCodeVerify } from 'src/guards/email-code-verify.guard'
 import { comparePassword } from 'src/utils/encrypt/encrypt-password'
@@ -14,7 +16,6 @@ import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { UniversalOperationResDto } from 'src/dto/universal-operation.dto'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
 import { emailAccountAtLeastOne } from 'src/utils/validator/account-phone-at-least-one'
-import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Query, Req, forwardRef } from '@nestjs/common'
 
 import { AuthService } from '../auth/auth.service'
 import { UserService } from './user.service'
@@ -67,8 +68,8 @@ export class UserController {
       })
       return objectOmit(user, omitFields)
     }
-    catch (err) {
-      const sqlError = parseSqlError(err)
+    catch (e) {
+      const sqlError = parseSqlError(e)
       if (sqlError === SqlError.ENTITY_PROPERTY_NOT_FOUND) {
         responseParamsError([{
           property: 'relation',
@@ -76,7 +77,7 @@ export class UserController {
         }])
       }
 
-      throw err
+      throw e
     }
   }
 
@@ -139,7 +140,7 @@ export class UserController {
       responseError(ErrorCode.AUTH_PASSWORD_NOT_MATCHED)
     await this._userSrv.updateUserPassword({ id: user.id }, body.newPassword)
     // 登出当前用户的所有登录会话
-    this._authSrv.logoutUser(user.id)
+    // this._authSrv.logoutUser(user.id)
     return true
   }
 
@@ -167,17 +168,17 @@ export class UserController {
 
   @ApiOperation({ summary: '更新指定用户的角色' })
   @HasPermission(PermissionType.ACCOUNT_UPDATE_ROLE)
-  @Patch(':userId/role/:roleName')
+  @Patch(':userId/role/:roleId')
   public async updateUserRole(@Param() param: UpdateUserRoleParamDto) {
     const { userId } = param
-    const roleName = param.roleName || null
+    const roleId = param.roleId || null
     try {
-      return (await this._userSrv.repo().update({ id: userId }, { roleName })).affected
+      return (await this._userSrv.repo().update({ id: userId }, { roleId })).affected
     }
-    catch (err) {
-      if (err.message.match(/FOREIGN KEY/)) {
+    catch (e) {
+      if (e.message.match(/FOREIGN KEY/)) {
         responseParamsError([{
-          property: 'roleName',
+          property: 'roleId',
           constraints: {
             roleName: '角色名不存在',
           },
@@ -188,19 +189,19 @@ export class UserController {
 
   @ApiOperation({ summary: '更新指定用户的数据角色' })
   @HasPermission(PermissionType.ACCOUNT_UPDATE_DATA_ROLE)
-  @Patch(':userId/data-role/:dataRoleName')
+  @Patch(':userId/data-role/:dataRoleId')
   public async updateUserDataRole(
     @Param() param: UpdateUserDataRoleParamDto,
   ) {
     const { userId } = param
-    const dataRoleName = param.dataRoleName || null
+    const dataRoleId = param.dataRoleId || null
     try {
-      return (await this._userSrv.repo().update({ id: userId }, { dataRoleName })).affected
+      return (await this._userSrv.repo().update({ id: userId }, { dataRoleId })).affected
     }
-    catch (err) {
-      if (err.message.match(/FOREIGN KEY/)) {
+    catch (e) {
+      if (e.message.match(/FOREIGN KEY/)) {
         responseParamsError([{
-          property: 'dataRoleName',
+          property: 'dataRoleId',
           constraints: {
             dataRoleName: '数据角色不存在',
           },

@@ -1,1 +1,1 @@
-declare type ErrorMessageCollection = import("zjf-types").ErrorMessageCollection;
+declare type ErrorMessageCollection = import('zjf-types').ErrorMessageCollection

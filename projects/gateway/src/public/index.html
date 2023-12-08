@@ -16,7 +16,6 @@
     }
 
     @media (prefers-color-scheme: dark) {
-
       html,
       body {
         background: #222;
@@ -129,8 +128,8 @@
     const items = []
 
     for (let i = 0; i < count; i++) {
-      const rasterItem = document.createElement("div")
-      rasterItem.classList.add("raster-item")
+      const rasterItem = document.createElement('div')
+      rasterItem.classList.add('raster-item')
       window.raster.appendChild(rasterItem)
       items.push(rasterItem)
     }
@@ -145,9 +144,9 @@
       items.forEach((item, index) => {
         const y = Math.sin(timePast / 1000 + index / r[0]) * 20
         const rx = Math.cos(timePast / 1000 + index / r[1]) * 90
-        item.style.setProperty("transform", `translateY(${y}px)`)
-        item.style.setProperty("--rotateY", `${rx}deg`)
-        item.style.setProperty("--sk", `${rx}deg`)
+        item.style.setProperty('transform', `translateY(${y}px)`)
+        item.style.setProperty('--rotateY', `${rx}deg`)
+        item.style.setProperty('--sk', `${rx}deg`)
       })
 
       window.requestAnimationFrame(frame)
@@ -161,7 +160,7 @@
   </script>
 
   <script type="module">
-    import cursor from "https://unpkg.com/ipad-cursor@latest"
+    import cursor from 'https://unpkg.com/ipad-cursor@latest'
     cursor.initCursor({
       normalStyle: {
         background: '#00000010',

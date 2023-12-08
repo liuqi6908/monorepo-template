@@ -1,16 +1,15 @@
 import { ErrorCode } from 'zjf-types'
 import { Reflector } from '@nestjs/core'
 import { ApiBearerAuth } from '@nestjs/swagger'
-import { getReflectorValue } from 'src/utils/reflector-value'
+import { Injectable, UseGuards, applyDecorators } from '@nestjs/common'
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
 import { ApiErrorResponse, responseError } from 'src/utils/response'
-import { Injectable, UseGuards, applyDecorators } from '@nestjs/common'
+import { getReflectorValue } from 'src/utils/reflector-value'
 
 @Injectable()
 export class LoginGuard implements CanActivate {
   constructor(
     public readonly reflector: Reflector,
-    // public readonly permissionSrv: PermissionService,
   ) {}
 
   public async canActivate(context: ExecutionContext): Promise<boolean> {

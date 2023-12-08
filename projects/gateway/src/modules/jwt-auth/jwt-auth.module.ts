@@ -12,7 +12,6 @@ import { JwtAuthService } from './jwt-auth.service'
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (_: ConfigService) => {
-        // https://github.com/nestjs/jwt/blob/master/README.md
         return {}
       },
     }),

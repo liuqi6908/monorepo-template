@@ -1,2 +1,2 @@
-export * from "./random-int";
-export * from "./random-password";
+export * from './random-int'
+export * from './random-password'

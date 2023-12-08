@@ -1,14 +1,15 @@
 import { Cron } from '@nestjs/schedule'
-import { Login } from 'src/entities/login'
 import { objectOmit } from '@catsjuice/utils'
-import type { User } from 'src/entities/user'
-import { CodeAction, ErrorCode } from 'zjf-types'
-import { responseError } from 'src/utils/response'
 import { InjectRepository } from '@nestjs/typeorm'
 import { LessThan, MoreThan, Repository } from 'typeorm'
 import { Inject, Injectable, forwardRef } from '@nestjs/common'
+import { CodeAction, ErrorCode } from 'zjf-types'
+import type { User } from 'src/entities/user'
+
+import { Login } from 'src/entities/login'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { comparePassword } from 'src/utils/encrypt/encrypt-password'
+import { responseError } from 'src/utils/response'
 
 import { UserService } from '../user/user.service'
 import { CodeService } from '../code/code.service'
@@ -70,7 +71,6 @@ export class AuthService {
     if (!correct)
       responseError(ErrorCode.AUTH_PASSWORD_NOT_MATCHED)
 
-    // 签发 access_token
     return await this.signLoginTicket(user)
   }
 
@@ -84,15 +84,9 @@ export class AuthService {
     await this._codeSrv.verifyWithError(bizId, [email, CodeAction.LOGIN, code])
 
     const user = await this._userSrv.repo().findOne({ where: { email } })
-    if (!user) {
-      /** __EDGE_CASE__ */
-      // 用户能够发送验证码到邮箱，说明用户已经注册了，但是在这里却找不到用户
-      // 这种情况只能是发送验证码 -> 登录期间账号被删除了
-      // 一般不会发生这一情况
+    if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
-    }
 
-    // 签发 access_token
     return await this.signLoginTicket(user)
   }
 
@@ -164,11 +158,11 @@ export class AuthService {
     }
   }
 
-  public loginRepo() {
+  public repo() {
     return this._loginRepo
   }
 
-  public loginQB(alias = 'l') {
+  public qb(alias = 'l') {
     return this._loginRepo.createQueryBuilder(alias)
   }
 }

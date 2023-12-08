@@ -1,17 +1,18 @@
 import { Queue } from 'bull'
 import { In } from 'typeorm'
 import { ErrorCode } from 'zjf-types'
+import { objectPick } from '@catsjuice/utils'
 import { ModuleRef } from '@nestjs/core'
 import { InjectQueue } from '@nestjs/bull'
 import { Injectable } from '@nestjs/common'
-import type { User } from 'src/entities/user'
-import { objectPick } from '@catsjuice/utils'
 import { ConfigService } from '@nestjs/config'
+
 import type { OnModuleInit } from '@nestjs/common'
-import { responseError } from 'src/utils/response'
+import type { User } from 'src/entities/user'
 import type { ESConfig } from 'src/config/_es.config'
-import { formatTimeLabel } from 'src/utils/format-time-label'
 import type { DataDirectory } from 'src/entities/data-directory'
+import { responseError } from 'src/utils/response'
+import { formatTimeLabel } from 'src/utils/format-time-label'
 
 import { UserService } from '../user/user.service'
 import { DataService } from '../data/data.service'
@@ -91,7 +92,7 @@ export class LogService implements OnModuleInit {
             ...objectPick(log.user, ['id', 'email', 'nickname', 'account']),
             verification: log.user.verification
               ? {
-                  ...objectPick(log.user.verification, ['name', 'college', 'idCard', 'identify', 'number', 'school']),
+                  ...objectPick(log.user.verification, ['name', 'college', 'idCard', 'dataRole', 'number', 'school']),
                 }
               : null,
           }
@@ -116,6 +117,13 @@ export class LogService implements OnModuleInit {
     return Object.entries(logTargets).map(([key, value]) => ({ key, value }))
   }
 
+  /**
+   * 日志聚合分析
+   * @param dimensionId
+   * @param filterDsl
+   * @param size
+   * @returns
+   */
   public async agg(dimensionId: string, filterDsl?: string, size = 10000) {
     const query = filterDsl
       ? this._esAnalyzerSrv.dsl2query(filterDsl, logDataMapping)

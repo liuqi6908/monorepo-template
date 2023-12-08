@@ -1,4 +1,4 @@
-import { CodeAction } from '../code-action.enum';
+import { CodeAction } from '../enum/code-action.enum'
 
 export interface ICodeActionDto {
   /** 请求验证码用于 */

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { CodeAction } from 'zjf-types'
 import { validateEmail, validatePassword } from 'zjf-utils'
 
 interface Props {
@@ -9,7 +10,7 @@ interface Props {
   bizId?: string
   label?: string
   captions?: string
-  action?: string
+  action?: CodeAction
 }
 
 defineProps<Props>()
@@ -40,11 +41,16 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
 <template>
   <section>
     <div mb2 flex="~ row items-center justify-between">
-      <div text-3.5>
-        <span font-600 text-grey-8>
-          {{ label }}
-        </span>
-        <span text-grey-6>（{{ captions }}）</span>
+      <div text-sm>
+        <span
+          font-500 text-grey-8
+          v-text="label"
+        />
+        <span
+          v-if="captions"
+          text-grey-6
+          v-text="`（${captions}）`"
+        />
       </div>
     </div>
 
@@ -68,9 +74,10 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
       :disable-confirm="disable"
       @ok="() => $emit('update:confirm', id)"
     >
-      <div mb2 font-bold text-grey-8>
-        {{ label }}
-      </div>
+      <div
+        mb2 font-500 text="sm grey-8"
+        v-text="label"
+      />
 
       <UserCodeInput
         :dark="false"
@@ -82,7 +89,7 @@ const disable = computed(() => Object.values(acceptObj).includes(false))
       />
 
       <div v-if="action" mt6>
-        <div mb2 font-bold text-grey-8>
+        <div mb2 font-500 text="sm grey-8">
           邮箱验证
         </div>
         <SMSInput

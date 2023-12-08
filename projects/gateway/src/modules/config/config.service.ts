@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Config } from 'src/entities/config'
 import { Repository } from 'typeorm'
+import { Config } from 'src/entities/config'
+
+import type { VersionDto } from './dto/version.dto'
 
 @Injectable()
 export class SysConfigService {
@@ -10,9 +12,9 @@ export class SysConfigService {
     private readonly _sysCfgRepo: Repository<Config>,
   ) {}
 
-  async getConfig() {
+  async getConfig(param: VersionDto) {
     return (await this._sysCfgRepo.findOne({
-      where: {},
+      where: { version: param.version },
       select: ['config'],
     }))?.config
   }

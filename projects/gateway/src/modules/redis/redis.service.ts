@@ -1,14 +1,16 @@
 import { Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import type { RedisClientType } from 'redis'
 import { createClient } from 'redis'
+import type { RedisClientType } from 'redis'
 
 @Injectable()
 export class RedisService {
   private logger = new Logger(RedisService.name)
   private _clients: Map<string, RedisClientType> = new Map()
 
-  constructor(private readonly _cfgSrv: ConfigService) {}
+  constructor(
+    private readonly _cfgSrv: ConfigService,
+  ) {}
 
   public async getClient(redisType: RedisType) {
     const { key, url }
@@ -26,6 +28,10 @@ export class RedisService {
     return client
   }
 
+  /**
+   * 处理所有连接
+   * @returns
+   */
   public async disposeAllConnection() {
     return Promise.all(
       Array.from(this._clients.keys()).map(

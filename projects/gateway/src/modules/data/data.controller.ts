@@ -3,21 +3,26 @@ import * as Papa from 'papaparse'
 import * as iconv from 'iconv-lite'
 import { In, IsNull, Not } from 'typeorm'
 import { objectPick } from '@catsjuice/utils'
-import type { FindOptionsWhere } from 'typeorm'
-import { batchSave } from 'src/utils/db/batch-save'
-import { ErrorCode, PermissionType } from 'zjf-types'
-import { DataRootIdDto } from 'src/dto/id/data-root.dto'
-import { HasPermission } from 'src/guards/permission.guard'
-import { DataDirectory } from 'src/entities/data-directory'
-import { ApiFormData } from 'src/decorators/api/api-form-data'
-import { dataCsvParser } from 'src/utils/parser/data-csv-parser'
+import { Body, Controller, Delete, Get, Param, Patch, Put, Query, Req } from '@nestjs/common'
 import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
-import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
+import { Throttle } from '@nestjs/throttler'
+import { ErrorCode, PermissionType, UploadType } from 'zjf-types'
+import { isUTF8 } from 'zjf-utils'
+import type { FindOptionsWhere } from 'typeorm'
+
+import { DataRootIdDto } from 'src/dto/id/data-root.dto'
+import { DataDirectoryIdDto } from 'src/dto/id/data-directory.dto'
+import { SuccessStringDto } from 'src/dto/success.dto'
+import { ApiFormData } from 'src/decorators/api/api-form-data'
+import { DataDirectory } from 'src/entities/data-directory'
 import { DataRoleCheck } from 'src/guards/data-role-permission.guard'
+import { HasPermission } from 'src/guards/permission.guard'
+import { batchSave } from 'src/utils/db/batch-save'
+import { dataCsvParser } from 'src/utils/parser/data-csv-parser'
+import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { createDataDirectoryTree } from 'src/utils/data-directory-tree'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
-import { Body, Controller, Delete, Get, Logger, Param, Patch, Put, Query, Req } from '@nestjs/common'
 
 import { FileService } from '../file/file.service'
 import { DataService } from './data.service'
@@ -27,11 +32,16 @@ import { GetDataListResDto } from './dto/get-data-list.res.dto'
 import { GetDataFieldListResDto } from './dto/get-field-list.res.dto'
 import { UpdateReferenceBodyDto } from './dto/update-reference.body.dto'
 import { UploadDirectoryQueryDto } from './dto/upload-directory.query.dto'
+import { UploadTableDataParamDto } from './dto/upload-table-data.param.dto'
+
+interface Node extends DataDirectory {
+  preview?: boolean
+  download?: boolean
+}
 
 @ApiTags('Data | 数据服务')
 @Controller('data')
 export class DataController {
-  private readonly _logger = new Logger(DataController.name)
   constructor(
     private readonly _dataSrv: DataService,
     private readonly _fileSrv: FileService,
@@ -41,14 +51,14 @@ export class DataController {
   @HasPermission(PermissionType.DATA_ROOT_CREATE)
   @Put('root')
   public async createRoot(@Body() body: CreateRootBodyDto) {
-    const { nameZH, nameEN, order } = body
+    const { id, nameZH, nameEN, order } = body
     const root = new DataDirectory()
+    root.id = id
     root.nameZH = nameZH
     root.nameEN = nameEN
     root.level = 0
     root.order = order ?? 0
-    root.id = nameEN
-    root.rootId = nameEN
+    root.rootId = id
     await this._dataSrv.dirRepo().save(root)
     this._dataSrv.cacheDir()
     return root
@@ -120,15 +130,12 @@ export class DataController {
     @Body() body: any,
   ) {
     const buffer: Buffer = await body?.file?.toBuffer()
-    // TODO: extract this
-    // check is utf8
-    const c1 = buffer[0]
-    const c2 = buffer[1]
-    const c3 = buffer[2]
-    const isUtf8 = c1 === 0xEF && c2 === 0xBB && c3 === 0xBF
+
+    // 判断文件是否为utf-8编码
     let str = buffer.toString()
-    if (!isUtf8)
+    if (!isUTF8(buffer))
       str = iconv.decode(buffer, 'gbk')
+
     const csv = Papa.parse(str, { header: true }).data
 
     const { nodes, fields } = dataCsvParser(csv, param.dataRootId)
@@ -137,32 +144,30 @@ export class DataController {
     const logger = {
       log: (...msgs: any[]) => _.log('[上传中间表]', ...msgs),
       error: _.error,
-    };
+    }
 
-    (async () => {
-      const newIds = nodes.map(node => node.id)
-      if (query.clear) {
-        const where: FindOptionsWhere<DataDirectory> = {
-          rootId: param.dataRootId,
-          parentId: Not(IsNull()),
-          id: Not(In(newIds)),
-        }
-        const deleteCount = await this._dataSrv.dirRepo().count({ where })
-        logger.log(`clear ${deleteCount} rows`)
-        await this._dataSrv.dirRepo().softDelete(where)
-        logger.log('clear success')
+    const newIds = nodes.map(node => node.id)
+    if (query.clear) {
+      const where: FindOptionsWhere<DataDirectory> = {
+        rootId: param.dataRootId,
+        parentId: Not(IsNull()),
+        id: Not(In(newIds)),
       }
-      try {
-        await batchSave(this._dataSrv.dirRepo(), nodes, 'id', 1, true)
-        await batchSave(this._dataSrv.fieldRepo(), fields, 'id')
-        logger.log('upload success')
-        this._dataSrv.cacheDir()
-      }
-      catch (err) {
-        logger.error(err)
-        logger.error('upload failed')
-      }
-    })()
+      const deleteCount = await this._dataSrv.dirRepo().count({ where })
+      logger.log(`clear ${deleteCount} rows`)
+      await this._dataSrv.dirRepo().softDelete(where)
+      logger.log('clear success')
+    }
+    try {
+      await batchSave(this._dataSrv.dirRepo(), nodes, 'id', 1, true)
+      await batchSave(this._dataSrv.fieldRepo(), fields, 'id')
+      logger.log('upload success')
+      this._dataSrv.cacheDir()
+    }
+    catch (err) {
+      logger.error(err)
+      logger.error('upload failed')
+    }
 
     return {
       nodes: nodes.length,
@@ -179,9 +184,21 @@ export class DataController {
     @Req() req: FastifyRequest,
   ) {
     const dataRole = req.dataRole
-    const nodes = await this._dataSrv.dirRepo().find({
+    const nodes: Node[] = await this._dataSrv.dirRepo().find({
       where: { rootId: param.dataRootId },
     })
+
+    // 判断表格的文件是否存在
+    for (const node of nodes) {
+      const { level, rootId, nameEN } = node
+      if (level === 4) {
+        const preview = `preview/${rootId}/${nameEN}.csv`
+        const download = `download/${rootId}/${nameEN}.zip`
+
+        node.preview = await this._fileSrv.stat('data', preview).then(() => true).catch(() => false)
+        node.download = await this._fileSrv.stat('data', download).then(() => true).catch(() => false)
+      }
+    }
 
     const allowedScopes = dataRole === '*'
       ? [param.dataRootId]
@@ -192,14 +209,17 @@ export class DataController {
   }
 
   @ApiOperation({ summary: '更新引用规范' })
-  @HasPermission(PermissionType.DATA_PERMISSION_UPDATE_REFERENCE)
+  @HasPermission(PermissionType.DATA_EDIT_REFERENCE)
   @ApiParam({ name: 'dataDirectoryId', description: '数据目录的唯一标识' })
   @Patch('reference/:dataDirectoryId')
   public async updateReference(
-    @Param('dataDirectoryId') dataDirectoryId: string,
+    @Param() param: DataDirectoryIdDto,
     @Body() body: UpdateReferenceBodyDto,
   ) {
-    await this._dataSrv.dirRepo().update(dataDirectoryId, { reference: body.reference })
+    await this._dataSrv.dirRepo().update(
+      { id: param.dataDirectoryId },
+      { reference: body.reference },
+    )
     return true
   }
 
@@ -209,11 +229,11 @@ export class DataController {
   @DataRoleCheck('viewDirectories')
   @Get('fields/:dataDirectoryId')
   public async getFields(
-    @Param('dataDirectoryId') dataDirectoryId: string,
+    @Param() param: DataDirectoryIdDto,
     @Req() req: FastifyRequest,
   ) {
     const dataRole = req.dataRole
-    const directory = await this._dataSrv.dirRepo().findOne({ where: { id: dataDirectoryId } })
+    const directory = await this._dataSrv.dirRepo().findOne({ where: { id: param.dataDirectoryId } })
     if (!directory)
       responseError(ErrorCode.DATA_DIRECTORY_NOT_FOUND)
 
@@ -222,7 +242,7 @@ export class DataController {
       responseError(ErrorCode.PERMISSION_DENIED)
 
     return await this._dataSrv.fieldRepo().find({
-      where: { directoryId: dataDirectoryId },
+      where: { directoryId: param.dataDirectoryId },
       order: { order: 'ASC' },
     })
   }
@@ -232,10 +252,10 @@ export class DataController {
   @ApiParam({ name: 'dataDirectoryId', description: '数据目录的id（请注意，只能传表级别，其他级别没有意义，会直接报错）' })
   @Get('preview/:dataDirectoryId')
   public async previewData(
-    @Param('dataDirectoryId') dataDirectoryId: string,
+    @Param() param: DataDirectoryIdDto,
     @Req() req: FastifyRequest,
   ) {
-    const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: dataDirectoryId } })
+    const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: param.dataDirectoryId } })
     const response = (code?: ErrorCode) => {
       this._dataSrv.saveLog({
         dataDirectory,
@@ -275,15 +295,46 @@ export class DataController {
     }
   }
 
+  @ApiOperation({
+    summary: '上传表格 预览/下载 数据',
+    description: '预览数据文件名为: `TABLE_ENG` + `.csv`；下载数据文件名为: `TABLE_ENG` + `.zip`',
+  })
+  @Throttle(10000, 60)
+  @HasPermission(PermissionType.DATA_UPLOAD_TABLE)
+  @ApiSuccessResponse(SuccessStringDto)
+  @ApiFormData()
+  @Put(':uploadType/:dataRootId/:filename')
+  public async uploadTableData(
+    @Param() param: UploadTableDataParamDto,
+    @Body() body: any,
+  ) {
+    const buffer = await body?.file?.toBuffer()
+    const { filename, dataRootId, uploadType } = param
+
+    const arr = filename.split('.')
+    const ext = arr.pop()
+    if (
+      (uploadType === UploadType.PREVIEW && ext !== 'csv')
+      || (uploadType === UploadType.DOWNLOAD && ext !== 'zip')
+    )
+      responseError(ErrorCode.FILE_TYPE_NOT_ALLOWED)
+
+    const name = arr.join('.')
+    const saveFilename = `${name}.${ext}`
+    const path = `${uploadType}/${dataRootId}/${saveFilename}`
+    await this._fileSrv.upload('data', path, buffer)
+    return saveFilename
+  }
+
   @ApiOperation({ summary: '获取数据下载链接' })
   @DataRoleCheck('downloadDirectories')
   @ApiParam({ name: 'dataDirectoryId', description: '数据目录的id（请注意，只能传表级别，其他级别没有意义，会直接报错）' })
   @Get('download/link/:dataDirectoryId')
   public async getDownloadLink(
-    @Param('dataDirectoryId') dataDirectoryId: string,
+    @Param() param: DataDirectoryIdDto,
     @Req() req: FastifyRequest,
   ) {
-    const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: dataDirectoryId } })
+    const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: param.dataDirectoryId } })
     const dataRole = req.dataRole
     const dataRootId = dataDirectory?.rootId
 
@@ -312,10 +363,31 @@ export class DataController {
       response()
       return url
     }
+    catch (e) {
+      if (e.message.match(/Not Found/))
+        responseError(ErrorCode.FILE_NOT_FOUND)
+      throw e
+    }
+  }
+
+  @ApiOperation({ summary: '判断文件是否存在' })
+  @ApiParam({ name: 'dataDirectoryId', description: '数据目录的id（请注意，只能传表级别，其他级别没有意义，会直接报错）' })
+  @Get('isExist/:dataDirectoryId')
+  public async isExist(
+    @Param() param: DataDirectoryIdDto,
+  ) {
+    const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: param.dataDirectoryId } })
+    if (!dataDirectory || dataDirectory.level !== 4)
+      return false
+
+    const { rootId, nameEN } = dataDirectory
+    const path = `download/${rootId}/${nameEN}.zip`
+    try {
+      await this._fileSrv.stat('data', path)
+      return true
+    }
     catch (err) {
-      // TODO: 处理无法找到指定文件的错误
-      console.error(err)
-      response(ErrorCode.COMMON_UNEXPECTED_ERROR)
+      return false
     }
   }
 }

@@ -1,8 +1,9 @@
 import { EventEmitter } from 'node:stream'
-import type { AxiosResponse } from 'axios'
 import { Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
+import type { AxiosResponse } from 'axios'
+import type { ZstackConfig } from 'src/config/_zstack.config'
 import { sha512 } from 'src/utils/encrypt/sha512'
 
 @Injectable()
@@ -19,12 +20,19 @@ export class ZstackService extends EventEmitter {
     super()
   }
 
+  /**
+   * 登录zstack
+   * @returns
+   */
   private async _login() {
-    const { host, user, password } = this._cfgSrv.get('zstack')
+    const { host, user, password } = this._cfgSrv.get<ZstackConfig>('zstack')
 
-    const getCfg = uuid => ({
+    const getCfg = (uuid: string) => ({
       uuid,
-      config: { baseURL: host, headers: { Authorization: `OAuth ${uuid}` } },
+      config: {
+        baseURL: host,
+        headers: { Authorization: `OAuth ${uuid}` },
+      },
     })
 
     if (this._oauth.token && this._oauth.expireAt > Date.now())
@@ -59,6 +67,11 @@ export class ZstackService extends EventEmitter {
     return getCfg(uuid)
   }
 
+  /**
+   * 登出zstack
+   * @param uuid
+   * @returns
+   */
   private _logout(uuid: string) {
     return this._httpSrv.axiosRef({
       method: 'DELETE',
@@ -66,6 +79,11 @@ export class ZstackService extends EventEmitter {
     })
   }
 
+  /**
+   * 带会话的请求
+   * @param request
+   * @returns
+   */
   public requestWithSession<T = any>(
     request: (axiosCfg) => Promise<AxiosResponse<T>>,
   ) {
@@ -79,6 +97,11 @@ export class ZstackService extends EventEmitter {
     })
   }
 
+  /**
+   * 自定义查询
+   * @param query
+   * @returns
+   */
   public zql(query: string) {
     return this.requestWithSession((cfg) => {
       return this._httpSrv.axiosRef({
@@ -89,6 +112,11 @@ export class ZstackService extends EventEmitter {
     })
   }
 
+  /**
+   * 获取指定物理机的 CPU、内存分配
+   * @param hostUuid
+   * @returns
+   */
   public async getHostCpuMem(hostUuid: string) {
     // eslint-disable-next-line max-len
     const zqlStr1 = `query Host.name where uuid = '${hostUuid}' return with (zwatch{{resultName='CPUUsedCount',metricName='CPUUsedCapacityPerHostCount',offsetAheadOfCurrentTime=0}}, zwatch{{resultName='CPUAvailableCount',metricName='CPUAvailableCapacityPerHostCount',offsetAheadOfCurrentTime=0}},zwatch{{resultName='CPUUsedPercent',metricName='CPUUsedCapacityPerHostInPercent',offsetAheadOfCurrentTime=0}}, zwatch{{resultName='memUsed', metricName='MemoryUsedCapacityPerHostInBytes',offsetAheadOfCurrentTime=0}}, zwatch{{resultName='memAvailable', metricName='MemoryAvailableCapacityPerHostInBytes',offsetAheadOfCurrentTime=0}}, zwatch{{resultName='memUsedPercent', metricName='MemoryUsedCapacityPerHostInPercent',offsetAheadOfCurrentTime=0}})`
@@ -101,6 +129,12 @@ export class ZstackService extends EventEmitter {
     }
   }
 
+  /**
+   * 获取指定物理机的时序数据
+   * @param hostUuid
+   * @param period
+   * @returns
+   */
   public async getHostMonitor(hostUuid: string, period = 60) {
     // eslint-disable-next-line max-len
     const zql = `query Host.name where uuid = '${hostUuid}' return with (zwatch{{resultName='CPUUtilization', metricName='CPUAllUsedUtilization',offsetAheadOfCurrentTime=3600, period=${period}}},zwatch{{resultName='memUsed',metricName='MemoryUsedInPercent',offsetAheadOfCurrentTime=3600, period=${period}}}, zwatch{{resultName='diskRead',metricName='DiskAllReadBytes', offsetAheadOfCurrentTime=3600, period=${period}}}, zwatch{{resultName='diskWrite',metricName='DiskAllWriteBytes', offsetAheadOfCurrentTime=3600, period=${period}}})`
@@ -176,6 +210,11 @@ export class ZstackService extends EventEmitter {
       })
   }
 
+  /**
+   * 开机指定的虚拟机
+   * @param vmUUID
+   * @returns
+   */
   public async startVM(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
       return this._httpSrv.axiosRef({
@@ -187,6 +226,11 @@ export class ZstackService extends EventEmitter {
     })
   }
 
+  /**
+   * 关机指定的虚拟机
+   * @param vmUUID
+   * @returns
+   */
   public async stopVM(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
       return this._httpSrv.axiosRef({
@@ -198,6 +242,11 @@ export class ZstackService extends EventEmitter {
     })
   }
 
+  /**
+   * 重启指定的虚拟机
+   * @param vmUUID
+   * @returns
+   */
   public async rebootVM(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
       return this._httpSrv.axiosRef({
@@ -209,6 +258,10 @@ export class ZstackService extends EventEmitter {
     })
   }
 
+  /**
+   * 云桌面总览
+   * @returns
+   */
   public async vmOverview() {
     // eslint-disable-next-line max-len
     const zqlStr = 'count vminstance named as \'total\'; count vminstance where state = \'Running\' named as \'running\'; count vminstance where state = \'Stopped\' named as \'stopped\''
@@ -228,6 +281,12 @@ export class ZstackService extends EventEmitter {
     return res.results[0].inventories[0]
   }
 
+  /**
+   * 获取指定虚拟机的详情
+   * @param vmUUID
+   * @param period
+   * @returns
+   */
   public async getVMStateDetail(vmUUID: string, period = 60) {
     // eslint-disable-next-line max-len
     const zqlStr = `query vminstance.uuid where uuid = '${vmUUID}' return with (zwatch{{resultName='CPU',metricName='CPUAverageUsedUtilization',offsetAheadOfCurrentTime=3600, period=${period}}}, zwatch{{resultName='memUsed',metricName='MemoryUsedInPercent',offsetAheadOfCurrentTime=3600, period=${period}}}, zwatch{{resultName='Disk',metricName='DiskAllUsedCapacityInPercent',offsetAheadOfCurrentTime=3600, period=${period}}},zwatch{{resultName='NetworkIn',metricName='NetworkAllInBytes',offsetAheadOfCurrentTime=3600, period=${period}}},zwatch{{resultName='NetworkOut',metricName='NetworkAllOutBytes',offsetAheadOfCurrentTime=3600, period=${period}}})`

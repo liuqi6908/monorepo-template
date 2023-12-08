@@ -1,5 +1,4 @@
 import { HttpException, HttpStatus } from '@nestjs/common'
-
 import { esHelper } from './es-helper'
 
 export interface CustomDslParserOptions {
@@ -17,6 +16,7 @@ interface ExpNode {
 interface Mapping {
   properties: Record<string, Property>
 }
+
 interface Property {
   type: string
   fields?: Record<string, Property>
@@ -39,6 +39,10 @@ const defaultOptions = {
     'notlike',
   ],
 }
+
+/**
+ * 自定义dsl解析器
+ */
 export class CustomDslParser {
   private _mapping: Mapping
   private _options: CustomDslParserOptions

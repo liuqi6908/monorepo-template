@@ -1,7 +1,6 @@
 import { ModuleRef } from '@nestjs/core'
-import type { NestMiddleware } from '@nestjs/common'
 import { Injectable, Logger } from '@nestjs/common'
-
+import type { NestMiddleware } from '@nestjs/common'
 import type { User } from 'src/entities/user'
 import { UserService } from 'src/modules/user/user.service'
 import { AuthService } from 'src/modules/auth/auth.service'
@@ -31,7 +30,7 @@ export class AuthMiddleware implements NestMiddleware {
           return dict
         }, {})
     }
-    catch (err) {}
+    catch (_) {}
 
     const authHeader = (req?.headers as any)?.authorization
 
@@ -52,9 +51,9 @@ export class AuthMiddleware implements NestMiddleware {
     try {
       info = await _jwtAuthSrv.validateLoginAuthToken(access_token)
     }
-    catch (err) {
+    catch (e) {
       req.accessTokenExpired = true
-      this.logger.error('解析 access_token 时出现错误', err)
+      this.logger.error('解析 access_token 时出现错误', e)
     }
     try {
       const userId = info?.id
@@ -64,8 +63,8 @@ export class AuthMiddleware implements NestMiddleware {
         .addSelect('u.password')
         .getOne()
     }
-    catch (err) {
-      this.logger.error('获取用户信息时出现错误', err)
+    catch (e) {
+      this.logger.error('获取用户信息时出现错误', e)
     }
     if (!user)
       return next()
@@ -79,7 +78,7 @@ export class AuthMiddleware implements NestMiddleware {
       req.user = user
 
       // 更新用户的最后活跃时间
-      _authSrv.loginRepo().update({ id: md5(access_token) }, { lastActiveAt: new Date() })
+      _authSrv.repo().update({ id: md5(access_token) }, { lastActiveAt: new Date() })
     }
     else {
       // 如果账号不一致，判定用户已更新了账号，旧的登录授权 token 全部销毁
@@ -91,8 +90,8 @@ export class AuthMiddleware implements NestMiddleware {
       try {
         _jwtAuthSrv.destroyLoginAuthToken(access_token)
       }
-      catch (err) {
-        this.logger.error('Error destroying access_token', err)
+      catch (e) {
+        this.logger.error('Error destroying access_token', e)
       }
     }
     next()

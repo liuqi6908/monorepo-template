@@ -1,21 +1,22 @@
 import { IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
-import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
 import { decorate } from 'ts-mixer'
+import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
+import type { Desktop } from 'src/entities/desktop'
 
-function D(o = false) {
+function Decorator(optional = false) {
   return GenerateParamsDecorator([
     ApiProperty({ description: '云桌面 ID' }),
     IsString(),
-  ], o)
+  ], optional)
 }
 
 export class DesktopIdDto {
-  @decorate(D())
-  desktopId: string
+  @decorate(Decorator())
+  desktopId: Desktop['id']
 }
 
 export class DesktopIdOptionalDto {
-  @decorate(D(true))
-  desktopId?: string
+  @decorate(Decorator(true))
+  desktopId?: DesktopIdDto['desktopId']
 }

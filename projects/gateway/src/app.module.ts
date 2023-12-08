@@ -1,20 +1,19 @@
 import { join } from 'node:path'
-import { BullModule } from '@nestjs/bull'
 import { validatePath } from '@catsjuice/utils'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { ScheduleModule } from '@nestjs/schedule'
+import { BullModule } from '@nestjs/bull'
 import { Module, RequestMethod } from '@nestjs/common'
-import { ServeStaticModule } from '@nestjs/serve-static'
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
-import type { TypeOrmModuleOptions } from '@nestjs/typeorm'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core'
+import { ScheduleModule } from '@nestjs/schedule'
+import { ServeStaticModule } from '@nestjs/serve-static'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
+import { TypeOrmModule } from '@nestjs/typeorm'
+
 import type { MiddlewareConsumer, NestModule } from '@nestjs/common'
+import type { TypeOrmModuleOptions } from '@nestjs/typeorm'
 
 import allConfig from './config'
 
-import { AppService } from './app.service'
-import { AppController } from './app.controller'
 import { CmsModule } from './modules/cms/cms.module'
 import { LogModule } from './modules/log/log.module'
 import { UserModule } from './modules/user/user.module'
@@ -97,9 +96,8 @@ import { ConfigModule as SysConfigModule } from './modules/config/config.module'
       inject: [ConfigService],
     }),
   ],
-  controllers: [AppController],
+  controllers: [],
   providers: [
-    AppService,
     { provide: APP_INTERCEPTOR, useClass: ResponseInterceptor },
     { provide: APP_GUARD, useClass: ThrottlerGuard },
   ],

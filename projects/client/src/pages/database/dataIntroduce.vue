@@ -20,7 +20,7 @@ const tableFieldsCol: QTableProps['columns'] = [
   { label: '字段', name: 'nameZH', field: 'nameZH', align: 'center' },
   { label: '含义', name: 'description', field: 'description', align: 'center' },
 ]
-useDataBase()
+useDatabase()
 
 const tableFieldRows = ref<any[]>([])
 

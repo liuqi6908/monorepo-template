@@ -1,6 +1,6 @@
-export interface DataRoleNameDto {
+export interface IDataRoleIdDto {
   /** 数据角色的唯一标识 */
-  dataRoleName: string
+  dataRoleId: string
 }
 
-export interface DataRoleNameOptionalDto extends Partial<DataRoleNameDto> {}
+export interface IDataRoleIdOptionalDto extends Partial<IDataRoleIdDto> {}

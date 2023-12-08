@@ -1,11 +1,12 @@
 import { Reflector } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 import { responseError } from 'src/utils/response'
-import { ErrorCode, PermissionType } from 'zjf-types'
-import { RoleService } from 'src/modules/role/role.service'
-import { type CanActivate, type ExecutionContext, Injectable, UseGuards, applyDecorators } from '@nestjs/common'
-
 import { ApiBearerAuth } from '@nestjs/swagger'
+import { ErrorCode, PermissionType } from 'zjf-types'
+import { Injectable, UseGuards, applyDecorators } from '@nestjs/common'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
+
+import { RoleService } from 'src/modules/role/role.service'
 import { PermissionGuard } from './permission.guard'
 
 @Injectable()

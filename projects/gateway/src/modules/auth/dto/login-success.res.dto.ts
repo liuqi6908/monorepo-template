@@ -1,7 +1,7 @@
-import { User } from 'src/entities/user'
 import { ApiProperty } from '@nestjs/swagger'
-import { SuccessDto } from 'src/dto/success.dto'
 import type { ILoginSuccessResData, ILoginSuccessResDto } from 'zjf-types'
+import { User } from 'src/entities/user'
+import { SuccessDto } from 'src/dto/success.dto'
 
 class Sign {
   @ApiProperty({
@@ -23,7 +23,9 @@ class LoginSuccessResData implements ILoginSuccessResData {
   sign: Sign
 }
 
-export class LoginSuccessResDto extends SuccessDto implements ILoginSuccessResDto {
+export class LoginSuccessResDto
+  extends SuccessDto
+  implements ILoginSuccessResDto {
   @ApiProperty({ type: () => LoginSuccessResData })
   data: LoginSuccessResData
 }

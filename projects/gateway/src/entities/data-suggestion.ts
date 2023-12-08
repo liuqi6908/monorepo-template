@@ -1,7 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger'
-import type { IDataSuggestion } from 'zjf-types'
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeorm'
-
+import type { IDataSuggestion } from 'zjf-types'
 import { User } from './user'
 import { DataDirectory } from './data-directory'
 

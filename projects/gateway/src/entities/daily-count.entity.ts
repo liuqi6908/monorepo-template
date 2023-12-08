@@ -1,6 +1,6 @@
-import type { IDailyCount } from 'zjf-types'
 import { ApiProperty } from '@nestjs/swagger'
 import { Column, Entity, PrimaryColumn } from 'typeorm'
+import type { IDailyCount } from 'zjf-types'
 
 @Entity()
 export class DailyCount implements IDailyCount {

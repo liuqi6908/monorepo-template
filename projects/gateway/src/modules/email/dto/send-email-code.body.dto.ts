@@ -1,6 +1,6 @@
 import { Mixin } from 'ts-mixer'
-import { EmailDto } from 'src/dto/email.dto'
 import type { ISendEmailCodeBodyDto } from 'zjf-types'
+import { EmailDto } from 'src/dto/email.dto'
 import { CodeActionDto } from 'src/dto/code-action.dto'
 
 export class SendEmailCodeBodyDto

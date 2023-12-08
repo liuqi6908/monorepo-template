@@ -1,6 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common'
-import { Login } from 'src/entities/login'
 import { TypeOrmModule } from '@nestjs/typeorm'
+
+import { Login } from 'src/entities/login'
 
 import { UserModule } from '../user/user.module'
 import { CodeModule } from '../code/code.module'

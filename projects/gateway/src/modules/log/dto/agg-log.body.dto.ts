@@ -1,8 +1,8 @@
 import { Mixin } from 'ts-mixer'
-import { DslDto } from 'src/dto/dsl.dto'
 import { IsEnum, IsNumber, IsOptional } from 'class-validator'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
+import { DslDto } from 'src/dto/dsl.dto'
 import { dimensions } from '../config/dimension'
 
 const dimensionMarkdown = dimensions.map(d => `- ${d.id} - ${d.name}`).join('\n')

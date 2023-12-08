@@ -1,11 +1,11 @@
 import { Reflector } from '@nestjs/core'
+import { PermissionType } from 'zjf-types'
+import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
+import type { CanActivate, ExecutionContext } from '@nestjs/common'
+
 import { RoleService } from 'src/modules/role/role.service'
 import { getReflectorValue } from 'src/utils/reflector-value'
-import type { CanActivate, ExecutionContext } from '@nestjs/common'
-import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 import { DataPermissionService, visitorRole } from 'src/modules/data/data-permission/data-permission.service'
-
-import { PermissionType } from 'zjf-types'
 import { PermissionGuard } from './permission.guard'
 
 export type DataRolePermissionScope = 'viewDirectories' | 'downloadDirectories'
@@ -40,9 +40,9 @@ export class DataRolePermission extends PermissionGuard implements CanActivate {
       return true
     }
 
-    const dataRoleName = user?.dataRoleName || visitorRole.name
-    const dataRole = await this.dataPSrv.dataRoleRepo().findOne({
-      where: { name: dataRoleName },
+    const dataRoleId = user?.dataRoleId || visitorRole.id
+    const dataRole = await this.dataPSrv.repo().findOne({
+      where: { id: dataRoleId },
       relations: queryScopes,
     })
     req.dataRole = dataRole

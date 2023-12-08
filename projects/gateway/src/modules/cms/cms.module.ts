@@ -1,7 +1,7 @@
-import { Cms } from 'src/entities/cms'
 import { Module } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
+import { Cms } from 'src/entities/cms'
 import { CmsService } from './cms.service'
 import { CmsController } from './cms.controller'
 

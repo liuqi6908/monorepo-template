@@ -1,8 +1,8 @@
 import { decorate } from 'ts-mixer'
-import type { IPaginationDto } from 'zjf-types'
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { IsNumber, IsOptional, Max, Min } from 'class-validator'
 import { PAGINATION_SIZE_DFT, PAGINATION_SIZE_MAX } from 'zjf-types'
+import type { IPaginatedResData, IPaginationDto } from 'zjf-types'
 
 export class PaginationDto implements IPaginationDto {
   @decorate(ApiPropertyOptional({
@@ -24,7 +24,7 @@ export class PaginationDto implements IPaginationDto {
   pageSize?: number
 }
 
-export class PaginatedResData<T> {
+export class PaginatedResData<T> implements IPaginatedResData<T> {
   @decorate(ApiPropertyOptional({ description: '页码' }))
   page: number
 

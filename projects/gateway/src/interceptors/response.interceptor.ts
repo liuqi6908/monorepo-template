@@ -1,13 +1,7 @@
-import type { Observable } from 'rxjs'
+import { Injectable } from '@nestjs/common'
 import { catchError, map } from 'rxjs'
-import type {
-  CallHandler,
-  ExecutionContext,
-  NestInterceptor,
-} from '@nestjs/common'
-import {
-  Injectable,
-} from '@nestjs/common'
+import type { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common'
+import type { Observable } from 'rxjs'
 import { responseSuccess } from '../utils/response'
 
 @Injectable()
@@ -23,8 +17,8 @@ export class ResponseInterceptor implements NestInterceptor {
           return data
         return responseSuccess(data)
       }),
-      catchError(async (err) => {
-        throw err
+      catchError(async (e) => {
+        throw e
       }),
     )
   }

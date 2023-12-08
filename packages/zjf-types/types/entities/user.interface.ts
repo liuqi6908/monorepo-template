@@ -1,84 +1,72 @@
-import { IRole } from './role.interface';
-import { ILogin } from './login.interface';
-import { IDesktop } from './desktop.interface';
-import { IDataRole } from './data-role.interface';
-import { IAccountDto } from '../dto/account.interface';
-import { IPasswordDto } from '../dto/password.interface';
-import { IDesktopQueue } from './desktop-queue.interface';
-import { IEmailOptionalDto } from '../dto/email.interface';
-import { ICreatedAt, IUpdatedAt } from "./_timestamp.interface";
-import { IVerificationHistory } from './verification.interface';
-import { INicknameOptionalDto } from '../dto/nickname.interface';
-import { IFileExportSmall } from './export/file-export-small.interface';
-import { IFileExportLarge } from './export/file-export-large.interface';
-import { IDesktopQueueHistory } from './desktop-queue-history.interface';
-import { IWork } from './work.interface';
+import { IRole } from './role.interface'
+import { ILogin } from './login.interface'
+import { IDesktop } from './desktop.interface'
+import { IDataRole } from './data-role.interface'
+import { IAccountDto } from '../dto/account.interface'
+import { IPasswordDto } from '../dto/password.interface'
+import { IDesktopQueue } from './desktop-queue.interface'
+import { IEmailOptionalDto } from '../dto/email.interface'
+import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import { IVerificationHistory } from './verification.interface'
+import { INicknameOptionalDto } from '../dto/nickname.interface'
+import { IFileExportSmall } from './export/file-export-small.interface'
+import { IFileExportLarge } from './export/file-export-large.interface'
+import { IDesktopQueueHistory } from './desktop-queue-history.interface'
+import { IWork } from './work.interface'
 
-export interface IUser extends 
-  ICreatedAt, 
-  IUpdatedAt, 
-  IPasswordDto, 
+/**
+ * 用户
+ */
+export interface IUser extends
+  ICreatedAt,
+  IUpdatedAt,
+  IPasswordDto,
   IAccountDto,
   IEmailOptionalDto,
   INicknameOptionalDto {
-
   /** 用户唯一标识（UUID, v4) */
-  id: string;
-
+  id: string
   /** 头像地址 */
-  avatar?: string;
+  avatar?: string
 
   /** 账号是否被删除 */
-  isDeleted?: boolean;
-
+  isDeleted?: boolean
   /** 是否是系统管理员 */
-  isSysAdmin: boolean;
-
-  /** 用户的角色信息 */
-  role?: IRole;
-
+  isSysAdmin: boolean
   /** 用户的数据下载角色信息 */
-  dataRole?: IDataRole;
-
-  /** 角色名称（角色信息外键） */
-  dataRoleName?: IDataRole['name']
-
-  /** 角色名称（角色信息外键） */
-  roleName?: string;
+  dataRole?: IDataRole
+  /** 数据下载角色Id（数据下载角色外键） */
+  dataRoleId?: IDataRole['id']
+  /** 用户的角色信息 */
+  role?: IRole
+  /** 业务角色Id（业务角色外键） */
+  roleId?: IRole['id']
 
   /** 认证信息，只有审核通过后才存在 */
-  verification?: IVerificationHistory;
-
+  verification?: IVerificationHistory
   /** 关联的认证信息 id */
-  verificationId?: IVerificationHistory['id'];
-
+  verificationId?: IVerificationHistory['id']
   /** 创建的认证信息 */
-  founderVerifications?: IVerificationHistory[];
-
+  founderVerifications?: IVerificationHistory[]
   /** 处理的认证信息 */
-  handlerVerifications?: IVerificationHistory[];
+  handlerVerifications?: IVerificationHistory[]
 
   /** 当前激活的所有的登录信息 */
   logins?: ILogin[]
 
   /** 当前使用中的云桌面信息 */
-  desktop?: IDesktop;
-
+  desktop?: IDesktop
   /** 曾使用过的云桌面列表 */
-  desktopHistories?: IDesktop[];
-
+  desktopHistories?: IDesktop[]
   /** 当前排队中的云桌面 */
-  desktopQueue?: IDesktopQueue;
-
+  desktopQueue?: IDesktopQueue
   /** 已结束的云桌面申请（历史记录） */
-  desktopQueueHistory?: IDesktopQueueHistory[];
+  desktopQueueHistory?: IDesktopQueueHistory[]
 
   /** 外发的小文件列表 */
   exportsSmall?: IFileExportSmall[]
-
   /** 外发的大文件列表 */
   exportsLarge?: IFileExportLarge[]
-
   /** 处理过（通过/驳回）的大文件外发列表 */
   exportsLargeHandled?: IFileExportLarge[]
 

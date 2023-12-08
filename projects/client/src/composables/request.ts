@@ -13,24 +13,6 @@ export function useRequest() {
     return { abortController, signal }
   }
 
-  function abort(controller: AbortController) {
-    if (requestControllers.has(controller)) {
-      controller.abort()
-      requestControllers.delete(controller)
-    }
-  }
-
-  function abortAll() {
-    for (const controller of requestControllers)
-      abort(controller)
-  }
-
-  //   function loadingWrapper<T>(promise: Promise<T>) {
-  //     const loading = ref(true)
-  //     promise.finally(() => loading.value = false)
-  //     return { loading, data: promise }
-  //   }
-
   async function $get<T = any>(url: string, data?: any, options?: AxiosRequestConfig, useCache = false): Promise<T> {
     const cacheKey = url + JSON.stringify(options)
     if (useCache && cache.has(cacheKey))
@@ -95,6 +77,7 @@ export function useRequest() {
     useCache && cache.set(cacheKey, response.data)
     return response.data
   }
+
   function $getUri(url: string, params?: any) {
     return $http.getUri({ url, params })
   }

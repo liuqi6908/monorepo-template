@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { objectPick } from '@vueuse/core'
+import { isClient, objectPick } from '@vueuse/core'
 import { getUsername } from 'shared/utils'
 
 defineProps<{ layout?: boolean }>()
@@ -68,9 +68,12 @@ useEventListener(avatarRef, 'click', (e: PointerEvent) => {
     userCenter.value.clientY = e.clientY + 40
     userDropdown.value = !userDropdown.value
   }
-  else { router.replace({ path: '/auth/login' }) }
+  else {
+    router.replace({ path: '/auth/login' })
+  }
 })
-if (typeof document !== 'undefined') {
+
+if (isClient) {
   useEventListener(document, 'click', (e) => {
     if (!avatarRef.value?.$el.contains(e.target))
       userDropdown.value = false
@@ -80,19 +83,19 @@ if (typeof document !== 'undefined') {
 
 <template>
   <main
-    full
-    text="center"
-    flex="~ col" items-center
+    full text-center
+    flex="~ col items-center"
   >
-    <div w-limited-1 bg-white>
+    <div w-limited-1 bg-grey-1>
       <div flex="~ row justify-between items-center">
-        <div my-4 flex="~ row">
-          <img mr-2 h-6 src="../assets/layout/cloud.png">
-          <div>
-            <span font-600 text-xl text-primary-1>
-              数智三农云科研平台 |
-            </span>
-            <span text-primary-1>CloudResearch</span>
+        <div my-4 flex="~ row gap-2 items-center" text-primary-1>
+          <img w-10 src="../assets/logo/logo.png">
+          <div font-600 text-2xl>
+            数智三农云科研平台
+          </div>
+          <div w-3px h-8 bg-primary-1 />
+          <div text-lg>
+            CloudResearch
           </div>
         </div>
 
@@ -150,7 +153,10 @@ if (typeof document !== 'undefined') {
             px8
             v-bind="objectPick(tab, ['to'])"
           >
-            <span text-primary-1 text-16px font-bold>{{ tab.label }}</span>
+            <span
+              text="primary-1 base" font-600
+              v-text="tab.label"
+            />
           </q-route-tab>
         </q-tabs>
       </div>

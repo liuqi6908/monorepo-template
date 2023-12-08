@@ -1,15 +1,14 @@
 import { Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
-import type { User } from 'src/entities/user'
-import type { OnModuleInit } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
+import { ModuleRef } from '@nestjs/core'
+import type { OnModuleInit } from '@nestjs/common'
+import type { User } from 'src/entities/user'
+
 import { DataField } from 'src/entities/data-field'
 import { DataDirectory } from 'src/entities/data-directory'
-
-import { ModuleRef } from '@nestjs/core'
 import { LogService } from '../log/log.service'
 import { RedisService } from '../redis/redis.service'
-
 import type { DataLog, LogDataAction } from '../log/log.service'
 
 @Injectable()
@@ -26,20 +25,12 @@ export class DataService implements OnModuleInit {
   ) {}
 
   async onModuleInit() {
-    // const roots = objectEntries(dataRootDescriptions).map(([id, name]) => {
-    //   const root = new DataDirectory()
-    //   root.id = id
-    //   root.nameZH = name
-    //   root.nameEN = name
-    //   root.level = 0
-    //   root.order = 0
-    //   root.rootId = id
-    //   return root
-    // })
-    // await this._dataDirRepo.save(roots)
     this.cacheDir()
   }
 
+  /**
+   * 缓存数据目录
+   */
   async cacheDir() {
     const client = await this._redisSrv.getClient(RedisType.DATA_DIR_CACHE)
 
@@ -51,6 +42,11 @@ export class DataService implements OnModuleInit {
     dirs.forEach(dir => client.set(dir.id, JSON.stringify(dir)))
   }
 
+  /**
+   * 获取数据目录的缓存
+   * @param id
+   * @returns
+   */
   async getDirCache(id: string) {
     const client = await this._redisSrv.getClient(RedisType.DATA_DIR_CACHE)
     const dir = await client.get(id)
@@ -62,6 +58,11 @@ export class DataService implements OnModuleInit {
     }
   }
 
+  /**
+   * 保存日志
+   * @param options
+   * @returns
+   */
   public async saveLog(
     options: {
       dataDirectory: DataDirectory
