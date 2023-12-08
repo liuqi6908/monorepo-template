@@ -32,7 +32,7 @@ export class VerificationHistory extends BaseTimeStamp implements IVerificationH
   idCard: string
 
   @ApiProperty({ description: '身份' })
-  @Column()
+  @Column({ nullable: true })
   dataRole?: string
 
   @ApiProperty({ description: '上传的附件列表，oss 相对地址列表' })
