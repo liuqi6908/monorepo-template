@@ -1,3 +1,4 @@
+import { decorate } from 'ts-mixer'
 import { ApiProperty } from '@nestjs/swagger'
 import { IsString } from 'class-validator'
 import type { INicknameDto, INicknameOptionalDto } from 'zjf-types'
@@ -18,11 +19,11 @@ function Decorator(optional = false) {
 }
 
 export class NicknameDto implements INicknameDto {
-  @Decorator(false)
+  @decorate(Decorator())
   nickname: string
 }
 
 export class NicknameOptionalDto implements INicknameOptionalDto {
-  @Decorator(true)
+  @decorate(Decorator(true))
   nickname?: string
 }

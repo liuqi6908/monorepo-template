@@ -4,9 +4,9 @@ import * as iconv from 'iconv-lite'
 import { In, IsNull, Not } from 'typeorm'
 import { objectPick } from '@catsjuice/utils'
 import { Body, Controller, Delete, Get, Param, Patch, Put, Query, Req } from '@nestjs/common'
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Throttle } from '@nestjs/throttler'
-import { ErrorCode, PermissionType, UploadType } from 'zjf-types'
+import { ErrorCode, LogDataAction, MinioBucket, PermissionType, UploadType } from 'zjf-types'
 import { isUTF8 } from 'zjf-utils'
 import type { FindOptionsWhere } from 'typeorm'
 
@@ -33,11 +33,6 @@ import { GetDataFieldListResDto } from './dto/get-field-list.res.dto'
 import { UpdateReferenceBodyDto } from './dto/update-reference.body.dto'
 import { UploadDirectoryQueryDto } from './dto/upload-directory.query.dto'
 import { UploadTableDataParamDto } from './dto/upload-table-data.param.dto'
-
-interface Node extends DataDirectory {
-  preview?: boolean
-  download?: boolean
-}
 
 @ApiTags('Data | 数据服务')
 @Controller('data')
@@ -73,8 +68,8 @@ export class DataController {
       this._dataSrv.cacheDir()
       return deleteRes.affected
     }
-    catch (err) {
-      const sqlErr = parseSqlError(err)
+    catch (e) {
+      const sqlErr = parseSqlError(e)
       if (sqlErr === SqlError.FOREIGN_KEY_CONSTRAINT_FAILS)
         responseError(ErrorCode.DATA_ROOT_CANNOT_DELETE_RELATED)
       responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
@@ -164,8 +159,8 @@ export class DataController {
       logger.log('upload success')
       this._dataSrv.cacheDir()
     }
-    catch (err) {
-      logger.error(err)
+    catch (e) {
+      logger.error(e)
       logger.error('upload failed')
     }
 
@@ -184,21 +179,9 @@ export class DataController {
     @Req() req: FastifyRequest,
   ) {
     const dataRole = req.dataRole
-    const nodes: Node[] = await this._dataSrv.dirRepo().find({
+    const nodes = await this._dataSrv.dirRepo().find({
       where: { rootId: param.dataRootId },
     })
-
-    // 判断表格的文件是否存在
-    for (const node of nodes) {
-      const { level, rootId, nameEN } = node
-      if (level === 4) {
-        const preview = `preview/${rootId}/${nameEN}.csv`
-        const download = `download/${rootId}/${nameEN}.zip`
-
-        node.preview = await this._fileSrv.stat('data', preview).then(() => true).catch(() => false)
-        node.download = await this._fileSrv.stat('data', download).then(() => true).catch(() => false)
-      }
-    }
 
     const allowedScopes = dataRole === '*'
       ? [param.dataRootId]
@@ -210,7 +193,6 @@ export class DataController {
 
   @ApiOperation({ summary: '更新引用规范' })
   @HasPermission(PermissionType.DATA_EDIT_REFERENCE)
-  @ApiParam({ name: 'dataDirectoryId', description: '数据目录的唯一标识' })
   @Patch('reference/:dataDirectoryId')
   public async updateReference(
     @Param() param: DataDirectoryIdDto,
@@ -225,7 +207,6 @@ export class DataController {
 
   @ApiOperation({ summary: '获取指定表格的字段说明' })
   @ApiSuccessResponse(GetDataFieldListResDto)
-  @ApiParam({ name: 'dataDirectoryId', description: '数据目录的唯一标识（目前仅 level4 表格可用）' })
   @DataRoleCheck('viewDirectories')
   @Get('fields/:dataDirectoryId')
   public async getFields(
@@ -249,7 +230,6 @@ export class DataController {
 
   @ApiOperation({ summary: '获取数据预览' })
   @DataRoleCheck('viewDirectories')
-  @ApiParam({ name: 'dataDirectoryId', description: '数据目录的id（请注意，只能传表级别，其他级别没有意义，会直接报错）' })
   @Get('preview/:dataDirectoryId')
   public async previewData(
     @Param() param: DataDirectoryIdDto,
@@ -259,7 +239,7 @@ export class DataController {
     const response = (code?: ErrorCode) => {
       this._dataSrv.saveLog({
         dataDirectory,
-        action: 'data:preview',
+        action: LogDataAction.PREVIEW,
         status: code || 0,
         user: req.raw.user,
         ip: req.raw.ip,
@@ -277,7 +257,7 @@ export class DataController {
       response(ErrorCode.PERMISSION_DENIED)
     const tableEn = dataDirectory.nameEN
     const path = `preview/${dataRootId}/${tableEn}.csv`
-    const readable = await this._fileSrv.download('data', path)
+    const readable = await this._fileSrv.download(MinioBucket.DATA, path)
     const buff = await new Promise<Buffer>((resolve, reject) => {
       const chunks: Buffer[] = []
       readable.on('data', chunk => chunks.push(chunk))
@@ -290,7 +270,7 @@ export class DataController {
       response()
       return data
     }
-    catch (err) {
+    catch (e) {
       response(ErrorCode.COMMON_UNEXPECTED_ERROR)
     }
   }
@@ -322,13 +302,12 @@ export class DataController {
     const name = arr.join('.')
     const saveFilename = `${name}.${ext}`
     const path = `${uploadType}/${dataRootId}/${saveFilename}`
-    await this._fileSrv.upload('data', path, buffer)
+    await this._fileSrv.upload(MinioBucket.DATA, path, buffer)
     return saveFilename
   }
 
   @ApiOperation({ summary: '获取数据下载链接' })
   @DataRoleCheck('downloadDirectories')
-  @ApiParam({ name: 'dataDirectoryId', description: '数据目录的id（请注意，只能传表级别，其他级别没有意义，会直接报错）' })
   @Get('download/link/:dataDirectoryId')
   public async getDownloadLink(
     @Param() param: DataDirectoryIdDto,
@@ -341,7 +320,7 @@ export class DataController {
     const response = (code?: ErrorCode) => {
       this._dataSrv.saveLog({
         dataDirectory,
-        action: 'data:download',
+        action: LogDataAction.DOWNLOAD,
         status: code || 0,
         user: req.raw.user,
         ip: req.raw.ip,
@@ -359,7 +338,7 @@ export class DataController {
     const tableEn = dataDirectory.nameEN
     const path = `download/${dataRootId}/${tableEn}.zip`
     try {
-      const url = await this._fileSrv.signUrl('data', path)
+      const url = await this._fileSrv.signUrl(MinioBucket.DATA, path)
       response()
       return url
     }
@@ -367,27 +346,6 @@ export class DataController {
       if (e.message.match(/Not Found/))
         responseError(ErrorCode.FILE_NOT_FOUND)
       throw e
-    }
-  }
-
-  @ApiOperation({ summary: '判断文件是否存在' })
-  @ApiParam({ name: 'dataDirectoryId', description: '数据目录的id（请注意，只能传表级别，其他级别没有意义，会直接报错）' })
-  @Get('isExist/:dataDirectoryId')
-  public async isExist(
-    @Param() param: DataDirectoryIdDto,
-  ) {
-    const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: param.dataDirectoryId } })
-    if (!dataDirectory || dataDirectory.level !== 4)
-      return false
-
-    const { rootId, nameEN } = dataDirectory
-    const path = `download/${rootId}/${nameEN}.zip`
-    try {
-      await this._fileSrv.stat('data', path)
-      return true
-    }
-    catch (err) {
-      return false
     }
   }
 }

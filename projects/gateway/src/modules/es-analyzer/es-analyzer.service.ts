@@ -54,7 +54,18 @@ export class EsAnalyzerService {
 
     const client = this.getClient()
     const query = this.dsl2query(dsl, options.mapping)
-    const body = { query, from, size: paginationOpt.pageSize }
+    const body = {
+      query,
+      from,
+      size: paginationOpt.pageSize,
+      sort: [
+        {
+          time: {
+            order: 'desc',
+          },
+        },
+      ],
+    }
     const esSearchRes = await client.search({ index: options.index, body })
     return {
       ...(await this._resolveSearchResult(

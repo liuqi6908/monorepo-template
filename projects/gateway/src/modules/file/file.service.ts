@@ -38,9 +38,6 @@ export class FileService {
 
   /**
    * 上传文件
-   * @param bucket
-   * @param path
-   * @param file
    */
   public async upload(bucket: keyof MinioConfig['bucket'], path: string, file: any) {
     if (!path) {
@@ -68,21 +65,38 @@ export class FileService {
 
   /**
    * 判断文件是否存在
-   * @param bucket
-   * @param path
-   * @returns
    */
   public async stat(bucket: keyof MinioConfig['bucket'], path: string) {
     const client = this.getClient()
     try {
       return await client.statObject(this._cfg.bucket[bucket], path)
     }
-    catch (err) {
-      if (err.message.match(/Not Found/))
+    catch (e) {
+      if (e.message.match(/Not Found/))
         responseError(ErrorCode.FILE_NOT_FOUND)
       else
-        responseError(ErrorCode.COMMON_UNEXPECTED_ERROR, err.message)
+        responseError(ErrorCode.COMMON_UNEXPECTED_ERROR, e.message)
     }
+  }
+
+  /**
+   * 获取指定文件夹下的文件列表
+   */
+  public async getFolderFiles(bucket: keyof MinioConfig['bucket'], path: string) {
+    const client = this.getClient()
+    const filesList = []
+    return new Promise((resolve, reject) => {
+      client.listObjects(this._cfg.bucket[bucket], path, true)
+        .on('data', (obj) => {
+          filesList.push(obj)
+        })
+        .on('error', (err) => {
+          reject(err)
+        })
+        .on('end', () => {
+          resolve(filesList)
+        })
+    })
   }
 
   private async _download(bucket: keyof MinioConfig['bucket'], path: string, range?: { start: number; end: number }) {
@@ -96,10 +110,6 @@ export class FileService {
 
   /**
    * 下载文件
-   * @param bucket
-   * @param path
-   * @param range
-   * @returns
    */
   public async download(
     bucket: keyof MinioConfig['bucket'],
@@ -130,18 +140,14 @@ export class FileService {
           })
       })
     }
-    catch (err) {
-      if (err.message.match(/The specified key does not exist/))
+    catch (e) {
+      if (e.message.match(/The specified key does not exist/))
         responseError(ErrorCode.FILE_NOT_FOUND)
     }
   }
 
   /**
    * 签发url
-   * @param bucket
-   * @param path
-   * @param expires
-   * @returns
    */
   public async signUrl(bucket: keyof MinioConfig['bucket'], path: string, expires = 60 * 10) {
     // 如果是下载数据，仅允许签发内网链接
@@ -161,8 +167,6 @@ export class FileService {
 
   /**
    * 删除文件
-   * @param bucket
-   * @param path
    */
   public async delete(bucket: keyof MinioConfig['bucket'], path: string) {
     const client = this.getClient()

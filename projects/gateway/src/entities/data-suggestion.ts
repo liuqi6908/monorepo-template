@@ -3,11 +3,14 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn, Unique } from 'typeo
 import type { IDataSuggestion } from 'zjf-types'
 import { User } from './user'
 import { DataDirectory } from './data-directory'
+import { BaseTimeStamp } from './_timestamp'
 
 // 每个用户对每个数据目录只能有一个建议
 @Unique('userDirectory', ['userId', 'dataDirectoryId'])
 @Entity()
-export class DataSuggestion implements IDataSuggestion {
+export class DataSuggestion
+  extends BaseTimeStamp
+  implements IDataSuggestion {
   @ApiProperty({ description: '数据建议的唯一标识' })
   @PrimaryGeneratedColumn('uuid')
   id: string

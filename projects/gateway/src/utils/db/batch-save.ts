@@ -33,7 +33,7 @@ export async function batchSave<T>(
           : c
       }))
     }
-    catch (err) {
+    catch (e) {
       restore && await repo.restore(chunk.map(c => c[idKey] as string))
     }
   }

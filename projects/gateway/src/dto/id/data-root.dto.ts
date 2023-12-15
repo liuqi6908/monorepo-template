@@ -1,3 +1,4 @@
+import { decorate } from 'ts-mixer'
 import { IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import type { IDataRootIdDto, IDataRootIdOptionalDto } from 'zjf-types'
@@ -13,11 +14,11 @@ function Decorator(optional = false) {
 }
 
 export class DataRootIdDto implements IDataRootIdDto {
-  @Decorator()
+  @decorate(Decorator())
   dataRootId: string
 }
 
 export class DataRootIdOptionalDto implements IDataRootIdOptionalDto {
-  @Decorator(true)
+  @decorate(Decorator(true))
   dataRootId?: DataRootIdDto['dataRootId']
 }

@@ -3,13 +3,13 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ModuleRef } from '@nestjs/core'
 import type { OnModuleInit } from '@nestjs/common'
+import type { ILog, LogDataAction } from 'zjf-types'
 import type { User } from 'src/entities/user'
 
 import { DataField } from 'src/entities/data-field'
 import { DataDirectory } from 'src/entities/data-directory'
 import { LogService } from '../log/log.service'
 import { RedisService } from '../redis/redis.service'
-import type { DataLog, LogDataAction } from '../log/log.service'
 
 @Injectable()
 export class DataService implements OnModuleInit {
@@ -77,21 +77,27 @@ export class DataService implements OnModuleInit {
       return
 
     const tableId = options.dataDirectory.id
-    const moduleId = options.dataDirectory.parentId
-    const subDbId = (await this.getDirCache(options.dataDirectory.parentId))?.parentId
-    const dbId = (await this.getDirCache(subDbId))?.parentId
-    const rootId = options.dataDirectory.rootId
+    const tableName = options.dataDirectory.nameZH
+    const module = await this.getDirCache(options.dataDirectory.parentId)
+    const subDb = await this.getDirCache(module?.parentId)
+    const db = await this.getDirCache(subDb?.parentId)
+    const root = await this.getDirCache(db?.parentId)
 
     const { dataDirectory, ...logOptions } = options
 
-    const log: DataLog = {
+    const log: ILog = {
       ...logOptions,
       target: {
         tableId,
-        moduleId,
-        subDbId,
-        dbId,
-        rootId,
+        tableName,
+        moduleId: module.id,
+        moduleName: module.nameZH,
+        subDbId: subDb.id,
+        subDbName: subDb.nameZH,
+        dbId: db.id,
+        dbName: db.nameZH,
+        rootId: root.id,
+        rootName: root.nameZH,
       },
       time: new Date(),
     }

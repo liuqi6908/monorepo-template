@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Req, Res, StreamableFile } from '@nestjs/common'
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
-import { ErrorCode, PermissionType } from 'zjf-types'
+import { ErrorCode, MinioBucket, PermissionType } from 'zjf-types'
 
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
@@ -26,7 +26,10 @@ export class ExportLgController {
   @ApiBody({ type: ExportFileBodyDto })
   @ApiFormData('file', { note: { type: 'string', description: '备注信息' } })
   @Put()
-  public async postExportLg(@Body() body: any, @Req() req: FastifyRequest) {
+  public async exportLg(
+    @Body() body: any,
+    @Req() req: FastifyRequest,
+  ) {
     const buffer = await body?.file?.toBuffer()
     if (!buffer)
       responseError(ErrorCode.EXPORT_FILE_NOT_EXISTS)
@@ -60,8 +63,8 @@ export class ExportLgController {
   @IsLogin()
   @Post('query/own')
   public async queryOwn(
-    @Body() body: QueryDto<FileExportLarge>,
     @Req() req: FastifyRequest,
+    @Body() body: QueryDto<FileExportLarge>,
   ) {
     const user = req.raw.user!
     body = body ?? {}
@@ -97,7 +100,7 @@ export class ExportLgController {
     const feLg = await this._exportSrv.lgRepo().findOne({ where: { id } })
     if (!feLg)
       responseError(ErrorCode.EXPORT_NOT_EXISTS)
-    const readable = await this._fileSrv.download('pri', feLg.path)
+    const readable = await this._fileSrv.download(MinioBucket.PRIVATE, feLg.path)
     res.header('Content-Disposition', `attachment; filename=${encodeURIComponent(feLg.fileName)}`)
     res.header('Content-Type', 'application/octet-stream')
     return new StreamableFile(readable)

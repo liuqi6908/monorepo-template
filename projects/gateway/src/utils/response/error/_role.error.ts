@@ -18,6 +18,10 @@ const _roleErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '权限名称已存在',
   },
+  [ErrorCode.ROLE_UPDATE_ROOT_ROLE]: {
+    httpStatus: HttpStatus.FORBIDDEN,
+    message: 'root用户的权限不可更改',
+  },
 }
 
 export default _roleErrors

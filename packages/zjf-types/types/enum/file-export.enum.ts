@@ -13,7 +13,7 @@ export enum FileExportLargeStatus {
 /**
  * 大文件外发审核状态的描述
  */
-export const fileExportLargeStatusDescriptions = {
+export const fileExportLargeStatusDescriptions: Record<FileExportLargeStatus, string> = {
   [FileExportLargeStatus.PENDING]: '待处理',
   [FileExportLargeStatus.APPROVED]: '已通过',
   [FileExportLargeStatus.REJECTED]: '已拒绝',

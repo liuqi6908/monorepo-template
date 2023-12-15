@@ -34,6 +34,10 @@ export enum ErrorCode {
   AUTH_ACCOUNT_REGISTERED = 20009,
   /** 账号未完成认证 */
   AUTH_NOT_VERIFIED = 200010,
+  /** 账号的密码不存在 */
+  AUTH_PASSWORD_IS_NULL = 200011,
+  /** 账号已被删除 */
+  AUTH_ACCOUNT_IS_DELETED = 200012,
 
   // ---- 权限相关错误码 ----
   /** 没有相关权限 */
@@ -138,6 +142,8 @@ export enum ErrorCode {
   ROLE_IN_USAGE = 120003,
   /** 权限名已存在 */
   ROLE_NAME_IS_EXIST = 120004,
+  /** 禁止更新root用户的权限 */
+  ROLE_UPDATE_ROOT_ROLE = 120005,
 }
 
 export type ErrorMessageCollection = Partial<

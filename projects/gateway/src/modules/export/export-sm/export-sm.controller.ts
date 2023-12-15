@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Req, Res, StreamableFile } from '@nestjs/common'
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
-import { ErrorCode, PermissionType } from 'zjf-types'
+import { ErrorCode, MinioBucket, PermissionType } from 'zjf-types'
 
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
@@ -21,12 +21,12 @@ export class ExportSmController {
     private readonly _fileSrv: FileService,
   ) {}
 
-  @ApiOperation({ summary: '小文件外发' })
+  @ApiOperation({ summary: '发起小文件外发的申请' })
   @IsLogin()
   @ApiBody({ type: ExportFileBodyDto })
   @ApiFormData('file', { note: { type: 'string', description: '备注信息' } })
   @Put()
-  public async exportSmall(
+  public async exportSm(
     @Body() body: any,
     @Req() req: FastifyRequest,
   ) {
@@ -54,7 +54,7 @@ export class ExportSmController {
   @ApiOperation({ summary: '查询自己的小文件外发历史记录' })
   @IsLogin()
   @Post('query/own')
-  public async queryOwnHistory(
+  public async queryOwn(
     @Req() req: FastifyRequest,
     @Body() body: QueryDto<FileExportSmall>,
   ) {
@@ -66,10 +66,10 @@ export class ExportSmController {
     return await getQuery(this._exportSrv.smRepo(), body || {})
   }
 
-  @ApiOperation({ summary: '查询全部的小文件外发历史记录' })
+  @ApiOperation({ summary: '查询全部的小文件外发记录' })
   @HasPermission(PermissionType.EXPORT_SM_QUERY_ALL)
-  @Post(['query/all', 'query'])
-  public async queryAllHistory(@Body() body: QueryDto<FileExportSmall>) {
+  @Post('query')
+  public async queryAll(@Body() body: QueryDto<FileExportSmall>) {
     return await getQuery(this._exportSrv.smRepo(), body || {})
   }
 
@@ -77,14 +77,14 @@ export class ExportSmController {
   @HasPermission(PermissionType.EXPORT_SM_QUERY_ALL)
   @ApiParam({ name: 'id', description: '小文件外发记录的唯一标识' })
   @Get('file/:id')
-  public async downloadFile(
+  public async downloadExportSmFile(
     @Res({ passthrough: true }) res: any,
     @Param('id') id: string,
   ) {
     const feSm = await this._exportSrv.smRepo().findOne({ where: { id } })
     if (!feSm?.path)
       responseError(ErrorCode.EXPORT_FILE_NOT_EXISTS)
-    const readable = await this._fileSrv.download('pri', feSm.path)
+    const readable = await this._fileSrv.download(MinioBucket.PRIVATE, feSm.path)
     res.header('Content-Disposition', `attachment; filename=${encodeURIComponent(feSm.fileName)}`)
     res.header('Content-Type', 'application/octet-stream')
     return new StreamableFile(readable)

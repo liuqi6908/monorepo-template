@@ -1,7 +1,7 @@
 import { IUser } from '../../entities/user.interface'
-import { IPasswordDto } from '../../dto/password.interface'
+import { IPasswordOptionalDto } from '../../dto/password.interface'
 import { IAccountDto } from '../../dto/account.interface'
-import { IEmailOptionalDto } from '../../dto/email.interface'
+import { IEmailDto } from '../../dto/email.interface'
 import { INicknameOptionalDto } from '../../dto/nickname.interface'
 
 /**
@@ -9,9 +9,9 @@ import { INicknameOptionalDto } from '../../dto/nickname.interface'
  * 请求参数
  */
 export interface ICreateUserBodyDto extends
-  IPasswordDto,
   IAccountDto,
-  IEmailOptionalDto,
+  IEmailDto,
+  IPasswordOptionalDto,
   INicknameOptionalDto {}
 
 /**

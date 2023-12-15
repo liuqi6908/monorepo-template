@@ -2,7 +2,6 @@ import { decorate } from 'ts-mixer'
 import { IsUUID } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import type { IVerificationIdDto, IVerificationIdOptionalDto } from 'zjf-types'
-import type { VerificationHistory } from 'src/entities/verification'
 import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
 
 function Decorator(optional = false) {
@@ -14,7 +13,7 @@ function Decorator(optional = false) {
 
 export class VerificationIdDto implements IVerificationIdDto {
   @decorate(Decorator())
-  verificationId: VerificationHistory['id']
+  verificationId: string
 }
 
 export class VerificationIdOptionalDto implements IVerificationIdOptionalDto {

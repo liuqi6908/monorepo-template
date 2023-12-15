@@ -1,10 +1,11 @@
+import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 import { IUser } from './user.interface'
 import { IDataDirectory } from './data-directory.interface'
 
 /**
  * 数据采购建议
  */
-export interface IDataSuggestion {
+export interface IDataSuggestion extends ICreatedAt, IUpdatedAt {
   /** 推荐的唯一标识 */
   id: string
   /** 推荐数据目录信息 */

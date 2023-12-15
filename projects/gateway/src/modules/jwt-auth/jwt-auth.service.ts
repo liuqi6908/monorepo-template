@@ -60,8 +60,8 @@ export class JwtAuthService {
       if (!exists)
         return
     }
-    catch (err) {
-      // this.logger.error('从redis读取access_token时出现错误', err);
+    catch (e) {
+      // this.logger.error('从redis读取access_token时出现错误', e);
       return
     }
 
@@ -86,7 +86,7 @@ export class JwtAuthService {
       // 删除数据库中存储的 token
       this._authSrv.repo().delete({ id: md5(token) })
     }
-    catch (err) {
+    catch (e) {
       responseError(ErrorCode.AUTH_LOGIN_EXPIRED)
     }
     client.del(token)

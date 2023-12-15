@@ -3,7 +3,7 @@ import { ILogin } from './login.interface'
 import { IDesktop } from './desktop.interface'
 import { IDataRole } from './data-role.interface'
 import { IAccountDto } from '../dto/account.interface'
-import { IPasswordDto } from '../dto/password.interface'
+import { IPasswordOptionalDto } from '../dto/password.interface'
 import { IDesktopQueue } from './desktop-queue.interface'
 import { IEmailOptionalDto } from '../dto/email.interface'
 import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
@@ -20,7 +20,7 @@ import { IWork } from './work.interface'
 export interface IUser extends
   ICreatedAt,
   IUpdatedAt,
-  IPasswordDto,
+  IPasswordOptionalDto,
   IAccountDto,
   IEmailOptionalDto,
   INicknameOptionalDto {

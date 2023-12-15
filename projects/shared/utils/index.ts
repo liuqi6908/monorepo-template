@@ -1,1 +1,2 @@
-export * from "./username"
+export * from './rich-text.processor'
+export * from './username'

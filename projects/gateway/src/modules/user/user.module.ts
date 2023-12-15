@@ -5,6 +5,7 @@ import { User } from 'src/entities/user'
 
 import { CodeModule } from '../code/code.module'
 import { AuthModule } from '../auth/auth.module'
+import { DesktopModule } from '../desktop/desktop.module'
 import { UserService } from './user.service'
 import { UserController } from './user.controller'
 
@@ -12,6 +13,7 @@ import { UserController } from './user.controller'
   imports: [
     TypeOrmModule.forFeature([User, UserDeleted]),
     CodeModule,
+    forwardRef(() => DesktopModule),
     forwardRef(() => AuthModule),
   ],
   providers: [UserService],

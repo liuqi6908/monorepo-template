@@ -42,6 +42,14 @@ const _authErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '账号未完成认证',
   },
+  [ErrorCode.AUTH_PASSWORD_IS_NULL]: {
+    httpStatus: HttpStatus.FORBIDDEN,
+    message: '账号密码不存在',
+  },
+  [ErrorCode.AUTH_ACCOUNT_IS_DELETED]: {
+    httpStatus: HttpStatus.FORBIDDEN,
+    message: '账号已被删除',
+  },
 }
 
 export default _authErrors

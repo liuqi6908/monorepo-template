@@ -1,5 +1,6 @@
 import { registerAs } from '@nestjs/config'
 import { parseBoolRaw } from 'zjf-utils'
+import type { MinioBucket } from 'zjf-types'
 
 export interface MinioConfig {
   endpoint: {
@@ -10,11 +11,7 @@ export interface MinioConfig {
   ak: string
   sk: string
   useSSL?: boolean
-  bucket: {
-    pub: string
-    pri: string
-    data: string
-  }
+  bucket: Record<MinioBucket, string>
 }
 
 export default registerAs('minio', (): MinioConfig => {

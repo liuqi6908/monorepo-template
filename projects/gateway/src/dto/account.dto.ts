@@ -29,7 +29,7 @@ function Decorator(optional = false) {
 
 export class AccountDto implements IAccountDto {
   /** 账号 */
-  @decorate(Decorator(false))
+  @decorate(Decorator())
   account: string
 }
 

@@ -1,10 +1,14 @@
 import { objectOmit } from '@catsjuice/utils'
 import { Throttle } from '@nestjs/throttler'
+import { ConfigService } from '@nestjs/config'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Query, Req, forwardRef } from '@nestjs/common'
 import { CodeAction, ErrorCode, PermissionType } from 'zjf-types'
+import { In } from 'typeorm'
 
+import type { SysAdmin } from 'src/config/_sa.config'
 import type { User } from 'src/entities/user'
+import { UserIdDto } from 'src/dto/id/user.dto'
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
 import { IsLogin } from 'src/guards/login.guard'
@@ -18,6 +22,7 @@ import { responseParamsError } from 'src/utils/response/validate-exception-facto
 import { emailAccountAtLeastOne } from 'src/utils/validator/account-phone-at-least-one'
 
 import { AuthService } from '../auth/auth.service'
+import { DesktopService } from '../desktop/desktop.service'
 import { UserService } from './user.service'
 import { UserProfileResponseDto } from './dto/user.res.dto'
 import { CreateUserResDto } from './dto/create-user.res.dto'
@@ -38,14 +43,47 @@ export class UserController {
     private readonly _userSrv: UserService,
     @Inject(forwardRef(() => AuthService))
     private readonly _authSrv: AuthService,
+    private readonly _cfgSrv: ConfigService,
+    private readonly _deskSrv: DesktopService,
   ) {}
 
   @ApiOperation({ summary: '创建一个新用户' })
   @ApiSuccessResponse(CreateUserResDto)
-  @Put('create')
+  @HasPermission(PermissionType.ACCOUNT_CREATE)
+  @Put()
   public async createUser(@Body() body: CreateUserBodyDto) {
     emailAccountAtLeastOne(body)
     return await this._userSrv.insertUser(body)
+  }
+
+  @ApiOperation({ summary: '删除指定用户' })
+  @HasPermission(PermissionType.ACCOUNT_DELETE)
+  @Delete(':userId')
+  public async deleteUser(@Param() param: UserIdDto) {
+    const desktop = await this._deskSrv.repo().findOne({
+      where: {
+        userId: param.userId,
+        disabled: false,
+      },
+    })
+    if (desktop)
+      responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
+    const updateRes = await this._userSrv.repo().update(
+      { id: param.userId },
+      { isDeleted: true },
+    )
+    return updateRes.affected > 0
+  }
+
+  @ApiOperation({ summary: '恢复指定用户' })
+  @HasPermission(PermissionType.ACCOUNT_UPDATE)
+  @Patch(':userId')
+  public async recoverUser(@Param() param: UserIdDto) {
+    const updateRes = this._userSrv.repo().update(
+      { id: param.userId },
+      { isDeleted: false },
+    )
+    return (await updateRes).affected > 0
   }
 
   @ApiOperation({ summary: '获取当前登录用户的信息' })
@@ -56,17 +94,26 @@ export class UserController {
     @Query() query: GetProfileOwnQueryDto,
     @Req() req: FastifyRequest,
   ) {
-    const omitFields: Array<keyof User> = ['password', 'isDeleted', 'isSysAdmin']
+    const omitFields: Array<keyof User> = ['isDeleted', 'isSysAdmin']
     if (!query.relation) {
-      return objectOmit(
+      const user = objectOmit(
         (req.raw?.user || {}) as User, omitFields,
       )
+      return {
+        ...user,
+        password: !!req.raw?.user.password,
+      }
     }
     try {
-      const user = await this._userSrv.findById(req.raw?.user?.id, {
-        relations: query.relation as any,
-      })
-      return objectOmit(user, omitFields)
+      const user = objectOmit(
+        await this._userSrv.findById(req.raw?.user?.id, {
+          relations: query.relation as any,
+        }), omitFields,
+      )
+      return {
+        ...user,
+        password: !!req.raw?.user.password,
+      }
     }
     catch (e) {
       const sqlError = parseSqlError(e)
@@ -126,7 +173,7 @@ export class UserController {
   }
 
   @Throttle(1, 10)
-  @ApiOperation({ summary: '通过原密码修改密码（需要登录）' })
+  @ApiOperation({ summary: '通过原密码修改密码（需要登录，账号未设置密码可直接修改）' })
   @ApiSuccessResponse(UniversalOperationResDto)
   @IsLogin()
   @Patch('own/password/old')
@@ -135,8 +182,8 @@ export class UserController {
     @Req() req: FastifyRequest,
   ) {
     const user = req.raw.user!
-    const correct = await comparePassword(body.oldPassword, user.password)
-    if (!correct)
+    const correct = await comparePassword(body.oldPassword || '', user.password || '')
+    if (!!user.password && !correct)
       responseError(ErrorCode.AUTH_PASSWORD_NOT_MATCHED)
     await this._userSrv.updateUserPassword({ id: user.id }, body.newPassword)
     // 登出当前用户的所有登录会话
@@ -172,6 +219,13 @@ export class UserController {
   public async updateUserRole(@Param() param: UpdateUserRoleParamDto) {
     const { userId } = param
     const roleId = param.roleId || null
+    const { list } = this._cfgSrv.get<{ list: SysAdmin[] }>('sa')
+    const user = await this._userSrv.repo().findOne({ where: { id: userId } })
+    if (!user?.account)
+      responseError(ErrorCode.USER_NOT_FOUND)
+    if (list.some(v => v.account === user.account))
+      responseError(ErrorCode.ROLE_UPDATE_ROOT_ROLE)
+
     try {
       return (await this._userSrv.repo().update({ id: userId }, { roleId })).affected
     }
@@ -208,5 +262,17 @@ export class UserController {
         }])
       }
     }
+  }
+
+  @ApiOperation({ summary: '批量清空用户密码' })
+  @HasPermission(PermissionType.ACCOUNT_UPDATE)
+  @Delete('delete/password')
+  public async batchDeleteUserPassword(@Body() body: UserIdDto[]) {
+    const updateRes = await this._userSrv.qb()
+      .update({ password: null })
+      .where({ id: In(body) })
+      .execute()
+
+    return updateRes.affected
   }
 }

@@ -147,8 +147,8 @@ export async function getQuery<Entity>(
       data,
     }
   }
-  catch (err) {
-    const matchRes = err.message.match(/Relation with property path (.*) in entity was not found/)
+  catch (e) {
+    const matchRes = e.message.match(/Relation with property path (.*) in entity was not found/)
     if (matchRes) {
       const property = matchRes[1]
       responseParamsError([{
@@ -156,6 +156,6 @@ export async function getQuery<Entity>(
         constraints: { [property]: '关联不存在，请检查' },
       }])
     }
-    responseError(ErrorCode.COMMON_UNEXPECTED_ERROR, err.message)
+    responseError(ErrorCode.COMMON_UNEXPECTED_ERROR, e.message)
   }
 }

@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, forwardRef } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { FileExportLarge } from 'src/entities/export/file-export-large.entity'
@@ -18,10 +18,10 @@ import { ExportLgController } from './export-lg/export-lg.controller'
       FileExportLarge,
       FileExportSmall,
     ]),
+    forwardRef(() => DesktopModule),
     FileModule,
     EmailModule,
     NotifyModule,
-    DesktopModule,
   ],
   providers: [ExportService],
   controllers: [ExportSmController, ExportLgController],

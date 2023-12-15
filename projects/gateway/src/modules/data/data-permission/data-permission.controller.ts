@@ -51,7 +51,7 @@ export class DataPermissionController {
   @ApiQuery({ name: 'permission', description: '是否关联查询所有的权限列表，传入任意值即可' })
   @Get('data-role/list')
   public async listDataRole(
-    @Query('permission') permission: any,
+    @Query('permission') permission: string,
   ) {
     return (await this._dataPSrv.repo().find({
       relations: permission

@@ -15,7 +15,7 @@ export enum VerificationStatus {
 /**
  * 认证状态的描述
  */
-export const verificationStatusDescriptions = {
+export const verificationStatusDescriptions: Record<VerificationStatus, string> = {
   [VerificationStatus.PENDING]: '审核中',
   [VerificationStatus.APPROVED]: '已通过',
   [VerificationStatus.REJECTED]: '已拒绝',

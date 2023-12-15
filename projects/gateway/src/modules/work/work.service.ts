@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
-import { ErrorCode } from 'zjf-types'
+import { ErrorCode, MinioBucket } from 'zjf-types'
 
 import { Work } from 'src/entities/work'
 import type { User } from 'src/entities/user'
@@ -32,7 +32,7 @@ export class WorkService {
       title,
       author,
     })
-    await this._fileSrv.upload('pri', path, file)
+    await this._fileSrv.upload(MinioBucket.PRIVATE, path, file)
     await this._workRepo.save(work)
     return work
   }
@@ -43,14 +43,14 @@ export class WorkService {
       responseError(ErrorCode.FILE_NOT_FOUND)
     const path = `work/${record.userId}/${record.filename}`
     return {
-      stream: await this._fileSrv.download('pri', path),
+      stream: await this._fileSrv.download(MinioBucket.PRIVATE, path),
       filename: record.filename,
     }
   }
 
   public async delete(record) {
     const path = `work/${record.userId}/${record.filename}`
-    await this._fileSrv.delete('pri', path)
+    await this._fileSrv.delete(MinioBucket.PRIVATE, path)
     const deleteRes = await this._workRepo.delete({ id: record.id })
     return deleteRes.affected > 0
   }
@@ -68,10 +68,10 @@ export class WorkService {
       record.author = author
     if (file) {
       const oldFilename = record.filename
-      await this._fileSrv.delete('pri', `work/${record.userId}/${oldFilename}`)
+      await this._fileSrv.delete(MinioBucket.PRIVATE, `work/${record.userId}/${oldFilename}`)
       const newFilename = timestampFilename(filename)
       const path = `work/${record.userId}/${newFilename}`
-      await this._fileSrv.upload('pri', path, file)
+      await this._fileSrv.upload(MinioBucket.PRIVATE, path, file)
       record.filename = newFilename
     }
     return await this._workRepo.save(record)

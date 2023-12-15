@@ -10,6 +10,7 @@ import {
   EXPORT_DFT_SM_SIZE_LIMIT,
   ErrorCode,
   FileExportLargeStatus,
+  MinioBucket,
 } from 'zjf-types'
 
 import type { User } from 'src/entities/user'
@@ -61,7 +62,7 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'file' })
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'export' })
     const {
       sizeLimitSm = EXPORT_DFT_SM_SIZE_LIMIT,
       dailyLimit = EXPORT_DFT_SM_DAILY_LIMIT,
@@ -111,7 +112,7 @@ export class ExportService {
         fileSize,
         createdAt: feSm.createdAt,
       }),
-      this._fileSrv.upload('pri', path, buffer),
+      this._fileSrv.upload(MinioBucket.PRIVATE, path, buffer),
     ])
     if (feSm)
       feSm.desktop = desktop
@@ -137,7 +138,7 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'file' })
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'export' })
     const { sizeLimitLg = EXPORT_DFT_LG_SIZE_LIMIT } = sysCfg?.export || {}
     // 检查文件尺寸
     if (fileSize > sizeLimitLg)
@@ -161,7 +162,7 @@ export class ExportService {
     })
     const [desktop] = await Promise.all([
       this._desktopSrv.findActiveDesktopByIP(ip),
-      this._fileSrv.upload('pri', path, buffer),
+      this._fileSrv.upload(MinioBucket.PRIVATE, path, buffer),
     ])
     if (desktop)
       feLg.desktop = desktop
@@ -183,7 +184,7 @@ export class ExportService {
     feLg.status = FileExportLargeStatus.APPROVED
     feLg.handler = handler
     feLg.handleAt = new Date()
-    const readable = await this._fileSrv.download('pri', feLg.path)
+    const readable = await this._fileSrv.download(MinioBucket.PRIVATE, feLg.path)
     const content = await readable2buffer(readable)
     await this._sendEmailWithAttachment({
       content,
@@ -250,7 +251,7 @@ export class ExportService {
     fileSize: number
     createdAt?: Date | string
   }) {
-    const { email, user, note, filename, content, contentType, fileSize, createdAt } = options
+    const { email, note, filename, content, contentType, fileSize, createdAt } = options
     // const name = user.verification?.name || user.nickname || user.account || user.id
     const readableFileSize = formatFileSize(fileSize)
 

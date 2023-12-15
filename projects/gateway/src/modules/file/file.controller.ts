@@ -1,7 +1,7 @@
-import { Body, Controller, Get, Headers, Param, Put, Query, Req, Res, StreamableFile } from '@nestjs/common'
+import { Body, Controller, Get, Headers, Param, Post, Put, Query, Req, Res, StreamableFile } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { SkipThrottle } from '@nestjs/throttler'
-import { ErrorCode, PermissionType } from 'zjf-types'
+import { ErrorCode, MinioBucket, PermissionType } from 'zjf-types'
 
 import { IsLogin } from 'src/guards/login.guard'
 import { FilenameDto } from 'src/dto/filename.dto'
@@ -15,6 +15,7 @@ import { ApiFormData } from '../../decorators/api/api-form-data'
 import { FileService } from './file.service'
 import { UploadDataIntroParamDto } from './dto/upload-data-intro.param.dto'
 import { GetVerifyAttachmentParamDto } from './dto/get-verify-attachment.param.dto'
+import { FileServesBodyDto } from './dto/file-serves.body.dto'
 
 @SkipThrottle()
 @ApiTags('File | 文件服务')
@@ -29,7 +30,7 @@ export class FileController {
     @Query() query: FilePathDto,
     @Body() body: any,
   ) {
-    await this._fileSrv.upload('pub', query.path, await body?.file?.toBuffer())
+    await this._fileSrv.upload(MinioBucket.PUBLIC, query.path, await body?.file?.toBuffer())
     return query.path
   }
 
@@ -40,7 +41,7 @@ export class FileController {
     @Query() query: FilePathDto,
     @Res({ passthrough: true }) res: any,
   ): Promise<StreamableFile> {
-    const stat = await this._fileSrv.stat('pub', query.path)
+    const stat = await this._fileSrv.stat(MinioBucket.PUBLIC, query.path)
     const size = stat.size
     let _range
     if (range) {
@@ -48,7 +49,7 @@ export class FileController {
       const end = size - 1
       _range = { start, end }
     }
-    const file = await this._fileSrv.download('pub', query.path, _range)
+    const file = await this._fileSrv.download(MinioBucket.PUBLIC, query.path, _range)
     const filename = query.path.split('/').pop()
     const ext = filename.split('.').pop()
     if (range) {
@@ -87,7 +88,7 @@ export class FileController {
     const name = arr.join('.')
     const saveFilename = `${name}_${Date.now()}.${ext}`
     const path = `verify/${user.id}/${saveFilename}`
-    await this._fileSrv.upload('pri', path, buffer)
+    await this._fileSrv.upload(MinioBucket.PRIVATE, path, buffer)
     return saveFilename
   }
 
@@ -106,7 +107,7 @@ export class FileController {
       responseError(ErrorCode.PERMISSION_DENIED)
 
     const path = `verify/${param.userId}/${param.filename}`
-    return new StreamableFile(await this._fileSrv.download('pri', path))
+    return new StreamableFile(await this._fileSrv.download(MinioBucket.PRIVATE, path))
   }
 
   @ApiOperation({
@@ -130,7 +131,7 @@ export class FileController {
     const name = arr.join('.')
     const saveFilename = `${name}_${Date.now()}.${ext}`
     const path = `desktop-request/${user.id}/${saveFilename}`
-    await this._fileSrv.upload('pri', path, buffer)
+    await this._fileSrv.upload(MinioBucket.PRIVATE, path, buffer)
     return saveFilename
   }
 
@@ -149,7 +150,7 @@ export class FileController {
       responseError(ErrorCode.PERMISSION_DENIED)
 
     const path = `desktop-request/${param.userId}/${param.filename}`
-    return new StreamableFile(await this._fileSrv.download('pri', path))
+    return new StreamableFile(await this._fileSrv.download(MinioBucket.PRIVATE, path))
   }
 
   @ApiOperation({
@@ -174,7 +175,7 @@ export class FileController {
     const name = arr.join('.')
     const saveFilename = `${name}.${ext}`
     const path = `db/intro/${param.dataRootId}/${saveFilename}`
-    await this._fileSrv.upload('pri', path, buffer)
+    await this._fileSrv.upload(MinioBucket.PRIVATE, path, buffer)
     return saveFilename
   }
 
@@ -196,6 +197,24 @@ export class FileController {
       responseError(ErrorCode.PERMISSION_DENIED)
 
     const path = `db/intro/${param.dataRootId}/${param.filename}`
-    return new StreamableFile(await this._fileSrv.download('pri', path))
+    return new StreamableFile(await this._fileSrv.download(MinioBucket.PRIVATE, path))
+  }
+
+  @ApiOperation({ summary: '判断文件是否存在' })
+  @Post('is')
+  public async isExist(@Body() body: FileServesBodyDto) {
+    try {
+      await this._fileSrv.stat(body.bucket, body.path)
+      return true
+    }
+    catch (e) {
+      return false
+    }
+  }
+
+  @ApiOperation({ summary: '获取指定文件夹下的文件列表' })
+  @Post('files')
+  public async getFolderFiles(@Body() body: FileServesBodyDto) {
+    return await this._fileSrv.getFolderFiles(body.bucket, body.path)
   }
 }

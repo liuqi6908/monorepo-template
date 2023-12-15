@@ -21,9 +21,6 @@ export class DesktopRequestService {
 
   /**
    * 创建一个云桌面使用申请
-   * @param userId
-   * @param info
-   * @returns
    */
   public async createRequest(
     userId: User['id'],
@@ -45,10 +42,10 @@ export class DesktopRequestService {
           return
         this._notifySrv.notifyNewDesktopRequest(queue)
       })
-      return insertRes.identifiers[0]
+      return insertRes.identifiers[0].userId
     }
-    catch (err) {
-      const sqlErr = parseSqlError(err)
+    catch (e) {
+      const sqlErr = parseSqlError(e)
       if (sqlErr === SqlError.DUPLICATE_ENTRY) {
         const desktopQueue = await this._desktopQueueRepo.findOne({
           where: { userId },
@@ -61,6 +58,45 @@ export class DesktopRequestService {
               : responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
         }
         responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
+      }
+    }
+  }
+
+  /**
+   * 创建一个云桌面用户使用申请（管理员操作）
+   */
+  public async createUserRequest(
+    userId: User['id'],
+    duration: number,
+  ) {
+    try {
+      const insertRes = await this._desktopQueueRepo.insert({
+        userId,
+        attachments: [],
+        requestAt: new Date(),
+        queueAt: new Date(),
+        status: DesktopQueueStatus.QUEUEING,
+        duration,
+      })
+      return insertRes.identifiers[0].userId
+    }
+    catch (e) {
+      const sqlErr = parseSqlError(e)
+      if (sqlErr === SqlError.DUPLICATE_ENTRY) {
+        const desktopQueue = await this._desktopQueueRepo.findOne({
+          where: { userId },
+        })
+        if (desktopQueue) {
+          desktopQueue.status === DesktopQueueStatus.PENDING
+            ? responseError(ErrorCode.DESKTOP_REQUEST_PENDING_EXISTS)
+            : desktopQueue.status === DesktopQueueStatus.QUEUEING
+              ? responseError(ErrorCode.DESKTOP_REQUEST_QUEUE_EXISTS)
+              : responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
+        }
+        responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
+      }
+      else if (sqlErr === SqlError.FOREIGN_KEY_CONSTRAINT_FAILS) {
+        responseError(ErrorCode.USER_NOT_FOUND)
       }
     }
   }

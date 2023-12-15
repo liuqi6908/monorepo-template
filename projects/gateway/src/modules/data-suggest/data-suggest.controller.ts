@@ -37,10 +37,10 @@ export class DataSuggestController {
       })
       return insertRes.identifiers[0].id
     }
-    catch (err) {
-      if (err.message.match(/FOREIGN\s+KEY\s+\(`dataDirectoryId`\)\s+REFERENCES/))
+    catch (e) {
+      if (e.message.match(/FOREIGN\s+KEY\s+\(`dataDirectoryId`\)\s+REFERENCES/))
         responseError(ErrorCode.DATA_DIRECTORY_NOT_FOUND)
-      const sqlError = parseSqlError(err)
+      const sqlError = parseSqlError(e)
       if (sqlError === SqlError.DUPLICATE_ENTRY)
         responseError(ErrorCode.DATA_SUGGEST_DUPLICATED)
 
@@ -63,7 +63,7 @@ export class DataSuggestController {
       })
       return true
     }
-    catch (err) {
+    catch (e) {
       responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
     }
   }

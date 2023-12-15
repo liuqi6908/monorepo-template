@@ -1,6 +1,7 @@
 import { ErrorCode } from 'zjf-types'
 import { Injectable, UseGuards, applyDecorators } from '@nestjs/common'
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
+import { ApiBearerAuth } from '@nestjs/swagger'
 import { ApiErrorResponse, responseError } from 'src/utils/response'
 
 import { LoginGuard } from './login.guard'
@@ -23,6 +24,7 @@ export class VerifiedRequiredGuard
 
 export function VerifiedRequired() {
   return applyDecorators(
+    ApiBearerAuth(),
     ApiErrorResponse(ErrorCode.AUTH_NOT_VERIFIED),
     UseGuards(VerifiedRequiredGuard),
   )

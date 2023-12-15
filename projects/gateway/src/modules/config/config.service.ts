@@ -15,7 +15,6 @@ export class SysConfigService {
   async getConfig(param: VersionDto) {
     return (await this._sysCfgRepo.findOne({
       where: { version: param.version },
-      select: ['config'],
     }))?.config
   }
 

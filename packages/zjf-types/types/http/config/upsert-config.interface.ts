@@ -1,6 +1,14 @@
-import { ISysConfig } from '../../entities/sys-config.interface'
+import { IExportConfigDto, IUploadWorkConfigDto, IDesktopRequestConfigDto } from '../../dto/config.interface'
 
-export type IUpsertConfigBodyDto = ISysConfig['export'] & {
+/**
+ * 创建/更新 全局配置
+ * 请求参数
+ */
+export interface IUpsertConfigBodyDto
+  extends
+  IExportConfigDto,
+  IUploadWorkConfigDto,
+  IDesktopRequestConfigDto {
   /** 配置版本 */
   version: string
 }

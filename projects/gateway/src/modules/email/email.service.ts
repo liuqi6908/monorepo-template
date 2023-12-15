@@ -39,10 +39,15 @@ export class EmailService implements OnModuleInit {
    * @returns
    */
   send(mailOptions: nodemailer.SendMailOptions) {
-    return this.transporter.sendMail({
-      ...mailOptions,
-      from: `${APP_NAME}系统通知 <${this._mailCfg?.auth?.user}>`,
-    })
+    try {
+      this.transporter.sendMail({
+        ...mailOptions,
+        from: `${APP_NAME}系统通知 <${this._mailCfg?.auth?.user}>`,
+      })
+    }
+    catch (e) {
+      console.error(e)
+    }
   }
 
   /**
@@ -89,7 +94,7 @@ export class EmailService implements OnModuleInit {
       to: email,
       subject,
       html,
-    }).catch(console.error)
+    })
     return { bizId }
   }
 

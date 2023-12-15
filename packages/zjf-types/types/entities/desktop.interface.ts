@@ -1,7 +1,6 @@
 import { IUser } from './user.interface'
 import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
-
 /**
  * 云桌面
  */

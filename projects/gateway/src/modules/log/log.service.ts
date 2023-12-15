@@ -1,12 +1,17 @@
 import { Queue } from 'bull'
 import { In } from 'typeorm'
-import { ErrorCode } from 'zjf-types'
 import { objectPick } from '@catsjuice/utils'
 import { ModuleRef } from '@nestjs/core'
 import { InjectQueue } from '@nestjs/bull'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import {
+  ErrorCode,
+  logDataActionDescriptions,
+  logTargetDescriptions,
+} from 'zjf-types'
 
+import type { ILog } from 'zjf-types'
 import type { OnModuleInit } from '@nestjs/common'
 import type { User } from 'src/entities/user'
 import type { ESConfig } from 'src/config/_es.config'
@@ -19,32 +24,6 @@ import { DataService } from '../data/data.service'
 import { EsAnalyzerService } from '../es-analyzer/es-analyzer.service'
 import { logDataMapping } from '../../config/mapping/log-data.mapping'
 import { dimensions } from './config/dimension'
-
-export type LogDataAction = 'data:preview' | 'data:download'
-const logActions: Record<LogDataAction, string> = {
-  'data:preview': '预览数据',
-  'data:download': '下载数据',
-}
-
-export type LogTarget = 'data'
-const logTargets: Record<LogTarget, string> = {
-  data: '数据',
-}
-
-export interface DataLog {
-  user?: Partial<User>
-  action: LogDataAction
-  ip: string
-  status: number
-  target: {
-    rootId: string
-    dbId: string
-    subDbId: string
-    moduleId: string
-    tableId: string
-  }
-  time: Date
-}
 
 @Injectable()
 export class LogService implements OnModuleInit {
@@ -73,7 +52,7 @@ export class LogService implements OnModuleInit {
    * @param log
    * @returns
    */
-  public async doLog(log: DataLog) {
+  public async doLog(log: ILog) {
     const client = this._esAnalyzerSrv.getClient()
     const index = this._cfgSrv.get<ESConfig>('es').index.log
     return client.index({ index, body: log })
@@ -84,7 +63,7 @@ export class LogService implements OnModuleInit {
    * @param log
    * @returns
    */
-  public async log(log: DataLog) {
+  public async log(log: ILog) {
     const saveLog = {
       ...log,
       user: log.user
@@ -106,7 +85,7 @@ export class LogService implements OnModuleInit {
    * @returns
    */
   public async getLogActions() {
-    return Object.entries(logActions).map(([key, value]) => ({ key, value }))
+    return Object.entries(logDataActionDescriptions).map(([key, value]) => ({ key, value }))
   }
 
   /**
@@ -114,7 +93,7 @@ export class LogService implements OnModuleInit {
    * @returns
    */
   public async getLogTargets() {
-    return Object.entries(logTargets).map(([key, value]) => ({ key, value }))
+    return Object.entries(logTargetDescriptions).map(([key, value]) => ({ key, value }))
   }
 
   /**

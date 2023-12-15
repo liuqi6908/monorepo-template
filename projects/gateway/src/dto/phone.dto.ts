@@ -33,7 +33,7 @@ function Decorator(optional = false) {
 }
 
 export class PhoneDto implements IPhoneDto {
-  @decorate(Decorator(false))
+  @decorate(Decorator())
   phone: string
 }
 

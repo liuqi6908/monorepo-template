@@ -1,4 +1,3 @@
-import { objectEntries } from '@catsjuice/utils'
 import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { ApiBody, ApiOperation, ApiTags } from '@nestjs/swagger'
@@ -70,25 +69,6 @@ export class LogController {
         mapping: logDataMapping,
       },
     )
-    const cachedMap = new Map()
-    for (const element of res.records) {
-      element.targetInfo = {}
-      for (const [k, v] of objectEntries(element.target)) {
-        const key = String(k).replace(/Id$/, '')
-        const id = String(v)
-
-        const imMemCache = cachedMap.get(key)
-        if (imMemCache) {
-          element.targetInfo[key] = imMemCache
-          continue
-        }
-        const cache = await this._dataDirSrv.getDirCache(id)
-        if (!cache)
-          continue
-        cachedMap.set(key, cache)
-        element.targetInfo[key] = cache
-      }
-    }
     return res
   }
 

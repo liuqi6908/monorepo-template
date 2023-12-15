@@ -51,7 +51,7 @@ export class AuthService {
     const { account, email, password } = body
     if (!account && !email)
       throw new Error('手机号码或邮箱地址至少需要填写一个')
-    const qb = this._userSrv.qb().addSelect('u.password')
+    const qb = this._userSrv.qb().addSelect('u.password').addSelect('u.isDeleted')
     if (account)
       qb.where('account = :account', { account })
     else if (email)
@@ -64,6 +64,11 @@ export class AuthService {
           : ErrorCode.AUTH_EMAIL_NOT_REGISTERED,
       )
     }
+
+    if (user.isDeleted)
+      responseError(ErrorCode.AUTH_ACCOUNT_IS_DELETED)
+    if (!user.password)
+      responseError(ErrorCode.AUTH_PASSWORD_IS_NULL)
 
     // 校验密码
     const correct = await comparePassword(password, user.password)
@@ -83,9 +88,14 @@ export class AuthService {
     const { email, bizId, code } = body
     await this._codeSrv.verifyWithError(bizId, [email, CodeAction.LOGIN, code])
 
-    const user = await this._userSrv.repo().findOne({ where: { email } })
+    const user = await this._userSrv.qb()
+      .addSelect('u.isDeleted')
+      .where('email = :email', { email })
+      .getOne()
     if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
+    if (user.isDeleted)
+      responseError(ErrorCode.AUTH_ACCOUNT_IS_DELETED)
 
     return await this.signLoginTicket(user)
   }
@@ -96,9 +106,14 @@ export class AuthService {
    */
   public async loginByEmailLink(body: LoginByEmailLinkDto) {
     const { email } = body
-    const user = await this._userSrv.repo().findOne({ where: { email } })
+    const user = await this._userSrv.qb()
+      .addSelect('u.isDeleted')
+      .where('email = :email', { email })
+      .getOne()
     if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
+    if (user.isDeleted)
+      responseError(ErrorCode.AUTH_ACCOUNT_IS_DELETED)
     const { sign } = await this.signLoginTicket(user)
     await this._emailSrv.sendMagicLink(body, sign.access_token)
   }

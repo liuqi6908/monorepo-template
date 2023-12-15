@@ -2,8 +2,14 @@ import { Mixin } from 'ts-mixer'
 import { DslDto } from 'src/dto/dsl.dto'
 import { ApiPropertyOptional } from '@nestjs/swagger'
 import { EsPaginationDto } from 'src/dto/pagination.dto'
+import type { IQueryByDslBodyDto } from 'zjf-types'
 
-export class QueryByDslBodyDto extends Mixin(DslDto, EsPaginationDto) {
+export class QueryByDslBodyDto
+  extends Mixin(
+    DslDto,
+    EsPaginationDto,
+  )
+  implements IQueryByDslBodyDto {
   @ApiPropertyOptional({
     description: '过滤返回数据的字段，如果不指定，则返回全部的字段',
     example: [

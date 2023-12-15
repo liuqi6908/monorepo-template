@@ -30,8 +30,8 @@ export class PermissionService implements OnModuleInit {
       try {
         await this._permissionRepo.save({ name, description })
       }
-      catch (err) {
-        const sqlError = parseSqlError(err)
+      catch (e) {
+        const sqlError = parseSqlError(e)
         if (sqlError === SqlError.DUPLICATE_ENTRY)
           await this._permissionRepo.update({ name }, { description })
       }

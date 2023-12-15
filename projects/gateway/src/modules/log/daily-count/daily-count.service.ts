@@ -35,7 +35,7 @@ export class DailyCountService {
       if (!updateRes.affected)
         throw new Error('not affected')
     }
-    catch (err) {
+    catch (e) {
       await this._dailyCountRepo.insert({ id, year, month, date })
       this._logger.log('new daily-count record')
     }

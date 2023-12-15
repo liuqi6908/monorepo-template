@@ -1,21 +1,31 @@
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req, Res, StreamableFile } from '@nestjs/common'
+import {
+  ErrorCode,
+  PermissionType,
+  UPLOAD_WORK_DFT_ACCEPT_LIMIT,
+  UPLOAD_WORK_DFT_SIZE_LIMIT,
+} from 'zjf-types'
+
+import type { Work } from 'src/entities/work'
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
-import type { Work } from 'src/entities/work'
 import { IsLogin } from 'src/guards/login.guard'
 import { responseError } from 'src/utils/response'
-import { ErrorCode, PermissionType } from 'zjf-types'
 import { HasPermission } from 'src/guards/permission.guard'
 import { ApiFormData } from 'src/decorators/api/api-form-data'
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req, Res, StreamableFile } from '@nestjs/common'
 
+import { SysConfigService } from '../config/config.service'
 import { WorkService } from './work.service'
 
 @ApiTags('Work | 成果（作品）模块')
 @Controller('work')
 export class WorkController {
-  constructor(private readonly _workSrv: WorkService) {}
+  constructor(
+    private readonly _workSrv: WorkService,
+    private readonly _sysCfgSrv: SysConfigService,
+  ) {}
 
   @ApiOperation({ summary: '上传作品' })
   @ApiFormData('file', {
@@ -30,11 +40,23 @@ export class WorkController {
       responseError(ErrorCode.FILE_NOT_FOUND)
 
     const fileSize = buffer.byteLength
-    if (fileSize > 1024 * 1024 * 10)
+
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'work' })
+    const {
+      sizeLimit = UPLOAD_WORK_DFT_SIZE_LIMIT,
+      acceptLimit = UPLOAD_WORK_DFT_ACCEPT_LIMIT,
+    } = sysCfg?.work || {}
+
+    if (fileSize > sizeLimit)
       responseError(ErrorCode.FILE_TOO_LARGE)
-    const filename = body.file.filename
-    if (!filename.split('.').pop().match(/pdf/i))
-      responseError(ErrorCode.FILE_TYPE_NOT_ALLOWED, '仅支持 PDF 格式')
+    const filename: string = body.file.filename
+    const ext = filename.split('.').pop().toLocaleLowerCase()
+    if (acceptLimit.every(v => v.toLocaleLowerCase() !== ext)) {
+      responseError(
+        ErrorCode.FILE_TYPE_NOT_ALLOWED,
+        `仅支持 ${acceptLimit.map(v => v.toLocaleUpperCase()).join('、')} 格式`,
+      )
+    }
 
     let title = body.title?.value
     const author = body.author?.value

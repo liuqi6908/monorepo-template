@@ -50,7 +50,7 @@ export class UserService implements OnModuleInit {
           isSysAdmin: true,
         })
       }
-      catch (err) {
+      catch (e) {
         await this._userRepo.update({ account: sa.account }, {
           password: await encryptPassword(sa.password),
           isSysAdmin: true,
@@ -105,7 +105,7 @@ export class UserService implements OnModuleInit {
       return await this._userRepo.save(
         await this._userRepo.create({
           ...user,
-          password: await encryptPassword(user.password),
+          password: user.password ? await encryptPassword(user.password) : null,
         }),
       )
     }
@@ -133,8 +133,8 @@ export class UserService implements OnModuleInit {
       await this._userRepo.update({ id }, { email: newEmail })
       return true
     }
-    catch (err) {
-      const sqlError = parseSqlError(err)
+    catch (e) {
+      const sqlError = parseSqlError(e)
       if (sqlError === SqlError.DUPLICATE_ENTRY)
         responseError(ErrorCode.AUTH_EMAIL_REGISTERED)
     }

@@ -42,8 +42,13 @@ export const logDataMapping: EsMapping = {
             idCard: {
               type: EsFieldType.KEYWORD,
             },
-            identify: {
-              type: EsFieldType.KEYWORD,
+            dataRole: {
+              type: EsFieldType.TEXT,
+              fields: {
+                keyword: {
+                  type: EsFieldType.KEYWORD,
+                },
+              },
             },
             number: {
               type: EsFieldType.KEYWORD,
@@ -86,6 +91,46 @@ export const logDataMapping: EsMapping = {
         },
         tableId: {
           type: EsFieldType.KEYWORD,
+        },
+        rootName: {
+          type: EsFieldType.TEXT,
+          fields: {
+            keyword: {
+              type: EsFieldType.KEYWORD,
+            },
+          },
+        },
+        dbName: {
+          type: EsFieldType.TEXT,
+          fields: {
+            keyword: {
+              type: EsFieldType.KEYWORD,
+            },
+          },
+        },
+        subDbName: {
+          type: EsFieldType.TEXT,
+          fields: {
+            keyword: {
+              type: EsFieldType.KEYWORD,
+            },
+          },
+        },
+        moduleName: {
+          type: EsFieldType.TEXT,
+          fields: {
+            keyword: {
+              type: EsFieldType.KEYWORD,
+            },
+          },
+        },
+        tableName: {
+          type: EsFieldType.TEXT,
+          fields: {
+            keyword: {
+              type: EsFieldType.KEYWORD,
+            },
+          },
         },
       },
     },

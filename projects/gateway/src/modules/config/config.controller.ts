@@ -35,9 +35,7 @@ export class ConfigController {
     const { version, ...config } = body
     const obj: Config = {
       version,
-      config: {
-        export: config,
-      },
+      config,
     }
     return (await this._sysCfgSrv.repo().save(obj)).config
   }

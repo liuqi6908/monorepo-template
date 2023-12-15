@@ -650,31 +650,37 @@ importers:
 
   projects/shared:
     dependencies:
-      zjf-types:
-        specifier: workspace:^
-        version: link:../../packages/zjf-types
-    devDependencies:
-      '@iconify-json/carbon':
-        specifier: ^1.1.18
-        version: registry.npmmirror.com/@iconify-json/carbon@1.1.18
       '@quasar/extras':
         specifier: ^1.16.5
         version: registry.npmmirror.com/@quasar/extras@1.16.5
       '@vueuse/core':
         specifier: ^10.2.1
         version: registry.npmmirror.com/@vueuse/core@10.2.1(vue@3.3.4)
+      axios:
+        specifier: ^1.4.0
+        version: registry.npmmirror.com/axios@1.4.0
       quasar:
         specifier: ^2.12.3
         version: registry.npmmirror.com/quasar@2.12.3
-      unocss:
-        specifier: ^0.53.5
-        version: registry.npmmirror.com/unocss@0.53.5(postcss@8.4.31)(vite@4.5.0)
       vue:
         specifier: ^3.3.4
         version: registry.npmmirror.com/vue@3.3.4
       vue-router:
         specifier: ^4.2.4
         version: registry.npmmirror.com/vue-router@4.2.4(vue@3.3.4)
+      zjf-types:
+        specifier: workspace:^
+        version: link:../../packages/zjf-types
+      zjf-utils:
+        specifier: workspace:^
+        version: link:../../packages/zjf-utils
+    devDependencies:
+      '@iconify-json/carbon':
+        specifier: ^1.1.18
+        version: registry.npmmirror.com/@iconify-json/carbon@1.1.18
+      unocss:
+        specifier: ^0.53.5
+        version: registry.npmmirror.com/unocss@0.53.5(postcss@8.4.31)(vite@4.5.0)
 
 packages:
 
@@ -3377,6 +3383,7 @@ packages:
     resolution: {integrity: sha512-3VAJS9NECr1OSHX674+3YvEMIlHclr81aZrEkoBtVqr+sX4In22Up44toua+qNFsxnoATPqzpwKOJxA3iAF71Q==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@quasar/extras/-/extras-1.16.5.tgz}
     name: '@quasar/extras'
     version: 1.16.5
+    dev: false
 
   registry.npmmirror.com/@quasar/vite-plugin@1.4.1(@vitejs/plugin-vue@4.2.3)(quasar@2.12.3)(vite@4.4.3)(vue@3.3.4):
     resolution: {integrity: sha512-lLw7j1A7viLQ6++p29NuYUdfjpaWctRi6tRhMYm8VPumXs8enGeV59JEJ+1tJR2FcQUMYsGOoyHHcQrsakXIkA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@quasar/vite-plugin/-/vite-plugin-1.4.1.tgz}

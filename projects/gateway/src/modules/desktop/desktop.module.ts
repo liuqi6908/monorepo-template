@@ -20,8 +20,8 @@ import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queu
 @Module({
   imports: [
     forwardRef(() => ExportModule),
+    forwardRef(() => NotifyModule),
     HttpModule,
-    NotifyModule,
     TypeOrmModule.forFeature([
       Desktop,
       DesktopQueue,

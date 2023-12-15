@@ -79,8 +79,8 @@ export class DesktopService {
         await this._notifySrv.notifyDesktopExpired(desktop)
       }
     }
-    catch (err) {
-      this._logger.error(err)
+    catch (e) {
+      this._logger.error(e)
     }
     finally {
       this._checking = false

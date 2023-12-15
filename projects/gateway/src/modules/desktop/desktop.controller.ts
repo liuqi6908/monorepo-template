@@ -47,8 +47,8 @@ export class DesktopController {
     try {
       return await this._desktopSrv.createDesktop(body)
     }
-    catch (err) {
-      const sqlErr = parseSqlError(err)
+    catch (e) {
+      const sqlErr = parseSqlError(e)
       if (sqlErr === SqlError.DUPLICATE_ENTRY)
         responseError(ErrorCode.DESKTOP_ID_EXISTS)
       responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)

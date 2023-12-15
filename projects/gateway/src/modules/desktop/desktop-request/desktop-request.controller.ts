@@ -16,7 +16,7 @@ import { DesktopQueueHistoryService } from '../desktop-queue-history/desktop-que
 import { DesktopRequestService } from './desktop-request.service'
 import { GetOwnDesktopReqResDto } from './dto/get-own-desktop-req.res.dto'
 import { RejectDesktopReqBodyDto } from './dto/reject-desktop-req.body.dto'
-import { CreateDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
+import { CreateDesktopRequestBodyDto, CreateUserDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
 
 @ApiTags('DesktopRequest | 云桌面申请')
 @Controller('desktop-request')
@@ -37,6 +37,15 @@ export class DesktopRequestController {
   ) {
     const user = req.raw.user!
     return await this._desktopReqSrv.createRequest(user.id, body)
+  }
+
+  @ApiOperation({ summary: '创建一个云桌面使用申请' })
+  @HasPermission(PermissionType.DESKTOP_REQUEST_CREATE)
+  @Put('create')
+  async createRequest(
+    @Body() body: CreateUserDesktopRequestBodyDto,
+  ) {
+    return await this._desktopReqSrv.createUserRequest(body.userId, body.duration)
   }
 
   @ApiOperation({ summary: '通过一个云桌面申请' })
