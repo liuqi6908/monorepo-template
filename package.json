@@ -1,7 +1,6 @@
 {
-  "name": "zjf-irc-zju",
+  "name": "zjf-irc",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -18,7 +17,5 @@
     "build:server": "pnpm run build:types && pnpm run build:utils && pnpm --filter server build",
     "lint-staged": "lint-staged"
   },
-  "keywords": [],
-  "author": "",
   "license": "ISC"
 }

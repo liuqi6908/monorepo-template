@@ -30,7 +30,7 @@ function handleEnter() {
 <template>
   <div w-full flex="~ col" font-500 text-grey-8>
     <header flex="~ flex col items-center justify-center" mb-2>
-      <span font-600 text-grey-8 text-5 v-text="'数智三农云科研平台'" />
+      <span font-600 text-grey-8 text-5 v-text="'智能云科研平台'" />
     </header>
     <span mb-1 v-text="'账号 / 邮箱'" />
     <UserCodeInput
