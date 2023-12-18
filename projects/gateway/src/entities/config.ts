@@ -1,12 +1,18 @@
-import { IConfigDto } from 'zjf-types'
-import type { ISysConfig } from 'zjf-types'
+import { SysConfig } from 'zjf-types'
+import type { IConfigDto, ISysConfig } from 'zjf-types'
 import { Column, Entity, PrimaryColumn } from 'typeorm'
 
 @Entity()
-export class Config implements ISysConfig {
-  @PrimaryColumn()
-  version: string
+export class Config implements ISysConfig<SysConfig> {
+  @PrimaryColumn({
+    type: 'enum',
+    enum: SysConfig,
+  })
+  version: SysConfig
 
-  @Column({ type: 'json' })
-  config: IConfigDto
+  @Column({
+    type: 'json',
+    nullable: true,
+  })
+  config?: IConfigDto[SysConfig]
 }

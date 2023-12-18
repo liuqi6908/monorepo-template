@@ -1,23 +1,22 @@
+import { SysConfigService } from 'src/modules/config/config.service'
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
 import { header } from '../blocks/header'
-import { APP_NAME } from '../assets/constants'
-import { getVerifyCode, verifyCodeDesc } from '../blocks/verify-code'
-
-const p1 = HtmlTag.create('p').text(`我们已收到您关于登录${APP_NAME}的请求。您的验证码为：`).indent()
+import { getVerifyCode, getVerifyCodeDesc } from '../blocks/verify-code'
 
 /**
  * 登录的验证码
  * @param code
  */
 export function getLoginCodeHTML(code: string) {
-  const subject = `【验证码】登录${APP_NAME}`
+  const p1 = HtmlTag.create('p').text(`我们已收到您关于登录${SysConfigService.appName}的请求。您的验证码为：`).indent()
+  const subject = `【验证码】登录${SysConfigService.appName}`
+
   const html = HtmlTag.create('div')
-    .appendChild(header)
+    .appendChild(header())
     .appendChild(p1)
     .appendChild(getVerifyCode(code).style({ margin: '20px 0' }))
-    .appendChild(verifyCodeDesc)
+    .appendChild(getVerifyCodeDesc())
     .appendChild(footer)
     .raw()
   return { subject, html }

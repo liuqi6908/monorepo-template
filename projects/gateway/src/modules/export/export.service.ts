@@ -11,6 +11,7 @@ import {
   ErrorCode,
   FileExportLargeStatus,
   MinioBucket,
+  SysConfig,
 } from 'zjf-types'
 
 import type { User } from 'src/entities/user'
@@ -62,11 +63,11 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'export' })
+    const sysCfg = await this._sysCfgSrv.getConfig<SysConfig.EXPORT>({ version: SysConfig.EXPORT })
     const {
       sizeLimitSm = EXPORT_DFT_SM_SIZE_LIMIT,
       dailyLimit = EXPORT_DFT_SM_DAILY_LIMIT,
-    } = sysCfg?.export || {}
+    } = sysCfg || {}
     // 检查文件尺寸
     if (fileSize > sizeLimitSm)
       responseError(ErrorCode.EXPORT_SIZE_LIMIT_EXCEEDED)
@@ -138,8 +139,8 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'export' })
-    const { sizeLimitLg = EXPORT_DFT_LG_SIZE_LIMIT } = sysCfg?.export || {}
+    const sysCfg = await this._sysCfgSrv.getConfig<SysConfig.EXPORT>({ version: SysConfig.EXPORT })
+    const { sizeLimitLg = EXPORT_DFT_LG_SIZE_LIMIT } = sysCfg || {}
     // 检查文件尺寸
     if (fileSize > sizeLimitLg)
       responseError(ErrorCode.EXPORT_SIZE_LIMIT_EXCEEDED)

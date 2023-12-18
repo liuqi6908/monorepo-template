@@ -3,6 +3,7 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req, Res, Strea
 import {
   ErrorCode,
   PermissionType,
+  SysConfig,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
 } from 'zjf-types'
@@ -41,11 +42,11 @@ export class WorkController {
 
     const fileSize = buffer.byteLength
 
-    const sysCfg = await this._sysCfgSrv.getConfig({ version: 'work' })
+    const sysCfg = await this._sysCfgSrv.getConfig<SysConfig.WORK>({ version: SysConfig.WORK })
     const {
       sizeLimit = UPLOAD_WORK_DFT_SIZE_LIMIT,
       acceptLimit = UPLOAD_WORK_DFT_ACCEPT_LIMIT,
-    } = sysCfg?.work || {}
+    } = sysCfg || {}
 
     if (fileSize > sizeLimit)
       responseError(ErrorCode.FILE_TOO_LARGE)

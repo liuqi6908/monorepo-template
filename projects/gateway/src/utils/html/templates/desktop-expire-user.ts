@@ -1,21 +1,20 @@
 import * as moment from 'moment'
+import { SysConfigService } from 'src/modules/config/config.service'
+import { getUserName } from 'src/utils/get-user-name'
 import type { Desktop } from 'src/entities/desktop'
 
-import { getUserName } from 'src/utils/get-user-name'
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
-import { APP_NAME } from '../assets/constants'
 import { header } from '../blocks/header'
 import { DANGER } from './../assets/color'
 
 export function getDesktopExpireUserHTML(desktop: Desktop) {
-  const subject = `【到期提醒】${APP_NAME}账号即将到期`
+  const subject = `【到期提醒】${SysConfigService.appName}账号即将到期`
   const expiredAt = moment(desktop.expiredAt).format('YYYY-MM-DD HH:mm:ss')
   const html = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       HtmlTag
         .div()
         .indent()
@@ -24,8 +23,8 @@ export function getDesktopExpireUserHTML(desktop: Desktop) {
           HtmlTag.span('用户【'),
           HtmlTag.span(getUserName(desktop.user)).color(DANGER).bold(500),
           HtmlTag.span('】（云桌面账号【'),
-          HtmlTag.span(`【${desktop.account}】`).color(DANGER).bold(500),
-          HtmlTag.span('）'),
+          HtmlTag.span(`${desktop.account}`).color(DANGER).bold(500),
+          HtmlTag.span('】）'),
           HtmlTag.span('即将于'),
           HtmlTag.span(`【${expiredAt}】`).color(DANGER).bold(500),
           HtmlTag.span('到期，请及时外发您的研究成果！云桌面到期后系统将自动删除云桌面上的所有数据，以便分配给其他等待的用户使用！到期后您可以再次申请云桌面的使用权限！'),

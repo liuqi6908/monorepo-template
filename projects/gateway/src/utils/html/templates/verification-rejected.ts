@@ -1,11 +1,10 @@
+import { SysConfigService } from 'src/modules/config/config.service'
 import type { VerificationHistory } from 'src/entities/verification'
 
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
 import { DANGER } from '../assets/color'
 import { header } from '../blocks/header'
-import { APP_NAME } from '../assets/constants'
 
 const desc1 = HtmlTag
   .create('div')
@@ -39,11 +38,11 @@ const desc3 = HtmlTag
   .indent()
 
 export function getVerificationRejectedHTML(verification: VerificationHistory) {
-  const subject = `【认证失败】${APP_NAME}用户认证申请`
+  const subject = `【认证失败】${SysConfigService.appName}用户认证申请`
   const html = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       desc1,
       desc2,
       reasonRenderer(verification.rejectReason),

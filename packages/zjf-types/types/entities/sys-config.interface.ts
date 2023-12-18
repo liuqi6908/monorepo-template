@@ -1,11 +1,11 @@
+import { IVersionDto } from '../dto/version.interface'
 import type { IConfigDto } from '../dto/config.interface'
+import { SysConfig } from '../enum/config.enum'
 
 /**
  * 全局配置
  */
-export interface ISysConfig {
-  /** 配置版本 */
-  version: string
+export interface ISysConfig<T extends SysConfig> extends IVersionDto<T> {
   /** 系统配置 */
-  config: IConfigDto
+  config?: IConfigDto[T]
 }

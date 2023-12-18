@@ -1,10 +1,9 @@
+import { SysConfigService } from 'src/modules/config/config.service'
 import type { VerificationHistory } from 'src/entities/verification'
 
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
 import { header } from '../blocks/header'
-import { APP_NAME } from '../assets/constants'
 
 const desc1 = HtmlTag
   .create('div')
@@ -16,11 +15,11 @@ const desc2 = HtmlTag
   .indent()
 
 export function getVerificationApprovedHTML(_: VerificationHistory) {
-  const subject = `【认证通过】${APP_NAME}用户认证申请`
+  const subject = `【认证通过】${SysConfigService.appName}用户认证申请`
   const html = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       desc1,
       desc2,
       footer,

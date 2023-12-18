@@ -1,11 +1,10 @@
 import * as moment from 'moment'
+import { SysConfigService } from 'src/modules/config/config.service'
 
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
 import { DANGER } from '../assets/color'
 import { header } from '../blocks/header'
-import { APP_NAME } from '../assets/constants'
 
 export function getFileExportRejectedHTML(config: {
   time: Date | string
@@ -13,14 +12,13 @@ export function getFileExportRejectedHTML(config: {
   reason: string
 }) {
   const { time, filename, reason } = config
-
   const timeReadable = moment(time).format('YYYY年MM月DD HH:mm:ss')
-  const subject = `【外发驳回】${APP_NAME}文件外发申请`
+  const subject = `【外发驳回】${SysConfigService.appName}文件外发申请`
 
   const html = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       HtmlTag
         .create('div')
         .indent()

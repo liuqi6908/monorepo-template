@@ -1,6 +1,7 @@
+import { SysConfigService } from 'src/modules/config/config.service'
 import type { Desktop } from 'src/entities/desktop'
 import { getUserName } from 'src/utils/get-user-name'
-import { APP_NAME } from '../assets/constants'
+
 import { HtmlTag } from '..'
 import { header } from '../blocks/header'
 import { DANGER } from '../assets/color'
@@ -28,17 +29,17 @@ export function getDesktopConnectInfo(desktop: Desktop) {
       importantInfo('云桌面登录账号', account).indent(),
       importantInfo('云桌面初始密码', password).indent(),
 
-      HtmlTag.create('div').indent().text('登录云桌面的使用教程请查看智能云科研平台的常见问题解答板块。'),
+      HtmlTag.create('div').indent().text(`登录云桌面的使用教程请查看${SysConfigService.appName}的常见问题解答板块。`),
       HtmlTag.create('div').indent().text('请务必保管好上述信息，以防外泄，若他人知悉您的账号密码，将有权登录并查看该账号上所有信息！').color(DANGER).style({ fontWeight: '500' }),
     )
 }
 
 export function getDesktopAssignedHTML(desktop: Desktop) {
-  const subject = `【云桌面开通通知】${APP_NAME}云桌面开通提示`
+  const subject = `【云桌面开通通知】${SysConfigService.appName}云桌面开通提示`
   const html = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       HtmlTag
         .create('div')
         .indent()

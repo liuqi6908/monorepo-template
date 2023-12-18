@@ -1,15 +1,15 @@
+import { SysConfigService } from 'src/modules/config/config.service'
+import footer from '../blocks/footer'
 import { HtmlTag } from '..'
 import { DANGER } from '../assets/color'
-import { APP_NAME } from '../assets/constants'
-import footer from '../blocks/footer'
 import { adminHeader } from '../blocks/header'
 
 export function getDesktopRequestHTML({ name }) {
-  const subject = `【审核通知】${APP_NAME}新的云桌面申请`
+  const subject = `【审核通知】${SysConfigService.appName}新的云桌面申请`
   const html = HtmlTag
     .create('div')
     .appendChild(
-      adminHeader,
+      adminHeader(),
       HtmlTag
         .create('div')
         .indent()

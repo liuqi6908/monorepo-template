@@ -2,7 +2,6 @@ import { IsString } from 'class-validator'
 import { ApiProperty } from '@nestjs/swagger'
 import { decorate } from 'ts-mixer'
 import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
-import type { Desktop } from 'src/entities/desktop'
 
 function Decorator(optional = false) {
   return GenerateParamsDecorator([
@@ -13,7 +12,7 @@ function Decorator(optional = false) {
 
 export class DesktopIdDto {
   @decorate(Decorator())
-  desktopId: Desktop['id']
+  desktopId: string
 }
 
 export class DesktopIdOptionalDto {

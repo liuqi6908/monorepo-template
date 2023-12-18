@@ -9,8 +9,8 @@ import { getRegisterCodeHTML } from 'src/utils/html/templates/register-code'
 import { getBindEmailCodeHTML } from 'src/utils/html/templates/bind-email-code'
 import { getChangePswdCodeHTML } from 'src/utils/html/templates/change-pswd-code'
 import { getChangeEmailCodeHTML } from 'src/utils/html/templates/change-email-code'
-import { APP_NAME } from 'src/utils/html/assets/constants'
 import { CodeService } from '../code/code.service'
+import { SysConfigService } from '../config/config.service'
 import type { LoginByEmailLinkDto } from '../auth/dto/login-by-email-link.body.dto'
 import type { SendEmailCodeBodyDto } from './dto/send-email-code.body.dto'
 
@@ -42,7 +42,7 @@ export class EmailService implements OnModuleInit {
     try {
       this.transporter.sendMail({
         ...mailOptions,
-        from: `${APP_NAME}系统通知 <${this._mailCfg?.auth?.user}>`,
+        from: `${SysConfigService.appName}系统通知 <${this._mailCfg?.auth?.user}>`,
       })
     }
     catch (e) {

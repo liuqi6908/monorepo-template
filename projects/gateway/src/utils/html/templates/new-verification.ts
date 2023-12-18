@@ -1,11 +1,10 @@
+import { SysConfigService } from 'src/modules/config/config.service'
 import type { VerificationHistory } from 'src/entities/verification'
 
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
 import { DANGER } from '../assets/color'
 import { adminHeader } from '../blocks/header'
-import { APP_NAME } from '../assets/constants'
 
 function contentGetter(name: string) {
   return HtmlTag
@@ -21,11 +20,12 @@ function contentGetter(name: string) {
 const desc = HtmlTag.create('div').text('这是一封系统邮件，请勿直接回复！如有其他疑问，可微信扫码联系客服！').indent()
 
 export function getNewVerificationHTML(verification: VerificationHistory) {
-  const subject = `【认证审核】${APP_NAME}新的用户认证申请`
+  const subject = `【认证审核】${SysConfigService.appName}新的用户认证申请`
+
   const html = HtmlTag
     .create('div')
     .appendChild(
-      adminHeader,
+      adminHeader(),
       contentGetter(verification.name),
       desc,
       footer,

@@ -1,8 +1,7 @@
-import type { Desktop } from 'src/entities/desktop'
 import { getUserName } from 'src/utils/get-user-name'
+import type { Desktop } from 'src/entities/desktop'
 
 import footer from '../blocks/footer'
-
 import { HtmlTag } from '..'
 import { DANGER } from '../assets/color'
 import { header } from '../blocks/header'
@@ -17,7 +16,7 @@ export function getDesktopInfoChangedHTML(desktop: Desktop) {
   const html = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       HtmlTag
         .create('div')
         .indent()

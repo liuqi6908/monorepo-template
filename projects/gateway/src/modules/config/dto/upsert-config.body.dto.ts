@@ -1,6 +1,7 @@
-import { IsString } from 'class-validator'
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { ApiPropertyOptional } from '@nestjs/swagger'
 import {
+  APP_ICON,
+  APP_NAME,
   DESKTOP_REQUEST_DURATION_OPTION,
   EXPORT_DFT_LG_SIZE_LIMIT,
   EXPORT_DFT_SM_DAILY_LIMIT,
@@ -9,16 +10,28 @@ import {
   UPLOAD_WORK_DFT_SIZE_LIMIT,
 } from 'zjf-types'
 import type {
-  IDesktopRequestConfigDto,
-  IExportConfigDto,
-  IUploadWorkConfigDto,
+  IConfigDto,
   IUpsertConfigBodyDto,
 } from 'zjf-types'
+import { VersionDto } from 'src/dto/version.dto'
 
-export class UpsertConfigBodyDto implements IUpsertConfigBodyDto {
-  @ApiProperty({ description: '配置版本', example: 'export' })
-  @IsString()
-  version: string
+export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBodyDto {
+  @ApiPropertyOptional({
+    description: 'App配置',
+    example: {
+      name: APP_NAME,
+      icon: APP_ICON,
+    },
+  })
+  app?: IConfigDto['app']
+
+  @ApiPropertyOptional({
+    description: '云桌面申请配置',
+    example: {
+      duration: DESKTOP_REQUEST_DURATION_OPTION,
+    },
+  })
+  desktop?: IConfigDto['desktop']
 
   @ApiPropertyOptional({
     description: '外发配置',
@@ -28,7 +41,7 @@ export class UpsertConfigBodyDto implements IUpsertConfigBodyDto {
       dailyLimit: EXPORT_DFT_SM_DAILY_LIMIT,
     },
   })
-  export?: IExportConfigDto['export']
+  export?: IConfigDto['export']
 
   @ApiPropertyOptional({
     description: '上传作品配置',
@@ -37,13 +50,5 @@ export class UpsertConfigBodyDto implements IUpsertConfigBodyDto {
       acceptLimit: UPLOAD_WORK_DFT_ACCEPT_LIMIT,
     },
   })
-  work?: IUploadWorkConfigDto['work']
-
-  @ApiPropertyOptional({
-    description: '云桌面申请配置',
-    example: {
-      duration: DESKTOP_REQUEST_DURATION_OPTION,
-    },
-  })
-  desktop?: IDesktopRequestConfigDto['desktop']
+  work?: IConfigDto['work']
 }

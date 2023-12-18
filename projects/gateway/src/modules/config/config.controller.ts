@@ -4,11 +4,11 @@ import { ApiSuccessResponse } from 'src/utils/response'
 import { HasPermission } from 'src/guards/permission.guard'
 import { PermissionType } from 'zjf-types'
 import type { Config } from 'src/entities/config'
+import { VersionDto } from 'src/dto/version.dto'
 
 import { SysConfigService } from './config.service'
 import { ConfigResDto } from './dto/config.res.dto'
 import { UpsertConfigBodyDto } from './dto/upsert-config.body.dto'
-import { VersionDto } from './dto/version.dto'
 
 @ApiTags('Config | 全局配置')
 @Controller('config')
@@ -35,7 +35,7 @@ export class ConfigController {
     const { version, ...config } = body
     const obj: Config = {
       version,
-      config,
+      config: config[version],
     }
     return (await this._sysCfgSrv.repo().save(obj)).config
   }

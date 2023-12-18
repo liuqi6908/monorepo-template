@@ -1,6 +1,7 @@
 import * as moment from 'moment'
+import { SysConfigService } from 'src/modules/config/config.service'
+
 import { HtmlTag } from '..'
-import { APP_NAME } from '../assets/constants'
 import { header } from '../blocks/header'
 import { DANGER } from '../assets/color'
 import footer from '../blocks/footer'
@@ -13,12 +14,12 @@ export function getFileExportSuccessHTML(exportInfo: {
 }) {
   const { createdAt, fileSize } = exportInfo
   const time = moment(createdAt).format('YYYY年MM月DD HH:mm:ss')
+  const subject = `【外发通过】${SysConfigService.appName}文件外发`
 
-  const subject = `【外发通过】${APP_NAME}文件外发`
   const tag = HtmlTag
     .create('div')
     .appendChild(
-      header,
+      header(),
       HtmlTag
         .create('div')
         .indent()
