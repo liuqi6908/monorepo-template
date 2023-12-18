@@ -92,7 +92,7 @@ $http.interceptors.response.use(
 function showNotify(message: string) {
   Notify.create({
     type: 'danger',
-    message,
+    message
   })
 }
 
