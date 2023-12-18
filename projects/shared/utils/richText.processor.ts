@@ -18,7 +18,6 @@ export class RichTextProcessor {
 
   /**
    * 懒加载图片
-   * @returns
    */
   lazyLoadImages() {
     const images = this._div.querySelectorAll('img')

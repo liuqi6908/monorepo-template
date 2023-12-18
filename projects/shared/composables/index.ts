@@ -1,3 +1,4 @@
+export * from './app'
 export * from './cms'
 export * from './database'
 export * from './permission'

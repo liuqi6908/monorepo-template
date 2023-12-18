@@ -1,15 +1,15 @@
 import axios from 'axios'
 import { Notify } from 'quasar'
 import { useRouter } from 'vue-router'
-import { isClient } from '@vueuse/core'
 import { ErrorCode } from 'zjf-types'
 import { VITE_API_BASE } from '../constants'
-import { authToken, adminRole, userInfo } from '../composables'
+import { authToken, adminRole, userInfo, useApp } from '../composables'
 
 const $http = axios.create({
   baseURL: VITE_API_BASE,
 })
 const $router = useRouter()
+const { isAdmin } = useApp()
 
 /**
  * 请求拦截器
@@ -48,7 +48,6 @@ $http.interceptors.response.use(
 
     const { status, detail, message } = response.data
     const notify = config.headers.notify !== false
-    const admin = isClient && window.location.href.includes('/admin')
 
     // 判断登录是否有效（未登录/登录过期）
     if (response.status === 401) {
@@ -58,7 +57,7 @@ $http.interceptors.response.use(
     }
 
     // 管理后台，跳转路由
-    if (admin) {
+    if (isAdmin.value) {
       // 判断是否有权限
       if (status === ErrorCode.PERMISSION_DENIED)
         $router.replace({ path: '/denied' })

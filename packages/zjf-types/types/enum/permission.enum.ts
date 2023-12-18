@@ -128,8 +128,14 @@ export enum PermissionType {
   EXPORT_LG_DOWNLOAD = 'export-lg:download',
 
   // ------------------ 全局配置 ---------------------
-  /** 更新文件外发的全局配置 */
-  CONFIG_UPDATE_EXPORT = 'config:update-export',
+  /** 创建/更新应用全局配置 */
+  CONFIG_UPSERT_APP = 'config:upsert-app',
+  /** 创建/更新云桌面全局配置 */
+  CONFIG_UPSERT_DESKTOP = 'config:upsert-desktop',
+  /** 创建/更新文件外发全局配置 */
+  CONFIG_UPSERT_EXPORT = 'config:upsert-export',
+  /** 创建/更新作品管理全局配置 */
+  CONFIG_UPSERT_WORK = 'config:upsert-work',
 
   // ------------------ 作品/成果 ---------------------
   /** 查询所有作品/成果 */
@@ -205,7 +211,10 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.EXPORT_LG_REJECT]: '驳回大文件外发申请',
   [PermissionType.EXPORT_LG_DOWNLOAD]: '下载大文件外发的文件',
 
-  [PermissionType.CONFIG_UPDATE_EXPORT]: '更新文件外发的全局配置',
+  [PermissionType.CONFIG_UPSERT_APP]: '创建/更新应用全局配置',
+  [PermissionType.CONFIG_UPSERT_DESKTOP]: '创建/更新云桌面全局配置',
+  [PermissionType.CONFIG_UPSERT_EXPORT]: '创建/更新文件外发全局配置',
+  [PermissionType.CONFIG_UPSERT_WORK]: '创建/更新作品管理全局配置',
 
   [PermissionType.WORK_QUERY_ALL]: '查询所有作品/成果',
   [PermissionType.WORK_DOWNLOAD]: '下载指定作品/成果的附件',

@@ -39,7 +39,7 @@ export function recoverUserApi(userId: string) {
  * 获取当前登录用户的信息
  */
 export function getOwnProfileApi(body: IGetProfileOwnQueryDto) {
-  return $get<Omit<IUser, keyof IUser>>('/user/profile/own', body)
+  return $get<IUser>('/user/profile/own', body)
 }
 
 /**

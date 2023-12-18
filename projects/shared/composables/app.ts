@@ -1,4 +1,5 @@
-import { ref, onMounted } from 'vue'
+import { computed, ref, onMounted } from 'vue'
+import { isClient } from '@vueuse/core'
 import { SysConfig, APP_NAME, APP_ICON } from 'zjf-types'
 import { getConfigApi } from '../api'
 
@@ -19,6 +20,11 @@ export function useApp() {
     appIcon.value = res.icon || APP_ICON
   }
 
+  /**
+   * 是否在管理后台
+   */
+  const isAdmin = computed(() => isClient && window.location.href.includes('/admin'))
+
   onMounted(() => {
     if (!isFetched) {
       isFetched = true
@@ -29,6 +35,7 @@ export function useApp() {
   return {
     appName,
     appIcon,
-    getAppConfig
+    getAppConfig,
+    isAdmin
   }
 }

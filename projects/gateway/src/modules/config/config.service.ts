@@ -2,11 +2,12 @@ import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Cron } from '@nestjs/schedule'
 import { Repository } from 'typeorm'
-import { APP_NAME, SysConfig } from 'zjf-types'
-import type { IConfigDto } from 'zjf-types'
+import { APP_NAME, ErrorCode, PermissionType, SysConfig } from 'zjf-types'
+import type { IConfigDto, IUser } from 'zjf-types'
 import type { OnModuleInit } from '@nestjs/common'
 import { Config } from 'src/entities/config'
 import type { VersionDto } from 'src/dto/version.dto'
+import { responseError } from 'src/utils/response'
 
 @Injectable()
 export class SysConfigService implements OnModuleInit {
@@ -39,7 +40,21 @@ export class SysConfigService implements OnModuleInit {
     SysConfigService._appName = value
   }
 
-  async getConfig<T extends SysConfig>(param: VersionDto<T>) {
+  public hasPermission(version: SysConfig, user: IUser) {
+    const permissions = user.role?.permissions.map(v => v.name)
+    if (
+      (version === SysConfig.APP && !permissions.includes(PermissionType.CONFIG_UPSERT_APP))
+      || (version === SysConfig.DESKTOP && !permissions.includes(PermissionType.CONFIG_UPSERT_DESKTOP))
+      || (version === SysConfig.EXPORT && !permissions.includes(PermissionType.CONFIG_UPSERT_EXPORT))
+      || (version === SysConfig.WORK && !permissions.includes(PermissionType.CONFIG_UPSERT_WORK))
+    )
+      responseError(ErrorCode.PERMISSION_DENIED)
+  }
+
+  /**
+   * 获取指定的全局配置
+   */
+  public async getConfig<T extends SysConfig>(param: VersionDto<T>) {
     return (await this._sysCfgRepo.findOne({
       where: { version: param.version },
     }))?.config as IConfigDto[T]

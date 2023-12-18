@@ -1,74 +1,141 @@
+import { computed, ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
-import type { ILoginByPasswordBodyDto, IRegisterBodyDto, IVerificationHistory } from 'zjf-types'
 import { encryptPasswordInHttp } from 'zjf-utils'
 import { Notify } from 'quasar'
+import type {
+  ILoginByPasswordBodyDto,
+  ILoginByEmailCodeBodyDto,
+  ILoginSuccessResData,
+  IRegisterBodyDto,
+  IVerificationHistory
+} from 'zjf-types'
 
-import { getProfile, getVerify, login, logout, register } from '~/api/auth'
-import { is } from '~/api/desktop'
+import {
+  loginByPasswordApi,
+  loginByEmailCodeApi,
+  logoutApi,
+  getOwnProfileApi,
+  getLatestVerificationApi,
+  registerApi,
+  isDesktopApi
+} from '../api'
+import { rolePermissionsToLabel } from '../utils'
+import { adminRole, authToken, useApp, userInfo } from '.'
+
+const { isAdmin } = useApp()
 
 /** 认证信息 */
 const latestVerify = ref<IVerificationHistory>()
-/** 是否云桌面 */
+/** 是否在云桌面中 */
 const isDesktop = ref(false)
-let isDesktopFetched = false
+/** 加载中 */
+const loading = ref(false)
+
+let isFetched = false
 
 export function useUser($router = useRouter()) {
   /**
-   * 登录
+   * 通过 账号/邮箱 + 密码 登录
    */
-  const useLogin = async (body: ILoginByPasswordBodyDto) => {
-    const res = await login({
-      ...body,
-      password: encryptPasswordInHttp(body.password),
-    })
-    if (res) {
-      authToken.value = res.sign.access_token
-      userInfo.value = res.user
-      $router.replace({ path: '/' })
+  async function loginByPassword(body: ILoginByPasswordBodyDto) {
+    loading.value = true
+    try {
+      const res = await loginByPasswordApi({
+        ...body,
+        password: encryptPasswordInHttp(body.password)
+      })
+      if (res)
+        processLoginInfo(res)
+    }
+    catch (_) {}
+    finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * 通过 邮箱 + 验证码 登录
+   */
+  async function loginByEmailCode(body: ILoginByEmailCodeBodyDto) {
+    loading.value = true
+    try {
+      const res = await loginByEmailCodeApi(body)
+      if (res)
+        processLoginInfo(res)
+    }
+    catch (_) { }
+    finally {
+      loading.value = false
     }
   }
 
   /**
    * 注册
    */
-  const useRegister = async (body: IRegisterBodyDto) => {
-    const res = await register({
-      ...body,
-      password: encryptPasswordInHttp(body.password),
-    })
-    if (res) {
-      Notify.create({
-        type: 'success',
-        message: '注册成功',
+  async function register(body: IRegisterBodyDto) {
+    loading.value = true
+    try {
+      const res = await registerApi({
+        ...body,
+        password: encryptPasswordInHttp(body.password)
       })
-      await useLogin(body)
+      if (res) {
+        Notify.create({
+          type: 'success',
+          message: '注册成功',
+        })
+        processLoginInfo(res)
+      }
     }
+    catch (_) {}
+    finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * 处理登录信息
+   */
+  function processLoginInfo(res: ILoginSuccessResData) {
+    const { sign, user } = res
+    authToken.value = sign.access_token
+    userInfo.value = user
+    $router.push('/')
   }
 
   /**
    * 登出
    */
-  const useLogout = () => {
-    logout()
-    authToken.value = null
+  async function logout() {
+    await logoutApi()
+    authToken.value = ''
+    adminRole.value = []
     userInfo.value = undefined
-    $router.replace({ path: '/' })
+    if (isAdmin.value)
+      $router.push('/auth/login')
+    else
+      $router.push('/')
   }
 
   /**
    * 获取当前登入用户信息
    */
-  const useGetProfile = async (relation = 'role.permissions,verification') => {
-    const res = await getProfile(relation)
-    if (res)
+  async function getOwnProfile(relation = 'role.permissions,verification') {
+    const res = await getOwnProfileApi({ relation })
+    if (res) {
       userInfo.value = res
+      const permissions = res.role?.permissions?.map(v => v.name)
+      adminRole.value = rolePermissionsToLabel(permissions)
+    }
+    return res
   }
 
   /**
    * 获取当前登入用户认证信息
    */
-  const useGetVerify = async () => {
-    latestVerify.value = await getVerify()
+  async function getVerify() {
+    latestVerify.value = await getLatestVerificationApi()
     return latestVerify.value
   }
 
@@ -83,23 +150,26 @@ export function useUser($router = useRouter()) {
   const isVerify = computed(() => userInfo.value?.verification?.status === VerificationStatus.APPROVED)
 
   onMounted(async () => {
-    if (!isDesktopFetched) {
-      isDesktopFetched = true
-      isDesktop.value = await is()
+    if (!isFetched) {
+      isFetched = true
+      isDesktop.value = await isDesktopApi()
     }
   })
 
   return {
-    userInfo,
+    adminRole,
     authToken,
+    userInfo,
     isLogin,
     isVerify,
-    latestVerify,
     isDesktop,
-    useLogin,
-    useRegister,
-    useLogout,
-    useGetProfile,
-    useGetVerify,
+    loading,
+    latestVerify,
+    loginByPassword,
+    loginByEmailCode,
+    register,
+    logout,
+    getOwnProfile,
+    getVerify
   }
 }
