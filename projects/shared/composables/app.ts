@@ -1,4 +1,4 @@
-import { ref, onBeforeMount } from 'vue'
+import { ref, onMounted } from 'vue'
 import { SysConfig, APP_NAME, APP_ICON } from 'zjf-types'
 import { getConfigApi } from '../api'
 
@@ -6,6 +6,8 @@ import { getConfigApi } from '../api'
 const appName = ref(APP_NAME)
 /** 应用图标 */
 const appIcon = ref(APP_ICON)
+
+let isFetched = false
 
 export function useApp() {
   /**
@@ -17,7 +19,12 @@ export function useApp() {
     appIcon.value = res.icon || APP_ICON
   }
 
-  onBeforeMount(getAppConfig)
+  onMounted(() => {
+    if (!isFetched) {
+      isFetched = true
+      getAppConfig()
+    }
+  })
 
   return {
     appName,
