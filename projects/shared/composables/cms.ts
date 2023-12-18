@@ -16,8 +16,6 @@ const expire = 60 * 1000
 export function useCms() {
   /**
    * 根据 Cms id 获取组件
-   * @param id
-   * @returns
    */
   function getComponentById(id: string) {
     return CMS_CONFIG.find(v => v.id === id)?.component
@@ -25,14 +23,12 @@ export function useCms() {
 
   /**
    * 获取 Cms 内容
-   * @param id
-   * @returns
    */
-  async function getCms(id: string) {
+  async function getCms(id: string, useCache = false) {
     const index = cms.value.findIndex(v => v.id === id)
-    if (index >= 0 && Date.now() - cms.value[index].time <= expire)
+    if (useCache && index >= 0 && Date.now() - cms.value[index].time <= expire)
       return cms.value[index].json
-    else
+    else if (index >= 0)
       cms.value.splice(index, 1)
 
     const res = await getCmsApi(id)
