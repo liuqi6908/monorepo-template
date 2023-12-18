@@ -1,76 +1,87 @@
-import type { TabItem } from 'shared/component/base/tab/Tabs.vue'
+import { ref } from 'vue'
+import { MinioBucket } from 'zjf-types'
 import type { IDataDirectory } from 'zjf-types'
-import { cloneDeep } from 'lodash-es'
 
-const { $get } = useRequest()
+import {
+  getRootListApi,
+  getDataByDataRootIdApi,
+  getFolderFilesApi
+} from '../api'
+import type { FileItem } from '../types'
 
-let rootTabList = reactive<TabItem[]>([])
-const rootData = ref<IDataDirectory[]>([])
-const allData = ref<IDataDirectory[]>([])
-const databaseTab = ref<TabItem[]>([])
+interface Node extends IDataDirectory {
+  preview?: boolean
+  download?: boolean
+  children?: Node[]
+}
+
+/** 数据大类 */
+const rootList = ref<IDataDirectory[]>([])
+/** 加载中 */
 const loading = ref(false)
-const verifyTree = ref([{ nameZH: '数据库类型', id: 'database', children: [] }])
+
+/** 数据大类中的数据 */
+const rootData = ref<Node[]>()
+/** 数据大类中所有的下载文件 */
+const downloadFiles = ref<string[]>([])
+/** 数据大类中所有的样例文件 */
+const previewFiles = ref<string[]>([])
 
 export function useDatabase() {
-  const downloadDescribeByRole = async (roleName: string) => {
-    return await $get(`data-permission/data-role/${roleName}`)
-  }
-
-  /** 获取指定分类的数据 */
-  const getDataByRootId = async (dataRootId: string) => {
+  /**
+   * 获取所有数据大类
+   */
+  async function getRootList() {
     loading.value = true
-    const res = await $get<IDataDirectory[]>(`/data/list/${dataRootId}`).finally(() => {
+    try {
+      rootList.value = await getRootListApi()
+    }
+    catch (_) {}
+    finally {
       loading.value = false
-    })
-    const tabs = [] as TabItem[]
-
-    if (res[0].children) {
-      res[0].children.forEach((item) => {
-        // const view = judgePermission(item.viewDataRoles)
-        // const download = judgePermission(item.downloadDataRoles)
-
-        tabs.push({
-          label: item.nameZH,
-          id: item.nameEN,
-          children: item.children,
-          nameEN: item.nameEN,
-          isRequest: false,
-          reference: item.reference,
-
-        })
-      })
     }
-    databaseTab.value = cloneDeep(tabs)
   }
 
-  const geRootData = async () => {
-    loading.value = true
-    rootData.value = await $get<IDataDirectory[]>('/data/root/list')
+  /**
+   * 获取指定分类的数据
+   */
+  async function getDataByRootId(id: string, isFile = false) {
+    rootData.value = []
+    if (id) {
+      loading.value = true
+      try {
+        rootData.value = await getDataByDataRootIdApi(id)
+        if (isFile && rootData.value[0]?.children?.length) {
+          const _getFileNames = (arr: FileItem[]) => {
+            return arr.map(({ name }) => {
+              return name.split('/').pop()?.split('.').shift() || ''
+            }).filter(v => v)
+          }
 
-    if (rootData.value && rootData.value.length) {
-      const rootList = [] as TabItem[]
-      rootData.value.forEach(async (item) => {
-        rootList.push({
-          id: item.id,
-          label: item.nameZH,
-          isRequest: false,
-        })
-      })
-
-      rootTabList = cloneDeep(rootList)
+          downloadFiles.value = _getFileNames(await getFolderFilesApi({
+            bucket: MinioBucket.DATA,
+            path: `download/${id}`,
+          }))
+          previewFiles.value = _getFileNames(await getFolderFilesApi({
+            bucket: MinioBucket.DATA,
+            path: `preview/${id}`,
+          }))
+        }
+      }
+      catch (_) {}
+      finally {
+        loading.value = false
+      }
     }
-    loading.value = false
   }
 
   return {
-    getDataByRootId,
-    geRootData,
-    rootData,
-    allData,
-    rootTabList,
-    verifyTree,
+    rootList,
     loading,
-    databaseTab,
-    downloadDescribeByRole,
+    rootData,
+    downloadFiles,
+    previewFiles,
+    getRootList,
+    getDataByRootId
   }
 }
