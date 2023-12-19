@@ -1,4 +1,4 @@
-import { UploadType } from '../enum/data-root.enum'
+import type { UploadType } from '../enum/data-root.enum'
 
 export interface IUploadTypeDto {
   /** 上传表格数据类型 */

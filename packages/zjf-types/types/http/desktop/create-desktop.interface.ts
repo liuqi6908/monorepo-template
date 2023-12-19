@@ -1,4 +1,4 @@
-import { IDesktop } from '../../entities/desktop.interface'
+import type { IDesktop } from '../../entities/desktop.interface'
 
 /**
  * 创建云桌面
@@ -8,4 +8,4 @@ export interface ICreateDesktopBodyDto extends
   Omit<
     IDesktop,
     'user' | 'createdAt' | 'updatedAt' | 'userId' | 'lastUser' | 'lastUserId'
-  >{}
+  > {}

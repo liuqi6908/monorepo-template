@@ -1,5 +1,5 @@
-import { IDataDirectory } from './data-directory.interface'
-import { IUser } from './user.interface'
+import type { IDataDirectory } from './data-directory.interface'
+import type { IUser } from './user.interface'
 
 /**
  * 数据下载角色

@@ -1,6 +1,6 @@
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
-import { IUser } from './user.interface'
-import { IDataDirectory } from './data-directory.interface'
+import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import type { IUser } from './user.interface'
+import type { IDataDirectory } from './data-directory.interface'
 
 /**
  * 数据采购建议

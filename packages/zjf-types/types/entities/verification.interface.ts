@@ -1,7 +1,7 @@
-import { IUser } from './user.interface'
-import { IDataRole } from './data-role.interface'
-import { VerificationStatus } from '../enum/verification.enum'
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import type { VerificationStatus } from '../enum/verification.enum'
+import type { IUser } from './user.interface'
+import type { IDataRole } from './data-role.interface'
+import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
 /**
  * 认证信息历史记录
@@ -40,6 +40,6 @@ export interface IVerificationHistory extends ICreatedAt, IUpdatedAt {
   handledAt?: Date
   /** 认证状态 */
   status: VerificationStatus
-  /** 驳回原因（仅当状态为驳回时存在）*/
+  /** 驳回原因（仅当状态为驳回时存在） */
   rejectReason?: string
 }

@@ -1,5 +1,5 @@
-import { IBucketDto } from '../../dto/bucket.interface'
-import { IFilePathDto } from '../../dto/file-path.interface'
+import type { IBucketDto } from '../../dto/bucket.interface'
+import type { IFilePathDto } from '../../dto/file-path.interface'
 
 /**
  * 文件服务

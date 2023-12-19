@@ -1,5 +1,5 @@
-import { DESKTOP_REQUEST_DURATION_OPTION } from '../constants/desktop-request.constant'
-import { SysConfig } from '../enum/config.enum'
+import type { DESKTOP_REQUEST_DURATION_OPTION } from '../constants/desktop-request.constant'
+import type { SysConfig } from '../enum/config.enum'
 
 export interface IConfigDto {
   /** App配置 */

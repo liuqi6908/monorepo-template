@@ -9,7 +9,7 @@ export enum SysConfig {
   /** 外发配置 */
   EXPORT = 'export',
   /** 上传作品配置 */
-  WORK = 'work'
+  WORK = 'work',
 }
 
 /**

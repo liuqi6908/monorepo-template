@@ -1,5 +1,5 @@
-import { IBasicResponse } from '../basic.interface';
-import { IVerificationHistory } from '../../entities/verification.interface'
+import type { IBasicResponse } from '../basic.interface'
+import type { IVerificationHistory } from '../../entities/verification.interface'
 
 /**
  * 创建认证申请

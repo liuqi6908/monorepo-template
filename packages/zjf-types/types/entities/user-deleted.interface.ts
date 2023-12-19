@@ -1,7 +1,7 @@
-import { IAccountDto } from '../dto/account.interface'
-import { IEmailOptionalDto } from '../dto/email.interface'
-import { ICreatedAt } from './_timestamp.interface'
-import { IUser } from './user.interface'
+import type { IAccountDto } from '../dto/account.interface'
+import type { IEmailOptionalDto } from '../dto/email.interface'
+import type { ICreatedAt } from './_timestamp.interface'
+import type { IUser } from './user.interface'
 
 /**
  * 已删除用户

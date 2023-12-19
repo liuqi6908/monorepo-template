@@ -1,4 +1,4 @@
-import { PermissionType } from '../../enum/permission.enum'
+import type { PermissionType } from '../../enum/permission.enum'
 
 /**
  * 创建/更新 业务角色

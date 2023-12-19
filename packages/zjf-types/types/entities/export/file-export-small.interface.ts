@@ -1,4 +1,4 @@
-import { IFileExportBasic } from './file-export-basic.interface'
+import type { IFileExportBasic } from './file-export-basic.interface'
 
 /**
  * 小文件外发的信息

@@ -1,5 +1,5 @@
-import { ICms } from '../../entities/cms.interface'
-import { IBasicResponse } from '../basic.interface'
+import type { ICms } from '../../entities/cms.interface'
+import type { IBasicResponse } from '../basic.interface'
 
 /**
  * 创建/更新 内容

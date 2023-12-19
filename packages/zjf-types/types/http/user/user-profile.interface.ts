@@ -1,5 +1,5 @@
-import { IBasicResponse } from '../basic.interface'
-import { IUser } from '../../entities/user.interface'
+import type { IBasicResponse } from '../basic.interface'
+import type { IUser } from '../../entities/user.interface'
 
 /**
  * 查询当前登录用户的信息

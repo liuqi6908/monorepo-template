@@ -1,6 +1,5 @@
-
-import { ICodeVerifyDto } from '../../dto/code-verify.interface'
-import { IEmailDto } from '../../dto/email.interface'
+import type { ICodeVerifyDto } from '../../dto/code-verify.interface'
+import type { IEmailDto } from '../../dto/email.interface'
 
 /**
  * 解绑邮箱

@@ -1,4 +1,4 @@
-import { IPermission } from './permission.interface'
+import type { IPermission } from './permission.interface'
 
 /**
  * 业务角色

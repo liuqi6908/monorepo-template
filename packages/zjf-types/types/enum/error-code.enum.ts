@@ -150,9 +150,9 @@ export type ErrorMessageCollection = Partial<
   Record<
     ErrorCode,
     {
-      httpStatus: import('@nestjs/common').HttpStatus;
-      message: string;
-      detail?: any;
+      httpStatus: import('@nestjs/common').HttpStatus
+      message: string
+      detail?: any
     }
   >
 >

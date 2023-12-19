@@ -1,6 +1,6 @@
-import { IUser } from '../user.interface'
-import { IDesktop } from '../desktop.interface'
-import { ICreatedAt } from '../_timestamp.interface'
+import type { IUser } from '../user.interface'
+import type { IDesktop } from '../desktop.interface'
+import type { ICreatedAt } from '../_timestamp.interface'
 
 /**
  * 文件外发的基本信息

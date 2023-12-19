@@ -1,4 +1,4 @@
-import { IUser } from '../../entities/user.interface'
+import type { IUser } from '../../entities/user.interface'
 
 /**
  * 修改基本信息

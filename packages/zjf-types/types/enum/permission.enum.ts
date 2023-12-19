@@ -145,7 +145,7 @@ export enum PermissionType {
 
   // ------------------ 采购建议 ----–––---------------
   /** 查询所有的采购建议 */
-  DATA_SUGGEST_QUERY_ALL = 'data-suggest:query-all'
+  DATA_SUGGEST_QUERY_ALL = 'data-suggest:query-all',
 }
 
 /**

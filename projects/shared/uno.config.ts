@@ -50,10 +50,10 @@ export default defineConfig({
       white: { 1: '#FFFFFF1A', 2: '#FFFFFF33', 3: '#FFFFFF4d', 4: '#FFFFFF66', 5: '#FFFFFF80', 6: '#FFFFFF99', 7: '#FFFFFFB3', 8: '#FFFFFFCC', 9: '#FFFFFFE6' },
     },
     breakpoints: {
-      'xs': '500px',
-      'sm': '760px',
-      'lg': '900px',
-      'xl': '1360px',
+      xs: '500px',
+      sm: '760px',
+      lg: '900px',
+      xl: '1360px',
     },
   },
 })

@@ -1,6 +1,6 @@
-import { FileExportLargeStatus } from '../../enum/file-export.enum'
-import { IUser } from '../user.interface'
-import { IFileExportBasic } from './file-export-basic.interface'
+import type { FileExportLargeStatus } from '../../enum/file-export.enum'
+import type { IUser } from '../user.interface'
+import type { IFileExportBasic } from './file-export-basic.interface'
 
 /**
  * 大文件外发的信息

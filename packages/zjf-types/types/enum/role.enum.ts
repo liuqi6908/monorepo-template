@@ -1,15 +1,18 @@
 import { objectKeys } from '@catsjuice/utils'
 
-import { IRole } from '../entities/role.interface'
-import { IPermission } from '../entities/permission.interface'
-import { PermissionType, permissionDescriptions } from './permission.enum'
+import type { IRole } from '../entities/role.interface'
+import type { IPermission } from '../entities/permission.interface'
+import type { PermissionType } from './permission.enum'
+import { permissionDescriptions } from './permission.enum'
 
 const allPermissionNames = objectKeys(permissionDescriptions) as PermissionType[]
 
-const getPermission = (name: PermissionType): IPermission => ({
-  name,
-  description: permissionDescriptions[name],
-})
+function getPermission(name: PermissionType): IPermission {
+  return {
+    name,
+    description: permissionDescriptions[name],
+  }
+}
 
 /**
  * 全部的默认权限
@@ -19,8 +22,8 @@ export const defaultRoles: IRole[] = [
     id: 'root',
     name: 'root',
     description: '完整的访问权限',
-    permissions: allPermissionNames.map(pn => getPermission(pn))
-  }
+    permissions: allPermissionNames.map(pn => getPermission(pn)),
+  },
 ]
 
 /**

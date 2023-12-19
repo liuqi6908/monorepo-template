@@ -1,8 +1,8 @@
-import { IUser } from '../../entities/user.interface'
-import { IPasswordOptionalDto } from '../../dto/password.interface'
-import { IAccountDto } from '../../dto/account.interface'
-import { IEmailDto } from '../../dto/email.interface'
-import { INicknameOptionalDto } from '../../dto/nickname.interface'
+import type { IUser } from '../../entities/user.interface'
+import type { IPasswordOptionalDto } from '../../dto/password.interface'
+import type { IAccountDto } from '../../dto/account.interface'
+import type { IEmailDto } from '../../dto/email.interface'
+import type { INicknameOptionalDto } from '../../dto/nickname.interface'
 
 /**
  * 创建用户

@@ -1,5 +1,5 @@
-import { IVersionDto } from '../../dto/version.interface'
-import { IConfigDto } from '../../dto/config.interface'
+import type { IVersionDto } from '../../dto/version.interface'
+import type { IConfigDto } from '../../dto/config.interface'
 
 /**
  * 创建/更新 全局配置

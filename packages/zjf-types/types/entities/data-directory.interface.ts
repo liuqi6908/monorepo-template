@@ -1,4 +1,4 @@
-import { IDataRole } from './data-role.interface'
+import type { IDataRole } from './data-role.interface'
 
 /**
  * 数据目录

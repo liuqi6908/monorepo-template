@@ -1,5 +1,5 @@
-import { IBasicResponse } from '../basic.interface'
-import { IDataDirectory } from '../../entities/data-directory.interface'
+import type { IBasicResponse } from '../basic.interface'
+import type { IDataDirectory } from '../../entities/data-directory.interface'
 
 /**
  * 获取数据目录

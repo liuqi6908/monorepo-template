@@ -1,4 +1,4 @@
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
 /**
  * 内容CMS

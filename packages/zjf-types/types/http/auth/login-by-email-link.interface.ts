@@ -1,4 +1,4 @@
-import { IEmailDto } from '../../dto/email.interface'
+import type { IEmailDto } from '../../dto/email.interface'
 
 /**
  * 根据邮箱链接登录

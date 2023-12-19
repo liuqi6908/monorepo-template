@@ -1,5 +1,5 @@
-import { IFilenameDto } from '../../dto/filename.interface'
-import { IUserIdDto } from '../../dto/id/user.interface'
+import type { IFilenameDto } from '../../dto/filename.interface'
+import type { IUserIdDto } from '../../dto/id/user.interface'
 
 /**
  * 获取认证附件参数

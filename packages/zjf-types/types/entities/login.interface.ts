@@ -1,5 +1,5 @@
-import { ICreatedAt } from './_timestamp.interface'
-import { IUser } from './user.interface'
+import type { ICreatedAt } from './_timestamp.interface'
+import type { IUser } from './user.interface'
 
 /**
  * 登录

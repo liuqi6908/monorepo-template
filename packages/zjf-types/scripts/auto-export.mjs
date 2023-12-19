@@ -1,14 +1,14 @@
+import path from 'node:path'
+import fs from 'node:fs'
+import process from 'node:process'
 import { glob } from 'glob'
-import path from 'path'
-import fs from 'fs'
 
 const ROOT_DIR = process.cwd()
 const INDEX = path.join(ROOT_DIR, 'index.ts')
 
-const interfaces = await glob('./types/**/*.interface.ts', {cwd: process.cwd()})
-const enums = await glob('./types/**/*.enum.ts', {cwd: process.cwd()})
-const constants = await glob('./types/**/*.constant.ts', {cwd: process.cwd()})
-
+const interfaces = await glob('./types/**/*.interface.ts', { cwd: process.cwd() })
+const enums = await glob('./types/**/*.enum.ts', { cwd: process.cwd() })
+const constants = await glob('./types/**/*.constant.ts', { cwd: process.cwd() })
 
 function exportCode(p) {
   const name = path.basename(p, '.ts')
@@ -19,7 +19,8 @@ function exportCode(p) {
 }
 function filter(p) {
   const name = path.basename(p, '.ts')
-  if (name.startsWith('_')) return false
+  if (name.startsWith('_'))
+    return false
   return true
 }
 function sort(a, b) {
@@ -46,4 +47,4 @@ const imports = [
   ...constantImports,
 ]
 
-fs.writeFileSync(INDEX, imports.join('\n'))
+fs.writeFileSync(INDEX, `${imports.join('\n')}\n`)

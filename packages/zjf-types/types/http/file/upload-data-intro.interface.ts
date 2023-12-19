@@ -1,5 +1,5 @@
-import { IFilenameDto } from '../../dto/filename.interface'
-import { IDataRootIdDto } from '../../dto/id/data-root.interface'
+import type { IFilenameDto } from '../../dto/filename.interface'
+import type { IDataRootIdDto } from '../../dto/id/data-root.interface'
 
 /**
  * 上传数据简介

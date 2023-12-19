@@ -1,5 +1,5 @@
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
-import { IUser } from './user.interface'
+import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import type { IUser } from './user.interface'
 
 /**
  * 用户成果（作品）

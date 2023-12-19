@@ -1,5 +1,5 @@
-import { IUser } from './user.interface'
-import { LogDataAction } from '../enum/log.enum'
+import type { LogDataAction } from '../enum/log.enum'
+import type { IUser } from './user.interface'
 
 /**
  * 日志

@@ -1,4 +1,4 @@
-import { IPasswordDto, IPasswordOptionalDto } from '../../dto/password.interface'
+import type { IPasswordDto, IPasswordOptionalDto } from '../../dto/password.interface'
 
 /**
  * 根据旧密码修改密码

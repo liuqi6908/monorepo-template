@@ -1,6 +1,6 @@
-import { IVersionDto } from '../dto/version.interface'
+import type { IVersionDto } from '../dto/version.interface'
 import type { IConfigDto } from '../dto/config.interface'
-import { SysConfig } from '../enum/config.enum'
+import type { SysConfig } from '../enum/config.enum'
 
 /**
  * 全局配置

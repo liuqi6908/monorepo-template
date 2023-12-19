@@ -1,8 +1,8 @@
-import { IBasicResponse } from '../basic.interface';
-import { IUser } from '../../entities/user.interface';
-import { IPasswordDto } from '../../dto/password.interface';
-import { IEmailOptionalDto } from '../../dto/email.interface';
-import { IAccountOptionalDto } from '../../dto/account.interface';
+import type { IBasicResponse } from '../basic.interface'
+import type { IUser } from '../../entities/user.interface'
+import type { IPasswordDto } from '../../dto/password.interface'
+import type { IEmailOptionalDto } from '../../dto/email.interface'
+import type { IAccountOptionalDto } from '../../dto/account.interface'
 
 /**
  * 根据 账号/邮箱 + 密码 登录

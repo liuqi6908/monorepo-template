@@ -1,5 +1,5 @@
-import { PermissionType } from '../enum/permission.enum'
-import { IRole } from './role.interface'
+import type { PermissionType } from '../enum/permission.enum'
+import type { IRole } from './role.interface'
 
 /**
  * 权限列表

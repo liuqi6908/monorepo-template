@@ -1,6 +1,6 @@
-import { IFilenameDto } from '../../dto/filename.interface'
-import { IDataRootIdDto } from '../../dto/id/data-root.interface'
-import { IUploadTypeDto } from '../../dto/upload-type.interface'
+import type { IFilenameDto } from '../../dto/filename.interface'
+import type { IDataRootIdDto } from '../../dto/id/data-root.interface'
+import type { IUploadTypeDto } from '../../dto/upload-type.interface'
 
 /**
  * 上传表格数据

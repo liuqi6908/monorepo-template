@@ -17,5 +17,26 @@
     "build:server": "pnpm run build:types && pnpm run build:utils && pnpm --filter server build",
     "lint-staged": "lint-staged"
   },
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@antfu/eslint-config": "^0.39.5",
+    "@typescript-eslint/eslint-plugin": "^5.0.0",
+    "@typescript-eslint/parser": "^6.10.0",
+    "@unocss/eslint-config": "^0.52.7",
+    "chalk": "^5.3.0",
+    "eslint": "^8.43.0",
+    "eslint-plugin-vue": "^9.15.1",
+    "execa": "^7.1.1",
+    "lint-staged": "^13.2.2",
+    "prettier": "^3.0.3",
+    "prompts": "^2.4.2",
+    "shx": "^0.3.4",
+    "simple-git-hooks": "^2.8.1"
+  },
+  "simple-git-hooks": {
+    "pre-commit": "pnpm lint-staged"
+  },
+  "lint-staged": {
+    "*.(vue|ts|js)": "eslint --fix"
+  }
 }

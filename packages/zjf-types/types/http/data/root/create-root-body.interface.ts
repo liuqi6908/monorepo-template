@@ -1,4 +1,4 @@
-import { IDataDirectory } from '../../../entities/data-directory.interface'
+import type { IDataDirectory } from '../../../entities/data-directory.interface'
 
 /**
  * 创建数据大类

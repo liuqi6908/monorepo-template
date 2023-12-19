@@ -1,6 +1,6 @@
-import { DesktopQueueStatus } from '../enum/desktop.enum'
-import { IUser } from './user.interface'
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import type { DesktopQueueStatus } from '../enum/desktop.enum'
+import type { IUser } from './user.interface'
+import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
 /**
  * 云桌面申请

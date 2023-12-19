@@ -1,7 +1,7 @@
-import { IDesktopQueueHistory } from '../../entities/desktop-queue-history.interface'
-import { IDesktopQueue } from '../../entities/desktop-queue.interface'
-import { IDesktop } from '../../entities/desktop.interface'
-import { IBasicResponse } from '../basic.interface'
+import type { IDesktopQueueHistory } from '../../entities/desktop-queue-history.interface'
+import type { IDesktopQueue } from '../../entities/desktop-queue.interface'
+import type { IDesktop } from '../../entities/desktop.interface'
+import type { IBasicResponse } from '../basic.interface'
 
 /**
  * 查询当前用户的云桌面申请

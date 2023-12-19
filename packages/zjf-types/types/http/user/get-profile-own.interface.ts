@@ -1,4 +1,4 @@
-import { IRelationRawDto } from '../../dto/relation.interface'
+import type { IRelationRawDto } from '../../dto/relation.interface'
 
 /**
  * 查询当前登录用户的信息

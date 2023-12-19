@@ -1,5 +1,5 @@
-import { IBasicResponse } from '../basic.interface'
-import { IDataField } from '../../entities/data-field.interface'
+import type { IBasicResponse } from '../basic.interface'
+import type { IDataField } from '../../entities/data-field.interface'
 
 /**
  * 获取数据字段说明

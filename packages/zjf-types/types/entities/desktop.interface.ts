@@ -1,5 +1,5 @@
-import { IUser } from './user.interface'
-import { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
+import type { IUser } from './user.interface'
+import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 
 /**
  * 云桌面

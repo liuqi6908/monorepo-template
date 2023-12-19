@@ -1,6 +1,6 @@
-import { IBasicResponse } from '../basic.interface'
-import { IEmailDto } from '../../dto/email.interface'
-import { ICodeActionDto } from '../../dto/code-action.interface'
+import type { IBasicResponse } from '../basic.interface'
+import type { IEmailDto } from '../../dto/email.interface'
+import type { ICodeActionDto } from '../../dto/code-action.interface'
 
 /**
  * 发送邮箱验证码

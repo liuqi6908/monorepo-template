@@ -1,4 +1,4 @@
-import { MinioBucket } from '../enum/minio-bucket.enum'
+import type { MinioBucket } from '../enum/minio-bucket.enum'
 
 export interface IBucketDto {
   /** Minio Bucket 桶名 */

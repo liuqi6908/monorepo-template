@@ -1,4 +1,4 @@
-import { ICreateDesktopBodyDto } from './create-desktop.interface'
+import type { ICreateDesktopBodyDto } from './create-desktop.interface'
 
 /**
  * 更新云桌面
