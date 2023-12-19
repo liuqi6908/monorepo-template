@@ -4,5 +4,5 @@
  * @returns 封装后的Promise
  */
 export function sleep(time: number) {
-  return new Promise((resolve) => setTimeout(resolve, time))
+  return new Promise(resolve => setTimeout(resolve, time))
 }

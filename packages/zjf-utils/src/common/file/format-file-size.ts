@@ -11,6 +11,6 @@ export function formatFileSize(bytes: number) {
     return '0 B'
   const k = 1024
   const i = Math.floor(Math.log(bytes) / Math.log(k))
-  const v = (bytes / Math.pow(k, i)).toFixed(2)
+  const v = (bytes / k ** i).toFixed(2)
   return `${Number(v)} ${FILE_SIZE_UNITS[i]}`
 }

@@ -5,12 +5,12 @@
  */
 export function validatePath(url: string) {
   // 判断是否是带有协议的路径
-  const withProtocol = url.indexOf('://') > -1
+  const withProtocol = url.includes('://')
   const protocol = withProtocol ? url.split('://')[0] : ''
   const uri = withProtocol ? url.split('://')[1] : url
 
   // 去除多余的斜杠
-  let path = uri.charAt(0) !== '/' ? '/' + url : url
+  let path = uri.charAt(0) !== '/' ? `/${url}` : url
   path = path.replace(/\/{2,}/g, '/')
   return protocol ? `${protocol}://${path.slice(1)}` : path
 }

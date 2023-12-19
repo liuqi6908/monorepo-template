@@ -7,10 +7,9 @@ outline: deep
 
 安装Node（满足workspace的版本要求）和pnpm， 并安装相关依赖
 
-
 ## 目录结构
 
-```
+```dir
 .
 ├── docs                       // vitepress 文档
 │   └── src
@@ -30,7 +29,6 @@ outline: deep
 │   └── index.ts
 └── tsconfig.json
 ```
-
 
 ## 流程
 

@@ -1,6 +1,6 @@
 export const PASSWORD_MAX_LENGTH = 24
 export const PASSWORD_MIN_LENGTH = 8
-export const PASSWORD_ALLOW_CHARS = `!@#$%^&*()_+-=`
+export const PASSWORD_ALLOW_CHARS = '!@#$%^&*()_+-='
 export const PASSWORD_REQUIREMENTS_DESC = `密码为${PASSWORD_MIN_LENGTH}-${PASSWORD_MAX_LENGTH}位，不得包含 ${PASSWORD_ALLOW_CHARS} 以外的特殊字符`
 
 /**
@@ -11,9 +11,9 @@ export const PASSWORD_REQUIREMENTS_DESC = `密码为${PASSWORD_MIN_LENGTH}-${PAS
 export function validatePassword(password: string) {
   if (typeof password !== 'string')
     return '密码必须是字符串'
-  if (password.length < PASSWORD_MIN_LENGTH )
+  if (password.length < PASSWORD_MIN_LENGTH)
     return `密码长度不得小于 ${PASSWORD_MIN_LENGTH}`
-  if (password.length > PASSWORD_MAX_LENGTH )
+  if (password.length > PASSWORD_MAX_LENGTH)
     return `密码长度不得大于 ${PASSWORD_MAX_LENGTH}`
 
   // 检测特殊字符

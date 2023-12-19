@@ -1,3 +1,5 @@
+import buffer from 'node:buffer'
+
 /**
  * base64编码
  * @param str 字符串
@@ -8,7 +10,7 @@ export function base64Encode(str: string) {
   if (isBrowser)
     return window.btoa(str)
   else
-    return Buffer.from(str).toString('base64')
+    return buffer.Buffer.from(str).toString('base64')
 }
 
 /**
@@ -18,9 +20,9 @@ export function base64Encode(str: string) {
  */
 export function base64Decode(str: string) {
   const isBrowser = typeof window !== 'undefined'
-  if (isBrowser) {
+  if (isBrowser)
     return window.atob(str)
-  } else {
-    return Buffer.from(str, 'base64').toString()
-  }
+
+  else
+    return buffer.Buffer.from(str, 'base64').toString()
 }

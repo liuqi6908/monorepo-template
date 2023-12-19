@@ -1,6 +1,5 @@
-/* eslint-disable */
-const fs = require('fs')
-const path = require('path')
+const fs = require('node:fs')
+const path = require('node:path')
 const ts = require('typescript')
 
 const esmDir = path.join(__dirname, '..', 'esm')
@@ -11,7 +10,7 @@ const utilJsonPath = path.join(
   '..',
   'docs',
   '.vitepress',
-  'utils.json'
+  'utils.json',
 )
 
 const utilsJson = []
@@ -59,10 +58,10 @@ async function travel(dir, pathArr = []) {
  */
 async function handler(file, pathArr = []) {
   if (
-    file.endsWith('.map') ||
-    file.endsWith('.js') ||
-    file.startsWith('index') ||
-    file.endsWith('.doc.md')
+    file.endsWith('.map')
+    || file.endsWith('.js')
+    || file.startsWith('index')
+    || file.endsWith('.doc.md')
   )
     return
 
@@ -76,7 +75,7 @@ async function handler(file, pathArr = []) {
     fs.mkdirSync(docTargetDir, { recursive: true })
   const docPath = path.join(docsSrcDir, ...pathArr, docFilename)
 
-  const manualDocPath = path.join(srcDir, ...pathArr, manualDocFilename);
+  const manualDocPath = path.join(srcDir, ...pathArr, manualDocFilename)
   let manualDoc
   let oldDoc
 
@@ -99,7 +98,7 @@ async function handler(file, pathArr = []) {
     return
 
   const newMdConfig = buildMarkdownConfig(dts)
-  const markdown = newMdConfig + '\n' + newMdContent
+  const markdown = `${newMdConfig}\n${newMdContent}`
   fs.writeFileSync(docPath, markdown)
 }
 
@@ -112,10 +111,11 @@ async function updateUtils(prefix, name) {
   let pointer = utilsJson
   for (let i = 0; i < prefix.length; i++) {
     const name = prefix[i]
-    const match = pointer.find((item) => item.text === name)
+    const match = pointer.find(item => item.text === name)
     if (match) {
       pointer = match.items
-    } else {
+    }
+    else {
       const item = {
         text: name,
         items: [],
@@ -152,13 +152,13 @@ function parseDTS(dts) {
       dts,
       ts.ScriptTarget.ESNext,
       true,
-      ts.ScriptKind.TSX
+      ts.ScriptKind.TSX,
     )
 
     // 遍历语法树，解析函数信息
     ts.forEachChild(sourceFile, (node) => {
       if (ts.isFunctionDeclaration(node) && node.name) {
-        const name = node.name.text;
+        const name = node.name.text
         const description = node.jsDoc[0].comment ?? ''
         const parameters = node.parameters.map((param) => {
           const paramName = param.name.getText(sourceFile)
@@ -173,7 +173,6 @@ function parseDTS(dts) {
         const returnType = node.type?.getText(sourceFile) ?? 'void'
         const returnComment = ts.getJSDocReturnTag(node)?.comment ?? ''
         resolve({ name, description, parameters, returnType, returnComment })
-        return
       }
     })
   })
@@ -194,16 +193,16 @@ function buildMarkdownContent(dts) {
   md += '\n'
 
   md += '## 参数\n'
-  md += '\n';
+  md += '\n'
 
-  const table =
-    `| 参数名 | 类型 | 描述 |\n` +
-    `| --- | --- | --- |\n` +
-    parameters
+  const table
+    = '| 参数名 | 类型 | 描述 |\n'
+    + `| --- | --- | --- |\n${
+     parameters
       .map((param) => {
         return `| ${param.name} | \`${param.type}\` | ${param.description} |`
       })
-      .join('\n')
+      .join('\n')}`
 
   md += table
 
@@ -212,12 +211,12 @@ function buildMarkdownContent(dts) {
   md += '## 返回值\n'
   md += '\n'
 
-  md +=
-    `| 类型 | 描述 |\n` +
-    `| --- | --- |\n` +
-    `| \`${returnType.replace(/\|/g, '\\|')}\` | ${returnComment.replace(
+  md
+    += '| 类型 | 描述 |\n'
+    + '| --- | --- |\n'
+    + `| \`${returnType.replace(/\|/g, '\\|')}\` | ${returnComment.replace(
       /\|/g,
-      '\\|'
+      '\\|',
     )} |`
 
   md += '\n'
@@ -229,12 +228,12 @@ function buildMarkdownConfig(dts) {
   let md = ''
   const { name, description } = dts
   const descriptionFirstLine = description.split('\n')[0]
-  const config =
-    `---\n` +
-    `title: ${name}\n` +
-    `description: ${descriptionFirstLine}\n` +
-    `outline: deep\n` +
-    `---\n`
+  const config
+    = '---\n'
+    + `title: ${name}\n`
+    + `description: ${descriptionFirstLine}\n`
+    + 'outline: deep\n'
+    + '---\n'
 
   md += config
   return md

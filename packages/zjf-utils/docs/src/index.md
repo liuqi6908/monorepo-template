@@ -3,9 +3,9 @@
 layout: home
 
 hero:
-  name: "SSDP Utils"
-  text: "Utils of ssdp system"
-  tagline: 🔧「社科大数据平台3.0」工具包
+  name: "ZJF Utils"
+  text: "Utils of ZJF-IRC system"
+  tagline: 🔧「智能云科研平台1.0」工具包
   actions:
     - theme: brand
       text: 查看所有工具

@@ -1,9 +1,8 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { md5 } from './md5'
 
-export function sortObj(obj: any): any{
+export function sortObj(obj: any): any {
   if (Object.prototype.toString.call(obj) === '[object Array]') {
-    return (obj as Array<any>).sort().map((el) => sortObj(el))
+    return (obj as Array<any>).sort().map(el => sortObj(el))
   }
   else if (Object.prototype.toString.call(obj) === '[object Object]') {
     const keys = Object.keys(obj).sort()

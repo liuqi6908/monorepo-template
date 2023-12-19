@@ -2,7 +2,7 @@
  * Colors
  * -------------------------------------------------------------------------- */
 
- :root {
+:root {
   --c-yellow: #ffd859;
   --c-yellow-light: #f7d336;
   --c-yellow-lighter: #dec96e;
@@ -29,7 +29,6 @@
   --c-text-light-1: #2c3e50;
   --c-text-light-2: #476582;
   --c-text-light-3: #90a4b7;
-  /* #f9fafb */
 
   /* light theme is a bit different */
   --vp-c-brand: var(--c-green-darker);
@@ -44,29 +43,14 @@
   --c-bg-accent: var(--c-white-dark);
   --code-bg-color: var(--c-white-dark);
   --code-inline-bg-color: var(--c-white-dark);
-  --code-font-family: 'dm', source-code-pro, Menlo, Monaco, Consolas,
-    'Courier New', monospace;
+  --code-font-family: 'dm', source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
   --code-font-size: 16px;
 
   --vp-code-block-bg: var(--vp-c-bg-alt);
   --vp-code-line-highlight-color: rgba(0, 0, 0, 0.075);
-
-  /* --vp-c-brand: #646cff; */
-  /* --vp-c-brand-light: #747bff; */
-  /* --vp-c-brand-lighter: #9499ff; */
-  /* --vp-c-brand-lightest: #bcc0ff; */
-  /* --vp-c-brand-dark: #535bf2; */
-  /* --vp-c-brand-darker: #454ce1; */
-  /* --vp-c-brand-dimm: rgba(100, 108, 255, 0.08); */
 }
 
 html.dark:root {
-  /* --c-black: #ffffff;
-  --c-white: #000000; */
-  /* --c-divider-light: rgba(60, 60, 67, 0.12);
-  --c-divider-dark: rgba(84, 84, 88, 0.48); */
-  /* --c-brand-light: var(--c-yellow-light); */
-
   --vp-c-brand: var(--c-yellow);
   --vp-c-brand-dark: var(--c-yellow-dark);
   --vp-c-brand-darker: var(--c-yellow-darker);
@@ -83,7 +67,6 @@ html.dark:root {
   --c-text-lighter: var(--c-text-dark-3);
   --c-divider: var(--c-divider-dark);
   --c-bg-accent: var(--vp-c-black-light);
-  /* --vp-code-inline-bg: var(--vp-c-black-light); */
 
   --vp-c-bg: var(--vp-c-black);
   --vp-c-bg-soft: var(--vp-c-black-light);
@@ -170,12 +153,9 @@ html.dark:root {
 
 html.dark .DocSearch,
 html.dark .DocSearch-Modal {
-  /* --docsearch-text-color: var(--c-white-dark); */
   --docsearch-container-background: rgba(9, 10, 17, 0.8);
   --docsearch-modal-background: var(--vp-c-black);
   --docsearch-modal-shadow: inset 1px 1px 0 0 #2c2e40, 0 3px 8px 0 #000309;
-  /* --docsearch-searchbox-background: var(--c-black-lighter); */
-  /* --docsearch-searchbox-focus-background: var(--c-black-light); */
   --docsearch-hit-color: var(--c-text-dark-1);
   --docsearch-hit-active-color: var(--c-text-light-1);
   --docsearch-hit-shadow: none;

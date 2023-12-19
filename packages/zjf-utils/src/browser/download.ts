@@ -4,7 +4,7 @@
  * @param name 文件名
  */
 export function downloadCsv(csvRaw: string, name?: string) {
-  const url = `data:text/csv;charset=utf-8,\ufeff${encodeURIComponent(csvRaw)}`
+  const url = `data:text/csv;charset=utf-8,\uFEFF${encodeURIComponent(csvRaw)}`
   downloadUrl(url, name)
 }
 
