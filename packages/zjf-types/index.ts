@@ -1,6 +1,6 @@
 /**
  * This file is auto generated, do not modify directly.
- * @author CatsJuice
+ * @author LiuQi
  */
 
 // Enums

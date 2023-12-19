@@ -34,7 +34,7 @@ const constantImports = constants.filter(filter).map(exportCode).sort(sort)
 const imports = [
   '/**',
   ' * This file is auto generated, do not modify directly.',
-  ' * @author CatsJuice',
+  ' * @author LiuQi',
   ' */',
   '',
   '// Enums',

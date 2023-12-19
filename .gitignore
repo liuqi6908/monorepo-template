@@ -39,7 +39,7 @@ coverage
 .env.*
 !.env.example
 
-# docker 
+# docker
 .docker-vol
 docker-compose.yaml
 
