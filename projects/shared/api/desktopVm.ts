@@ -1,7 +1,7 @@
 import type {
+  VMDetail,
   VMOverview,
   VMState,
-  VMDetail
 } from '~/types'
 import { useRequest } from '~/composables'
 

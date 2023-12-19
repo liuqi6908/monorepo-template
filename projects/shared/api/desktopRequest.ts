@@ -1,11 +1,11 @@
 import type {
   ICreateDesktopRequestBodyDto,
   ICreateUserDesktopRequestBodyDto,
-  IRejectDesktopReqBodyDto,
-  IGetOwnDesktopReqResData,
   IDesktopQueue,
+  IGetOwnDesktopReqResData,
+  IPaginatedResData,
   IQueryDto,
-  IPaginatedResData
+  IRejectDesktopReqBodyDto,
 } from 'zjf-types'
 import { useRequest } from '~/composables'
 

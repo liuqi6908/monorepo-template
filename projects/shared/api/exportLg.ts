@@ -1,10 +1,10 @@
 import { file2FormData } from 'zjf-utils'
 import type {
   IFileExportLarge,
+  IPaginatedResData,
   IQueryDto,
-  IPaginatedResData
 } from 'zjf-types'
-import { useRequest, authToken } from '~/composables'
+import { authToken, useRequest } from '~/composables'
 
 const { $getUri, $post, $put } = useRequest()
 
@@ -52,6 +52,6 @@ export function rejectExportLgApi(id: string, body: {
  */
 export function getDownloadExportLgFileUrl(id: string) {
   return $getUri(`/export-lg/file/${id}`, {
-    token: authToken.value
+    token: authToken.value,
   })
 }

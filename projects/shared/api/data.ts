@@ -2,9 +2,9 @@ import { file2FormData } from 'zjf-utils'
 import type {
   ICreateRootBodyDto,
   IDataDirectory,
-  IUpdateRootBodyDto,
   IDataField,
-  IUploadTableDataParamDto
+  IUpdateRootBodyDto,
+  IUploadTableDataParamDto,
 } from 'zjf-types'
 import { useRequest } from '~/composables'
 

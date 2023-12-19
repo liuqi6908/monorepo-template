@@ -2,7 +2,6 @@
  * 富文本处理器
  */
 export class RichTextProcessor {
-
   private _div!: HTMLDivElement
 
   constructor(public raw: string) {

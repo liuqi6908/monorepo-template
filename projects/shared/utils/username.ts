@@ -1,4 +1,4 @@
-import { IUser } from 'zjf-types'
+import type { IUser } from 'zjf-types'
 
 /**
  * 获取用户名

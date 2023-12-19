@@ -1,6 +1,6 @@
 import type {
   IRole,
-  IUpsertRoleBodyDto
+  IUpsertRoleBodyDto,
 } from 'zjf-types'
 import { useRequest } from '~/composables'
 

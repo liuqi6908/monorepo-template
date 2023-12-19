@@ -1,10 +1,10 @@
 import { file2FormData } from 'zjf-utils'
 import type {
   IFileExportSmall,
+  IPaginatedResData,
   IQueryDto,
-  IPaginatedResData
 } from 'zjf-types'
-import { useRequest, authToken } from '~/composables'
+import { authToken, useRequest } from '~/composables'
 
 const { $getUri, $post, $put } = useRequest()
 
@@ -36,6 +36,6 @@ export function queryOwnExportSmApi(body: IQueryDto<IFileExportSmall>) {
  */
 export function getDownloadExportSmFileUrl(id: string) {
   return $getUri(`/export-sm/file/${id}`, {
-    token: authToken.value
+    token: authToken.value,
   })
 }

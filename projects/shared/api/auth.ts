@@ -1,9 +1,9 @@
 import type {
-  ILoginByPasswordBodyDto,
-  ILoginSuccessResData,
   ILoginByEmailCodeBodyDto,
   ILoginByEmailLinkDto,
-  IRegisterBodyDto
+  ILoginByPasswordBodyDto,
+  ILoginSuccessResData,
+  IRegisterBodyDto,
 } from 'zjf-types'
 import { useRequest, useUser } from '~/composables'
 

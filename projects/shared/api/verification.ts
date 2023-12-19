@@ -1,9 +1,9 @@
 import type {
-  IVerificationHistory,
   ICreateVerificationBodyDto,
-  IQueryDto,
   IPaginatedResData,
-  IRejectVerificationBodyDto
+  IQueryDto,
+  IRejectVerificationBodyDto,
+  IVerificationHistory,
 } from 'zjf-types'
 import { useRequest } from '~/composables'
 

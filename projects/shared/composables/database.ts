@@ -3,9 +3,9 @@ import { MinioBucket } from 'zjf-types'
 import type { IDataDirectory } from 'zjf-types'
 
 import {
-  getRootListApi,
   getDataByDataRootIdApi,
-  getFolderFilesApi
+  getFolderFilesApi,
+  getRootListApi,
 } from '~/api'
 import type { FileItem } from '~/types'
 
@@ -82,6 +82,6 @@ export function useDatabase() {
     downloadFiles,
     previewFiles,
     getRootList,
-    getDataByRootId
+    getDataByRootId,
   }
 }

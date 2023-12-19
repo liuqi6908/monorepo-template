@@ -17,7 +17,7 @@ export interface DesktopHost {
   uuid: string
 }
 
-type Value = {
+interface Value {
   value: number
   time: number
 }

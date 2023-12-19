@@ -1,8 +1,8 @@
 import type {
+  ClusterStorage,
   DesktopHost,
   HostAllocation,
   HostTimeSeries,
-  ClusterStorage
 } from '~/types'
 import { useRequest } from '~/composables'
 

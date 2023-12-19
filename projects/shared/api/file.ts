@@ -1,7 +1,7 @@
 import { file2FormData } from 'zjf-utils'
 import type {
   IFilePathDto,
-  IFileServesBodyDto
+  IFileServesBodyDto,
 } from 'zjf-types'
 import { authToken, useRequest } from '~/composables'
 import type { FileItem } from '~/types'
@@ -21,8 +21,8 @@ export function uploadPublicFileApi(body: IFilePathDto, file: File) {
 export function getPublicFileApi(body: IFilePathDto, range: string) {
   return $get<ReadableStream<File>>('/file/public', body, false, {
     headers: {
-      range
-    }
+      range,
+    },
   })
 }
 
@@ -38,7 +38,7 @@ export function uploadVerifyAttachmentsApi(file: File, filename?: string) {
  */
 export function getVerifyAttachmentsUrl(userId: string, filename: string) {
   return $getUri(`/file/private/verify/${userId}/${filename}`, {
-    token: authToken.value
+    token: authToken.value,
   })
 }
 
@@ -54,7 +54,7 @@ export function uploadDesktopRequestAttachmentsApi(file: File, filename?: string
  */
 export function getDesktopRequestAttachmentsUrl(userId: string, filename: string) {
   return $getUri(`/file/private/desktop-request/${userId}/${filename}`, {
-    token: authToken.value
+    token: authToken.value,
   })
 }
 

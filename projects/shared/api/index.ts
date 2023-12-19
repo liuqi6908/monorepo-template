@@ -3,7 +3,7 @@ import { Notify } from 'quasar'
 import { useRouter } from 'vue-router'
 import { ErrorCode } from 'zjf-types'
 import { VITE_API_BASE } from '~/constants'
-import { authToken, adminRole, userInfo, useApp } from '~/composables'
+import { adminRole, authToken, useApp, userInfo } from '~/composables'
 
 const $http = axios.create({
   baseURL: VITE_API_BASE,
@@ -30,7 +30,7 @@ $http.interceptors.request.use(
     }
 
     return config
-  }
+  },
 )
 
 /**
@@ -68,7 +68,7 @@ $http.interceptors.response.use(
 
     if (notify) {
       if (Array.isArray(detail)) {
-        detail.forEach((item) =>
+        detail.forEach(item =>
           showNotify(item.message),
         )
       }
@@ -91,7 +91,7 @@ $http.interceptors.response.use(
 function showNotify(message: string) {
   Notify.create({
     type: 'danger',
-    message
+    message,
   })
 }
 

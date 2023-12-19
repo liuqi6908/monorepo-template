@@ -1,27 +1,27 @@
-import { computed, ref, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
 import { encryptPasswordInHttp } from 'zjf-utils'
 import { Notify } from 'quasar'
 import type {
-  ILoginByPasswordBodyDto,
   ILoginByEmailCodeBodyDto,
+  ILoginByPasswordBodyDto,
   ILoginSuccessResData,
   IRegisterBodyDto,
-  IVerificationHistory
+  IVerificationHistory,
 } from 'zjf-types'
 
+import { adminRole, authToken, useApp, userInfo } from '.'
 import {
-  loginByPasswordApi,
-  loginByEmailCodeApi,
-  logoutApi,
-  getOwnProfileApi,
   getLatestVerificationApi,
+  getOwnProfileApi,
+  isDesktopApi,
+  loginByEmailCodeApi,
+  loginByPasswordApi,
+  logoutApi,
   registerApi,
-  isDesktopApi
 } from '~/api'
 import { rolePermissionsToLabel } from '~/utils'
-import { adminRole, authToken, useApp, userInfo } from '.'
 
 const { isAdmin } = useApp()
 
@@ -43,7 +43,7 @@ export function useUser($router = useRouter()) {
     try {
       const res = await loginByPasswordApi({
         ...body,
-        password: encryptPasswordInHttp(body.password)
+        password: encryptPasswordInHttp(body.password),
       })
       if (res)
         processLoginInfo(res)
@@ -78,7 +78,7 @@ export function useUser($router = useRouter()) {
     try {
       const res = await registerApi({
         ...body,
-        password: encryptPasswordInHttp(body.password)
+        password: encryptPasswordInHttp(body.password),
       })
       if (res) {
         Notify.create({
@@ -170,6 +170,6 @@ export function useUser($router = useRouter()) {
     register,
     logout,
     getOwnProfile,
-    getVerify
+    getVerify,
   }
 }

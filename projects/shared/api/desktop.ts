@@ -1,12 +1,12 @@
 import type {
   ICreateDesktopBodyDto,
-  IUpdateDesktopBodyDto,
-  IQueryDto,
+  IDesktop,
   IPaginatedResData,
-  IDesktop
+  IQueryDto,
+  IUpdateDesktopBodyDto,
 } from 'zjf-types'
 import { useRequest } from '~/composables'
-import { DesktopVM } from '~/types'
+import type { DesktopVM } from '~/types'
 
 const { $delete, $get, $patch, $post, $put } = useRequest()
 

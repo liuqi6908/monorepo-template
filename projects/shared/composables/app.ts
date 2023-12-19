@@ -1,6 +1,6 @@
-import { computed, ref, onMounted } from 'vue'
+import { computed, onMounted, ref } from 'vue'
 import { isClient } from '@vueuse/core'
-import { SysConfig, APP_NAME, APP_ICON } from 'zjf-types'
+import { APP_ICON, APP_NAME, SysConfig } from 'zjf-types'
 import { getConfigApi } from '~/api'
 
 /** 应用名称 */
@@ -36,6 +36,6 @@ export function useApp() {
     appName,
     appIcon,
     getAppConfig,
-    isAdmin
+    isAdmin,
   }
 }

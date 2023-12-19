@@ -1,10 +1,10 @@
 import { file2FormData } from 'zjf-utils'
 import type {
-  IWork,
+  IPaginatedResData,
   IQueryDto,
-  IPaginatedResData
+  IWork,
 } from 'zjf-types'
-import { useRequest, authToken } from '~/composables'
+import { authToken, useRequest } from '~/composables'
 
 const { $getUri, $delete, $patch, $post, $put } = useRequest()
 
@@ -54,6 +54,6 @@ export function queryAllWorksApi(body: IQueryDto<IWork>) {
  */
 export function getWorkDownloadFileUrl(id: string) {
   return $getUri(`/work/file/${id}`, {
-    token: authToken.value
+    token: authToken.value,
   })
 }

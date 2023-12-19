@@ -1,7 +1,7 @@
 import type {
   IDataSuggestion,
+  IPaginatedResData,
   IQueryDto,
-  IPaginatedResData
 } from 'zjf-types'
 import { useRequest } from '~/composables'
 

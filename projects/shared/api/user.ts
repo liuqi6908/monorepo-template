@@ -1,14 +1,14 @@
 import type {
-  IUser,
   ICreateUserBodyDto,
   IGetProfileOwnQueryDto,
-  IUpdateProfileOwnBodyDto,
+  IPaginatedResData,
+  IQueryDto,
   IUnbindEmailOwnBodyDto,
   IUpdateEmailOwnBodyDto,
-  IUpdatePasswordByOldBodyDto,
   IUpdatePasswordByCodeBodyDto,
-  IQueryDto,
-  IPaginatedResData
+  IUpdatePasswordByOldBodyDto,
+  IUpdateProfileOwnBodyDto,
+  IUser,
 } from 'zjf-types'
 import { useRequest } from '~/composables'
 
