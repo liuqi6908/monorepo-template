@@ -3,8 +3,8 @@ import type {
   IFilePathDto,
   IFileServesBodyDto
 } from 'zjf-types'
-import { authToken, useRequest } from '../composables'
-import type { FileItem } from '../types'
+import { authToken, useRequest } from '~/composables'
+import type { FileItem } from '~/types'
 
 const { $get, $getUri, $post, $put } = useRequest()
 

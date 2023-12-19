@@ -1,8 +1,8 @@
 import { ref } from 'vue'
 import { ICms } from 'zjf-types'
-import { getCmsApi } from '../api'
-import { CMS_CONFIG } from '../constants'
-import { CmsJson } from '../types'
+import { getCmsApi } from '~/api'
+import { CMS_CONFIG } from '~/constants'
+import { CmsJson } from '~/types'
 
 interface Cms extends ICms<CmsJson[]> {
   time: number

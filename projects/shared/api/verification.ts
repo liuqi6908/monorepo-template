@@ -5,7 +5,7 @@ import type {
   IPaginatedResData,
   IRejectVerificationBodyDto
 } from 'zjf-types'
-import { useRequest } from '../composables'
+import { useRequest } from '~/composables'
 
 const { $get, $delete, $patch, $post, $put } = useRequest()
 

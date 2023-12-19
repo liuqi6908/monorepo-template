@@ -4,7 +4,7 @@ import type {
   IQueryDto,
   IPaginatedResData
 } from 'zjf-types'
-import { useRequest, authToken } from '../composables'
+import { useRequest, authToken } from '~/composables'
 
 const { $getUri, $post, $put } = useRequest()
 

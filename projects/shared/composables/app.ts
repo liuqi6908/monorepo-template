@@ -1,7 +1,7 @@
 import { computed, ref, onMounted } from 'vue'
 import { isClient } from '@vueuse/core'
 import { SysConfig, APP_NAME, APP_ICON } from 'zjf-types'
-import { getConfigApi } from '../api'
+import { getConfigApi } from '~/api'
 
 /** 应用名称 */
 const appName = ref(APP_NAME)

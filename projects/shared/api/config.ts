@@ -1,5 +1,5 @@
 import type { SysConfig, IConfigDto, IUpsertConfigBodyDto } from 'zjf-types'
-import { useRequest } from '../composables'
+import { useRequest } from '~/composables'
 
 const { $get, $post } = useRequest()
 

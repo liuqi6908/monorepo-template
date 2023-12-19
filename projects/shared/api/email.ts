@@ -1,5 +1,5 @@
 import type { ISendEmailCodeBodyDto, ISendEmailCodeResData } from 'zjf-types'
-import { useRequest } from '../composables'
+import { useRequest } from '~/composables'
 
 const { $post } = useRequest()
 

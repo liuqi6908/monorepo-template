@@ -19,8 +19,8 @@ import {
   getLatestVerificationApi,
   registerApi,
   isDesktopApi
-} from '../api'
-import { rolePermissionsToLabel } from '../utils'
+} from '~/api'
+import { rolePermissionsToLabel } from '~/utils'
 import { adminRole, authToken, useApp, userInfo } from '.'
 
 const { isAdmin } = useApp()

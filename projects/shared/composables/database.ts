@@ -6,8 +6,8 @@ import {
   getRootListApi,
   getDataByDataRootIdApi,
   getFolderFilesApi
-} from '../api'
-import type { FileItem } from '../types'
+} from '~/api'
+import type { FileItem } from '~/types'
 
 interface Node extends IDataDirectory {
   preview?: boolean

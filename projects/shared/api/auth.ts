@@ -5,7 +5,7 @@ import type {
   ILoginByEmailLinkDto,
   IRegisterBodyDto
 } from 'zjf-types'
-import { useRequest, useUser } from '../composables'
+import { useRequest, useUser } from '~/composables'
 
 const { $post, $put } = useRequest()
 const { isLogin } = useUser()

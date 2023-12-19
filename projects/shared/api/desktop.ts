@@ -5,8 +5,8 @@ import type {
   IPaginatedResData,
   IDesktop
 } from 'zjf-types'
-import { useRequest } from '../composables'
-import { DesktopVM } from '../types'
+import { useRequest } from '~/composables'
+import { DesktopVM } from '~/types'
 
 const { $delete, $get, $patch, $post, $put } = useRequest()
 

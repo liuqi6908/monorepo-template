@@ -6,8 +6,8 @@ import type {
   IAggLogBodyDto,
   IDailyCount
 } from 'zjf-types'
-import { useRequest } from '../composables'
-import type { EsMapping, LogItem } from '../types'
+import { useRequest } from '~/composables'
+import type { EsMapping, LogItem } from '~/types'
 
 const { $get, $post } = useRequest()
 

@@ -1,5 +1,5 @@
 import type { IUpsertDataRoleBodyDto, IDataRole } from 'zjf-types'
-import { useRequest } from '../composables'
+import { useRequest } from '~/composables'
 
 const { $delete, $get, $post } = useRequest()
 

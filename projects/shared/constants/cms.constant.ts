@@ -1,11 +1,11 @@
 import { defineAsyncComponent, markRaw } from 'vue'
-import type { CmsConfig } from '../types'
+import type { CmsConfig } from '~/types'
 
-const HomeCarousel = defineAsyncComponent(() => import('../component/cms/home/HomeCarousel.vue'))
-const DataIntroduce = defineAsyncComponent(() => import('../component/cms/home/DataIntroduce.vue'))
-const Footer = defineAsyncComponent(()=>import('../component/cms/home/Footer.vue'))
-const Question = defineAsyncComponent(()=>import('../component/cms/question/Question.vue'))
-const UpdateDescribe = defineAsyncComponent(()=>import('../component/cms/user/UpdateDescribe.vue'))
+const HomeCarousel = defineAsyncComponent(() => import('~/component/cms/home/HomeCarousel.vue'))
+const DataIntroduce = defineAsyncComponent(() => import('~/component/cms/home/DataIntroduce.vue'))
+const Footer = defineAsyncComponent(()=>import('~/component/cms/home/Footer.vue'))
+const Question = defineAsyncComponent(()=>import('~/component/cms/question/Question.vue'))
+const UpdateDescribe = defineAsyncComponent(()=>import('~/component/cms/user/UpdateDescribe.vue'))
 
 /**
  * CMS 配置

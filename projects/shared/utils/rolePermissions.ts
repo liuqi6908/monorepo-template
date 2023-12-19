@@ -1,5 +1,5 @@
 import type { PermissionType } from 'zjf-types'
-import { MenuList } from '../constants'
+import { MenuList } from '~/constants'
 import { hasIntersection, expandArray } from '.'
 
 /**

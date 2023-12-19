@@ -2,7 +2,7 @@ import type {
   IRole,
   IUpsertRoleBodyDto
 } from 'zjf-types'
-import { useRequest } from '../composables'
+import { useRequest } from '~/composables'
 
 const { $get, $delete, $post } = useRequest()
 

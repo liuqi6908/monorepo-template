@@ -6,7 +6,7 @@ import type {
   IDataField,
   IUploadTableDataParamDto
 } from 'zjf-types'
-import { useRequest } from '../composables'
+import { useRequest } from '~/composables'
 
 const { $delete, $get, $patch, $put } = useRequest()
 

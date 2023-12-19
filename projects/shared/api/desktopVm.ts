@@ -2,8 +2,8 @@ import type {
   VMOverview,
   VMState,
   VMDetail
-} from '../types'
-import { useRequest } from '../composables'
+} from '~/types'
+import { useRequest } from '~/composables'
 
 const { $get, $post } = useRequest()
 

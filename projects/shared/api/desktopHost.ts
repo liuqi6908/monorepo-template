@@ -3,8 +3,8 @@ import type {
   HostAllocation,
   HostTimeSeries,
   ClusterStorage
-} from '../types'
-import { useRequest } from '../composables'
+} from '~/types'
+import { useRequest } from '~/composables'
 
 const { $get } = useRequest()
 

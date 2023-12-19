@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-import $http from '../api'
+import $http from '~/api'
 
 const cache = new Map<string, any>()
 

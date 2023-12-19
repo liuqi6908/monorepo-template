@@ -2,8 +2,8 @@ import axios from 'axios'
 import { Notify } from 'quasar'
 import { useRouter } from 'vue-router'
 import { ErrorCode } from 'zjf-types'
-import { VITE_API_BASE } from '../constants'
-import { authToken, adminRole, userInfo, useApp } from '../composables'
+import { VITE_API_BASE } from '~/constants'
+import { authToken, adminRole, userInfo, useApp } from '~/composables'
 
 const $http = axios.create({
   baseURL: VITE_API_BASE,
