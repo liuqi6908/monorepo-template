@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { onMounted, ref, reactive, nextTick, computed } from 'vue'
 import { useRoute, useRouter }  from 'vue-router'
-import { RichTextProcessor } from '../../../utils/rich-text.processor'
+import { RichTextProcessor } from '../../../utils/richText'
 
 interface Question {
   title: string

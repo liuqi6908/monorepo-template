@@ -1,3 +1,3 @@
-export * from './richText.processor'
+export * from './richText'
 export * from './rolePermissions'
 export * from './username'

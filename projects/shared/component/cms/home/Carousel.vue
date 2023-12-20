@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { CmsJson } from '~/types'
+import type { CmsJson } from '../../../types'
 
 const props = defineProps<{
   list?: CmsJson[]
@@ -40,7 +40,7 @@ watch(
       p0
     >
       <div flex-center full text="center grey-1">
-        <div max-w-150 flex="~ col gap-6" mb-12>
+        <div max-w-150 flex=".. col gap-6" mb-12>
           <h2 v-text="item.title" />
           <div text-sm font-400 v-html="item.richText" />
         </div>

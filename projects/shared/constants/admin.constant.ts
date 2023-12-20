@@ -7,7 +7,10 @@ interface Menu {
   permission: PermissionType[]
 }
 
-export const MenuList: Menu[] = [
+/**
+ * 管理后台菜单列表
+ */
+export const MENU_LIST: Menu[] = [
   {
     id: 'home',
     name: '页面管理',
