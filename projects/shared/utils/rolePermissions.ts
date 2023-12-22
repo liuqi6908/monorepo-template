@@ -1,6 +1,6 @@
 import type { PermissionType } from 'zjf-types'
 import { expandArray, hasIntersection } from 'zjf-utils'
-import { MENU_LIST } from '../constants'
+import { MENU_LIST } from '../constants/admin.constant'
 
 /**
  * 根据角色粒子化权限返回后台菜单

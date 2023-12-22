@@ -1,5 +1,5 @@
 import { defineAsyncComponent, markRaw } from 'vue'
-import type { CmsConfig } from '../types'
+import type { CmsConfig } from '../types/cms.interface'
 
 /**
  * CMS 配置
