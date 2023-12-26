@@ -1,6 +1,6 @@
 import type { ICms, IUpsertCmsBodyDto } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import type { CmsJson } from '../types'
+import type { CmsJson } from '../types/cms.interface'
 
 const { $get, $post } = useRequest()
 

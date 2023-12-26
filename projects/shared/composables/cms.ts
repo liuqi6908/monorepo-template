@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import type { ICms } from 'zjf-types'
-import { CMS_CONFIG } from '../constants/cms.constant'
+import { CMS_CONFIG } from '../constants/cms'
 import { getCmsApi } from '../api/cms'
 import type { CmsJson } from '../types/cms.interface'
 

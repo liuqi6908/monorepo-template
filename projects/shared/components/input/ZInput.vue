@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import type { QInputProps } from 'quasar'
 import { ref } from 'vue'
+import type { QInputProps } from 'quasar'
 
-interface ZInputProps {
+export interface ZInputProps {
   modelValue: string
   label?: string
   placeholder?: string
@@ -35,7 +35,7 @@ const isPwd = ref(true)
       :dark="dark"
       :color="dark ? 'grey-1' : 'primary-1'"
       :placeholder="placeholder"
-      :type="isPwd ? 'password' : 'text'"
+      :type="password && isPwd ? 'password' : 'text'"
       v-bind="params"
       @update:model-value="val => $emit('update:modelValue', val)"
     >
@@ -43,7 +43,7 @@ const isPwd = ref(true)
         <div
           v-if="password"
           :class="isPwd ? 'i-material-symbols:visibility-off-outline' : 'i-material-symbols:visibility-outline' "
-          cursor-pointer text="xl grey-1"
+          cursor-pointer text-xl :text="dark ? 'grey-1' : 'grey-4'"
           @click="isPwd = !isPwd"
         />
         <slot />
@@ -54,7 +54,7 @@ const isPwd = ref(true)
 
 <style lang="scss">
 .z-input {
-  --q-negative: var(--q-error);
+  --q-negative: #FF8080;
 
   .q-field {
     .q-field__control {
@@ -64,6 +64,11 @@ const isPwd = ref(true)
 
       .q-field__append {
         height: inherit;
+        margin-left: 6px;
+      }
+
+      .text-negative {
+        font-size: 20px;
       }
 
       .q-field__label {

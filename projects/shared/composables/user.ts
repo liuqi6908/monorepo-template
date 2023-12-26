@@ -1,4 +1,4 @@
-import { computed, onMounted, ref } from 'vue'
+import { computed, getCurrentInstance, onMounted, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
 import { encryptPasswordInHttp } from 'zjf-utils'
@@ -8,6 +8,7 @@ import type {
   ILoginByPasswordBodyDto,
   ILoginSuccessResData,
   IRegisterBodyDto,
+  IUpdatePasswordByCodeBodyDto,
   IVerificationHistory,
 } from 'zjf-types'
 
@@ -19,12 +20,13 @@ import {
   registerApi,
 } from '../api/auth'
 import { isDesktopApi } from '../api/desktop'
-import { getOwnProfileApi } from '../api/user'
+import { getOwnProfileApi, updateOwnPasswordByCodeApi } from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
+import { REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useApp } from './app'
 import { adminRole } from './permission'
 import { authToken } from './token'
-import { userInfo } from './userInfo'
+import { getTime, userInfo } from './userInfo'
 
 const { isAdmin } = useApp()
 
@@ -41,17 +43,29 @@ export function useUser($router = useRouter()) {
   /**
    * 通过 账号/邮箱 + 密码 登录
    */
-  async function loginByPassword(body: ILoginByPasswordBodyDto) {
+  async function loginByPassword(body: ILoginByPasswordBodyDto, remember = false) {
     loading.value = true
     try {
       const res = await loginByPasswordApi({
         ...body,
         password: encryptPasswordInHttp(body.password),
       })
-      if (res)
+      if (res) {
+        if (remember) {
+          localStorage.setItem(
+            REMEMBER_LOGIN_INFO_KEY,
+            JSON.stringify({
+              userCode: body.account || body.email,
+              password: encryptPasswordInHttp(body.password),
+            }),
+          )
+        }
+        else {
+          localStorage.removeItem(REMEMBER_LOGIN_INFO_KEY)
+        }
         processLoginInfo(res)
+      }
     }
-    catch (_) {}
     finally {
       loading.value = false
     }
@@ -67,7 +81,28 @@ export function useUser($router = useRouter()) {
       if (res)
         processLoginInfo(res)
     }
-    catch (_) { }
+    catch (_) {}
+    finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * 根据邮箱验证码修改密码
+   */
+  async function updatePasswordByCode(body: IUpdatePasswordByCodeBodyDto) {
+    loading.value = true
+    try {
+      const res = await updateOwnPasswordByCodeApi(body)
+      if (res) {
+        Notify.create({
+          type: 'success',
+          message: '修改密码成功',
+        })
+        $router.push('/auth/login')
+      }
+    }
+    catch (_) {}
     finally {
       loading.value = false
     }
@@ -100,10 +135,11 @@ export function useUser($router = useRouter()) {
   /**
    * 处理登录信息
    */
-  function processLoginInfo(res: ILoginSuccessResData) {
+  async function processLoginInfo(res: ILoginSuccessResData) {
     const { sign, user } = res
     authToken.value = sign.access_token
     userInfo.value = user
+    await getOwnProfile()
     $router.push('/')
   }
 
@@ -125,6 +161,10 @@ export function useUser($router = useRouter()) {
    * 获取当前登入用户信息
    */
   async function getOwnProfile(relation = 'role.permissions,verification') {
+    if (userInfo.value && getTime.value && Date.now() - getTime.value < 10 * 1000)
+      return
+
+    getTime.value = Date.now()
     const res = await getOwnProfileApi({ relation })
     if (res) {
       userInfo.value = res
@@ -152,13 +192,15 @@ export function useUser($router = useRouter()) {
    */
   const isVerify = computed(() => userInfo.value?.verification?.status === VerificationStatus.APPROVED)
 
-  onMounted(async () => {
-    if (!isFetched && isLogin.value) {
-      isFetched = true
-      getOwnProfile()
-      isDesktop.value = await isDesktopApi()
-    }
-  })
+  const instance = getCurrentInstance()
+  if (instance) {
+    onMounted(async () => {
+      if (!isFetched) {
+        isFetched = true
+        isDesktop.value = await isDesktopApi()
+      }
+    })
+  }
 
   return {
     adminRole,
@@ -171,6 +213,7 @@ export function useUser($router = useRouter()) {
     latestVerify,
     loginByPassword,
     loginByEmailCode,
+    updatePasswordByCode,
     register,
     logout,
     getOwnProfile,

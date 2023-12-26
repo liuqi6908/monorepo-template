@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
-import type { CmsJson } from '../../../types'
+import type { CmsJson } from '../../../types/cms.interface'
 
 const props = defineProps<{
   list?: CmsJson[]
@@ -9,7 +9,7 @@ const props = defineProps<{
 /** 当前轮播页索引 */
 const index = ref(0)
 /** 是否自动轮播 */
-const autoplay = ref(true)
+const autoplay = ref(false)
 
 watch(
   () => props.list,
@@ -30,26 +30,25 @@ watch(
     navigation arrows animated infinite
     height="400px" :autoplay="autoplay"
     @mouseenter="autoplay = false"
-    @mouseleave="autoplay = true"
+    @mouseleave="autoplay = false"
   >
     <q-carousel-slide
       v-for="(item, index) in list"
       :key="index"
       :name="index"
       :img-src="item.img"
-      p0
     >
-      <div flex-center full text="center grey-1">
-        <div max-w-150 flex=".. col gap-6" mb-12>
+      <div flex-center w-limited-1 h-full max-w-180 text="center grey-1">
+        <div flex="~ col gap6">
           <h2 v-text="item.title" />
-          <div text-sm font-400 v-html="item.richText" />
+          <div v-if="item.richText" text-sm font-400 v-html="item.richText" />
         </div>
       </div>
     </q-carousel-slide>
     <template #navigation-icon="{ active, onClick }">
       <div
-        rounded-full w3 h3 mx2
-        border="1px grey-1" :bg="active ? 'grey-1' : 'transparent'"
+        rounded-full w3 h3 mx2 cursor-pointer
+        b="1px grey-1" :bg="active ? 'grey-1' : 'transparent'"
         @click="onClick"
       />
     </template>
@@ -61,14 +60,10 @@ watch(
   .q-carousel__arrow {
     opacity: 0;
     transition: opacity .3s;
-    .q-icon {
-      color: var(--white-5);
-    }
-    .q-carousel__prev-arrow--horizontal {
-      left: 40px;
-    }
-    .q-carousel__next-arrow--horizontal {
-      right: 40px;
+    .q-btn {
+      .q-icon {
+        color: var(--white-5);
+      }
     }
   }
 

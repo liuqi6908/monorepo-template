@@ -12,41 +12,39 @@ interface Node extends IDataDirectory {
 }
 
 /** 数据大类 */
-const rootList = ref<IDataDirectory[]>([])
-/** 加载中 */
-const loading = ref(false)
+const rootList = ref<IDataDirectory[]>()
+/** 当前数据大类的ID */
+const rootId = ref<string>()
 
 /** 数据大类中的数据 */
 const rootData = ref<Node[]>()
 /** 数据大类中所有的下载文件 */
-const downloadFiles = ref<string[]>([])
+const downloadFiles = ref<string[]>()
 /** 数据大类中所有的样例文件 */
-const previewFiles = ref<string[]>([])
+const previewFiles = ref<string[]>()
+
+/** 当前数据库的ID */
+const databaseId = ref<string>()
 
 export function useDatabase() {
   /**
    * 获取所有数据大类
    */
   async function getRootList() {
-    loading.value = true
     try {
       rootList.value = await getRootListApi()
     }
     catch (_) {}
-    finally {
-      loading.value = false
-    }
   }
 
   /**
    * 获取指定分类的数据
    */
-  async function getDataByRootId(id: string, isFile = false) {
+  async function getDataByRootId(id?: string, isFile = false) {
     rootData.value = []
     if (id) {
-      loading.value = true
       try {
-        rootData.value = await getDataByDataRootIdApi(id)
+        rootData.value = (await getDataByDataRootIdApi(id))[0]?.children || []
         if (isFile && rootData.value[0]?.children?.length) {
           const _getFileNames = (arr: FileItem[]) => {
             return arr.map(({ name }) => {
@@ -65,18 +63,16 @@ export function useDatabase() {
         }
       }
       catch (_) {}
-      finally {
-        loading.value = false
-      }
     }
   }
 
   return {
     rootList,
-    loading,
+    rootId,
     rootData,
     downloadFiles,
     previewFiles,
+    databaseId,
     getRootList,
     getDataByRootId,
   }

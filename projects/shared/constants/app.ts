@@ -5,4 +5,4 @@ export const API_BASE_URL = '/api'
 /**
  * 应用的最小宽度
  */
-export const APP_MIN_WIDTH = 500
+export const APP_MIN_WIDTH = 600

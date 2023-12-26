@@ -1,47 +1,75 @@
-<template >
+<script lang="ts" setup>
+import { ref } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
+import type { CmsJson } from '../../../types/cms.interface'
+
+defineProps<{
+  list?: CmsJson[]
+}>()
+
+const flexBox = ref<HTMLElement>()
+const linefeed = ref(false)
+
+useResizeObserver(flexBox, ([{ contentRect, target }]) => {
+  const { width } = contentRect
+  const { children } = target
+  let allWidth = Math.floor(children.length / 2)  * 49.5
+  for (let i = 0; i < children.length; i++) {
+    const { className, clientWidth } = children[i]
+    if (!className)
+      allWidth += clientWidth
+  }
+  linefeed.value = width < allWidth
+})
+</script>
+
+<template>
+  <div
+    class="home-footer"
+    text-grey-1 bg="#001020"
+    py36
+  >
     <div
-      flex="~ row justify-center"
-      p25 text-grey-1 w-full bg="#001020"
-      gap24
+      v-if="list?.length"
+      ref="flexBox"
+      w-limited-1
+      :flex="`~ justify-between items-start gap6 wrap ${linefeed ? 'col' : 'row'}`"
     >
-      <div v-for="(item,index) in list" :key="index" flex="~ row" class="footer-item">
-        <div flex="~ col">
-            <span text-4.5 font-500 mb-5>{{ item.title }}</span>
-            <div class="col-grow items-center" v-html="item.richText"/>
+      <template
+        v-for="(item, index) in list"
+        :key="index"
+      >
+        <div flex="~ col gap8">
+          <div text-lg font-500 v-text="item.title" />
+          <div v-if="item.richText" text-sm font-400 v-html="item.richText"/>
         </div>
-      </div>
+        <div
+          v-if="index < list.length - 1"
+          :class="`line-${linefeed ? 'horizontal' : 'vertical'}`"
+          bg-white-3
+        />
+      </template>
+    </div>
   </div>
 </template>
 
-<script lang="ts" setup>
-interface footerItem {
-    title: string
-    richText: string
-}
-interface Props {
-    list : footerItem[]
-}
-defineProps<Props>()
-</script>
-
-
-<style lang="scss" scoped>
-.border-color {
-   background-color: var(--transparency-white-3, rgba(255, 255, 255, 0.30));;
-}
-.footer-item:not(:last-child) {
-  position: relative;
-
-  &::after {
-    content: "";
-    position: absolute;
-    height: 65px;
-    background: rgba(255,255,255,0.3);
-    width: 1px;
-    left: calc(100% + 48px);
-    top: 50%;
-    transform: translateY(-50%);
+<style lang="scss">
+.home-footer {
+  img {
+    display: inline;
   }
 
+  .line {
+    &-vertical {
+      height: 65px;
+      width: 1px;
+      margin: auto 0;
+    }
+
+    &-horizontal {
+      height: 1px;
+      width: 100px;
+    }
+  }
 }
 </style>

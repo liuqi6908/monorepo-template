@@ -1,13 +1,12 @@
 <script lang="ts" setup>
 import type { QDialogProps } from 'quasar'
-import Btn from '../btn/Btn.vue'
+import ZBtn from '../btn/ZBtn.vue'
 
-interface Props {
+interface ZDialogProps {
   modelValue: boolean
   title: string
   caption?: string
   footer?: boolean
-  confirmEvent?: () => void
   disableConfirm?: boolean
   cancelText?: string
   confirmText?: string
@@ -17,11 +16,11 @@ interface Props {
   params?: Omit<QDialogProps, 'modelValue'>
 }
 
-const { wrapperStyle, params } = withDefaults(defineProps<Props>(), {
+const { wrapperStyle, params } = withDefaults(defineProps<ZDialogProps>(), {
   cancelText: '取消',
   confirmText: '确认',
 })
-defineEmits(['update:modelValue'])
+defineEmits(['update:modelValue', 'ok'])
 </script>
 
 <template>
@@ -62,16 +61,21 @@ defineEmits(['update:modelValue'])
       </div>
 
       <footer v-if="footer" flex="~ row justify-end gap6" px6 mt-4>
-        <Btn
+        <ZBtn
           v-close-popup
-          outline min-w-28
+          min-w-28
           :label="cancelText"
+          text-color="primary-1"
+          :params="{
+            outline: true,
+          }"
         />
-        <Btn
+        <ZBtn
           v-close-popup
           min-w-28
           :label="confirmText"
-          @click="confirmEvent"
+          :disable="disableConfirm"
+          @click="$emit('ok')"
         />
       </footer>
     </q-card>
