@@ -1,67 +1,57 @@
-<script lang="ts" setup>
+<script setup lang="ts">
+import bg from '~/assets/bg/auth.webp'
+
 const $router = useRouter()
+const { width } = useWindowSize()
+const { appName } = useApp()
 </script>
 
 <template>
-  <div class="confirmation" absolute inset-0 flex="~ row justify-end">
-    <div class="confirmation-bgImg" absolute inset-y-0 left-0 w-1290px>
-      <header flex="~ items-center gap-2" text-grey-1 absolute cursor-pointer left-12 top-10 @click="$router.push('/')">
-        <img w-12 src="../assets/logo/logo-white.png">
-        <div text-7 font-600>
-          智能云科研平台
-        </div>
-        <div w-3px h-8 bg-grey-1 />
-        <div text-lg>
-          CloudResearch
-        </div>
-      </header>
-    </div>
-
-    <!-- auth card  -->
-    <div class="flex-center" mr-40>
+  <div
+    class="auth" text-grey-1
+    absolute inset-0 flex="~ row"
+  >
+    <div flex="1" w0 relative>
+      <img
+        v-if="width >= 900"
+        :src="bg"
+        h-full w-100vw max-w-inherit object-cover
+      />
       <div
-        class="confirmation-card"
-        w-26rem p-10 backdrop-blur-md
+        flex="~ gap2 items-center"
+        absolute top-12 left-12
+        cursor-pointer min-w-113
+        @click="$router.push('/')"
       >
-        <RouterView w-full flex="~ col" text="sm grey-1" font-500 />
+        <h2 v-text="appName" />
+        <div w3px h8 bg-grey-1 />
+        <div text-lg v-text="'CloudResearch'" />
+      </div>
+    </div>
+    <div flex-center w-full lg="max-w-160" xl="max-w-210">
+      <div
+        class="auth-card"
+        w120 p="y20 x10" backdrop-blur-md
+        b="1px solid transparent" overflow-auto
+      >
+        <RouterView w-full text-sm font-500 />
       </div>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-$confirmation-bg: linear-gradient(90deg, #2F96FB 0%, #2041B7 100%);
-$linear: linear-gradient(135deg, rgba(255, 255, 255, 0.20) 0%, rgba(255, 255, 255, 0.01) 100%);
+.auth {
+  background: linear-gradient(90deg, #2F96FB 0%, #2041B7 100%);
 
-.confirmation {
-    overflow: hidden;
-    background: $confirmation-bg;
-    &_ellipse {
-        position: fixed;
-        top:0;
-        left:0;
-        height:100%;
-        width:100%
+  &-card {
+    border-image: linear-gradient(150.02deg, #FFFFFF 0%, rgba(255, 255, 255, 0.05) 100%) 1;
+    background: linear-gradient(147.03deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.01) 100%);
+    max-height: calc(100% - 20px);
+
+    &::-webkit-scrollbar {
+      display: none;
     }
-    &-bgImg {
-      background: no-repeat url(~/assets/bg/auth.webp);
-      background-size: cover;
-      background-position: center;
-    }
-    &-card {
-      border: 1px solid transparent;
-      border-image: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.1))  1;
-      background: $linear;
-    }
+  }
 }
-</style>
-
-<style lang="sass">
-.confirmation-card label.q-input
-  --q-primary: white
-  .q-field__control::after
-    border-width: 1px
-
-  .q-field__label
-    color: rgba(255, 255, 255, 0.7) !important
 </style>

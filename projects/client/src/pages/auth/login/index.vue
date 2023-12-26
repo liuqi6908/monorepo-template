@@ -1,67 +1,136 @@
 <script setup lang="ts">
-import { validateEmail, validatePassword } from 'zjf-utils'
+import { validateEmail, validatePassword, decryptPasswordInHttp } from 'zjf-utils'
+import { ErrorCode } from 'zjf-types'
 
-const { useLogin } = useUser()
+const { loginByPassword, loading } = useUser()
 
+/** 用户账号 */
 const userCode = ref('')
+/** 密码 */
 const password = ref('')
-const acceptObj = reactive({
-  password: false,
-})
+/** 记住账号密码 */
+const remember = ref(false)
 
-function passwordRule(val: string) {
-  return validatePassword(val) || true
-}
+/** 登录提示对话框 */
+const dialog = ref(false)
 
-const logArg = computed(() => {
-  return {
-    password: password.value,
-    [validateEmail(userCode.value) ? 'account' : 'email']: userCode.value
+onBeforeMount(() => {
+  try {
+    const loginInfo = JSON.parse(localStorage.getItem(REMEMBER_LOGIN_INFO_KEY) || '{}')
+    if (loginInfo.userCode && loginInfo.password) {
+      userCode.value = loginInfo.userCode
+      password.value = decryptPasswordInHttp(loginInfo.password)
+      remember.value = true
+    }
   }
+  catch (_) {}
 })
 
-const disable = computed(() => !userCode.value || Object.values(acceptObj).includes(false))
+/** 禁用登录 */
+const disable = computed(() => loading.value || !userCode.value || !!validatePassword(password.value))
 
 /**
- * 按下回车键，登录
+ * 登录
  */
-function handleEnter() {
-  if (!disable.value)
-    useLogin(logArg.value)
+async function login() {
+  if (disable.value)
+    return
+
+  try {
+    await loginByPassword(
+      {
+        [validateEmail(userCode.value) ? 'account' : 'email']: userCode.value,
+        password: password.value,
+      },
+      remember.value,
+    )
+  }
+  catch (e: any) {
+    const { status } = e.response?.data || {}
+    if (status === ErrorCode.AUTH_PASSWORD_IS_NULL)
+      dialog.value = true
+  }
 }
 </script>
 
 <template>
-  <div>
-    <header flex-center mb-12 font-600 text-7 v-text="'登录'" />
-
-    <div mb-2 v-text="'账号 / 邮箱'" />
-    <UserCodeInput
-      v-model:userCode="userCode"
-      label="请输入账号/邮箱"
-    />
-
-    <div mb-2 mt-6 v-text="'密码'" />
-    <PasswordInput
-      v-model:password="password"
-      reactive-rules
-      :rules="[(val:string) => passwordRule(val)]"
-      @update:accept="(val) => acceptObj.password = val"
-      @keydown.enter="handleEnter()"
-    />
-
-    <RouterLink text-grey-1 font-400 mt-2 :to="{ path: 'forgetPassword' }" v-text="'忘记密码？'" />
-
-    <client-only>
-      <Btn color="primary-1" mt-20 h="12!" bg-color="grey-1" :disable="disable" @click="handleEnter">
-        <div text-base font-600>登录</div>
-      </Btn>
-    </client-only>
-
-    <div flex-center mt-4 font-400>
-      <span text-white-7>没有账号？</span>
-      <RouterLink text-grey-1 :to="{ path: 'signup' }" v-text="'立即注册'" />
+  <div flex="~ col gap14">
+    <h2 text-center v-text="'登录'" />
+    <div flex="~ col gap10">
+      <div flex="~ col">
+        <ZInput
+          v-model="userCode"
+          label="账号 / 邮箱"
+          placeholder="请输入用户名/邮箱"
+          dark mb-6
+        />
+        <ZInput
+          v-model="password"
+          label="密码"
+          placeholder="请输入密码"
+          dark password
+          :params="{
+            rules: [
+              (val: string) => validatePassword(val) || true
+            ]
+          }"
+          @keydown.enter="login"
+        />
+        <q-checkbox
+          v-model="remember"
+          dark color="primary" size="sm"
+          label="记住账号密码"
+          relative right-2 self-start
+        />
+        <div flex="~ justify-between" font-400 mt-2>
+          <RouterLink
+            text-grey-1
+            :to="{
+              path: '/auth/forgetPassword'
+            }"
+            v-text="'忘记密码？'"
+          />
+          <RouterLink
+            text-grey-1
+            :to="{
+              path: '/auth/loginByEmail'
+            }"
+            v-text="'使用验证码登录'"
+          />
+        </div>
+      </div>
+      <div flex="~ col gap4">
+        <ZBtn
+          size="big"
+          color="grey-1"
+          text-color="primary-1"
+          label="登录"
+          :disable="disable"
+          @click="login"
+        />
+        <div text="center white-7" font-400>
+          没有账号？
+          <RouterLink
+            text-grey-1
+            :to="{
+              path: '/auth/register'
+            }"
+            v-text="'立即注册'"
+          />
+        </div>
+      </div>
     </div>
+
+    <!-- 登录提示对话框 -->
+    <ZDialog
+      v-model="dialog"
+      title="提示"
+      confirm-text="立即前往"
+      footer
+      @ok="$router.push('/auth/forgetPassword')"
+    >
+      您登录的账号密码不存在，为了您的账号安全，请先前往“邮箱找回”设置初始密码。
+    </ZDialog>
   </div>
 </template>
 

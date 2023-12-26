@@ -1,66 +1,64 @@
-<script lang="ts" setup>
-import CurrentData from './CurrentData.vue'
+<script setup lang="ts">
+import bg from '~/assets/bg/database.webp'
+import type { ZMenuProps } from 'shared/components/menu/ZMenu.vue'
+import Root from '~/views/database/Root.vue'
 
-const { geRootData, rootData, loading } = useDatabase()
-
-const databaseId = ref('')
-const $router = useRouter()
+const { rootList, rootId, getRootList } = useDatabase()
+const { scrollTo } = useScrollApp()
 const $route = useRoute()
+const $router = useRouter()
 
-onBeforeMount(() => {
-  geRootData().finally(() => {
-    if (rootData.value && rootData.value.length) {
-      rootData.value = rootData.value.map((item) => {
-        return {
-          ...item,
-          router: { path: '/database', query: { database: item.id, label: item.nameZH } },
-        }
-      })
-    }
-    const { database } = $route.query as Record<string, string>
-    const obj = rootData.value.find(v => v.id === database) || rootData.value[0]
+/** 加载中 */
+const loading = ref(false)
 
-    databaseId.value = obj.id
-    $router.push({ query: { database: obj.id, label: obj.nameZH } })
-  },
-  )
+onBeforeMount(async () => {
+  loading.value = true
+  try {
+    await getRootList()
+    if (rootList.value?.length)
+      rootId.value = rootList.value.find(v => v.id === $route.query.rootId)?.id || rootList.value[0].id
+    if (rootId.value)
+      $router.push({ query: { rootId: rootId.value } })
+  }
+  finally {
+    loading.value = false
+  }
 })
 
-const empty = computed(() => !rootData.value || !rootData.value.length)
+const menu = computed<ZMenuProps['list']>(() => {
+  return rootList.value?.map((item) => {
+    const { id, nameZH } = item
+    return {
+      id,
+      label: nameZH,
+      to: {
+        path: '/database',
+        query: {
+          rootId: id,
+        },
+      },
+    }
+  })
+})
+
+watch(rootId, () => scrollTo(0))
 </script>
 
 <template>
-  <div flex="~ col" full min-h-4xl items-center bg-grey-1>
-    <header class="database" h-64 w-full flex-center>
-      <div text-grey-1 title-1 v-text="'数据库'" />
-    </header>
-    <div
-      class="col-grow" flex-start w-limited-1 mt-10 justify-center
-      flex="~ row gap-10"
-    >
-      <SliderList :list="rootData" :current-id="databaseId" router @update:current-id="(id) => databaseId = id" />
-
-      <div flex="1" w0 flex-center>
-        <q-spinner
-          v-if="loading"
-          color="primary-1"
-          size="5rem"
-          :thickness="2"
-          label-class="text-primary-1"
-          label-style="font-size: 1.1em"
-        />
-        <Empty v-else-if="empty" label="暂无数据" icon="database" />
-        <CurrentData v-else :db-id="databaseId" />
+  <div>
+    <Banner text-grey-1 :img="bg" title="数据库" />
+    <div p="t10 b20" relative>
+      <ZLoading :value="loading" />
+      <ZEmpty v-if="!menu?.length" icon="database" />
+      <div v-else w-limited-1 flex="~ gap10">
+        <div>
+          <ZMenu v-model="rootId" :list="menu" sticky top-41 />
+        </div>
+        <Root :key="rootId" flex-1 w0 />
       </div>
     </div>
   </div>
 </template>
-
-<style lang="scss" scoped>
-.database {
-  background: no-repeat center / cover url("~/assets/bg/database.webp");
-}
-</style>
 
 <route lang="yaml">
 meta:

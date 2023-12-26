@@ -72,8 +72,12 @@ export default ({ mode }: any) => {
         ],
         dts: 'src/auto-imports.d.ts',
         dirs: [
-          'src/composables',
           'src/constants',
+          'src/composables',
+          '../shared/api',
+          '../shared/composables',
+          '../shared/constants',
+          '../shared/utils',
         ],
         vueTemplate: true,
       }),
@@ -85,6 +89,10 @@ export default ({ mode }: any) => {
         // allow auto import and register components used in markdown
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
         dts: 'src/components.d.ts',
+        dirs: [
+          'src/components',
+          '../shared/components',
+        ],
       }),
 
       // https://github.com/antfu/unocss

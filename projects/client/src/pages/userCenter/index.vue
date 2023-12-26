@@ -1,9 +1,9 @@
+<script setup lang="ts"></script>
+
 <template>
-  <div full bg-grey-1 min-h-xl />
+  <div />
 </template>
 
 <route lang="yaml">
 redirect: /userCenter/authentication
-meta:
-  layout: userCenter
 </route>

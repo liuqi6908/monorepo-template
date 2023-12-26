@@ -2,53 +2,60 @@
 import { isClient } from '@vueuse/core'
 import { QScrollArea } from 'quasar'
 
-useHead({
-  title: '智能云科研平台',
-  meta: [
-    { name: 'description', content: '「智能云科研平台」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。' },
-  ],
-  link: [
-    {
-      rel: 'icon',
-      type: 'image/svg+xml',
-      href: '/favicon.svg',
-    },
-  ],
+const $route = useRoute()
+const { width } = useWindowSize()
+const { appName, appIcon, getAppConfig } = useApp()
+const { el, scrollTo } = useScrollApp()
+
+onBeforeMount(async () => {
+  await getAppConfig()
+  useHead({
+    title: appName.value,
+    meta: [
+      {
+        name: 'description',
+        content: `「${appName.value}」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。`,
+      },
+    ],
+    link: [
+      {
+        rel: 'icon',
+        href: appIcon.value,
+      },
+    ],
+  })
 })
 
-const el = ref<QScrollArea>()
-const route = useRoute()
-
 watch(
-  () => route.name,
+  () => $route.name,
   () => {
-    el.value?.setScrollPosition('vertical', 0)
+    scrollTo(0)
   },
 )
 
-const { width } = useWindowSize()
+const debouncedFn = useDebounceFn((width: number) => {
+  if (isClient) {
+    nextTick(() => {
+      const body = document.body
+      if (body) {
+        if (width < APP_MIN_WIDTH) {
+          body.style.transform = `scale(${width / APP_MIN_WIDTH})`
+          body.style.width = `${APP_MIN_WIDTH / width * 100}%`
+          body.style.height = `${APP_MIN_WIDTH / width * 100}%`
+        }
+        else {
+          body.style.transform = ''
+          body.style.width = '100%'
+          body.style.height = '100%'
+        }
+      }
+    })
+  }
+}, 300)
+
 watch(
   width,
-  (newVal) => {
-    if (isClient) {
-      nextTick(() => {
-        const body = document.body
-        const base = 1290
-        if (body) {
-          if (newVal < base) {
-            body.style.transform = `scale(${newVal / base})`
-            body.style.width = `${base / newVal * 100}%`
-            body.style.height = `${base / newVal * 100}%`
-          }
-          else {
-            body.style.transform = ''
-            body.style.width = '100%'
-            body.style.height = '100%'
-          }
-        }
-      })
-    }
-  },
+  debouncedFn,
   {
     immediate: true,
   },
@@ -60,3 +67,11 @@ watch(
     <RouterView />
   </QScrollArea>
 </template>
+
+<style lang="scss" scoped>
+.q-scrollarea {
+  :deep(> .q-scrollarea__thumb) {
+    z-index: 999;
+  }
+}
+</style>

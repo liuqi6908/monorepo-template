@@ -1,74 +1,53 @@
 <script setup lang="ts">
-import { cmsConfig } from 'shared/constants/cms.constant'
-import { getCms } from '~/api/cms'
+import type { CmsJson } from 'shared/types/cms.interface'
 
-const cmsId = ref('home')
-const homeList = ref<any>([])
-const questionProps = ref<[{ title: string; svg: string; richText: string }]>()
-const route = useRoute()
-const { cmsProps } = useCms()
+const { getCms } = useCms()
 
-function currCom(id: string) {
-  const list = cmsConfig.find(i => i.id === cmsId.value)?.children
-  const item = list?.find(i => i.id === id)
-  if (item)
-    return item.component
-}
-
-const comProps = computed(() => (currId: string) => {
-  const json: any[] = []
-  if (homeList.value.length) {
-    const clone = homeList.value.find((i: any) => i.id === currId)
-    if (!clone)
-      return
-    const jsons = clone.json
-    if (jsons && json) {
-      jsons.forEach((item: any, index: number) => {
-        json.push({
-          name: `silder${index}`,
-          content: item.content,
-          title: item.title,
-          img: item.uploadImg,
-          richText: item.richText,
-        })
-      })
-    }
+/** 首页 CMS 内容 */
+const cmsList = reactive(CMS_CONFIG.filter(v => v.id.includes('home')).map((v) => {
+  const { id, component } = v
+  return {
+    id,
+    component,
+    props: [] as CmsJson[] | undefined,
   }
-  return json
-})
+}))
+/** 问答管理参数 */
+const questionProps = ref<CmsJson[]>()
 
 onMounted(async () => {
-  questionProps.value = await cmsProps('questionItem') as any
+  cmsList.forEach(async (item) => {
+    item.props = await getCms(item.id, true)
+  })
+  questionProps.value = await getCms('question')
 })
-
-watch(() => route.name, async () => {
-  // Do something here...
-  const list = cmsConfig.find(i => i.id === cmsId.value)?.children
-  if (!list)
-    return
-  for (const cms of list) {
-    const res = await getCms(cms.id)
-    homeList.value.push(res)
-  }
-}, { immediate: true })
 </script>
 
 <template>
   <div>
-    <component :is="currCom('homeCarousel')" v-if="comProps('homeCarousel') && comProps('homeCarousel')?.length && currCom('homeCarousel')" :list="comProps('homeCarousel')" />
+    <component
+      :is="item.component"
+      v-for="item in cmsList"
+      :key="item.id"
+      :list="item.props"
+    />
 
-    <component :is="currCom('homeDataIntroduce')" v-if="comProps('homeDataIntroduce') && comProps('homeDataIntroduce')?.length" :list="comProps('homeDataIntroduce')" />
-
-    <div flex-center bg-grey-2>
-      <div grid my-20 max-w-4xl gap-12 lg:grid-cols-1 xl:grid-cols-2>
+    <!-- 常见问题 -->
+    <div py20 bg="grey-2">
+      <div w-limited-1 flex="~ row wrap" gap="y10 x20">
         <RouterLink
-          v-for="(item, index) in questionProps"
+          v-for="(item, index) in questionProps?.filter((_, i) => i < 4)"
           :key="index"
-          :to="{ path: '/question', query: { title: item.title, index } }"
+          :to="{
+            path: '/question',
+            query: {
+              title: item.title,
+              index,
+            },
+          }"
+          flex-1 min-w-112
         >
-          <DisplayCard
-            v-bind="{ ...item }"
-          />
+          <QuestionCard v-bind="{ ...item }" />
         </RouterLink>
       </div>
     </div>
