@@ -82,7 +82,7 @@ onMounted(() => {
         if (footer.value.getBoundingClientRect().bottom < height.value)
           footer.value.style.boxShadow = ''
         else
-          footer.value.style.boxShadow = '0px -2px 16px 0px #00000014'
+          footer.value.style.boxShadow = '0px -5px 10px 0px #00000014'
       }
     )
   })
@@ -183,7 +183,8 @@ async function downloadData() {
             query: {
               rootId,
               databaseId,
-            }
+              tableId,
+            },
           }"
           flex="~ items-center gap4"
         >
@@ -243,7 +244,7 @@ async function downloadData() {
     <div
       ref="footer" class="footer"
       flex="center col gap2" py4 sticky bottom-0 bg-grey-1
-      style="box-shadow: 0px -2px 16px 0px #00000014"
+      style="box-shadow: 0px -5px 10px 0px #00000014"
     >
       <!-- 操作按钮 -->
       <ZBtn

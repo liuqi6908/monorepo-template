@@ -1,8 +1,53 @@
 <script lang="ts" setup>
+import { isClient } from '@vueuse/core'
+import { omit } from 'zjf-utils'
+
 const { rootData, rootId, databaseId } = useDatabase()
+const { query } = useRoute()
+const $router = useRouter()
+const { scrollTo } = useScrollApp()
 
 const children = computed(() => {
   return rootData.value?.find(v => v.id === databaseId.value)?.children
+})
+
+/** 子库Id */
+const bDbId = ref<string>()
+/** 模块Id */
+const partId = ref<string>()
+/** 表格Id */
+const tableId = ref<string>()
+
+onBeforeMount(() => {
+  if (query.tableId) {
+    tableId.value = query.tableId as string
+    children.value?.some((b_db) => {
+      if (b_db.children?.some((part) => {
+        if (part.children?.some((table) => table.id === tableId.value)) {
+          partId.value = part.id
+          return true
+        }
+      })) {
+        bDbId.value = b_db.id
+          return true
+      }
+    })
+    console.log(omit(query, 'tableId'));
+    
+    $router.push({
+      query: omit(query, 'tableId'),
+    })
+  }
+})
+
+onMounted(() => {
+  if (bDbId.value && isClient) {
+    nextTick(() => {
+      const dom = document.querySelector(`#b_db_${bDbId.value}`) as HTMLElement
+      if (dom)
+        scrollTo(dom.offsetTop + 160, undefined, 300)
+    })
+  }
 })
 </script>
 
@@ -11,10 +56,12 @@ const children = computed(() => {
     <ZExpansion
       v-for="b_db in children"
       :key="b_db.id"
+      :id="`b_db_${b_db.id}`"
       :label="b_db.nameZH"
+      :initialValue="b_db.id === bDbId"
     >
       <template v-for="(part, index) in b_db.children" :key="part.id">
-        <ZExpansion p="l7 y1">
+        <ZExpansion p="l7 y1" :initialValue="part.id === partId">
           <template #label>
             <div text-lg font-600 truncate v-text="part.nameZH" />
           </template>

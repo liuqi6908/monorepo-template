@@ -3,6 +3,7 @@ import { ref } from 'vue'
 
 interface ZExpansionProps {
   label?: string
+  initialValue?: boolean
 }
 defineProps<ZExpansionProps>()
 
@@ -34,8 +35,9 @@ const value = ref(false)
 
     <!-- Content -->
     <q-expansion-item
-      v-model="value"
+      :model-value="initialValue || value"
       header-class="display-none"
+      @update:model-value="val => value = val"
     >
       <slot />
     </q-expansion-item>
