@@ -2,11 +2,16 @@
 import * as mammoth from 'mammoth'
 import { isClient } from '@vueuse/core'
 
+/** 目录元素 */
+const toc = ref<HTMLElement>()
+
 const { rootData, rootId, databaseId } = useDatabase()
 const { query } = useRoute() as {
   query: Record<string, string>
 }
 const $router = useRouter()
+const { width } = useElementSize(toc)
+const { el, scrollTo } = useScrollApp()
 
 /** 数据库的英文名 */
 const nameEN = ref<string>()
@@ -15,12 +20,13 @@ const loading = ref(false)
 /** 文档 */
 const docHtml = ref<{
   toc: {
-    id: number
+    id: string
     label: string
-    level: number
   }[]
   article: HTMLElement
 }>()
+/** 当前激活目录 */
+const value = ref<string>()
 
 onBeforeMount(async () => {
   rootId.value = query.rootId
@@ -37,6 +43,40 @@ onBeforeMount(async () => {
   }
   finally {
     loading.value = false
+    value.value = docHtml.value?.toc[0]?.id
+
+    /** 监听滚动， 切换激活目录 */
+    nextTick(() => {
+      const { y } = useScroll(el.value?.$el.firstChild as HTMLElement | undefined)
+
+      watch(
+        y,
+        (newVal) => {
+          const { toc } = docHtml.value || {}
+          if (!toc?.length || !isClient)
+            return
+
+          for (let i = 0; i < toc.length; i++) {
+            const dom = document.querySelector(`#${toc[i].id}`) as HTMLElement
+            const next = i < toc.length - 1 ? document.querySelector(`#${toc[i + 1].id}`)  as HTMLElement : null
+
+            if (!dom)
+              continue
+
+            const top = dom.offsetTop + 100
+            const nextTop = next ? next.offsetTop + 100 : 0
+            if (
+              (i === 0 && newVal < top)
+              || (!next && newVal >= top)
+              || (newVal >= top && newVal < nextTop)
+            ) {
+              value.value = toc[i].id
+              return
+            }
+          }
+        }
+      )
+    })
   }
 })
 
@@ -69,19 +109,30 @@ function resolveHTML(html: string) {
   let id = 0
   for (const h of hsArr) {
     id++
-    const level = Number(h.tagName.slice(1))
-    h.setAttribute('id', id.toString())
+    h.setAttribute('id', `toc_${id}`)
     docHtml.value.toc.push({
-      id,
+      id: `toc_${id}`,
       label: h.innerText,
-      level,
     })
+  }
+}
+
+/** 激活目录，滚动 */
+function scroll(id: string) {
+  value.value = id
+  if (!id || !isClient)
+    return
+
+  const dom = document.querySelector(`#${id}`) as HTMLElement
+  if (dom) {
+    const top = dom.offsetTop + 100
+    scrollTo(top, 'vertical', 300)
   }
 }
 </script>
 
 <template>
-  <div w-limited-1 flex="~ col gap6">
+  <div w-limited-1 flex="~ col gap6" pb20>
     <!-- Header -->
     <div py6>
       <RouterLink
@@ -108,7 +159,33 @@ function resolveHTML(html: string) {
     <!-- Main -->
     <div flex="~ gap4" sm="gap6" lg="gap8" xl="gap10" relative>
       <ZLoading :value="loading" />
-      <ZEmpty label="暂无数据库介绍" />
+      <ZEmpty v-if="!docHtml?.article" label="暂无数据库介绍" />
+      <template v-else>
+        <!-- Toc -->
+        <div>
+          <q-scroll-area
+            sticky top-36
+            :style="{
+              height: 'calc(100vh - 144px)',
+              width: `${width + 1}px`
+            }"
+          >
+            <ZMenu
+              ref="toc"
+              :model-value="value"
+              :list="docHtml.toc"
+              gap="0!"
+              @update:model-value="val => scroll(val)"
+            />
+          </q-scroll-area>
+        </div>
+        <!-- Content -->
+        <div
+          class="intro-content"
+          pb4 flex="~ col 1 gap2" w0
+          v-html="docHtml?.article.innerHTML"
+        />
+      </template>
     </div>
   </div>
 </template>
@@ -117,3 +194,47 @@ function resolveHTML(html: string) {
 meta:
   layout: home
 </route>
+
+<style lang="scss" scoped>
+.q-scrollarea {
+  :deep(.q-scrollarea__content) {
+    display: flex;
+  }
+}
+
+:deep(.intro-content) {
+  h1 {
+    text-align: center;
+  }
+
+  @for $i from 1 through 4 {
+    h#{$i} {
+      margin: #{(4 - $i) * 4}px 0;
+    }
+  }
+
+  > p {
+    text-indent: 36px;
+    word-break: break-all;
+  }
+
+  img {
+    margin: auto;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 8px;
+      border: 1px solid #ccc;
+    }
+
+    th {
+      text-align: left;
+      font-weight: 600;
+    }
+  }
+}
+</style>

@@ -16,7 +16,7 @@ const children = computed(() => {
       <template v-for="(part, index) in b_db.children" :key="part.id">
         <ZExpansion p="l7 y1">
           <template #label>
-            <div text-lg font-600 line-clamp-1 v-text="part.nameZH" />
+            <div text-lg font-600 truncate v-text="part.nameZH" />
           </template>
           <div
             p="l8" grid="~ cols-1 gap-x2"

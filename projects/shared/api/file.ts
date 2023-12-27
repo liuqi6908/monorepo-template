@@ -76,6 +76,9 @@ export function getDbIntroApi(dataRootId: string, filename: string) {
     false,
     {
       responseType: 'arraybuffer',
+      headers: {
+        notify: false,
+      },
     },
   )
 }

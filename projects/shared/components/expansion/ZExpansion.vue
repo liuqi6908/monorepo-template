@@ -28,7 +28,7 @@ const value = ref(false)
         </slot>
       </div>
       <slot name="label">
-        <h4 line-clamp-1 v-text="label" />
+        <h4 truncate v-text="label" />
       </slot>
     </q-item>
 
