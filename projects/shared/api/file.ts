@@ -70,7 +70,14 @@ export function uploadDbIntroApi(file: File, dataRootId: string, filename?: stri
  * 获取（下载）指定数据根目录的数据库介绍
  */
 export function getDbIntroApi(dataRootId: string, filename: string) {
-  return $get<ReadableStream<File>>(`/file/private/db/${dataRootId}/${filename}`, null, false)
+  return $get<ArrayBuffer>(
+    `/file/private/db/${dataRootId}/${filename}`,
+    null,
+    false,
+    {
+      responseType: 'arraybuffer',
+    },
+  )
 }
 
 /**

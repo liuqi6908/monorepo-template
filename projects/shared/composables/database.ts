@@ -5,19 +5,13 @@ import { getDataByDataRootIdApi, getRootListApi } from '../api/data'
 import { getFolderFilesApi } from '../api/file'
 import type { FileItem } from '../types/file.interface'
 
-interface Node extends IDataDirectory {
-  preview?: boolean
-  download?: boolean
-  children?: Node[]
-}
-
 /** 数据大类 */
 const rootList = ref<IDataDirectory[]>()
 /** 当前数据大类的ID */
 const rootId = ref<string>()
 
 /** 数据大类中的数据 */
-const rootData = ref<Node[]>()
+const rootData = ref<IDataDirectory[]>()
 /** 数据大类中所有的下载文件 */
 const downloadFiles = ref<string[]>()
 /** 数据大类中所有的样例文件 */
