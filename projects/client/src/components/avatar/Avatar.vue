@@ -34,9 +34,8 @@ const dialog = ref(false)
           width >= APP_MIN_WIDTH ? 16 : 82 - (66 / APP_MIN_WIDTH) * width,
         ]"
         style="box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);"
-        w50 py2 rounded-0
       >
-        <q-list>
+        <q-list py2 w50>
           <q-item
             v-for="(item, index) in USER_MENU_LIST"
             :key="index"
@@ -90,6 +89,8 @@ const dialog = ref(false)
 
 <style lang="scss">
 .avatar-menu {
+  border-radius: 0;
+
   .q-item {
     &:hover > .q-focus-helper {
       opacity: 0.08 !important;
