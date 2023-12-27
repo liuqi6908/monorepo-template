@@ -15,6 +15,7 @@ declare module 'vue' {
     Carousel: typeof import('./../../shared/components/cms/home/Carousel.vue')['default']
     Content: typeof import('./../../shared/components/cms/home/Content.vue')['default']
     Footer: typeof import('./../../shared/components/cms/home/Footer.vue')['default']
+    HomeMenu: typeof import('./components/menu/HomeMenu.vue')['default']
     Menu: typeof import('./components/menu/Menu.vue')['default']
     PlatformIntroduce: typeof import('./../../shared/components/cms/home/PlatformIntroduce.vue')['default']
     Question: typeof import('./../../shared/components/cms/question/Question.vue')['default']
@@ -27,8 +28,10 @@ declare module 'vue' {
     ZBtn: typeof import('./../../shared/components/btn/ZBtn.vue')['default']
     ZDialog: typeof import('./../../shared/components/dialog/ZDialog.vue')['default']
     ZEmpty: typeof import('./components/empty/ZEmpty.vue')['default']
+    ZExpansion: typeof import('./../../shared/components/expansion/ZExpansion.vue')['default']
     ZInput: typeof import('./../../shared/components/input/ZInput.vue')['default']
     ZLoading: typeof import('./../../shared/components/loading/ZLoading.vue')['default']
     ZMenu: typeof import('./../../shared/components/menu/ZMenu.vue')['default']
+    ZMenu1: typeof import('./../../shared/components/menu/ZMenu1.vue')['default']
   }
 }

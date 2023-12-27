@@ -17,9 +17,9 @@ const value = ref<string>()
   </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .client-menu {
-  .q-tab {
+  :deep(.q-tab) {
     .q-tab__content {
       min-width: auto;
     }

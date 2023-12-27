@@ -2,6 +2,7 @@
 import user from '~/assets/icons/user.svg?raw'
 
 const { userInfo, isLogin, logout } = useUser()
+const { width } = useWindowSize()
 
 /** 用户名的首个字符 */
 const firstCharName = computed(() => {
@@ -28,7 +29,10 @@ const dialog = ref(false)
         class="avatar-menu"
         anchor="bottom right"
         self="top right"
-        :offset="[0, 16]"
+        :offset="[
+          width >= APP_MIN_WIDTH ? 0 : 570 - (570 / APP_MIN_WIDTH) * width,
+          width >= APP_MIN_WIDTH ? 16 : 82 - (66 / APP_MIN_WIDTH) * width,
+        ]"
         style="box-shadow: 0px 9px 28px 8px rgba(0, 0, 0, 0.05), 0px 6px 16px 0px rgba(0, 0, 0, 0.08), 0px 3px 6px -4px rgba(0, 0, 0, 0.12);"
         w50 py2 rounded-0
       >

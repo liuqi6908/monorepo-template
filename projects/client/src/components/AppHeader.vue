@@ -17,7 +17,7 @@ const { appName, appIcon } = useApp()
         <Avatar />
       </div>
       <!-- Menu -->
-      <Menu />
+      <HomeMenu />
     </div>
   </div>
 </template>

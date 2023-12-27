@@ -5,7 +5,7 @@ import Root from '~/views/database/Root.vue'
 
 const { rootList, rootId, getRootList } = useDatabase()
 const { scrollTo } = useScrollApp()
-const $route = useRoute()
+const { query } = useRoute()
 const $router = useRouter()
 
 /** 加载中 */
@@ -16,8 +16,8 @@ onBeforeMount(async () => {
   try {
     await getRootList()
     if (rootList.value?.length)
-      rootId.value = rootList.value.find(v => v.id === $route.query.rootId)?.id || rootList.value[0].id
-    if (rootId.value)
+      rootId.value = rootList.value.find(v => v.id === query.rootId)?.id || rootList.value[0].id
+    if (rootId.value && rootId.value !== query.rootId)
       $router.push({ query: { rootId: rootId.value } })
   }
   finally {
@@ -25,6 +25,7 @@ onBeforeMount(async () => {
   }
 })
 
+/** 数据大类菜单 */
 const menu = computed<ZMenuProps['list']>(() => {
   return rootList.value?.map((item) => {
     const { id, nameZH } = item
@@ -47,11 +48,10 @@ watch(rootId, () => scrollTo(0))
 <template>
   <div>
     <Banner text-grey-1 :img="bg" title="数据库" />
-    <div p="t10 b20" relative>
-      <ZLoading :value="loading" />
+    <div pb20 relative>
       <ZEmpty v-if="!menu?.length" icon="database" />
-      <div v-else w-limited-1 flex="~ gap10">
-        <div>
+      <div v-else w-limited-1 flex="~ gap4" sm="gap6" lg="gap8" xl="gap10">
+        <div pt10>
           <ZMenu v-model="rootId" :list="menu" sticky top-41 />
         </div>
         <Root :key="rootId" flex-1 w0 />
