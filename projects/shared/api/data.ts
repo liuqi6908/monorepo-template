@@ -75,7 +75,16 @@ export function getFieldsByTableApi(dataDirectoryId: string) {
  * 获取数据预览
  */
 export function getDataPreviewByTableApi(dataDirectoryId: string) {
-  return $get<Record<string, string[]>>(`/data/preview/${dataDirectoryId}`)
+  return $get<Record<string, string[]>[]>(
+    `/data/preview/${dataDirectoryId}`,
+    undefined,
+    true,
+    {
+      headers: {
+        notify: false,
+      },
+    },
+  )
 }
 
 /**

@@ -190,7 +190,7 @@ export function useUser($router = useRouter()) {
   /**
    * 用户是否通过认证
    */
-  const isVerify = computed(() => userInfo.value?.verification?.status === VerificationStatus.APPROVED)
+  const isVerify = computed(() => isLogin.value && userInfo.value?.verification?.status === VerificationStatus.APPROVED)
 
   const instance = getCurrentInstance()
   if (instance) {

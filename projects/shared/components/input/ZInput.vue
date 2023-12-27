@@ -58,12 +58,11 @@ const isPwd = ref(true)
 
   .q-field {
     .q-field__control {
-      height: 48px;
       min-height: 48px;
       border-radius: 0;
 
       .q-field__append {
-        height: inherit;
+        height: 100%;
         margin-left: 6px;
       }
 
@@ -74,6 +73,10 @@ const isPwd = ref(true)
       .q-field__label {
         top: 14px;
         color: var(--grey-5);
+      }
+
+      .q-field__control-container {
+        height: 100%;
       }
 
       input {
@@ -92,6 +95,7 @@ const isPwd = ref(true)
         border-color: var(--grey-4)
       }
       &::after {
+        height: 100%;
         border-width: 1px !important
       }
     }
@@ -120,6 +124,22 @@ const isPwd = ref(true)
 
     .q-field__bottom {
       padding-left: 0;
+    }
+
+    &.q-textarea {
+      background-color: var(--grey-2);
+      &.q-field--dark {
+        background-color: transparent;
+      }
+
+      .q-field__control {
+        padding-right: 0;
+
+        textarea {
+          min-height: 48px;
+          max-height: 300px;
+        }
+      }
     }
   }
 }

@@ -19,6 +19,7 @@ const { params } = withDefaults(defineProps<ZBtnProps>(), {
 
 <template>
   <q-btn
+    class="z-btn"
     unelevated square
     min-h="inherit!"
     :px="size === 'big' ? 6 : 4"

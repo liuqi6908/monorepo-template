@@ -1,4 +1,2 @@
-import * as browser from './browser/index'
-
-export { browser }
+export * from './browser/index'
 export * from './common/index'
