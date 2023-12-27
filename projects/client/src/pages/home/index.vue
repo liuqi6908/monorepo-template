@@ -3,6 +3,8 @@ import type { CmsJson } from 'shared/types/cms.interface'
 
 const { getCms } = useCms()
 
+/** 加载中 */
+const loading = ref(false)
 /** 首页 CMS 内容 */
 const cmsList = reactive(CMS_CONFIG.filter(v => v.id.includes('home')).map((v) => {
   const { id, component } = v
@@ -16,15 +18,23 @@ const cmsList = reactive(CMS_CONFIG.filter(v => v.id.includes('home')).map((v) =
 const questionProps = ref<CmsJson[]>()
 
 onMounted(async () => {
-  cmsList.forEach(async (item) => {
-    item.props = await getCms(item.id, true)
-  })
-  questionProps.value = await getCms('question')
+  loading.value = true
+  try {
+    cmsList.forEach(async (item) => {
+      item.props = await getCms(item.id, true)
+    })
+    questionProps.value = await getCms('question')
+  }
+  finally {
+    loading.value = false
+  }
 })
 </script>
 
 <template>
-  <div>
+  <div relative>
+    <ZLoading :value="loading" />
+
     <component
       :is="item.component"
       v-for="item in cmsList"

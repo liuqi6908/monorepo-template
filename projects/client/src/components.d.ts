@@ -33,5 +33,6 @@ declare module 'vue' {
     ZLoading: typeof import('./../../shared/components/loading/ZLoading.vue')['default']
     ZMenu: typeof import('./../../shared/components/menu/ZMenu.vue')['default']
     ZMenu1: typeof import('./../../shared/components/menu/ZMenu1.vue')['default']
+    ZTable: typeof import('./../../shared/components/table/ZTable.vue')['default']
   }
 }

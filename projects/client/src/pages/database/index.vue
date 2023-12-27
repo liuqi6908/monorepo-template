@@ -13,6 +13,7 @@ const loading = ref(false)
 
 onBeforeMount(async () => {
   loading.value = true
+  rootId.value = undefined
   try {
     await getRootList()
     if (rootList.value?.length)
