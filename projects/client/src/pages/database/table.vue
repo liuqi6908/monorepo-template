@@ -5,14 +5,27 @@ import { downloadUrl, pick } from 'zjf-utils'
 import type { IDataDirectory } from 'zjf-types'
 import Purchase from '~/views/database/Purchase.dialog.vue'
 
+/** footer元素 */
+const footer = ref<HTMLElement>()
+
 const { rootData, rootId, rootList, databaseId, getDataByRootId, getRootList } = useDatabase()
 const { query } = useRoute() as {
   query: Record<string, string>
 }
 const $router = useRouter()
-const { el } = useScrollApp()
 const { height } = useWindowSize()
+const { bottom, update } = useElementBounding(footer)
 const { isDesktop, isLogin, isVerify } = useUser()
+
+watch(
+  bottom,
+  () => {
+    console.log(height.value, bottom.value)
+  },
+  {
+    immediate: true,
+  }
+)
 
 /** 加载中 */
 const loading = ref(false)
@@ -48,8 +61,6 @@ const previewCols: QTableProps['columns'] = reactive([])
 /** 数据预览的行 */
 const previewRows: any[] = reactive([])
 
-/** footer元素 */
-const footer = ref<HTMLElement>()
 /** 是否预购 */
 const isPurchased = computed(() => rootList.value?.find(v => v.id === rootId.value)?.nameZH.includes('预购'))
 /** 是否申请了云桌面 */
@@ -66,26 +77,6 @@ onBeforeMount(() => {
   if (!rootId.value || !databaseId.value || !tableId.value)
     return $router.replace('/database')
   init()
-})
-
-onMounted(() => {
-  /** 监听滚动， 为 Footer 添加/移除 阴影 */
-  nextTick(() => {
-    const { y } = useScroll(el.value?.$el.firstChild as HTMLElement | undefined)
-
-    watch(
-      y,
-      () => {
-        if (!footer.value)
-          return
-
-        if (footer.value.getBoundingClientRect().bottom < height.value)
-          footer.value.style.boxShadow = ''
-        else
-          footer.value.style.boxShadow = '0px -5px 10px 0px #00000014'
-      }
-    )
-  })
 })
 
 /**
@@ -129,6 +120,7 @@ async function init() {
   }
   finally {
     loading.value = false
+    update()
 
     // 预购数据
     if (isPurchased.value)
@@ -244,7 +236,9 @@ async function downloadData() {
     <div
       ref="footer" class="footer"
       flex="center col gap2" py4 sticky bottom-0 bg-grey-1
-      style="box-shadow: 0px -5px 10px 0px #00000014"
+      :style="{
+        boxShadow: bottom < height ? '' : '0px -2px 16px 0px #00000014'
+      }"
     >
       <!-- 操作按钮 -->
       <ZBtn
