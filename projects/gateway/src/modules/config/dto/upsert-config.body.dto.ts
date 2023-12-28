@@ -3,6 +3,9 @@ import {
   APP_ICON,
   APP_NAME,
   DESKTOP_REQUEST_DURATION_OPTION,
+  DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
+  DESKTOP_REQUEST_UPLOAD_DFT_SIZE_LIMIT,
+  DESKTOP_REQUEST_UPLOAD_HINT,
   EXPORT_DFT_LG_SIZE_LIMIT,
   EXPORT_DFT_SM_DAILY_LIMIT,
   EXPORT_DFT_SM_SIZE_LIMIT,
@@ -29,6 +32,9 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
     description: '云桌面申请配置',
     example: {
       duration: DESKTOP_REQUEST_DURATION_OPTION,
+      sizeLimit: DESKTOP_REQUEST_UPLOAD_DFT_SIZE_LIMIT,
+      acceptLimit: DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
+      hint: DESKTOP_REQUEST_UPLOAD_HINT,
     },
   })
   desktop?: IConfigDto['desktop']

@@ -12,8 +12,14 @@ export interface IConfigDto {
 
   /** 云桌面申请配置 */
   [SysConfig.DESKTOP]?: {
-    /** 云桌面申请时长配置 */
+    /** 申请时长配置 */
     duration: typeof DESKTOP_REQUEST_DURATION_OPTION
+    /** 上传尺寸限制，单位为 字节 */
+    sizeLimit: number
+    /** 上传可接受文件后缀列表 */
+    acceptLimit: string[]
+    /** 上传提示信息 */
+    hint: string
   }
 
   /** 外发配置 */
@@ -28,9 +34,9 @@ export interface IConfigDto {
 
   /** 上传作品配置 */
   [SysConfig.WORK]?: {
-    /** 上传作品尺寸限制，单位为 字节 */
+    /** 上传尺寸限制，单位为 字节 */
     sizeLimit: number
-    /** 上传作品可接受文件后缀列表 */
+    /** 上传可接受文件后缀列表 */
     acceptLimit: string[]
   }
 }
