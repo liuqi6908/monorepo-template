@@ -188,6 +188,11 @@ export function useUser($router = useRouter()) {
   const isLogin = computed(() => !!authToken.value)
 
   /**
+   * 用户认证状态
+   */
+  const verifyStatus = computed(() => latestVerify.value?.status)
+
+  /**
    * 用户是否通过认证
    */
   const isVerify = computed(() => isLogin.value && userInfo.value?.verification?.status === VerificationStatus.APPROVED)
@@ -211,6 +216,7 @@ export function useUser($router = useRouter()) {
     isDesktop,
     loading,
     latestVerify,
+    verifyStatus,
     loginByPassword,
     loginByEmailCode,
     updatePasswordByCode,

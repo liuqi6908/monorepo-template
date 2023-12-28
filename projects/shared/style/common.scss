@@ -33,3 +33,12 @@
     }
   }
 }
+
+/* 隐藏滚动条 */
+.hide-scrollbar {
+  overflow: auto;
+
+  &::--webkit-scrollbar {
+    display: none;
+  }
+}

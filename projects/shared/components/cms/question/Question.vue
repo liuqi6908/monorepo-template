@@ -88,7 +88,7 @@ function scroll(id?: number) {
           <div :id="`question_${index}`" relative :top="isAdmin ? -4 : -35" />
           <q-item
             clickable flex="~ items-center gap-2"
-            p2 min-h-inherit sticky top-35
+            p2 min-h-auto sticky top-35
             bg-grey-1 z-1
             @click="() => {
               if (value === index)

@@ -15,7 +15,7 @@ const value = ref(false)
     <!-- Label -->
     <q-item
       clickable flex="~ items-center gap1"
-      p2 min-h-inherit
+      p2 min-h-auto
       @click="value = !value"
     >
       <div

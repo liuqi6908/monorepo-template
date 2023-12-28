@@ -34,6 +34,7 @@ defineEmits(['update:modelValue', 'ok'])
       rounded="0!" flex="~ col gap6" py6
       :style="{
         minWidth: '460px',
+        height: scroll ? 'calc(100vh - 100px)' : 'auto',
         ...wrapperStyle,
       }"
     >
@@ -43,7 +44,7 @@ defineEmits(['update:modelValue', 'ok'])
           <div text-grey-6 v-text="caption" />
         </div>
 
-        <q-btn v-close-popup dense flat p0 h6 w6 min-h="inherit!">
+        <q-btn v-close-popup dense flat p0 h6 w6 min-h="auto!">
           <div i-mingcute:close-line text-grey-5 text-lg />
         </q-btn>
       </header>

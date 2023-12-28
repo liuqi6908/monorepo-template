@@ -77,7 +77,7 @@ async function getSmsCode() {
   >
     <q-btn
       unelevated square
-      min-h="inherit!"
+      min-h="auto!"
       w26 h9 text-base font-400 p0
       :bg="dark ? 'white-2' : 'primary-1/12'"
       :text-color="dark ? 'grey-1' : 'primary-1'"
