@@ -1,3 +1,5 @@
+import { isClient } from '@vueuse/core'
+
 /**
  * 富文本处理器
  */
@@ -5,7 +7,7 @@ export class RichTextProcessor {
   private _div!: HTMLDivElement
 
   constructor(public raw: string) {
-    if (typeof document !== 'undefined') {
+    if (isClient) {
       this._div = document.createElement('div')
       this._div.innerHTML = raw
     }
@@ -21,7 +23,7 @@ export class RichTextProcessor {
   lazyLoadImages() {
     const images = this._div.querySelectorAll('img')
 
-    images.forEach((img: HTMLImageElement) => {
+    images.forEach((img) => {
       img.setAttribute('loading', 'lazy')
     })
     return this

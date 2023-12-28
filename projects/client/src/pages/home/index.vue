@@ -23,7 +23,7 @@ onMounted(async () => {
     cmsList.forEach(async (item) => {
       item.props = await getCms(item.id, true)
     })
-    questionProps.value = await getCms('question')
+    questionProps.value = await getCms('question', true)
   }
   finally {
     loading.value = false
@@ -51,7 +51,6 @@ onMounted(async () => {
           :to="{
             path: '/question',
             query: {
-              title: item.title,
               index,
             },
           }"

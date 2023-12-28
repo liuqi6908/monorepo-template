@@ -10,7 +10,7 @@ const { query } = useRoute() as {
   query: Record<string, string>
 }
 const $router = useRouter()
-const { width } = useElementSize(toc)
+const { width, height } = useElementSize(toc)
 const { el, scrollTo } = useScrollApp()
 
 /** 数据库的英文名 */
@@ -168,7 +168,8 @@ function scroll(id: string) {
           <q-scroll-area
             sticky top-36
             :style="{
-              height: 'calc(100vh - 144px)',
+              maxHeight: 'calc(100vh - 144px)',
+              height: `${height}px`,
               width: `${width + 1}px`
             }"
           >
@@ -183,7 +184,7 @@ function scroll(id: string) {
         </div>
         <!-- Content -->
         <div
-          class="intro-content"
+          class="richtext-content"
           pb4 flex="~ col 1 gap2" w0
           v-html="docHtml?.article.innerHTML"
         />
@@ -204,39 +205,9 @@ meta:
   }
 }
 
-:deep(.intro-content) {
-  h1 {
-    text-align: center;
-  }
-
-  @for $i from 1 through 4 {
-    h#{$i} {
-      margin: #{(4 - $i) * 4}px 0;
-    }
-  }
-
+:deep(.richtext-content) {
   > p {
     text-indent: 36px;
-    word-break: break-all;
-  }
-
-  img {
-    margin: auto;
-  }
-
-  table {
-    width: 100%;
-    border-collapse: collapse;
-
-    th, td {
-      padding: 8px;
-      border: 1px solid #ccc;
-    }
-
-    th {
-      text-align: left;
-      font-weight: 600;
-    }
   }
 }
 </style>

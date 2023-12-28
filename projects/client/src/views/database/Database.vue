@@ -32,9 +32,7 @@ onBeforeMount(() => {
           return true
       }
     })
-    console.log(omit(query, 'tableId'));
-    
-    $router.push({
+    $router.replace({
       query: omit(query, 'tableId'),
     })
   }

@@ -17,16 +17,6 @@ const { height } = useWindowSize()
 const { bottom, update } = useElementBounding(footer)
 const { isDesktop, isLogin, isVerify } = useUser()
 
-watch(
-  bottom,
-  () => {
-    console.log(height.value, bottom.value)
-  },
-  {
-    immediate: true,
-  }
-)
-
 /** 加载中 */
 const loading = ref(false)
 /** 当前表格的Id */

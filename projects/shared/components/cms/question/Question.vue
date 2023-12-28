@@ -1,129 +1,145 @@
 <script lang="ts" setup>
-import { onMounted, ref, reactive, nextTick, computed } from 'vue'
-import { useRoute, useRouter }  from 'vue-router'
+import { ref, computed, onMounted, nextTick } from 'vue'
+import { useElementSize, isClient } from '@vueuse/core'
+import { useRouteQuery } from '@vueuse/router'
+import ZMenu from '../../menu/ZMenu.vue'
+import type { CmsJson } from '../../../types/cms.interface'
 import { RichTextProcessor } from '../../../utils/richText'
+import { useApp } from '../../../composables/app'
 
-interface Question {
-  title: string
-  richText: string
-}
+const props = defineProps<{
+  list?: CmsJson[]
+}>()
 
-interface Props {
-  list: Question[]
-}
-const props = defineProps<Props>()
+/** 目录元素 */
+const toc = ref<HTMLElement>()
 
-const link = ref('')
-const openState = reactive<Record<string, boolean>>({})
+const { width, height } = useElementSize(toc)
+const value = useRouteQuery<number | undefined>('index', undefined, { transform: Number })
+const { isAdmin } = useApp()
+let type = false
 
-const route = useRoute()
-const router = useRouter()
-
-function scrollTo(title: string, index: number) {
-  openState[title] = true
-
-  if (typeof document !=='undefined'){
-    nextTick(() => {
-      link.value = title
-      const target = document.querySelector(`#title${index}`)
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-        });
-        router.replace({query:{title,index}})
-      }
-    })
-  }
-}
-
-onMounted(() => {
-  const { title, index } = route.query
-  scrollTo(String(title), Number(index))
+/** 目录 */
+const tocList = computed(() => {
+  return props.list?.map(({ title, richText }, index) => {
+    return {
+      id: index,
+      label: title ?? '',
+      richText: RichTextProcessor.from(richText ?? '').lazyLoadImages().html,
+    }
+  })
 })
 
-const processedList = computed(() => props.list.map(q => ({
-  ...q,
-  richText: RichTextProcessor.from(q.richText).lazyLoadImages().html
-})))
+onMounted(() => {
+  if (typeof value.value === 'number') {
+    nextTick(() => {
+      scroll(value.value)
+    })
+  }
+})
+
+/** 激活目录，滚动 */
+function scroll(id?: number) {
+  value.value = id
+  if (typeof id !== 'number' || !isClient)
+    return
+
+  type = true
+  setTimeout(() => {
+    const dom = document.querySelector(`#question_${id}`)
+    if (!dom)
+      return
+    dom.scrollIntoView({
+      behavior: 'smooth',
+    })
+    type = false
+  }, 110)
+}
 </script>
 
 <template>
-  <div flex="~ row gap-15" w-full>
-    <q-list text-grey-8>
-      <div sticky top-10 flex="~ col" gap2>
-        <q-item
-          w-50 v-for="(item, index) in processedList"
-          class="ellipsis"
-          flex="~ col"
-          text-4
-          justify-center items-start font-600
-          clickable @click="scrollTo(item.title, index)"
-          :active="link === item.title"
-          active-class="text-primary-1 bg-gray-2"
-
-        >
-          <q-item-section>
-            <q-item-label lines="1">
-              {{ item.title }}
-            </q-item-label>
-          </q-item-section>
-        </q-item>
-      </div>
-    </q-list>
-    <div flex="~ col 1" w0 gap-16 pb16>
-      <div
-        :id="`title${index}`" :label="item.title"
-        v-for="(item, index) in processedList" :key="index" relative
+  <div
+    w-limited-1 p="t10 b20"
+    flex="~ gap2" sm="gap4" lg="gap6"
+    xl="gap8"
+  >
+    <!-- Toc -->
+    <div>
+      <q-scroll-area
+        sticky top-36
+        :style="{
+          maxHeight: 'calc(100vh - 144px)',
+          height: `${height}px`,
+          width: `${width + 1}px`
+        }"
       >
-        <q-item clickable flex="~" items-center gap-2 @click="openState[item.title] = !openState[item.title]">
-          <div
-            w6 h6 transition-all flex-center
-            :style="{ transform: openState[item.title] ? 'rotate(0deg)' : 'rotate(-90deg)' }"
+        <ZMenu
+          ref="toc"
+          :model-value="value"
+          :list="tocList"
+          @update:model-value="val => scroll(val)"
+        />
+      </q-scroll-area>
+    </div>
+    <!-- Content -->
+    <div flex="~ 1 col gap10" w0 pb10>
+      <template v-for="(item, index) in tocList" :key="index">
+        <div flex="~ col">
+          <div :id="`question_${index}`" relative :top="isAdmin ? -4 : -35" />
+          <q-item
+            clickable flex="~ items-center gap-2"
+            p2 min-h-inherit sticky top-35
+            bg-grey-1 z-1
+            @click="() => {
+              if (value === index)
+                value = undefined
+              else
+                value = index
+            }"
           >
-            <svg  width="10" height="5" viewBox="0 0 10 5" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M5 5L0 0H10L5 5Z" fill="black"/>
-            </svg>
-          </div>
-          <span text="5 grey-8" font-bold>{{ item.title }}</span>
-        </q-item>
-        <q-expansion-item
-          v-model="openState[item.title]"
-          header-class="display-none"
-        >
-          <div w-full overflow-hidden pl12 pt4>
-            <div relative full pl4>
-              <div absolute w2px left-0 top="1/2" translate-y="-1/2" bg="primary-1/70" style="height: calc(100% - 10px)"></div>
-              <div class="question-content" w-150 v-html="item.richText" />
+            <div
+              :style="{ transform: value === index ? 'rotate(0deg)' : 'rotate(-90deg)' }"
+              w6 h6 transition-all flex-center
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 15L7 10H17L12 15Z" fill="black"/>
+              </svg>
             </div>
-          </div>
-        </q-expansion-item>
-
-        <div v-if="index !== 0" w-full px4 absolute left-0 top="-8">
-          <div w-full h1px bg-grey-3 />
+            <h4 truncate v-text="item.label" />
+          </q-item>
+          <q-expansion-item
+            :model-value="value === index"
+            header-class="display-none"
+            :duration="type ? 0 : 300"
+          >
+            <div pl14 py2 relative>
+              <div
+                absolute top-3 bottom-3 left-10
+                w2px bg="primary-1/70"
+              />
+              <div
+                class="richtext-content"
+                text="base grey-6" font-400
+                overflow-hidden
+                v-html="item.richText"
+              />
+            </div>
+          </q-expansion-item>
         </div>
-      </div>
+        <div
+          v-if="list?.length && index < list.length - 1"
+          h1px bg-grey-3 m-auto
+          style="width: calc(100% - 16px)"
+        />
+      </template>
     </div>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.q-expansion-item :deep(.q-expansion-item__container) {
-  .q-item {
-    .q-item__section {
-      align-items: start;
-      i {
-          font-size: 18px
-      }
-    }
-    .q-item__section--avatar{
-      min-width: 20px;
-    }
+.q-scrollarea {
+  :deep(.q-scrollarea__content) {
+    display: flex;
   }
 }
-</style>
-
-<style lang="sass">
-.question-content
-  color: var(--grey-6)
-  text-align: start
 </style>
