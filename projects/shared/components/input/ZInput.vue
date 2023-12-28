@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
 import type { QInputProps } from 'quasar'
 
@@ -11,11 +12,13 @@ export interface ZInputProps {
   params?: Omit<QInputProps, 'modelValue' | 'placeholder' | 'dark'>
 }
 
-const { params } = withDefaults(defineProps<ZInputProps>(), {
+const props = withDefaults(defineProps<ZInputProps>(), {
   dark: false,
   password: false,
 })
 defineEmits(['update:modelValue'])
+
+const value = useVModel(props, 'modelValue')
 
 /** 输入框类型是否为password */
 const isPwd = ref(true)
@@ -30,14 +33,13 @@ const isPwd = ref(true)
       v-text="label"
     />
     <q-input
-      :model-value="modelValue"
+      v-model="value"
       dense outlined
       :dark="dark"
       :color="dark ? 'grey-1' : 'primary-1'"
       :placeholder="placeholder"
       :type="password && isPwd ? 'password' : 'text'"
       v-bind="params"
-      @update:model-value="val => $emit('update:modelValue', val)"
     >
       <template #append>
         <div

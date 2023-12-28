@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useVModel } from '@vueuse/core'
+
 export interface ZMenu1Props {
   modelValue?: string | number
   list?: {
@@ -11,15 +13,14 @@ export interface ZMenu1Props {
   }[]
 }
 
-defineProps<ZMenu1Props>()
+const props = defineProps<ZMenu1Props>()
 defineEmits(['update:modelValue'])
+
+const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
-  <q-tabs
-    :model-value="modelValue"
-    @update:model-value="val => $emit('update:modelValue', val)"
-  >
+  <q-tabs v-model="value">
     <q-route-tab
       v-for="item in list"
       :key="item.id"

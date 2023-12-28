@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { useVModel } from '@vueuse/core'
 import type { QDialogProps } from 'quasar'
 import ZBtn from '../btn/ZBtn.vue'
 
@@ -16,19 +17,20 @@ interface ZDialogProps {
   params?: Omit<QDialogProps, 'modelValue'>
 }
 
-const { wrapperStyle, params } = withDefaults(defineProps<ZDialogProps>(), {
+const props = withDefaults(defineProps<ZDialogProps>(), {
   cancelText: '取消',
   confirmText: '确认',
 })
 defineEmits(['update:modelValue', 'ok'])
+
+const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
   <q-dialog
     persistent
-    :model-value="modelValue"
+    v-model="value"
     v-bind="params"
-    @update:model-value="val => $emit('update:modelValue', val)"
   >
     <q-card
       rounded="0!" flex="~ col gap6" py6

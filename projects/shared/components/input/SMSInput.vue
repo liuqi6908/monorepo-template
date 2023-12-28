@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { computed, ref } from 'vue'
-import { useIntervalFn } from '@vueuse/core'
+import { useIntervalFn, useVModel } from '@vueuse/core'
 import { Notify } from 'quasar'
 import type { CodeAction } from 'zjf-types'
 import { pick, validateEmail } from 'zjf-utils'
@@ -18,6 +18,8 @@ interface SMSInputProps {
 
 const props = defineProps<SMSInputProps>()
 const emits = defineEmits(['update:modelValue', 'update:bizId'])
+
+const value = useVModel(props, 'modelValue')
 
 /** 倒计时 */
 const interval = ref(0)
@@ -52,7 +54,7 @@ async function getSmsCode() {
     }
   }
   catch (_) {
-    interval.value = 5
+    interval.value = 10
   }
   finally {
     loading.value = false
@@ -63,7 +65,7 @@ async function getSmsCode() {
 
 <template>
   <ZInput
-    :model-value="modelValue"
+    v-model="value"
     label="邮箱验证"
     placeholder="请输入验证码"
     :params="{
@@ -73,7 +75,6 @@ async function getSmsCode() {
     }"
     :dark="dark"
     v-bind="params"
-    @update:model-value="val => $emit('update:modelValue', val)"
   >
     <q-btn
       unelevated square

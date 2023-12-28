@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { useVModel } from '@vueuse/core'
+
 export interface ZMenuProps {
   modelValue?: string | number
   list?: {
@@ -11,8 +13,10 @@ export interface ZMenuProps {
   }[]
 }
 
-defineProps<ZMenuProps>()
+const props = defineProps<ZMenuProps>()
 defineEmits(['update:modelValue'])
+
+const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
@@ -21,15 +25,15 @@ defineEmits(['update:modelValue'])
       v-for="{ id, label, to } in list"
       :key="id"
       :to="to"
-      :active="modelValue === id"
+      :active="value === id"
       active-class="bg-gray-2"
       clickable max-w-30 min-w-12 p="y2.5 x4"
       sm="max-w-36" lg="max-w-42" xl="max-w-50"
       text-nowrap font-600 items-center
-      @click="$emit('update:modelValue', id)"
+      @click="value = id"
     >
       <div
-        :text="modelValue === id ? 'primary-1' : 'grey-8'"
+        :text="value === id ? 'primary-1' : 'grey-8'"
         truncate
       >
         {{ label }}
