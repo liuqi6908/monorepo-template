@@ -25,9 +25,9 @@ import { isDesktopApi } from '../api/desktop'
 import { getOwnProfileApi, updateOwnPasswordByCodeApi } from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
 import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
-import { useApp } from './app'
+import { useSysConfig } from './app'
 
-const { isAdmin } = useApp()
+const { isAdmin } = useSysConfig()
 
 /** 用户token */
 export const authToken = useStorage(AUTH_TOKEN_KEY, '')

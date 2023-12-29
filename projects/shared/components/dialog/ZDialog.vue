@@ -2,6 +2,7 @@
 import { useVModel } from '@vueuse/core'
 import type { QDialogProps } from 'quasar'
 import ZBtn from '../btn/ZBtn.vue'
+import ZLoading from '../loading/ZLoading.vue'
 
 interface ZDialogProps {
   modelValue: boolean
@@ -14,6 +15,7 @@ interface ZDialogProps {
   wrapperStyle?: Record<string, any>
   /** 是否使用滚动区域 */
   scroll?: boolean
+  loading?: boolean
   params?: Omit<QDialogProps, 'modelValue'>
 }
 
@@ -81,6 +83,8 @@ const value = useVModel(props, 'modelValue')
           @click="$emit('ok')"
         />
       </footer>
+
+      <ZLoading :value="loading" />
     </q-card>
   </q-dialog>
 </template>

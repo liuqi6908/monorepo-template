@@ -3,7 +3,7 @@ import { Notify } from 'quasar'
 import { useRouter } from 'vue-router'
 import { ErrorCode } from 'zjf-types'
 import { API_BASE_URL } from '../constants/app'
-import { useApp } from '../composables/app'
+import { useSysConfig } from '../composables/app'
 import { authToken, useUser } from '../composables/user'
 
 const $http = axios.create({
@@ -54,7 +54,7 @@ $http.interceptors.response.use(
       logout(true)
     }
 
-    const { isAdmin } = useApp()
+    const { isAdmin } = useSysConfig()
     // 管理后台，跳转路由
     if (isAdmin.value) {
       const $router = useRouter()

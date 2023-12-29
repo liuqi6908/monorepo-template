@@ -5,7 +5,7 @@ import { useRouteQuery } from '@vueuse/router'
 import ZMenu from '../../menu/ZMenu.vue'
 import type { CmsJson } from '../../../types/cms.interface'
 import { RichTextProcessor } from '../../../utils/richText'
-import { useApp } from '../../../composables/app'
+import { useSysConfig } from '../../../composables/app'
 
 const props = defineProps<{
   list?: CmsJson[]
@@ -16,7 +16,7 @@ const toc = ref<HTMLElement>()
 
 const { width, height } = useElementSize(toc)
 const value = useRouteQuery<number | undefined>('index', undefined, { transform: Number })
-const { isAdmin } = useApp()
+const { isAdmin } = useSysConfig()
 let type = false
 
 /** 目录 */
