@@ -125,7 +125,13 @@ export class AuthService {
    */
   public async signLoginTicket(user: Partial<User>) {
     const sign = await this._jwtAuthSrv.signLoginAuthToken(user)
-    return { sign, user: objectOmit(user, ['password']) }
+    return {
+      sign,
+      user: {
+        ...user,
+        password: !!user.password,
+      },
+    }
   }
 
   /**
