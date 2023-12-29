@@ -8,6 +8,8 @@ export enum SysConfig {
   DESKTOP = 'desktop',
   /** 外发配置 */
   EXPORT = 'export',
+  /** 身份认证上传配置 */
+  VERIFICATION = 'verification',
   /** 上传作品配置 */
   WORK = 'work',
 }
@@ -19,5 +21,6 @@ export const sysConfigDescriptions: Record<SysConfig, string> = {
   [SysConfig.APP]: 'App配置',
   [SysConfig.DESKTOP]: '云桌面申请配置',
   [SysConfig.EXPORT]: '外发配置',
+  [SysConfig.VERIFICATION]: '身份认证上传配置',
   [SysConfig.WORK]: '上传作品配置',
 }

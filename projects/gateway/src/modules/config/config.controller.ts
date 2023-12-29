@@ -32,6 +32,7 @@ export class ConfigController {
     PermissionType.CONFIG_UPSERT_APP,
     PermissionType.CONFIG_UPSERT_DESKTOP,
     PermissionType.CONFIG_UPSERT_EXPORT,
+    PermissionType.CONFIG_UPSERT_VERIFICATION,
     PermissionType.CONFIG_UPSERT_WORK,
   ])
   @ApiSuccessResponse(ConfigResDto)

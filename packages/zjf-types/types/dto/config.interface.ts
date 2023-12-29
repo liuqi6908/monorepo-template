@@ -13,30 +13,46 @@ export interface IConfigDto {
   /** 云桌面申请配置 */
   [SysConfig.DESKTOP]?: {
     /** 申请时长配置 */
-    duration: typeof DESKTOP_REQUEST_DURATION_OPTION
+    duration?: typeof DESKTOP_REQUEST_DURATION_OPTION
     /** 上传尺寸限制，单位为 字节 */
-    sizeLimit: number
+    sizeLimit?: number
+    /** 上传数量限制 */
+    amountLimit?: number
     /** 上传可接受文件后缀列表 */
-    acceptLimit: string[]
+    acceptLimit?: string[]
     /** 上传提示信息 */
-    hint: string
+    hint?: string
   }
 
   /** 外发配置 */
   [SysConfig.EXPORT]?: {
     /** 小文件尺寸限制，单位为 字节 */
-    sizeLimitSm: number
+    sizeLimitSm?: number
     /** 大文件尺寸限制，单位为 字节 */
-    sizeLimitLg: number
+    sizeLimitLg?: number
     /** 小文件每日外发限制 */
-    dailyLimit: number
+    dailyLimit?: number
+  }
+
+  /** 身份认证上传配置 */
+  [SysConfig.VERIFICATION]?: {
+    /** 上传尺寸限制，单位为 字节 */
+    sizeLimit?: number
+    /** 上传数量限制 */
+    amountLimit?: number
+    /** 上传可接受文件后缀列表 */
+    acceptLimit?: string[]
+    /** 上传提示信息 */
+    hint?: string
   }
 
   /** 上传作品配置 */
   [SysConfig.WORK]?: {
     /** 上传尺寸限制，单位为 字节 */
-    sizeLimit: number
+    sizeLimit?: number
     /** 上传可接受文件后缀列表 */
-    acceptLimit: string[]
+    acceptLimit?: string[]
+    /** 上传提示信息 */
+    hint?: string
   }
 }

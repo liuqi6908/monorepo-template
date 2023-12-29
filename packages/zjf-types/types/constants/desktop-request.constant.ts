@@ -15,7 +15,9 @@ export const DESKTOP_REQUEST_DURATION_OPTION = [
 ]
 /** 云桌面申请上传文件大小限制 */
 export const DESKTOP_REQUEST_UPLOAD_DFT_SIZE_LIMIT = 1024 * 1024 * 5
+/** 云桌面申请上传文件数量限制 */
+export const DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT = 5
 /** 云桌面申请上传文件可接受文件后缀列表 */
 export const DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT = ['pdf', 'doc', 'docx', 'png', 'jpg', 'jpeg']
 /** 云桌面申请上传文件提示信息 */
-export const DESKTOP_REQUEST_UPLOAD_HINT = 'PDF、WORD、PNG、JPG 不超过 5 个，每个不超过 5 M'
+export const DESKTOP_REQUEST_UPLOAD_HINT = '请上传 PDF、WORD、PNG、JPG 格式文件，每个不超过 5 MB'

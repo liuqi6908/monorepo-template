@@ -134,6 +134,8 @@ export enum PermissionType {
   CONFIG_UPSERT_DESKTOP = 'config:upsert-desktop',
   /** 创建/更新文件外发全局配置 */
   CONFIG_UPSERT_EXPORT = 'config:upsert-export',
+  /** 创建/更新身份认证上传全局配置 */
+  CONFIG_UPSERT_VERIFICATION = 'config:upsert-verification',
   /** 创建/更新作品管理全局配置 */
   CONFIG_UPSERT_WORK = 'config:upsert-work',
 
@@ -214,6 +216,7 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.CONFIG_UPSERT_APP]: '创建/更新应用全局配置',
   [PermissionType.CONFIG_UPSERT_DESKTOP]: '创建/更新云桌面全局配置',
   [PermissionType.CONFIG_UPSERT_EXPORT]: '创建/更新文件外发全局配置',
+  [PermissionType.CONFIG_UPSERT_VERIFICATION]: '创建/更新身份认证上传全局配置',
   [PermissionType.CONFIG_UPSERT_WORK]: '创建/更新作品管理全局配置',
 
   [PermissionType.WORK_QUERY_ALL]: '查询所有作品/成果',
