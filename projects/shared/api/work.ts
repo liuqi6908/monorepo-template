@@ -5,7 +5,7 @@ import type {
   IWork,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/token'
+import { authToken } from '../composables/user'
 
 const { $getUri, $delete, $patch, $post, $put } = useRequest()
 

@@ -41,9 +41,9 @@ const value = useVModel(props, 'modelValue')
       }"
     >
       <header flex="~ row justify-between items-center" px6>
-        <div flex="~ row">
+        <div flex="~ row items-center gap1">
           <div font-600 v-text="title" />
-          <div text-grey-6 v-text="caption" />
+          <div text="sm grey-6" font-400 v-text="caption" />
         </div>
 
         <q-btn v-close-popup dense flat p0 h6 w6 min-h="auto!">

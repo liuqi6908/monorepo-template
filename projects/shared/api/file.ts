@@ -5,7 +5,7 @@ import type {
 } from 'zjf-types'
 import type { FileItem } from '../types/file.interface'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/token'
+import { authToken } from '../composables/user'
 
 const { $get, $getUri, $post, $put } = useRequest()
 

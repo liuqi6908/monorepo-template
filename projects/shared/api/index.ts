@@ -4,9 +4,7 @@ import { useRouter } from 'vue-router'
 import { ErrorCode } from 'zjf-types'
 import { API_BASE_URL } from '../constants/app'
 import { useApp } from '../composables/app'
-import { adminRole } from '../composables/permission'
-import { authToken } from '../composables/token'
-import { userInfo } from '../composables/userInfo'
+import { authToken, useUser } from '../composables/user'
 
 const $http = axios.create({
   baseURL: API_BASE_URL,
@@ -52,9 +50,8 @@ $http.interceptors.response.use(
 
     // 判断登录是否有效（未登录/登录过期）
     if (response.status === 401) {
-      authToken.value = ''
-      adminRole.value = []
-      userInfo.value = undefined
+      const { logout } = useUser()
+      logout(true)
     }
 
     const { isAdmin } = useApp()

@@ -6,7 +6,7 @@ import type {
   IRegisterBodyDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/token'
+import { authToken } from '../composables/user'
 
 const { $post, $put } = useRequest()
 

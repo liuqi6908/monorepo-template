@@ -5,7 +5,7 @@ import type {
   IQueryDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/token'
+import { authToken } from '../composables/user'
 
 const { $getUri, $post, $put } = useRequest()
 

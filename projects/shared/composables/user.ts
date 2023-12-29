@@ -1,4 +1,5 @@
 import { computed, getCurrentInstance, onMounted, ref } from 'vue'
+import { useStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
 import { encryptPasswordInHttp } from 'zjf-utils'
@@ -9,6 +10,7 @@ import type {
   ILoginSuccessResData,
   IRegisterBodyDto,
   IUpdatePasswordByCodeBodyDto,
+  IUser,
   IVerificationHistory,
 } from 'zjf-types'
 
@@ -22,16 +24,22 @@ import {
 import { isDesktopApi } from '../api/desktop'
 import { getOwnProfileApi, updateOwnPasswordByCodeApi } from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
-import { REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
+import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useApp } from './app'
-import { adminRole } from './permission'
-import { authToken } from './token'
-import { getTime, userInfo } from './userInfo'
 
 const { isAdmin } = useApp()
 
+/** 用户token */
+export const authToken = useStorage(AUTH_TOKEN_KEY, '')
+/** 用户信息 */
+const userInfo = ref<IUser>()
+/** 用户信息获取时间 */
+const getTime = ref<number>()
+/** 用户管理权限 */
+const adminRole = useStorage<string[]>(ADMIN_ROLE_KEY, [])
 /** 认证信息 */
 const latestVerify = ref<IVerificationHistory>()
+
 /** 是否在云桌面中 */
 const isDesktop = ref(false)
 /** 加载中 */
@@ -146,15 +154,19 @@ export function useUser($router = useRouter()) {
   /**
    * 登出
    */
-  async function logout() {
-    await logoutApi()
+  async function logout(flag = false) {
+    if (!flag) {
+      await logoutApi()
+      if (isAdmin.value)
+        $router.push('/auth/login')
+      else
+        $router.push('/')
+    }
+
     authToken.value = ''
     adminRole.value = []
     userInfo.value = undefined
-    if (isAdmin.value)
-      $router.push('/auth/login')
-    else
-      $router.push('/')
+    latestVerify.value = undefined
   }
 
   /**

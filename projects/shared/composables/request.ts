@@ -92,5 +92,5 @@ export function useRequest() {
     return $http.getUri({ url, params })
   }
 
-  return { $get, $post, $put, $patch, $delete, $getUri, queryParamsUrl, cache }
+  return { $get, $post, $put, $patch, $delete, $getUri, queryParamsUrl }
 }
