@@ -4,13 +4,13 @@ import desktop from '~/assets/empty/desktop.svg?raw'
 import verify from '~/assets/empty/verify.svg?raw'
 import works from '~/assets/empty/works.svg?raw'
 
-interface ZEmptyProps {
+interface EmptyProps {
   icon?: keyof (typeof icons)
   label?: string
   captions?: string
 }
 
-withDefaults(defineProps<ZEmptyProps>(), {
+withDefaults(defineProps<EmptyProps>(), {
   icon: 'works',
   label: '暂无数据',
 })

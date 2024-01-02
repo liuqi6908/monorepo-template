@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 
-defineProps<{
+const props = defineProps<{
   modelValue: boolean
 }>()
 defineEmits(['update:modelValue'])
 
+const value = useVModel(props, 'modelValue')
 const { query } = useRoute()
 
 /** 采购理由 */
@@ -31,7 +32,7 @@ async function applyPurchase() {
 
 <template>
   <ZDialog
-    :model-value="modelValue"
+    v-model="value"
     title="采购理由"
     footer
     :disableConfirm="disable"
@@ -39,7 +40,6 @@ async function applyPurchase() {
       width: '618px'
     }"
     @ok="applyPurchase"
-    @update:model-value="val => $emit('update:modelValue', val)"
   >
     <ZInput
       v-model="text"

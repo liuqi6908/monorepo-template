@@ -5,7 +5,7 @@ import { validatePassword } from 'zjf-utils'
 defineProps<{ layout?: boolean }>()
 
 const $route = useRoute()
-const { getOwnProfile, isLogin } = useUser()
+const { userInfo, getOwnProfile, isLogin } = useUser()
 
 /** 修改密码对话框 */
 const dialog = ref(false)

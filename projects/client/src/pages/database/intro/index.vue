@@ -161,7 +161,7 @@ function scroll(id: string) {
     <!-- Main -->
     <div flex="~ gap4" sm="gap6" lg="gap8" xl="gap10" relative>
       <ZLoading :value="loading" />
-      <ZEmpty v-if="!docHtml?.article" label="暂无数据库介绍" />
+      <Empty v-if="!docHtml?.article" label="暂无数据库介绍" />
       <template v-else>
         <!-- Toc -->
         <div>

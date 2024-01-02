@@ -3,7 +3,7 @@ import bg from '~/assets/bg/auth.webp'
 
 const $router = useRouter()
 const { width } = useWindowSize()
-const { appName } = useApp()
+const { app } = useSysConfig()
 </script>
 
 <template>
@@ -23,7 +23,7 @@ const { appName } = useApp()
         cursor-pointer min-w-113
         @click="$router.push('/')"
       >
-        <h2 v-text="appName" />
+        <h2 v-text="app?.name" />
         <div w3px h8 bg-grey-1 />
         <div text-lg v-text="'CloudResearch'" />
       </div>

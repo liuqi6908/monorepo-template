@@ -9,6 +9,7 @@ export interface ZInputProps {
   placeholder?: string
   dark?: boolean
   password?: boolean
+  required?: boolean
   params?: Omit<QInputProps, 'modelValue' | 'placeholder' | 'dark'>
 }
 
@@ -28,10 +29,12 @@ const isPwd = ref(true)
   <div class="z-input" flex="~ col gap2">
     <div
       v-if="label"
-      text-sm font-500
+      text-sm font-500 flex="~ gap1"
       :text="dark ? 'grey-1' : 'grey-8'"
-      v-text="label"
-    />
+    >
+      <div v-if="required" text-alert-error>*</div>
+      {{ label }}
+    </div>
     <q-input
       v-model="value"
       dense outlined
@@ -56,78 +59,7 @@ const isPwd = ref(true)
 
 <style lang="scss">
 .z-input {
-  --q-negative: #FF8080;
-
   .q-field {
-    .q-field__control {
-      min-height: 48px;
-      border-radius: 0;
-
-      .q-field__append {
-        height: 100%;
-        margin-left: 6px;
-      }
-
-      .text-negative {
-        font-size: 20px;
-      }
-
-      .q-field__label {
-        top: 14px;
-        color: var(--grey-5);
-      }
-
-      .q-field__control-container {
-        height: 100%;
-      }
-
-      input {
-        font-size: 16px;
-        line-height: 24px;
-        color: var(--grey-8);
-        &::-webkit-input-placeholder {
-          color: var(--grey-5);
-        }
-      }
-
-      &::before {
-        border-color: var(--grey-3)
-      }
-      &:hover::before {
-        border-color: var(--grey-4)
-      }
-      &::after {
-        height: 100%;
-        border-width: 1px !important
-      }
-    }
-
-    &--dark {
-      .q-field__control {
-        .q-field__label {
-          color: var(--white-7);
-        }
-
-        input {
-          color: var(--grey-1);
-          &::-webkit-input-placeholder {
-            color: var(--white-7);
-          }
-        }
-
-        &::before {
-          border-color: var(--white-7);
-        }
-        &:hover::before {
-          border-color: var(--white-9);
-        }
-      }
-    }
-
-    .q-field__bottom {
-      padding-left: 0;
-    }
-
     &.q-textarea {
       background-color: var(--grey-2);
       &.q-field--dark {

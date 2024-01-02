@@ -2,4 +2,4 @@
 @import 'shared/style/fonts.css';
 @import 'shared/style/variables.css';
 @import "shared/style/common.scss";
-@import "shared/style/quasar/index.sass";
+@import "shared/style/quasar/index.scss";

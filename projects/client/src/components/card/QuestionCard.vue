@@ -1,13 +1,13 @@
 <script lang="ts" setup>
 import icon from '~/assets/icons/chat.svg?raw'
 
-interface Props {
+interface QuestionCardProps {
   title?: string
   svg?: string
   richText?: string
 }
 
-const props = defineProps<Props>()
+const props = defineProps<QuestionCardProps>()
 
 /**
  * 将 HTML 字符串进行解码

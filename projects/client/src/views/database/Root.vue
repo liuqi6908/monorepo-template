@@ -72,7 +72,7 @@ const nameEN = computed(() => rootData.value?.find(v => v.id === databaseId.valu
       </div>
       <!-- Main -->
       <div>
-        <ZEmpty
+        <Empty
           v-if="
             !databaseId
             || !rootData?.find(v => v.id === databaseId)?.children?.length

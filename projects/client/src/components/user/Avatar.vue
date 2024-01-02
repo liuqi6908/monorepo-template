@@ -93,7 +93,7 @@ const dialog = ref(false)
 
   .q-item {
     &:hover > .q-focus-helper {
-      opacity: 0.08 !important;
+      opacity: 0.1 !important;
     }
   }
 }

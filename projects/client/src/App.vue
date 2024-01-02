@@ -4,23 +4,23 @@ import { QScrollArea } from 'quasar'
 
 const $route = useRoute()
 const { width } = useWindowSize()
-const { appName, appIcon, getAppConfig } = useApp()
+const { app, getAppConfig } = useSysConfig()
 const { el, scrollTo } = useScrollApp()
 
 onBeforeMount(async () => {
   await getAppConfig()
   useHead({
-    title: appName.value,
+    title: app.value?.name,
     meta: [
       {
         name: 'description',
-        content: `「${appName.value}」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。`,
+        content: `「${app.value?.name}」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。`,
       },
     ],
     link: [
       {
         rel: 'icon',
-        href: appIcon.value,
+        href: app.value?.icon,
       },
     ],
   })
@@ -70,8 +70,14 @@ watch(
 
 <style lang="scss" scoped>
 .q-scrollarea {
-  :deep(> .q-scrollarea__thumb) {
+  :deep {
+    .q-scrollarea__content {
+      width: 100%;
+    }
+
+    > .q-scrollarea__thumb {
     z-index: 999;
+    }
   }
 }
 </style>

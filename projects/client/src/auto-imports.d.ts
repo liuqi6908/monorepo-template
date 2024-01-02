@@ -17,13 +17,12 @@ declare global {
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
   const RichTextProcessor: typeof import('../../shared/utils/richText')['RichTextProcessor']
   const USER_MENU_LIST: typeof import('./constants/client')['USER_MENU_LIST']
-  const adminRole: typeof import('../../shared/composables/permission')['adminRole']
   const approveDesktopRequestApi: typeof import('../../shared/api/desktopRequest')['approveDesktopRequestApi']
   const approveExportLgApi: typeof import('../../shared/api/exportLg')['approveExportLgApi']
   const approveVerificationApi: typeof import('../../shared/api/verification')['approveVerificationApi']
   const assignDesktopApi: typeof import('../../shared/api/desktop')['assignDesktopApi']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
-  const authToken: typeof import('../../shared/composables/token')['authToken']
+  const authToken: typeof import('../../shared/composables/user')['authToken']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const batchDeleteDesktopApi: typeof import('../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteUserPasswordApi: typeof import('../../shared/api/user')['batchDeleteUserPasswordApi']
@@ -102,7 +101,6 @@ declare global {
   const getRolesApi: typeof import('../../shared/api/role')['getRolesApi']
   const getRootListApi: typeof import('../../shared/api/data')['getRootListApi']
   const getTableDownloadLinkApi: typeof import('../../shared/api/data')['getTableDownloadLinkApi']
-  const getTime: typeof import('../../shared/composables/userInfo')['getTime']
   const getUsername: typeof import('../../shared/utils/username')['getUsername']
   const getVMDetailApi: typeof import('../../shared/api/desktopVm')['getVMDetailApi']
   const getVMListApi: typeof import('../../shared/api/desktop')['getVMListApi']
@@ -236,7 +234,6 @@ declare global {
   const upsertRoleApi: typeof import('../../shared/api/role')['upsertRoleApi']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
-  const useApp: typeof import('../../shared/composables/app')['useApp']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
   const useArrayEvery: typeof import('@vueuse/core')['useArrayEvery']
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
@@ -276,6 +273,7 @@ declare global {
   const useDebounce: typeof import('@vueuse/core')['useDebounce']
   const useDebounceFn: typeof import('@vueuse/core')['useDebounceFn']
   const useDebouncedRefHistory: typeof import('@vueuse/core')['useDebouncedRefHistory']
+  const useDesktop: typeof import('./composables/desktop')['useDesktop']
   const useDeviceMotion: typeof import('@vueuse/core')['useDeviceMotion']
   const useDeviceOrientation: typeof import('@vueuse/core')['useDeviceOrientation']
   const useDevicePixelRatio: typeof import('@vueuse/core')['useDevicePixelRatio']
@@ -370,6 +368,7 @@ declare global {
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSupported: typeof import('@vueuse/core')['useSupported']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
+  const useSysConfig: typeof import('../../shared/composables/app')['useSysConfig']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('@vueuse/core')['useTextDirection']
   const useTextSelection: typeof import('@vueuse/core')['useTextSelection']
@@ -402,7 +401,6 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
-  const userInfo: typeof import('../../shared/composables/userInfo')['userInfo']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -442,13 +440,12 @@ declare module 'vue' {
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../shared/utils/richText')['RichTextProcessor']>
     readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client.constant')['USER_MENU_LIST']>
-    readonly adminRole: UnwrapRef<typeof import('../../shared/composables/permission')['adminRole']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../shared/api/verification')['approveVerificationApi']>
     readonly assignDesktopApi: UnwrapRef<typeof import('../../shared/api/desktop')['assignDesktopApi']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
-    readonly authToken: UnwrapRef<typeof import('../../shared/composables/token')['authToken']>
+    readonly authToken: UnwrapRef<typeof import('../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../shared/api/user')['batchDeleteUserPasswordApi']>
@@ -527,7 +524,6 @@ declare module 'vue' {
     readonly getRolesApi: UnwrapRef<typeof import('../../shared/api/role')['getRolesApi']>
     readonly getRootListApi: UnwrapRef<typeof import('../../shared/api/data')['getRootListApi']>
     readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../shared/api/data')['getTableDownloadLinkApi']>
-    readonly getTime: UnwrapRef<typeof import('../../shared/composables/userInfo')['getTime']>
     readonly getUsername: UnwrapRef<typeof import('../../shared/utils/username')['getUsername']>
     readonly getVMDetailApi: UnwrapRef<typeof import('../../shared/api/desktopVm')['getVMDetailApi']>
     readonly getVMListApi: UnwrapRef<typeof import('../../shared/api/desktop')['getVMListApi']>
@@ -661,7 +657,6 @@ declare module 'vue' {
     readonly upsertRoleApi: UnwrapRef<typeof import('../../shared/api/role')['upsertRoleApi']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
-    readonly useApp: UnwrapRef<typeof import('../../shared/composables/app')['useApp']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
@@ -701,6 +696,7 @@ declare module 'vue' {
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
     readonly useDebouncedRefHistory: UnwrapRef<typeof import('@vueuse/core')['useDebouncedRefHistory']>
+    readonly useDesktop: UnwrapRef<typeof import('./composables/desktop')['useDesktop']>
     readonly useDeviceMotion: UnwrapRef<typeof import('@vueuse/core')['useDeviceMotion']>
     readonly useDeviceOrientation: UnwrapRef<typeof import('@vueuse/core')['useDeviceOrientation']>
     readonly useDevicePixelRatio: UnwrapRef<typeof import('@vueuse/core')['useDevicePixelRatio']>
@@ -795,6 +791,7 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
+    readonly useSysConfig: UnwrapRef<typeof import('../../shared/composables/app')['useSysConfig']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
     readonly useTextSelection: UnwrapRef<typeof import('@vueuse/core')['useTextSelection']>
@@ -827,7 +824,6 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly userInfo: UnwrapRef<typeof import('../../shared/composables/userInfo')['userInfo']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
@@ -860,13 +856,12 @@ declare module '@vue/runtime-core' {
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../shared/utils/richText')['RichTextProcessor']>
     readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client.constant')['USER_MENU_LIST']>
-    readonly adminRole: UnwrapRef<typeof import('../../shared/composables/permission')['adminRole']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../shared/api/verification')['approveVerificationApi']>
     readonly assignDesktopApi: UnwrapRef<typeof import('../../shared/api/desktop')['assignDesktopApi']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
-    readonly authToken: UnwrapRef<typeof import('../../shared/composables/token')['authToken']>
+    readonly authToken: UnwrapRef<typeof import('../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../shared/api/user')['batchDeleteUserPasswordApi']>
@@ -945,7 +940,6 @@ declare module '@vue/runtime-core' {
     readonly getRolesApi: UnwrapRef<typeof import('../../shared/api/role')['getRolesApi']>
     readonly getRootListApi: UnwrapRef<typeof import('../../shared/api/data')['getRootListApi']>
     readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../shared/api/data')['getTableDownloadLinkApi']>
-    readonly getTime: UnwrapRef<typeof import('../../shared/composables/userInfo')['getTime']>
     readonly getUsername: UnwrapRef<typeof import('../../shared/utils/username')['getUsername']>
     readonly getVMDetailApi: UnwrapRef<typeof import('../../shared/api/desktopVm')['getVMDetailApi']>
     readonly getVMListApi: UnwrapRef<typeof import('../../shared/api/desktop')['getVMListApi']>
@@ -1079,7 +1073,6 @@ declare module '@vue/runtime-core' {
     readonly upsertRoleApi: UnwrapRef<typeof import('../../shared/api/role')['upsertRoleApi']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
-    readonly useApp: UnwrapRef<typeof import('../../shared/composables/app')['useApp']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
@@ -1119,6 +1112,7 @@ declare module '@vue/runtime-core' {
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
     readonly useDebouncedRefHistory: UnwrapRef<typeof import('@vueuse/core')['useDebouncedRefHistory']>
+    readonly useDesktop: UnwrapRef<typeof import('./composables/desktop')['useDesktop']>
     readonly useDeviceMotion: UnwrapRef<typeof import('@vueuse/core')['useDeviceMotion']>
     readonly useDeviceOrientation: UnwrapRef<typeof import('@vueuse/core')['useDeviceOrientation']>
     readonly useDevicePixelRatio: UnwrapRef<typeof import('@vueuse/core')['useDevicePixelRatio']>
@@ -1213,6 +1207,7 @@ declare module '@vue/runtime-core' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
+    readonly useSysConfig: UnwrapRef<typeof import('../../shared/composables/app')['useSysConfig']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
     readonly useTextSelection: UnwrapRef<typeof import('@vueuse/core')['useTextSelection']>
@@ -1245,7 +1240,6 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly userInfo: UnwrapRef<typeof import('../../shared/composables/userInfo')['userInfo']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>

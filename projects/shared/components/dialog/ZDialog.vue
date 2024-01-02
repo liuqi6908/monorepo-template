@@ -5,7 +5,7 @@ import ZBtn from '../btn/ZBtn.vue'
 import ZLoading from '../loading/ZLoading.vue'
 
 interface ZDialogProps {
-  modelValue: boolean
+  modelValue?: boolean
   title: string
   caption?: string
   footer?: boolean
@@ -88,3 +88,11 @@ const value = useVModel(props, 'modelValue')
     </q-card>
   </q-dialog>
 </template>
+
+<style lang="scss" scoped>
+.q-card {
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+</style>

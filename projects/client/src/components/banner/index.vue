@@ -1,10 +1,10 @@
 <script lang="ts" setup>
-interface Props {
+interface BannerProps {
   img: string
   title: string
 }
 
-defineProps<Props>()
+defineProps<BannerProps>()
 </script>
 
 <template>
