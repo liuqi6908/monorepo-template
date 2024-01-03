@@ -49,7 +49,7 @@ watch(rootId, () => scrollTo(0))
 <template>
   <div>
     <Banner text-grey-1 :img="bg" title="数据库" />
-    <div pb20 relative>
+    <div pb20>
       <Empty v-if="!menu?.length" icon="database" />
       <div v-else w-limited-1 flex="~ gap4" sm="gap6" lg="gap8" xl="gap10">
         <div pt10>
