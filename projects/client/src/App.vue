@@ -70,7 +70,7 @@ watch(
 
 <style lang="scss" scoped>
 .q-scrollarea {
-  :deep {
+  :deep() {
     .q-scrollarea__content {
       width: 100%;
     }
