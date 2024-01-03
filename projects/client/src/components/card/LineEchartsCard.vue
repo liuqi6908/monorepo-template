@@ -34,7 +34,7 @@ const options = computed<ECBasicOption>(() => {
       itemGap: 40,
       left: -4,
       top: 6,
-      width: '120%'
+      width: 1000
     },
     grid: {
       left: 1,

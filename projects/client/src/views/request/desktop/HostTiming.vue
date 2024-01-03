@@ -5,7 +5,7 @@ const props = defineProps<{
   uuid?: string
 }>()
 
-const { pause, resume } = useIntervalFn(getHostTiming, 30000)
+const { pause } = useIntervalFn(getHostTiming, 30000, { immediateCallback: true })
 
 /** 物理机时序列表 */
 const hostList = reactive({
@@ -47,11 +47,6 @@ const hostList = reactive({
       },
     ],
   },
-})
-
-onBeforeMount(() => {
-  getHostTiming()
-  resume()
 })
 
 /**
@@ -99,8 +94,8 @@ async function getHostTiming() {
 /**
  * 处理数据
  */
-function processData(dataArray: any, property: string) {
-  if (dataArray && dataArray.length) {
+function processData(dataArray: any, property: 'value' | 'time') {
+  if (dataArray?.length) {
     return dataArray.map((item: any) => {
       const { value, time } = item
       if (time)

@@ -1,5 +1,6 @@
 import { DesktopQueueHistoryStatus, DesktopQueueStatus } from 'zjf-types'
 import type { IDesktop } from 'zjf-types'
+import type { VMState } from 'shared/types/desktop.interface'
 
 /** 云桌面申请状态 */
 const requestStatus = ref<DesktopQueueStatus | DesktopQueueHistoryStatus>()
@@ -9,6 +10,8 @@ const queueLen = ref<number>()
 const rejectReason = ref<string>()
 /** 云桌面信息 */
 const desktopInfo = ref<IDesktop>()
+/** 虚拟机信息 */
+const vmInfo = ref<VMState>()
 
 export function useDesktop() {
   /**
@@ -30,11 +33,22 @@ export function useDesktop() {
     }
   }
 
+  /**
+   * 获取虚拟机信息
+   */
+  async function getVmInfo() {
+    if (!desktopInfo.value?.id)
+      return
+    vmInfo.value = await getVMStateApi(desktopInfo.value.id)
+  }
+
   return {
     requestStatus,
     queueLen,
     rejectReason,
     desktopInfo,
+    vmInfo,
     getDesktopRequest,
+    getVmInfo,
   }
 }

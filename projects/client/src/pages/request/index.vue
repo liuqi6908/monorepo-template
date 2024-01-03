@@ -16,7 +16,8 @@ onBeforeMount(async () => {
   loading.value = true
   try {
     await getOwnProfile()
-    await getVerify()
+    if (!isVerify.value)
+      await getVerify()
   }
   finally {
     if (!isVerify.value)
@@ -45,7 +46,7 @@ onBeforeMount(async () => {
         <div mt4 flex="~ row items-center gap8">
           <VerifyStatus v-if="isLogin && verifyStatus" :status="verifyStatus" />
           <RouterLink
-            v-if="!isLogin || !verifyStatus || verifyStatus !== VerificationStatus.PENDING"
+            v-if="!isLogin || verifyStatus !== VerificationStatus.PENDING"
             :to="!isLogin ? '/auth/login' : '/userCenter/authentication'"
           >
             <ZBtn

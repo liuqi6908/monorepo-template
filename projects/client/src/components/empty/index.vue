@@ -24,10 +24,10 @@ const icons = {
 </script>
 
 <template>
-  <div w-full p="t20 b80" flex="~ col items-center gap10">
+  <div class="empty" w-full p="t20 b80" flex="~ col items-center gap10">
     <div flex="~ col items-center gap6">
       <div v-html="icons[icon]" />
-      <div flex="~ col items-center gap2">
+      <div flex="~ col items-center gap2" text-center>
         <div
           text="lg grey-8"
           v-text="label"

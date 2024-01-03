@@ -3,7 +3,7 @@ const props = defineProps<{
   uuid?: string
 }>()
 
-const { pause, resume } = useIntervalFn(getHostInfo, 30000)
+const { pause } = useIntervalFn(getHostInfo, 30000, { immediateCallback: true })
 
 /** 物理机配置列表 */
 const hostList = reactive({
@@ -11,28 +11,23 @@ const hostList = reactive({
     title: 'CPU分配情况',
     color: '#025CB9',
     unit: false,
-    used: 1,
-    total: 100,
+    used: 0,
+    total: 0,
   },
   storage: {
     title: '内存使用率',
     unit: true,
     color: '#F99E34',
-    used: 1,
-    total: 100,
+    used: 0,
+    total: 0,
   },
   disk: {
     title: '存储使用率',
     unit: true,
     color: '#8D5FF0',
-    used: 1,
-    total: 100,
+    used: 0,
+    total: 0,
   },
-})
-
-onBeforeMount(() => {
-  getHostInfo()
-  resume()
 })
 
 /**
