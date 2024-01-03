@@ -4,8 +4,9 @@ import { ref } from 'vue'
 import type { QInputProps } from 'quasar'
 
 export interface ZInputProps {
-  modelValue: string
+  modelValue?: string
   label?: string
+  caption?: string
   placeholder?: string
   dark?: boolean
   password?: boolean
@@ -34,6 +35,12 @@ const isPwd = ref(true)
     >
       <div v-if="required" text-alert-error>*</div>
       {{ label }}
+      <div
+        v-if="caption"
+        :text="dark ? 'white-7' : 'grey-6'"
+        font-400
+        v-text="caption"
+      />
     </div>
     <q-input
       v-model="value"

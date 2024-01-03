@@ -53,7 +53,7 @@ const verifyStyle: VerifyStyle = {
     :style="{
       borderColor: `var(--${verifyStyle[status].color})`,
       backgroundColor: `var(--${verifyStyle[status].color}-bg)`,
-    }"
+    }" whitespace-nowrap
   >
     认证状态：
     <div flex="~ items-center gap1">

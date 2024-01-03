@@ -23,7 +23,7 @@ const value = computed(() => $route.path)
             sticky top-41
           />
         </div>
-        <RouterView pt10 />
+        <RouterView pt10 flex-1 w0 />
       </div>
     </div>
   </HomeLayout>

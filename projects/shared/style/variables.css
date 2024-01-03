@@ -37,4 +37,9 @@
   --white-7: #FFFFFFB3;
   --white-8: #FFFFFFCC;
   --white-9: #FFFFFFE6;
+
+  --xs: 500px;
+  --sm: 760px;
+  --lg: 900px;
+  --xl: 1360px;
 }

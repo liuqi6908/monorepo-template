@@ -2,7 +2,6 @@
 export interface Protocol {
   label: string
   component: Component
-  dialog?: boolean
 }
 
 interface ProtocolProps {
@@ -14,6 +13,9 @@ const props = defineProps<ProtocolProps>()
 defineEmits(['update:modelValue'])
 
 const value = useVModel(props)
+
+/** 对话框 */
+const dialog: boolean[] = reactive([])
 </script>
 
 <template>
@@ -27,12 +29,12 @@ const value = useVModel(props)
       <template v-for="(item, index) in list" :key="index">
         <span
           text-primary-1 cursor-pointer hover:underline="~ offset-1"
-          @click="item.dialog = true"
+          @click="dialog[index] = true"
           v-text="`《${item.label}》`"
         />
         <span v-if="index < list.length - 1">、</span>
         <ZDialog
-          v-model="item.dialog"
+          v-model="dialog[index]"
           class="protocol-dialog"
           :title="item.label"
           :wrapper-style="{

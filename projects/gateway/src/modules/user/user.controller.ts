@@ -172,7 +172,7 @@ export class UserController {
     return await this._userSrv.updateUserEmail(user.id, body.email)
   }
 
-  @Throttle(1, 10)
+  @Throttle(1, 3)
   @ApiOperation({ summary: '通过原密码修改密码（需要登录，账号未设置密码可直接修改）' })
   @ApiSuccessResponse(UniversalOperationResDto)
   @IsLogin()

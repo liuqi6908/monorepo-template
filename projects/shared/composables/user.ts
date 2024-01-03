@@ -172,8 +172,8 @@ export function useUser($router = useRouter()) {
   /**
    * 获取当前登入用户信息
    */
-  async function getOwnProfile(relation = 'role.permissions,verification') {
-    if (userInfo.value && getTime.value && Date.now() - getTime.value < 10 * 1000)
+  async function getOwnProfile(relation = 'role.permissions,verification', useCache = true) {
+    if (useCache && userInfo.value && getTime.value && Date.now() - getTime.value < 10 * 1000)
       return
 
     getTime.value = Date.now()

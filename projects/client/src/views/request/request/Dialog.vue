@@ -26,10 +26,10 @@ const attachments = ref<{
 const checked = ref(false)
 
 /** 协议列表 */
-const protocolList = ref<Protocol[]>([
+const protocolList = computed<Protocol[]>(() => [
   {
     label: `「${app.value?.name}」云桌面使用协议`,
-    component: shallowRef(defineAsyncComponent(() => import('~/components/protocol/DesktopDoc.vue')))
+    component: defineAsyncComponent(() => import('~/components/protocol/DesktopDoc.vue'))
   }
 ])
 

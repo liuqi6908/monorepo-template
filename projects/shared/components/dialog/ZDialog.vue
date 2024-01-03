@@ -61,11 +61,11 @@ const value = useVModel(props, 'modelValue')
         </q-scroll-area>
       </div>
 
-      <div v-else px6>
+      <div v-else px6 pb4>
         <slot />
       </div>
 
-      <footer v-if="footer" flex="~ row justify-end gap6" px6 mt-4>
+      <footer v-if="footer" flex="~ row justify-end gap6" px6>
         <ZBtn
           v-close-popup
           min-w-28

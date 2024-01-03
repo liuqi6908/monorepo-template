@@ -23,6 +23,7 @@ declare module 'vue' {
     Protocol: typeof import('./components/protocol/index.vue')['default']
     Question: typeof import('./../../shared/components/cms/question/Question.vue')['default']
     QuestionCard: typeof import('./components/card/QuestionCard.vue')['default']
+    ReadonlyInput: typeof import('./../../shared/components/input/ReadonlyInput.vue')['default']
     RoundEchartsCard: typeof import('./components/card/RoundEchartsCard.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

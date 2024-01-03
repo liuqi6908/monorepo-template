@@ -401,6 +401,11 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
+  const validateCollege: typeof import('./utils/validator')['validateCollege']
+  const validateIdCard: typeof import('./utils/validator')['validateIdCard']
+  const validateName: typeof import('./utils/validator')['validateName']
+  const validateNumber: typeof import('./utils/validator')['validateNumber']
+  const validateSchool: typeof import('./utils/validator')['validateSchool']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -824,6 +829,11 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly validateCollege: UnwrapRef<typeof import('./utils/validator')['validateCollege']>
+    readonly validateIdCard: UnwrapRef<typeof import('./utils/validator')['validateIdCard']>
+    readonly validateName: UnwrapRef<typeof import('./utils/validator')['validateName']>
+    readonly validateNumber: UnwrapRef<typeof import('./utils/validator')['validateNumber']>
+    readonly validateSchool: UnwrapRef<typeof import('./utils/validator')['validateSchool']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
@@ -1240,6 +1250,11 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly validateCollege: UnwrapRef<typeof import('./utils/validator')['validateCollege']>
+    readonly validateIdCard: UnwrapRef<typeof import('./utils/validator')['validateIdCard']>
+    readonly validateName: UnwrapRef<typeof import('./utils/validator')['validateName']>
+    readonly validateNumber: UnwrapRef<typeof import('./utils/validator')['validateNumber']>
+    readonly validateSchool: UnwrapRef<typeof import('./utils/validator')['validateSchool']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
