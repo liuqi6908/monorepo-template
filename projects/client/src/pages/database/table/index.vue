@@ -257,7 +257,7 @@ async function downloadData() {
       <ZBtn
         v-else
         label="数据下载"
-        :disable="!isLogin"
+        :disable="!isLogin || !isExist"
         size="big"
         @click="downloadData"
       />
