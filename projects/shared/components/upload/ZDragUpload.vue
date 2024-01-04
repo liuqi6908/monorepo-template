@@ -72,7 +72,7 @@ function dragFile(e: DragEvent) {
       @rejected="onRejected"
     />
     <div
-      py13 flex="~ col items-center gap6"
+      py13 flex="~ col gap6"
       b-1px :b="active ? 'solid grey-4' : 'dashed grey-3'"
       :bg="active ? 'grey-2' : 'grey-1'" transition
       hover:b-grey-4
@@ -82,7 +82,7 @@ function dragFile(e: DragEvent) {
       @drop.prevent="dragFile"
     >
       <div
-        flex="~ col items-center gap2"
+        flex="~ col self-center items-center gap2"
         text-primary-1 cursor-pointer
         @click="clickUpload"
       >
@@ -96,11 +96,11 @@ function dragFile(e: DragEvent) {
       </div>
       <div
         v-if="value"
-        flex="~ items-center gap4"
+        flex="center gap4"
       >
-        <div flex="~ items-center gap1">
-          <div i-mdi:file-outline text-grey-5 />
-          <div v-text="value.name" />
+        <div flex="~ items-center gap1" style="max-width: calc(100% - 40px)">
+          <div min-w-4 i-mdi:file-outline text-grey-5 />
+          <div truncate v-text="value.name" />
         </div>
         <div
           i-mdi:close-circle
