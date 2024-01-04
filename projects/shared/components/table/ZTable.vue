@@ -10,7 +10,6 @@ interface ZTableProps {
   loading?: boolean
   /** 是否启用分页，禁用后，强制显示全部的数据 */
   disablePagination?: boolean
-  h?: number | string
   params?: Omit<QTableProps, 'rows' | 'columns' | 'loading' | 'hideBottom'>
 }
 

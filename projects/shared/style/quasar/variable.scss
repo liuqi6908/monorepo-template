@@ -5,17 +5,6 @@
   --q-warning: var(--alerts-warning);
 }
 
-/* 主题色 */
-@for $i from 1 through 2 {
-  .text-primary-#{$i} {
-    color: var(--primary-#{$i}) !important;
-  }
-
-  .bg-primary-#{$i} {
-    background: var(--primary-#{$i}) !important;
-  }
-}
-
 /* 中性色 */
 @for $i from 1 through 8 {
   .text-grey-#{$i} {
@@ -38,15 +27,23 @@
   }
 }
 
-/* 背景色 */
-$bgs: primary-1, alerts-success, alerts-error, alerts-warning;
+/* 通知色 */
+$alerts: primary-1, primary-2, alerts-success, alerts-error, alerts-warning;
 
-@each $bg in $bgs {
-  .text-#{$bg}-bg {
-    color: var(--#{$bg}-bg) !important;
+@each $alert in $alerts {
+  .text-#{$alert} {
+    color: var(--#{$alert}) !important;
   }
 
-  .bg-#{$bg}-bg {
-    background: var(--#{$bg}-bg) !important;
+  .bg-#{$alert} {
+    background: var(--#{$alert}) !important;
+  }
+
+  .text-#{$alert}-bg {
+    color: var(--#{$alert}-bg) !important;
+  }
+
+  .bg-#{$alert}-bg {
+    background: var(--#{$alert}-bg) !important;
   }
 }

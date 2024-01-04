@@ -119,7 +119,7 @@ export function useSysConfig() {
       acceptLimit = UPLOAD_WORK_DFT_ACCEPT_LIMIT,
       hint = UPLOAD_WORK_HINT,
     } = await getConfigApi(SysConfig.WORK) || {}
-    desktop.value = {
+    works.value = {
       sizeLimit,
       acceptLimit,
       hint,
