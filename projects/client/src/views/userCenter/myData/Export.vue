@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
-import { formatFileSize } from 'zjf-utils'
+import { formatFileSize, isCompressedFile } from 'zjf-utils'
 import type { FileType } from '~/constants/export'
 import ChangeEmailDialog from '../authentication/ChangeEmail.dialog.vue'
 
@@ -60,6 +60,19 @@ onBeforeMount(async () => {
   await getFileExportConfig()
   loading.value = false
 })
+
+watch(
+  () => exportForm.small.file,
+  (newVal) => {
+    if (newVal && isCompressedFile(newVal)) {
+      exportForm.small.file = undefined
+      Notify.create({
+        message: '禁止外发压缩文件',
+        type: 'danger'
+      })
+    }
+  }
+)
 
 /**
  * 外发文件

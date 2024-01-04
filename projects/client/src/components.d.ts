@@ -29,7 +29,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SMSInput: typeof import('./../../shared/components/input/SMSInput.vue')['default']
-    UpdateDescribe: typeof import('./../../shared/components/cms/user/UpdateDescribe.vue')['default']
+    UploadDescribe: typeof import('./../../shared/components/cms/userCenter/UploadDescribe.vue')['default']
     UserAgreementDoc: typeof import('./components/protocol/UserAgreementDoc.vue')['default']
     VerifyStatus: typeof import('./components/user/VerifyStatus.vue')['default']
     WorksDoc: typeof import('./components/protocol/WorksDoc.vue')['default']
