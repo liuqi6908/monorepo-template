@@ -1,13 +1,18 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { onBeforeMount, ref } from 'vue'
 
 interface ZExpansionProps {
   label?: string
   initialValue?: boolean
 }
-defineProps<ZExpansionProps>()
+const { initialValue } = defineProps<ZExpansionProps>()
 
 const value = ref(false)
+
+onBeforeMount(() => {
+  if (initialValue)
+    value.value = true
+})
 </script>
 
 <template>
@@ -35,9 +40,8 @@ const value = ref(false)
 
     <!-- Content -->
     <q-expansion-item
-      :model-value="initialValue || value"
+      v-model="value"
       header-class="display-none"
-      @update:model-value="val => value = val"
     >
       <slot />
     </q-expansion-item>
