@@ -76,15 +76,17 @@ async function getSmsCode() {
     :dark="dark"
     v-bind="params"
   >
-    <q-btn
-      unelevated square
-      min-h="auto!"
-      w26 h9 text-base font-400 p0
-      :bg="dark ? 'white-2' : 'primary-1/12'"
-      :text-color="dark ? 'grey-1' : 'primary-1'"
-      :label="interval > 0 ? `${interval}秒后再试` : '发送验证码'"
-      :disable="disable"
-      @click="getSmsCode"
-    />
+    <template #append>
+      <q-btn
+        unelevated square
+        min-h="auto!"
+        w26 h9 text-base font-400 p0
+        :bg="dark ? 'white-2' : 'primary-1/12'"
+        :text-color="dark ? 'grey-1' : 'primary-1'"
+        :label="interval > 0 ? `${interval}秒后再试` : '发送验证码'"
+        :disable="disable"
+        @click="getSmsCode"
+      />
+    </template>
   </ZInput>
 </template>

@@ -65,7 +65,7 @@ const isPwd = ref(true)
           cursor-pointer text-xl :text="dark ? 'grey-1' : 'grey-4'"
           @click="isPwd = !isPwd"
         />
-        <slot />
+        <slot name="append" />
       </template>
     </q-input>
   </div>
