@@ -196,7 +196,7 @@ const filterTableRows = computed(() => {
       @update:model-value="rejectReason = undefined"
     >
       <div
-        class="hide-scrollbar"
+        class="hide-scrollbar" break-all
         min-h-20 style="max-height: calc(100vh - 200px)"
         v-text="rejectReason || '暂无驳回理由'"
       />

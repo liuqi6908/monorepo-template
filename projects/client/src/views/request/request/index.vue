@@ -119,7 +119,7 @@ const processSvg = computed(() => {
     <!-- 驳回对话框 -->
     <ZDialog v-model="rejectDialog" title="驳回理由">
       <div
-        class="hide-scrollbar"
+        class="hide-scrollbar" break-all
         min-h-20 style="max-height: calc(100vh - 200px)"
         v-text="rejectReason || '暂无驳回理由'"
       />
