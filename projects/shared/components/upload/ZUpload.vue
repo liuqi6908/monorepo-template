@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
-import { Notify, QFile } from 'quasar'
-import type { QFileProps, QRejectedEntry } from 'quasar'
+import { QFile } from 'quasar'
+import type { QFileProps } from 'quasar'
 import { readFileAsDataURL } from 'zjf-utils'
 import ZBtn from '../btn/ZBtn.vue'
+import { onRejected } from '../../utils/uploadFile'
 
 interface ZUploadProps {
   modelValue?: File | File[]
@@ -43,42 +44,6 @@ function clickUpload() {
 }
 
 /**
- * 选择文件，未通过验证的回调
- */
-function onRejected(e: QRejectedEntry[]) {
-  if (e.length) {
-    const { failedPropValidation } = e[0]
-    if (failedPropValidation === 'accept') {
-      Notify.create({
-        type: 'danger',
-        message: '不支持的文件类型',
-      })
-    }
-    else if (failedPropValidation === 'filter') {
-      Notify.create({
-        type: 'danger',
-        message: '不允许的文件',
-      })
-    }
-    else if (
-      failedPropValidation === 'max-file-size'
-      || failedPropValidation === 'max-total-size'
-    ) {
-      Notify.create({
-        type: 'danger',
-        message: '超出限定的文件大小',
-      })
-    }
-    else if (failedPropValidation === 'duplicate') {
-      Notify.create({
-        type: 'danger',
-        message: '重复上传的文件',
-      })
-    }
-  }
-}
-
-/**
  * 删除文件
  */
 function deleteFile(index: number) {
@@ -100,13 +65,13 @@ function deleteFile(index: number) {
         <QFile
           ref="ZUploadRef"
           v-model="value"
+          class="hidden!"
           :accept="accept"
           :max-files="maxFiles"
           :multiple="multiple"
           :max-file-size="maxFileSize"
           :disable="disable"
           append
-          style="display:none"
           @rejected="onRejected"
         />
         <ZBtn size="small" color="primary-1-bg" text-color="primary-1" @click="clickUpload">

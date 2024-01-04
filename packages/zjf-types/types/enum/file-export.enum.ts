@@ -2,11 +2,11 @@
  * 大文件外发审核状态
  */
 export enum FileExportLargeStatus {
-  /** 待处理 */
+  /** 待审核 */
   PENDING = 'pending',
   /** 已通过 */
   APPROVED = 'approved',
-  /** 已拒绝 */
+  /** 已驳回 */
   REJECTED = 'rejected',
 }
 
@@ -14,7 +14,7 @@ export enum FileExportLargeStatus {
  * 大文件外发审核状态的描述
  */
 export const fileExportLargeStatusDescriptions: Record<FileExportLargeStatus, string> = {
-  [FileExportLargeStatus.PENDING]: '待处理',
+  [FileExportLargeStatus.PENDING]: '待审核',
   [FileExportLargeStatus.APPROVED]: '已通过',
-  [FileExportLargeStatus.REJECTED]: '已拒绝',
+  [FileExportLargeStatus.REJECTED]: '已驳回',
 }

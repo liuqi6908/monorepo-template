@@ -41,3 +41,13 @@ const value = useVModel(props)
     v-bind="params"
   />
 </template>
+
+<style lang="scss" scoped>
+.q-btn-toggle {
+  :deep(.q-btn) {
+    font-size: 16px;
+    line-height: 24px;
+    font-weight: 600;
+  }
+}
+</style>

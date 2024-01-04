@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
-import type { QInputProps } from 'quasar'
+import type { QInputProps, QInputSlots } from 'quasar'
 
 export interface ZInputProps {
   modelValue?: string
@@ -51,6 +51,13 @@ const isPwd = ref(true)
       :type="password && isPwd ? 'password' : 'text'"
       v-bind="params"
     >
+      <template
+        v-for="(_, slotName) of ($slots as Readonly<QInputSlots>)"
+        :key="slotName"
+        #[slotName]
+      >
+        <slot :name="slotName" />
+      </template>
       <template #append>
         <div
           v-if="password"
@@ -68,13 +75,9 @@ const isPwd = ref(true)
 .z-input {
   .q-field {
     &.q-textarea {
-      background-color: var(--grey-2);
-      &.q-field--dark {
-        background-color: transparent;
-      }
-
       .q-field__control {
         padding-right: 0;
+        height: auto;
 
         textarea {
           min-height: 48px;

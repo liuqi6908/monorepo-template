@@ -51,10 +51,10 @@ export const CMS_CONFIG: CmsConfig[] = [
     rows: [],
   },
   {
-    id: 'updateDescribe',
+    id: 'uploadDescribe',
     label: '数据上传说明',
     component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/user/UpdateDescribe.vue')),
+      defineAsyncComponent(() => import('../components/cms/userCenter/UploadDescribe.vue')),
     ),
     param: ['richText'],
     rows: [{ richText: '' }],

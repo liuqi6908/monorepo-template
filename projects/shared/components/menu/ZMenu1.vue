@@ -20,13 +20,14 @@ const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
-  <q-tabs v-model="value">
+  <q-tabs v-model="value" class="z-menu-1">
     <q-route-tab
       v-for="item in list"
       :key="item.id"
       :name="item.id"
       :to="item.to"
       px5 opacity100
+      @click="value = item.id"
     >
       <div
         text="base ellipsis" font-600

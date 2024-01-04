@@ -50,3 +50,11 @@ async function applyPurchase() {
     />
   </ZDialog>
 </template>
+
+<style lang="scss" scoped>
+.z-input {
+  :deep(.q-field) {
+    background-color: var(--grey-2);
+  }
+}
+</style>

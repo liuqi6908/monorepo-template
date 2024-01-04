@@ -38,8 +38,8 @@ export function useSysConfig() {
   /**
    * 获取App配置
    */
-  async function getAppConfig() {
-    if (app.value)
+  async function getAppConfig(useCache = true) {
+    if (useCache && app.value)
       return
     const { name = APP_NAME, icon = APP_ICON } = await getConfigApi(SysConfig.APP) || {}
     app.value = {
@@ -51,8 +51,8 @@ export function useSysConfig() {
   /**
    * 获取云桌面申请配置
    */
-  async function getDesktopConfig() {
-    if (desktop.value)
+  async function getDesktopConfig(useCache = true) {
+    if (useCache && desktop.value)
       return
     const {
       duration = DESKTOP_REQUEST_DURATION_OPTION,
@@ -73,8 +73,8 @@ export function useSysConfig() {
   /**
    * 获取外发配置
    */
-  async function getFileExportConfig() {
-    if (fileExport.value)
+  async function getFileExportConfig(useCache = true) {
+    if (useCache && fileExport.value)
       return
     const {
       sizeLimitSm = EXPORT_DFT_SM_SIZE_LIMIT,
@@ -91,8 +91,8 @@ export function useSysConfig() {
   /**
    * 获取身份认证上传配置
    */
-  async function getVerificationConfig() {
-    if (verification.value)
+  async function getVerificationConfig(useCache = true) {
+    if (useCache && verification.value)
       return
     const {
       sizeLimit = VERIFICATION_UPLOAD_DFT_SIZE_LIMIT,
@@ -111,8 +111,8 @@ export function useSysConfig() {
   /**
    * 获取上传作品配置
    */
-  async function getWorkConfig() {
-    if (works.value)
+  async function getWorkConfig(useCache = true) {
+    if (useCache && works.value)
       return
     const {
       sizeLimit = UPLOAD_WORK_DFT_SIZE_LIMIT,

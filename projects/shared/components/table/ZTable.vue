@@ -1,8 +1,6 @@
 <script setup lang="ts">
 import type { QTableProps } from 'quasar'
 import { QTableSlots } from 'quasar'
-import { ref } from 'vue'
-import { useElementSize } from '@vueuse/core'
 import { PAGINATION_SIZE_DFT, ROWS_PER_PAGE_OPTIONS } from 'zjf-types'
 import ZLoading from '../loading/ZLoading.vue'
 
@@ -17,51 +15,37 @@ interface ZTableProps {
 }
 
 const { params } = defineProps<ZTableProps>()
-
-const table = ref<HTMLElement>()
-const { height } = useElementSize(table)
 </script>
 
 <template>
-  <q-scroll-area
-    w-full b="1px solid grey-3"
-    :style="{
-      height: h ?
-        typeof h === 'number' ? `${h}px` : h
-        : `${height + 3}px`,
+  <q-table
+    class="z-table"
+    :rows="rows"
+    :columns="cols"
+    :loading="loading"
+    :hide-bottom="disablePagination"
+    separator="cell" flat square
+    :pagination="{
+      rowsPerPage: disablePagination ? 0 : PAGINATION_SIZE_DFT,
     }"
+    :rows-per-page-options="ROWS_PER_PAGE_OPTIONS"
+    bordered
+    v-bind="params"
   >
-    <q-table
-      ref="table"
-      class="z-table"
-      :rows="rows"
-      :columns="cols"
-      :loading="loading"
-      :hide-bottom="disablePagination"
-      separator="cell" flat square
-      :pagination="{
-        rowsPerPage: disablePagination ? 0 : PAGINATION_SIZE_DFT,
-      }"
-      :rows-per-page-options="ROWS_PER_PAGE_OPTIONS"
-      v-bind="params"
+    <template
+      v-for="(_, slotName) of ($slots as Readonly<QTableSlots>)"
+      :key="slotName"
+      #[slotName]="props"
     >
-      <template
-        v-for="(_, slotName) of ($slots as Readonly<QTableSlots>)"
-        :key="slotName"
-        #[slotName]="props"
-      >
-        <slot :name="slotName" v-bind="props" />
-      </template>
-      <template #loading>
-        <ZLoading :value="loading" />
-      </template>
-    </q-table>
-  </q-scroll-area>
+      <slot :name="slotName" v-bind="props as any" />
+    </template>
+    <template #loading>
+      <ZLoading :value="loading" />
+    </template>
+  </q-table>
 </template>
 
 <style lang="scss" scoped>
-$primary-color: var(--primary-1);
-
 .z-table {
   :deep() {
     .q-table__top,

@@ -13,6 +13,7 @@ declare global {
   const AUTH_TOKEN_KEY: typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']
   const CLIENT_MENU_LIST: typeof import('./constants/client')['CLIENT_MENU_LIST']
   const CMS_CONFIG: typeof import('../../shared/constants/cms')['CMS_CONFIG']
+  const EXPORT_MENU: typeof import('./constants/export')['EXPORT_MENU']
   const EffectScope: typeof import('vue')['EffectScope']
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
   const RichTextProcessor: typeof import('../../shared/utils/richText')['RichTextProcessor']
@@ -138,6 +139,7 @@ declare global {
   const onKeyStroke: typeof import('@vueuse/core')['onKeyStroke']
   const onLongPress: typeof import('@vueuse/core')['onLongPress']
   const onMounted: typeof import('vue')['onMounted']
+  const onRejected: typeof import('../../shared/utils/uploadFile')['onRejected']
   const onRenderTracked: typeof import('vue')['onRenderTracked']
   const onRenderTriggered: typeof import('vue')['onRenderTriggered']
   const onScopeDispose: typeof import('vue')['onScopeDispose']
@@ -439,12 +441,13 @@ declare module 'vue' {
     readonly API_BASE_URL: UnwrapRef<typeof import('../../shared/constants/app')['API_BASE_URL']>
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']>
-    readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client.constant')['CLIENT_MENU_LIST']>
+    readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client')['CLIENT_MENU_LIST']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
+    readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../shared/utils/richText')['RichTextProcessor']>
-    readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client.constant')['USER_MENU_LIST']>
+    readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client')['USER_MENU_LIST']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../shared/api/verification')['approveVerificationApi']>
@@ -566,6 +569,7 @@ declare module 'vue' {
     readonly onKeyStroke: UnwrapRef<typeof import('@vueuse/core')['onKeyStroke']>
     readonly onLongPress: UnwrapRef<typeof import('@vueuse/core')['onLongPress']>
     readonly onMounted: UnwrapRef<typeof import('vue')['onMounted']>
+    readonly onRejected: UnwrapRef<typeof import('../../shared/utils/uploadFile')['onRejected']>
     readonly onRenderTracked: UnwrapRef<typeof import('vue')['onRenderTracked']>
     readonly onRenderTriggered: UnwrapRef<typeof import('vue')['onRenderTriggered']>
     readonly onScopeDispose: UnwrapRef<typeof import('vue')['onScopeDispose']>
@@ -860,12 +864,13 @@ declare module '@vue/runtime-core' {
     readonly API_BASE_URL: UnwrapRef<typeof import('../../shared/constants/app')['API_BASE_URL']>
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']>
-    readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client.constant')['CLIENT_MENU_LIST']>
+    readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client')['CLIENT_MENU_LIST']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
+    readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../shared/utils/richText')['RichTextProcessor']>
-    readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client.constant')['USER_MENU_LIST']>
+    readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client')['USER_MENU_LIST']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../shared/api/verification')['approveVerificationApi']>
@@ -987,6 +992,7 @@ declare module '@vue/runtime-core' {
     readonly onKeyStroke: UnwrapRef<typeof import('@vueuse/core')['onKeyStroke']>
     readonly onLongPress: UnwrapRef<typeof import('@vueuse/core')['onLongPress']>
     readonly onMounted: UnwrapRef<typeof import('vue')['onMounted']>
+    readonly onRejected: UnwrapRef<typeof import('../../shared/utils/uploadFile')['onRejected']>
     readonly onRenderTracked: UnwrapRef<typeof import('vue')['onRenderTracked']>
     readonly onRenderTriggered: UnwrapRef<typeof import('vue')['onRenderTriggered']>
     readonly onScopeDispose: UnwrapRef<typeof import('vue')['onScopeDispose']>

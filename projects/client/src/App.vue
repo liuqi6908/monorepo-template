@@ -75,8 +75,11 @@ watch(
       width: 100%;
     }
 
+    > .q-scrollarea__bar {
+      z-index: 998;
+    }
     > .q-scrollarea__thumb {
-    z-index: 999;
+      z-index: 999;
     }
   }
 }

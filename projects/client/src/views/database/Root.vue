@@ -5,6 +5,7 @@ import Database from './Database.vue'
 const { rootId, rootData, databaseId, getDataByRootId } = useDatabase()
 const { query } = useRoute()
 const $router = useRouter()
+const { el, scrollTo } = useScrollApp()
 
 /** 加载中 */
 const loading = ref(false)
@@ -43,6 +44,16 @@ const menu = computed<ZMenu1Props['list']>(() => {
 
 /** 数据库的英文名 */
 const nameEN = computed(() => rootData.value?.find(v => v.id === databaseId.value)?.nameEN)
+
+watch(
+  databaseId,
+  () => {
+    if (el.value) {
+      if (el.value.getScrollPosition().top > 265)
+        scrollTo(265)
+    }
+  }
+)
 </script>
 
 <template>

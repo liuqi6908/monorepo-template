@@ -10,7 +10,7 @@ defineProps<ReadonlyInputProps>()
 </script>
 
 <template>
-  <div class="readonly-input" flex="~ col gap2">
+  <div flex="~ col gap2">
     <div
       v-if="label"
       text="sm grey-8" font-500 flex="~ gap1"
@@ -30,25 +30,3 @@ defineProps<ReadonlyInputProps>()
     />
   </div>
 </template>
-
-<style lang="scss">
-.z-input {
-  .q-field {
-    &.q-textarea {
-      background-color: var(--grey-2);
-      &.q-field--dark {
-        background-color: transparent;
-      }
-
-      .q-field__control {
-        padding-right: 0;
-
-        textarea {
-          min-height: 48px;
-          max-height: 300px;
-        }
-      }
-    }
-  }
-}
-</style>
