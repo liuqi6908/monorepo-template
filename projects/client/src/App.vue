@@ -33,15 +33,17 @@ watch(
   },
 )
 
-const debouncedFn = useDebounceFn((width: number) => {
+watch(
+  width,
+  (newVal) => {
   if (isClient) {
     nextTick(() => {
       const body = document.body
       if (body) {
-        if (width < APP_MIN_WIDTH) {
-          body.style.transform = `scale(${width / APP_MIN_WIDTH})`
-          body.style.width = `${APP_MIN_WIDTH / width * 100}%`
-          body.style.height = `${APP_MIN_WIDTH / width * 100}%`
+        if (newVal < APP_MIN_WIDTH) {
+          body.style.transform = `scale(${newVal / APP_MIN_WIDTH})`
+          body.style.width = `${APP_MIN_WIDTH / newVal * 100}%`
+          body.style.height = `${APP_MIN_WIDTH / newVal * 100}%`
         }
         else {
           body.style.transform = ''
@@ -51,11 +53,7 @@ const debouncedFn = useDebounceFn((width: number) => {
       }
     })
   }
-}, 300)
-
-watch(
-  width,
-  debouncedFn,
+},
   {
     immediate: true,
   },
