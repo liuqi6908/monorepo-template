@@ -1,11 +1,7 @@
-<script setup lang="ts">
-defineOptions({
-  name: 'IndexPage',
-})
-</script>
+<script setup></script>
 
-<route lang="yaml">
-redirect: /home
-meta:
-  layout: home
-</route>
+<template>
+  <div>
+    首页
+  </div>
+</template>

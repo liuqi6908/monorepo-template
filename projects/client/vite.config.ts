@@ -15,20 +15,20 @@ import Components from 'unplugin-vue-components/vite'
 export default ({ mode }: any) => {
   process.env = {
     ...process.env,
-    ...loadEnv(mode, process.cwd()),
+    ...loadEnv(mode, path.relative(__dirname, '../shared/')),
     VITE_MODE: mode,
   }
 
-  // Object.assign(process.env, loadEnv(mode, process.cwd()))
   return defineConfig({
-    base: process.env.VITE_BASE,
+    envDir: './shared/.env',
+    base: process.env.VITE_BASE_CLIENT,
     define: {
       'process.env': {},
     },
 
     server: {
       host: '0.0.0.0',
-      port: Number.parseInt((process.env.VITE_PORT as string) || '3333', 10),
+      port: Number.parseInt(process.env.VITE_PORT_CLIENT || '3333', 10),
       proxy: {
         [process.env.VITE_API_BASE as string]: {
           target: process.env.VITE_PROXY_TARGET,
