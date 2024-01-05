@@ -3,11 +3,11 @@ export const PHONE_NUMBER_MIN_LENGTH = 11
 export const PHONE_NUMBER_MAX_LENGTH = 11
 
 /**
- * 校验一个手机号是否合法，如果合法，返回空字符串，否则返回错误信息
- * @param phone 手机号
- * @returns
+ * 校验一个手机号是否符合要求
+ * @param phone 待校验的手机号
+ * @returns 如果符合要求，返回空字符串，否则返回错误信息
  */
-export function validatePhone(phone: string | number) {
+export function validatePhone(phone: string | number): string {
   if (typeof phone === 'number')
     phone = phone.toString()
   if (typeof phone !== 'string')

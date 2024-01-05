@@ -1,6 +1,15 @@
-import { md5 } from './md5'
+import { md5 } from '../md5'
 
-export function sortObj(obj: any): any {
+/**
+ * 对传入的对象进行排序并计算其MD5哈希值
+ * @param obj 待处理的对象
+ * @returns MD5哈希值
+ */
+export function hashObject(obj: unknown) {
+  return md5(JSON.stringify(sortObj(obj)))
+}
+
+function sortObj(obj: any): any {
   if (Object.prototype.toString.call(obj) === '[object Array]') {
     return (obj as Array<any>).sort().map(el => sortObj(el))
   }
@@ -14,8 +23,4 @@ export function sortObj(obj: any): any {
   else {
     return obj
   }
-}
-
-export function hashObject(obj: unknown) {
-  return md5(JSON.stringify(sortObj(obj)))
 }

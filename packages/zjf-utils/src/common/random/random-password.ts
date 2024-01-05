@@ -1,11 +1,15 @@
 import { randomInt } from './random-int'
 
 /**
- * 生成随机密码
+ * 根据配置生成随机密码
  * @param min 最小长度
  * @param max 最大长度
  * @param special 允许的特殊字符
- * @return 随机密码
+ * @default
+ *  min 8
+ *  max 16
+ *  special !@#$%^&*()-_=+,.:;?/~
+ * @return 生成的随机密码
  */
 export function getRandomPassword(min = 8, max = 16, special = '!@#$%^&*()-_=+,.:;?/~') {
   const length = randomInt(min, max)

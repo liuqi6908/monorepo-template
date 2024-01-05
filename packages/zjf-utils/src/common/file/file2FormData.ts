@@ -1,6 +1,6 @@
 /**
- * 文件 转 FormData
- * @param file 文件
+ * 将指定文件转换为FormData
+ * @param file 指定文件
  * @returns FormData
  */
 export function file2FormData(file: File) {

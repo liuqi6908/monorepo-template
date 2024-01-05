@@ -2,7 +2,7 @@ const fs = require('node:fs')
 const path = require('node:path')
 const ts = require('typescript')
 
-const esmDir = path.join(__dirname, '..', 'esm')
+const esmDir = path.join(__dirname, '..', 'dist/esm')
 const srcDir = path.join(__dirname, '..', 'src')
 const docsSrcDir = path.join(__dirname, '..', 'docs', 'src')
 const utilJsonPath = path.join(
@@ -68,13 +68,13 @@ async function handler(file, pathArr = []) {
   const docFile = file.replace(/^(.+)\.d.ts$/, '$1')
   const docFilename = `${docFile}.md`
   const manualDocFilename = `${docFile}.doc.md`
-  await updateUtils(pathArr, docFile)
+  updateUtils(pathArr, docFile)
 
   const docTargetDir = path.join(docsSrcDir, ...pathArr)
   if (!fs.existsSync(docTargetDir))
     fs.mkdirSync(docTargetDir, { recursive: true })
-  const docPath = path.join(docsSrcDir, ...pathArr, docFilename)
 
+  const docPath = path.join(docsSrcDir, ...pathArr, docFilename)
   const manualDocPath = path.join(srcDir, ...pathArr, manualDocFilename)
   let manualDoc
   let oldDoc
@@ -84,7 +84,6 @@ async function handler(file, pathArr = []) {
 
   if (docPath && fs.existsSync(docPath))
     oldDoc = fs.readFileSync(docPath).toString()
-
   if (manualDoc)
     return fs.writeFileSync(docPath, manualDoc)
 
@@ -92,8 +91,11 @@ async function handler(file, pathArr = []) {
     .readFileSync(path.join(esmDir, ...pathArr, file))
     .toString()
   const dts = await parseDTS(dtsRaw)
+  if (!dts)
+    return
+
   const newMdContent = buildMarkdownContent(dts)
-  const oldMdContent = oldDoc ? oldDoc.replace(/---[\s\S]+---/, '') : ''
+  const oldMdContent = oldDoc ? oldDoc.replace(/---[\s\S]*?---/, '') : ''
   if (newMdContent.trim() === oldMdContent.trim())
     return
 
@@ -107,7 +109,7 @@ async function handler(file, pathArr = []) {
  * @param {string[]} prefix
  * @param {string} name
  */
-async function updateUtils(prefix, name) {
+function updateUtils(prefix, name) {
   let pointer = utilsJson
   for (let i = 0; i < prefix.length; i++) {
     const name = prefix[i]
@@ -134,16 +136,17 @@ async function updateUtils(prefix, name) {
  * 解析 dts 文件，返回命中的第一个函数信息
  * @param {string} dts
  * @return {Promise<{
- *  name: string;
- *  description: string;
+ *  name: string
+ *  description: string
  *  parameters: {
- *    name: string;
- *    description: string;
- *    type: string;
- *  }[];
- *  returnType: string;
- *  returnComment: string;
- * }>}
+ *    name: string
+ *    description: string
+ *    type: string
+ *    default: string
+ *  }[]
+ *  returnType: string
+ *  returnComment: string
+ * } | undefined>}
  */
 function parseDTS(dts) {
   return new Promise((resolve) => {
@@ -159,15 +162,31 @@ function parseDTS(dts) {
     ts.forEachChild(sourceFile, (node) => {
       if (ts.isFunctionDeclaration(node) && node.name) {
         const name = node.name.text
-        const description = node.jsDoc[0].comment ?? ''
+        const description = node.jsDoc?.[0].comment ?? ''
         const parameters = node.parameters.map((param) => {
           const paramName = param.name.getText(sourceFile)
-          const paramDescription = param.jsDoc?.[0]?.comment ?? ''
-          const type = param.type ? param.type.getText(sourceFile) : 'any'
+          const paramDescription
+            = param.jsDoc?.[0]?.comment
+            ?? node.jsDoc?.[0]?.tags.find(v => (
+              v.tagName.escapedText === 'param' && v.name?.text === paramName
+            ))?.comment
+            ?? ''
+          let type = param.type
+            ? param.type.getText(sourceFile)?.replace('|', '\\|')
+            : 'any'
+          if (param.type && param.questionToken)
+            type += ' \\| undefined'
+          const defaultValue
+            = node.jsDoc?.[0]?.tags.find(v => (
+              v.tagName.escapedText === 'default'
+            ))?.comment.split('\n').map(v => v.split(' '))
+              ?.find(v => v[0] === paramName)?.[1]
+            ?? ''
           return {
             name: paramName,
             description: paramDescription,
             type,
+            default: defaultValue,
           }
         })
         const returnType = node.type?.getText(sourceFile) ?? 'void'
@@ -175,6 +194,7 @@ function parseDTS(dts) {
         resolve({ name, description, parameters, returnType, returnComment })
       }
     })
+    resolve()
   })
 }
 
@@ -186,57 +206,36 @@ function buildMarkdownContent(dts) {
   let md = ''
   const { name, description, parameters, returnType, returnComment } = dts
 
-  md += `## 方法说明（${name}）\n`
+  md += `# ${name}\n\n`
+    + '## 方法说明\n\n'
+    + `${description}\n\n`
+    + '## 参数\n\n'
 
-  md += description
-
-  md += '\n'
-
-  md += '## 参数\n'
-  md += '\n'
-
-  const table
-    = '| 参数名 | 类型 | 描述 |\n'
-    + `| --- | --- | --- |\n${
+  const table = '| 参数名 | 类型 | 描述 | 默认值 |\n'
+    + `| --- | --- | --- | --- |\n${
      parameters
       .map((param) => {
-        return `| ${param.name} | \`${param.type}\` | ${param.description} |`
+        return `| ${param.name} | \`${param.type}\` | ${param.description} | ${param.default} |`
       })
       .join('\n')}`
 
-  md += table
-
-  md += '\n'
-
-  md += '## 返回值\n'
-  md += '\n'
-
-  md
-    += '| 类型 | 描述 |\n'
+  md += `${table}\n\n`
+    + '## 返回值\n\n'
+    + '| 类型 | 描述 |\n'
     + '| --- | --- |\n'
-    + `| \`${returnType.replace(/\|/g, '\\|')}\` | ${returnComment.replace(
-      /\|/g,
-      '\\|',
-    )} |`
-
-  md += '\n'
+    + `| \`${returnType.replace(/\|/g, '\\|')}\` | `
+    + `${returnComment.replace(/\|/g, '\\|')} |\n`
 
   return md
 }
 
 function buildMarkdownConfig(dts) {
-  let md = ''
-  const { name, description } = dts
+  const { description } = dts
   const descriptionFirstLine = description.split('\n')[0]
-  const config
-    = '---\n'
-    + `title: ${name}\n`
+  return '---\n'
     + `description: ${descriptionFirstLine}\n`
     + 'outline: deep\n'
     + '---\n'
-
-  md += config
-  return md
 }
 
 async function main() {

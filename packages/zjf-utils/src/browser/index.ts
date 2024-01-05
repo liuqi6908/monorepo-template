@@ -1,2 +1,2 @@
 export * from './download'
-export * from './readFile'
+export * from './file'

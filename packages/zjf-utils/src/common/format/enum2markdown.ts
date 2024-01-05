@@ -1,5 +1,5 @@
 /**
- * 枚举值转Markdown文本
+ * 枚举值 转 Markdown文本
  * @param obj 需要转换的对象
  * @returns 转换后的字符串
  */

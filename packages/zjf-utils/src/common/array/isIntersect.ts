@@ -15,14 +15,3 @@ export function hasIntersection(arr1: any[], arr2: any[]) {
 
   return false
 }
-
-/**
- * 展开数组
- * @param arr 任意二维数组
- * @returns 展开后的数组
- */
-export function expandArray(arr: any[][]) {
-  if (Array.isArray(arr))
-    return arr.reduce((a, b) => a.concat(b), [])
-  return []
-}

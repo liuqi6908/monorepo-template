@@ -2,7 +2,7 @@
 export const FILE_SIZE_UNITS = ['B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
 /**
- * 格式化文件大小
+ * 格式化文件尺寸大小
  * @param bytes 文件大小
  * @returns 格式化后的字符串 `1024 MB`
  */

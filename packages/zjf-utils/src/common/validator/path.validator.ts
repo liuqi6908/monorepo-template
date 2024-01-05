@@ -1,6 +1,6 @@
 /**
  * 校验路径并修复其中的错误
- * @param url 路径
+ * @param url 待校验的路径
  * @return 修复后的路径（去除重复的 `/`）
  */
 export function validatePath(url: string) {

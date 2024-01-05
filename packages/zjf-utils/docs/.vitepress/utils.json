@@ -4,7 +4,25 @@
     "items": [
       {
         "text": "download",
-        "link": "/browser/download"
+        "items": [
+          {
+            "text": "downloadCsv",
+            "link": "/browser/download/downloadCsv"
+          },
+          {
+            "text": "downloadUrl",
+            "link": "/browser/download/downloadUrl"
+          }
+        ]
+      },
+      {
+        "text": "file",
+        "items": [
+          {
+            "text": "readFile",
+            "link": "/browser/file/readFile"
+          }
+        ]
       }
     ]
   },
@@ -12,16 +30,105 @@
     "text": "common",
     "items": [
       {
-        "text": "camel2dash",
-        "link": "/common/camel2dash"
+        "text": "array",
+        "items": [
+          {
+            "text": "expandArray",
+            "link": "/common/array/expandArray"
+          },
+          {
+            "text": "isIntersect",
+            "link": "/common/array/isIntersect"
+          }
+        ]
       },
       {
-        "text": "dash2camel",
-        "link": "/common/dash2camel"
+        "text": "base64",
+        "items": [
+          {
+            "text": "decode",
+            "link": "/common/base64/decode"
+          },
+          {
+            "text": "encode",
+            "link": "/common/base64/encode"
+          }
+        ]
+      },
+      {
+        "text": "file",
+        "items": [
+          {
+            "text": "file2FormData",
+            "link": "/common/file/file2FormData"
+          },
+          {
+            "text": "formatFileSize",
+            "link": "/common/file/formatFileSize"
+          },
+          {
+            "text": "isCompressed",
+            "link": "/common/file/isCompressed"
+          },
+          {
+            "text": "isUTF8",
+            "link": "/common/file/isUTF8"
+          }
+        ]
+      },
+      {
+        "text": "format",
+        "items": [
+          {
+            "text": "camel2dash",
+            "link": "/common/format/camel2dash"
+          },
+          {
+            "text": "dash2camel",
+            "link": "/common/format/dash2camel"
+          },
+          {
+            "text": "enum2markdown",
+            "link": "/common/format/enum2markdown"
+          }
+        ]
+      },
+      {
+        "text": "info",
+        "link": "/common/info"
+      },
+      {
+        "text": "md5",
+        "link": "/common/md5"
+      },
+      {
+        "text": "object",
+        "items": [
+          {
+            "text": "hashObject",
+            "link": "/common/object/hashObject"
+          },
+          {
+            "text": "omit",
+            "link": "/common/object/omit"
+          },
+          {
+            "text": "pick",
+            "link": "/common/object/pick"
+          }
+        ]
       },
       {
         "text": "parser",
         "items": [
+          {
+            "text": "decryptPassword",
+            "link": "/common/parser/decryptPassword"
+          },
+          {
+            "text": "encryptPassword",
+            "link": "/common/parser/encryptPassword"
+          },
           {
             "text": "parseBoolRaw",
             "link": "/common/parser/parseBoolRaw"
@@ -46,8 +153,33 @@
         "link": "/common/sleep"
       },
       {
-        "text": "validatePath",
-        "link": "/common/validatePath"
+        "text": "validator",
+        "items": [
+          {
+            "text": "account.validator",
+            "link": "/common/validator/account.validator"
+          },
+          {
+            "text": "email.validator",
+            "link": "/common/validator/email.validator"
+          },
+          {
+            "text": "password.validator",
+            "link": "/common/validator/password.validator"
+          },
+          {
+            "text": "path.validator",
+            "link": "/common/validator/path.validator"
+          },
+          {
+            "text": "phone.validator",
+            "link": "/common/validator/phone.validator"
+          },
+          {
+            "text": "string.validator",
+            "link": "/common/validator/string.validator"
+          }
+        ]
       }
     ]
   }

@@ -11,7 +11,7 @@ export default defineConfig({
   title: 'ZJF Utils',
   description: 'Utils of zjf system',
   srcDir: 'src',
-  head: [['link', { rel: 'icon', href: `${base}logo.svg` }]],
+  head: [['link', { rel: 'icon', href: `${base}public/logo.svg` }]],
   themeConfig: {
     logo: '/logo.svg',
     // https://vitepress.dev/reference/default-theme-config
@@ -28,7 +28,7 @@ export default defineConfig({
         link: '/contribute',
       },
       {
-        text: 'Roadmap',
+        text: '待办事项',
         link: '/roadmap',
       },
     ],
@@ -36,7 +36,7 @@ export default defineConfig({
     socialLinks: [
       {
         icon: 'github',
-        link: 'https://codeup.aliyun.com/62cea2b83e81781f3ad23a2f/r.qiyandata.com/ssdp',
+        link: 'https://codeup.aliyun.com/62cea2b83e81781f3ad23a2f/zjf-irc/zjf-irc',
       },
     ],
   },

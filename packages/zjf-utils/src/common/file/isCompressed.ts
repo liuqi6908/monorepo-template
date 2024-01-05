@@ -1,6 +1,7 @@
 /**
- * 判断是否为压缩文件
+ * 判断指定文件是否为压缩文件
  * @param file 待判断的文件
+ * @returns 是否为压缩文件
  */
 export function isCompressedFile(file: File) {
   const { type, name } = file
