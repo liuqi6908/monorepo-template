@@ -1,8 +1,7 @@
-import process from 'node:process'
 import { defineConfig } from 'vitepress'
 import utilStructure from './utils.json'
 
-const base = process.env.NODE_ENV === 'production' ? '/r/v3/utils/docs/' : '/'
+const base = '/'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -11,7 +10,7 @@ export default defineConfig({
   title: 'ZJF Utils',
   description: 'Utils of zjf system',
   srcDir: 'src',
-  head: [['link', { rel: 'icon', href: `${base}public/logo.svg` }]],
+  head: [['link', { rel: 'icon', href: `${base}logo.svg` }]],
   themeConfig: {
     logo: '/logo.svg',
     // https://vitepress.dev/reference/default-theme-config
