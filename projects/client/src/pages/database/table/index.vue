@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import type { QTableProps } from 'quasar'
 import { DesktopQueueStatus, MinioBucket } from 'zjf-types'
-import { downloadUrl, pick } from 'zjf-utils'
+import { browser, pick } from 'zjf-utils'
 import type { IDataDirectory } from 'zjf-types'
 import Purchase from '~/views/database/Purchase.dialog.vue'
 
@@ -148,7 +148,7 @@ async function downloadData() {
   if (!tableId.value)
     return
   const url = await getTableDownloadLinkApi(tableId.value)
-  downloadUrl(url, `${tableName.value?.nameZH}.zip` ?? '')
+  browser.downloadUrl(url, `${tableName.value?.nameZH}.zip` ?? '')
 }
 </script>
 

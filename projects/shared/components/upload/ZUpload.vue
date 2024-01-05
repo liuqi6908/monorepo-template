@@ -3,7 +3,7 @@ import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
 import { QFile } from 'quasar'
 import type { QFileProps } from 'quasar'
-import { readFileAsDataURL } from 'zjf-utils'
+import { browser } from 'zjf-utils'
 import ZBtn from '../btn/ZBtn.vue'
 import { onRejected } from '../../utils/uploadFile'
 
@@ -127,7 +127,7 @@ function deleteFile(index: number) {
           :key="index"
           relative
         >
-          <img :src="readFileAsDataURL(file)" w16 h16 />
+          <img :src="browser.readFileAsDataURL(file)" w16 h16 />
           <div
             h6 w6 cursor-pointer flex-center
             bg="black/30" hover:bg="black/40"
