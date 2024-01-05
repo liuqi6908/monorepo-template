@@ -22,7 +22,7 @@
     "build": "concurrently \"npm run build:esm\" \"npm run build:cjs\" \"npm run build:docs\"",
     "build:esm": "rimraf dist/esm && tsc -p \"tsconfig.json\"",
     "build:cjs": "rimraf dist/cjs && tsc -p \"tsconfig.cjs.json\"",
-    "build:docs": "node ./scripts/auto-create-docs.js && npm run docs:build"
+    "build:docs": "npm run docs:build"
   },
   "devDependencies": {
     "@types/blueimp-md5": "^2.18.0",
