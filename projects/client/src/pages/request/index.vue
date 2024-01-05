@@ -5,6 +5,7 @@ import Request from '~/views/request/request/index.vue'
 import Desktop from '~/views/request/desktop/index.vue'
 
 const { isLogin, isVerify, verifyStatus, getOwnProfile, getVerify } = useUser()
+const { nav } = useSysConfig()
 
 /** 加载中 */
 const loading = ref(false)
@@ -28,7 +29,7 @@ onBeforeMount(async () => {
 
 <template>
   <div>
-    <Banner :img="bg" title="申请云桌面" />
+    <Banner :img="bg" :title="nav?.requestDesc" />
     <div relative min-h-100>
       <ZLoading :value="loading" />
       <!-- 未登录 / 未认证 -->

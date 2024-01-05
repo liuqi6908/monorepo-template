@@ -442,7 +442,6 @@ declare module 'vue' {
     readonly API_BASE_URL: UnwrapRef<typeof import('../../shared/constants/app')['API_BASE_URL']>
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']>
-    readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client')['CLIENT_MENU_LIST']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
@@ -866,7 +865,6 @@ declare module '@vue/runtime-core' {
     readonly API_BASE_URL: UnwrapRef<typeof import('../../shared/constants/app')['API_BASE_URL']>
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']>
-    readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client')['CLIENT_MENU_LIST']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>

@@ -3,13 +3,14 @@ import bg from '~/assets/bg/user.webp'
 import HomeLayout from './home.vue'
 
 const $route = useRoute()
+const { nav } = useSysConfig()
 
 const value = computed(() => $route.path)
 </script>
 
 <template>
   <HomeLayout layout>
-    <Banner text-grey-1 :img="bg" title="用户中心" />
+    <Banner text-grey-1 :img="bg" :title="nav?.homeDesc" />
     <div pb20>
       <div w-limited-1 flex="~ gap4" sm="gap6" lg="gap8" xl="gap10">
         <div pt10>

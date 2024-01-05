@@ -8,6 +8,8 @@ export interface IConfigDto {
     name?: string
     /** 应用图标 */
     icon?: string
+    /** 应用英文名称 */
+    nameEn?: string
   }
 
   /** 云桌面申请配置 */
@@ -32,6 +34,26 @@ export interface IConfigDto {
     sizeLimitLg?: number
     /** 小文件每日外发限制 */
     dailyLimit?: number
+  }
+
+  /** 首页导航栏配置 */
+  [SysConfig.NAV]?: {
+    /** 首页标签 */
+    homeLabel?: string
+    /** 首页描述 */
+    homeDesc?: string
+    /** 数据库标签 */
+    databaseLabel?: string
+    /** 数据库描述 */
+    databaseDesc?: string
+    /** 常见问题标签 */
+    questionLabel?: string
+    /** 常见问题描述 */
+    questionDesc?: string
+    /** 申请使用标签 */
+    requestLabel?: string
+    /** 申请使用描述 */
+    requestDesc?: string
   }
 
   /** 身份认证上传配置 */

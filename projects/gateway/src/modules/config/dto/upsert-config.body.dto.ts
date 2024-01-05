@@ -2,6 +2,7 @@ import { ApiPropertyOptional } from '@nestjs/swagger'
 import {
   APP_ICON,
   APP_NAME,
+  APP_NAME_EN,
   DESKTOP_REQUEST_DURATION_OPTION,
   DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
   DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
@@ -10,6 +11,14 @@ import {
   EXPORT_DFT_LG_SIZE_LIMIT,
   EXPORT_DFT_SM_DAILY_LIMIT,
   EXPORT_DFT_SM_SIZE_LIMIT,
+  NAV_DATABASE_DESC,
+  NAV_DATABASE_LABEL,
+  NAV_HOME_DESC,
+  NAV_HOME_LABEL,
+  NAV_QUESTION_DESC,
+  NAV_QUESTION_LABEL,
+  NAV_REQUEST_DESC,
+  NAV_REQUEST_LABEL,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
   UPLOAD_WORK_HINT,
@@ -31,6 +40,7 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
     example: {
       name: APP_NAME,
       icon: APP_ICON,
+      nameEn: APP_NAME_EN,
     },
   })
   app?: IConfigDto[SysConfig.APP]
@@ -56,6 +66,21 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
     },
   })
   export?: IConfigDto[SysConfig.EXPORT]
+
+  @ApiPropertyOptional({
+    description: '首页导航栏配置',
+    example: {
+      homeLabel: NAV_HOME_LABEL,
+      homeDesc: NAV_HOME_DESC,
+      databaseLabel: NAV_DATABASE_LABEL,
+      databaseDesc: NAV_DATABASE_DESC,
+      questionLabel: NAV_QUESTION_LABEL,
+      questionDesc: NAV_QUESTION_DESC,
+      requestLabel: NAV_REQUEST_LABEL,
+      requestDesc: NAV_REQUEST_DESC,
+    },
+  })
+  nav?: IConfigDto[SysConfig.NAV]
 
   @ApiPropertyOptional({
     description: '身份认证上传配置',

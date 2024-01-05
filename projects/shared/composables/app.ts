@@ -3,6 +3,7 @@ import { isClient } from '@vueuse/core'
 import {
   APP_ICON,
   APP_NAME,
+  APP_NAME_EN,
   DESKTOP_REQUEST_DURATION_OPTION,
   DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
   DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
@@ -11,6 +12,14 @@ import {
   EXPORT_DFT_LG_SIZE_LIMIT,
   EXPORT_DFT_SM_DAILY_LIMIT,
   EXPORT_DFT_SM_SIZE_LIMIT,
+  NAV_DATABASE_DESC,
+  NAV_DATABASE_LABEL,
+  NAV_HOME_DESC,
+  NAV_HOME_LABEL,
+  NAV_QUESTION_DESC,
+  NAV_QUESTION_LABEL,
+  NAV_REQUEST_DESC,
+  NAV_REQUEST_LABEL,
   SysConfig,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
@@ -29,6 +38,8 @@ const app = ref<IConfigDto[SysConfig.APP]>()
 const desktop = ref<IConfigDto[SysConfig.DESKTOP]>()
 /** 外发配置 */
 const fileExport = ref<IConfigDto[SysConfig.EXPORT]>()
+/** 首页导航栏配置 */
+const nav = ref<IConfigDto[SysConfig.NAV]>()
 /** 身份认证上传配置 */
 const verification = ref<IConfigDto[SysConfig.VERIFICATION]>()
 /** 上传作品配置 */
@@ -41,10 +52,11 @@ export function useSysConfig() {
   async function getAppConfig(useCache = true) {
     if (useCache && app.value)
       return
-    const { name = APP_NAME, icon = APP_ICON } = await getConfigApi(SysConfig.APP) || {}
+    const { name = APP_NAME, icon = APP_ICON, nameEn = APP_NAME_EN } = await getConfigApi(SysConfig.APP) || {}
     app.value = {
       name,
       icon,
+      nameEn,
     }
   }
 
@@ -85,6 +97,34 @@ export function useSysConfig() {
       sizeLimitSm,
       sizeLimitLg,
       dailyLimit,
+    }
+  }
+
+  /**
+   * 获取首页导航栏
+   */
+  async function getNavConfig(useCache = true) {
+    if (useCache && nav.value)
+      return
+    const {
+      homeLabel = NAV_HOME_LABEL,
+      homeDesc = NAV_HOME_DESC,
+      databaseLabel = NAV_DATABASE_LABEL,
+      databaseDesc = NAV_DATABASE_DESC,
+      questionLabel = NAV_QUESTION_LABEL,
+      questionDesc = NAV_QUESTION_DESC,
+      requestLabel = NAV_REQUEST_LABEL,
+      requestDesc = NAV_REQUEST_DESC,
+    } = await getConfigApi(SysConfig.NAV) || {}
+    nav.value = {
+      homeLabel,
+      homeDesc,
+      databaseLabel,
+      databaseDesc,
+      questionLabel,
+      questionDesc,
+      requestLabel,
+      requestDesc,
     }
   }
 
@@ -135,11 +175,13 @@ export function useSysConfig() {
     app,
     desktop,
     fileExport,
+    nav,
     verification,
     works,
     getAppConfig,
     getDesktopConfig,
     getFileExportConfig,
+    getNavConfig,
     getVerificationConfig,
     getWorkConfig,
     isAdmin,

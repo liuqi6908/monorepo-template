@@ -1,12 +1,36 @@
 <script lang="ts" setup>
+const { nav, getNavConfig } = useSysConfig()
+
 const value = ref<string>()
+
+/** 导航栏列表 */
+const navList = computed(() => [
+  {
+    name: nav.value?.homeLabel,
+    to: '/home',
+  },
+  {
+    name: nav.value?.databaseLabel,
+    to: '/database',
+  },
+  {
+    name: nav.value?.questionLabel,
+    to: '/question',
+  },
+  {
+    name: nav.value?.requestLabel,
+    to: '/request',
+  },
+])
+
+onBeforeMount(getNavConfig)
 </script>
 
 <template>
   <div flex="~ justify-center" b-b="1px grey-3">
     <q-tabs class="client-menu" v-model="value">
       <q-route-tab
-        v-for="item in CLIENT_MENU_LIST"
+        v-for="item in navList"
         :key="item.to"
         :to="item.to"
         px8 opacity100

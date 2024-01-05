@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 interface BannerProps {
   img: string
-  title: string
+  title?: string
 }
 
 defineProps<BannerProps>()

@@ -24,8 +24,10 @@ const { app } = useSysConfig()
         @click="$router.push('/')"
       >
         <h2 v-text="app?.name" />
-        <div w3px h8 bg-grey-1 />
-        <div text-lg v-text="'CloudResearch'" />
+        <template v-if="app?.nameEn">
+          <div w3px h8 bg-grey-1 />
+          <div text-lg v-text="app.nameEn" />
+        </template>
       </div>
     </div>
     <div flex-center w-full lg="max-w-160" xl="max-w-210">

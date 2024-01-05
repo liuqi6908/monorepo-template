@@ -3,6 +3,7 @@ import type { CmsJson } from 'shared/types/cms.interface'
 import bg from '~/assets/bg/question.webp'
 
 const { getCms, getComponentById } = useCms()
+const { nav } = useSysConfig()
 
 /** 加载中 */
 const loading = ref(false)
@@ -24,7 +25,7 @@ onBeforeMount(async () => {
 
 <template>
   <div>
-    <Banner :img="bg" title="常见问题解答(Q&A)" />
+    <Banner :img="bg" :title="nav?.questionDesc" />
     <div relative min-h-100>
       <ZLoading :value="loading" />
       <component
