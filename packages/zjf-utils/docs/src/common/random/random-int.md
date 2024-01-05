@@ -1,5 +1,4 @@
 ---
-title: randomInt
 description: 生成指定区间内的随机整数
 outline: deep
 ---
@@ -14,8 +13,8 @@ outline: deep
 
 | 参数名 | 类型 | 描述 | 默认值 |
 | --- | --- | --- | --- |
-| start | `number \| undefined` | 最小值 |  |
-| end | `number \| undefined` | 最大值 |  |
+| start | `number \| undefined` | 最小值 | 0 |
+| end | `number \| undefined` | 最大值 | 100 |
 
 ## 返回值
 

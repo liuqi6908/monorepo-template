@@ -179,7 +179,7 @@ function parseDTS(dts) {
           const defaultValue
             = node.jsDoc?.[0]?.tags.find(v => (
               v.tagName.escapedText === 'default'
-            ))?.comment.split('\n').map(v => v.split(' '))
+            ))?.comment.split('\n').map(v => v.trim().split(' '))
               ?.find(v => v[0] === paramName)?.[1]
             ?? ''
           return {
