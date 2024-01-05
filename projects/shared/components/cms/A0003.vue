@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { ref } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
-import type { CmsJson } from '../../../types/cms.interface'
+import type { CmsJson } from '../../types/cms.interface'
 
 defineProps<{
   list?: CmsJson[]
@@ -25,7 +25,7 @@ useResizeObserver(flexBox, ([{ contentRect, target }]) => {
 
 <template>
   <div
-    class="home-footer"
+    class="A0003"
     text-grey-1 bg="#001020"
     py36
   >
@@ -54,7 +54,7 @@ useResizeObserver(flexBox, ([{ contentRect, target }]) => {
 </template>
 
 <style lang="scss">
-.home-footer {
+.A0003 {
   img {
     display: inline;
   }

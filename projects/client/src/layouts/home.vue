@@ -9,7 +9,7 @@ const { userInfo, getOwnProfile, isLogin } = useUser()
 /** 设置密码对话框 */
 const dialog = ref(false)
 
-onMounted(async () => {
+onBeforeMount(async () => {
   if (isLogin.value) {
     await getOwnProfile()
     if ($route.name === 'home' && !userInfo.value?.password)

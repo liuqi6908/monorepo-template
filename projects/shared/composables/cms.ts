@@ -1,6 +1,6 @@
 import { ref } from 'vue'
 import type { ICms } from 'zjf-types'
-import { CMS_CONFIG } from '../constants/cms'
+import { CMS_COMPONENTS, CMS_CONFIG } from '../constants/cms'
 import { getCmsApi } from '../api/cms'
 import type { CmsJson } from '../types/cms.interface'
 
@@ -17,8 +17,15 @@ export function useCms() {
   /**
    * 根据 Cms id 获取组件
    */
-  function getComponentById(id: string) {
-    return CMS_CONFIG.find(v => v.id === id)?.component
+  function getComponentById(id?: string) {
+    if (!id)
+      return
+
+    const cms = CMS_CONFIG.find(v => v.id === id)
+    if (cms && typeof cms.component === 'string')
+      return CMS_COMPONENTS[cms.component].component
+    else
+      return CMS_COMPONENTS[id as any]?.component
   }
 
   /**

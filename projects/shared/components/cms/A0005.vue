@@ -2,10 +2,10 @@
 import { ref, computed, onMounted, nextTick } from 'vue'
 import { useElementSize, isClient } from '@vueuse/core'
 import { useRouteQuery } from '@vueuse/router'
-import ZMenu from '../../menu/ZMenu.vue'
-import type { CmsJson } from '../../../types/cms.interface'
-import { RichTextProcessor } from '../../../utils/richText'
-import { useSysConfig } from '../../../composables/app'
+import ZMenu from '../menu/ZMenu.vue'
+import type { CmsJson } from '../../types/cms.interface'
+import { RichTextProcessor } from '../../utils/richText'
+import { useSysConfig } from '../../composables/app'
 
 const props = defineProps<{
   list?: CmsJson[]
@@ -59,6 +59,7 @@ function scroll(id?: number) {
 
 <template>
   <div
+    class="A0006"
     w-limited-1 p="t10 b20"
     flex="~ gap2" sm="gap4" lg="gap6"
     xl="gap8"

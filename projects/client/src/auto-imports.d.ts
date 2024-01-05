@@ -12,6 +12,7 @@ declare global {
   const APP_MIN_WIDTH: typeof import('../../shared/constants/app')['APP_MIN_WIDTH']
   const AUTH_TOKEN_KEY: typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']
   const CLIENT_MENU_LIST: typeof import('./constants/client')['CLIENT_MENU_LIST']
+  const CMS_COMPONENTS: typeof import('../../shared/constants/cms')['CMS_COMPONENTS']
   const CMS_CONFIG: typeof import('../../shared/constants/cms')['CMS_CONFIG']
   const EXPORT_MENU: typeof import('./constants/export')['EXPORT_MENU']
   const EffectScope: typeof import('vue')['EffectScope']
@@ -442,6 +443,7 @@ declare module 'vue' {
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client')['CLIENT_MENU_LIST']>
+    readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
@@ -865,6 +867,7 @@ declare module '@vue/runtime-core' {
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CLIENT_MENU_LIST: UnwrapRef<typeof import('./constants/client')['CLIENT_MENU_LIST']>
+    readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>

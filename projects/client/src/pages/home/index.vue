@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import type { CmsJson } from 'shared/types/cms.interface'
 
-const { getCms } = useCms()
+const { getCms, getComponentById } = useCms()
 
 /** 加载中 */
 const loading = ref(false)
 /** 首页 CMS 内容 */
-const cmsList = reactive(CMS_CONFIG.filter(v => v.id.includes('home')).map((v) => {
+const cmsList = reactive(CMS_CONFIG.filter((_, i) => i < 2).map((v) => {
   const { id, component } = v
   return {
     id,
@@ -14,15 +14,18 @@ const cmsList = reactive(CMS_CONFIG.filter(v => v.id.includes('home')).map((v) =
     props: [] as CmsJson[] | undefined,
   }
 }))
+/** 首页拓展参数 */
+const expandProps = ref<CmsJson[]>()
 /** 问答管理参数 */
 const questionProps = ref<CmsJson[]>()
 
-onMounted(async () => {
+onBeforeMount(async () => {
   loading.value = true
   try {
     cmsList.forEach(async (item) => {
       item.props = await getCms(item.id, true)
     })
+    expandProps.value = await getCms('homeExpand', true)
     questionProps.value = await getCms('question', true)
   }
   finally {
@@ -32,14 +35,22 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div relative>
+  <div relative flex="~ col gap20">
     <ZLoading :value="loading" />
 
     <component
-      :is="item.component"
+      :is="getComponentById(item.id)"
       v-for="item in cmsList"
       :key="item.id"
       :list="item.props"
+    />
+
+    <!-- 首页拓展 -->
+    <component
+      :is="getComponentById(item.componentId)"
+      v-for="(item, index) in expandProps"
+      :key="index"
+      :list="[item]"
     />
 
     <!-- 常见问题 -->

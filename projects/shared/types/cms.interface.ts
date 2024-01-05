@@ -3,12 +3,26 @@ import type { Component } from 'vue'
 /**
  * Cms 配置参数
  */
-export type CmsConfigParam = 'title' | 'img' | 'svg' | 'richText' | 'delete' | 'sort' | 'add'
+export type CmsConfigParam = 'list' | 'title' | 'img' | 'svg' | 'mask' | 'richText'
+
+/**
+ * Cms 组件
+ */
+export type CmsComponent = Record<
+  `A${number}${number}${number}${number}`,
+  {
+    label: string
+    component: Component
+    param: CmsConfigParam[]
+  }
+>
 
 /**
  * Cms Json
  */
-export type CmsJson = Partial<Record<CmsConfigParam, string>>
+export type CmsJson = Partial<Record<CmsConfigParam, string>> & {
+  componentId?: keyof CmsComponent
+}
 
 /**
  * Cms 配置
@@ -16,7 +30,5 @@ export type CmsJson = Partial<Record<CmsConfigParam, string>>
 export interface CmsConfig {
   id: string
   label: string
-  component: Component
-  param: CmsConfigParam[]
-  rows: CmsJson[]
+  component: keyof CmsComponent | true
 }

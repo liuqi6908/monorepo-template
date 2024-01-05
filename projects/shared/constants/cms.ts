@@ -1,5 +1,46 @@
 import { defineAsyncComponent, markRaw } from 'vue'
-import type { CmsConfig } from '../types/cms.interface'
+import type { CmsComponent, CmsConfig } from '../types/cms.interface'
+
+/**
+ * CMS 组件
+ */
+export const CMS_COMPONENTS: CmsComponent = {
+  A0001: {
+    label: '轮播图',
+    component: markRaw(
+      defineAsyncComponent(() => import('../components/cms/A0001.vue')),
+    ),
+    param: ['list', 'title', 'img', 'mask', 'richText'],
+  },
+  A0002: {
+    label: '图片+文本',
+    component: markRaw(
+      defineAsyncComponent(() => import('../components/cms/A0002.vue')),
+    ),
+    param: ['title', 'img', 'richText'],
+  },
+  A0003: {
+    label: '页脚',
+    component: markRaw(
+      defineAsyncComponent(() => import('../components/cms/A0003.vue')),
+    ),
+    param: ['list', 'title', 'richText'],
+  },
+  A0004: {
+    label: '富文本',
+    component: markRaw(
+      defineAsyncComponent(() => import('../components/cms/A0004.vue')),
+    ),
+    param: ['richText'],
+  },
+  A0005: {
+    label: '常见问题',
+    component: markRaw(
+      defineAsyncComponent(() => import('../components/cms/A0005.vue')),
+    ),
+    param: ['list', 'title', 'svg', 'richText'],
+  },
+}
 
 /**
  * CMS 配置
@@ -8,55 +49,31 @@ export const CMS_CONFIG: CmsConfig[] = [
   {
     id: 'homeCarousel',
     label: '首页轮播图',
-    component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/home/Carousel.vue')),
-    ),
-    param: ['title', 'img', 'richText', 'delete', 'sort', 'add'],
-    rows: [],
+    component: 'A0001',
   },
   {
-    id: 'homePlatformIntroduce',
+    id: 'platformIntroduce',
     label: '平台介绍',
-    component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/home/PlatformIntroduce.vue')),
-    ),
-    param: ['title', 'richText'],
-    rows: [{ title: '', richText: '' }],
+    component: 'A0002',
   },
   {
-    id: 'homeContent',
-    label: '首页内容',
-    component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/home/Content.vue')),
-    ),
-    param: ['richText', 'delete', 'sort', 'add'],
-    rows: [{ richText: '' }],
-  },
-  {
-    id: 'footer',
-    label: '联系方式',
-    component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/home/Footer.vue')),
-    ),
-    param: ['title', 'richText', 'delete', 'sort', 'add'],
-    rows: [],
+    id: 'homeExpand',
+    label: '首页拓展',
+    component: true,
   },
   {
     id: 'question',
     label: '问答管理',
-    component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/question/Question.vue')),
-    ),
-    param: ['title', 'svg', 'richText', 'delete', 'sort', 'add'],
-    rows: [],
+    component: 'A0005',
+  },
+  {
+    id: 'footer',
+    label: '页脚管理',
+    component: 'A0003',
   },
   {
     id: 'uploadDescribe',
     label: '数据上传说明',
-    component: markRaw(
-      defineAsyncComponent(() => import('../components/cms/userCenter/UploadDescribe.vue')),
-    ),
-    param: ['richText'],
-    rows: [{ richText: '' }],
+    component: 'A0004',
   },
 ]

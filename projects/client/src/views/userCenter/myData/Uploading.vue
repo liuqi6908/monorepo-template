@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { CmsJson } from 'shared/types/cms.interface'
 
-const { getCms, getComponentById } = useCms()
+const { getCms } = useCms()
 
 /** 加载中 */
 const loading = ref(false)
@@ -22,11 +22,9 @@ onBeforeMount(async () => {
 </script>
 
 <template>
-  <div relative min-h-100>
+  <div relative min-h-60>
     <ZLoading :value="loading" />
-    <component
-      :is="getComponentById(id)"
-      :list="uploadProps"
-    />
+    <Empty v-if="!uploadProps?.[0]?.richText" label="管理员正在配置中" />
+    <div v-else v-html="uploadProps?.[0]?.richText" />
   </div>
 </template>
