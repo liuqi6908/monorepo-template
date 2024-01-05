@@ -1,7 +1,8 @@
+import process from 'node:process'
 import { defineConfig } from 'vitepress'
 import utilStructure from './utils.json'
 
-const base = '/'
+const base = process.env.NODE_ENV === 'production' ? '/utils/docs/' : '/'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
