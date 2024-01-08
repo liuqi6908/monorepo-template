@@ -1,5 +1,4 @@
 ---
-title: base64Encode
 description: base64编码
 outline: deep
 ---

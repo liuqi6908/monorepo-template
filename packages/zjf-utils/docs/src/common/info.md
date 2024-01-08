@@ -1,5 +1,4 @@
 ---
-title: hideSensitiveInfo
 description: 隐藏敏感信息
 outline: deep
 ---

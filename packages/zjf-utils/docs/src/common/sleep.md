@@ -1,5 +1,4 @@
 ---
-title: sleep
 description: 使用 Promise 封装 setTimeout，使其支持 async/await
 outline: deep
 ---

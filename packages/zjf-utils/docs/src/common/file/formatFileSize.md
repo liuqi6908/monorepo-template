@@ -1,5 +1,4 @@
 ---
-title: formatFileSize
 description: 格式化文件尺寸大小
 outline: deep
 ---

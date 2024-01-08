@@ -74,6 +74,12 @@ importers:
       blueimp-md5:
         specifier: ^2.19.0
         version: registry.npmmirror.com/blueimp-md5@2.19.0
+      jsencrypt:
+        specifier: ^3.3.2
+        version: registry.npmmirror.com/jsencrypt@3.3.2
+      node-rsa:
+        specifier: ^1.1.1
+        version: registry.npmmirror.com/node-rsa@1.1.1
     devDependencies:
       '@types/blueimp-md5':
         specifier: ^2.18.0
@@ -81,6 +87,9 @@ importers:
       '@types/node':
         specifier: 18.16.18
         version: registry.npmmirror.com/@types/node@18.16.18
+      '@types/node-rsa':
+        specifier: ^1.1.4
+        version: registry.npmmirror.com/@types/node-rsa@1.1.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.0.0
         version: registry.npmmirror.com/@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.56.0)(typescript@5.3.3)
@@ -548,6 +557,9 @@ importers:
       mysql2:
         specifier: ^3.5.2
         version: registry.npmmirror.com/mysql2@3.5.2
+      node-rsa:
+        specifier: ^1.1.1
+        version: registry.npmmirror.com/node-rsa@1.1.1
       nodemailer:
         specifier: ^6.9.4
         version: registry.npmmirror.com/nodemailer@6.9.4
@@ -612,6 +624,9 @@ importers:
       '@types/node':
         specifier: 18.16.18
         version: registry.npmmirror.com/@types/node@18.16.18
+      '@types/node-rsa':
+        specifier: ^1.1.4
+        version: registry.npmmirror.com/@types/node-rsa@1.1.4
       '@types/nodemailer':
         specifier: ^6.4.9
         version: registry.npmmirror.com/@types/nodemailer@6.4.9
@@ -675,6 +690,9 @@ importers:
       axios:
         specifier: ^1.4.0
         version: registry.npmmirror.com/axios@1.4.0
+      jsencrypt:
+        specifier: ^3.3.2
+        version: registry.npmmirror.com/jsencrypt@3.3.2
       quasar:
         specifier: ^2.12.3
         version: registry.npmmirror.com/quasar@2.12.3
@@ -4122,6 +4140,14 @@ packages:
     version: 0.7.34
     dev: true
 
+  registry.npmmirror.com/@types/node-rsa@1.1.4:
+    resolution: {integrity: sha512-dB0ECel6JpMnq5ULvpUTunx3yNm8e/dIkv8Zu9p2c8me70xIRUUG3q+qXRwcSf9rN3oqamv4116iHy90dJGRpA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node-rsa/-/node-rsa-1.1.4.tgz}
+    name: '@types/node-rsa'
+    version: 1.1.4
+    dependencies:
+      '@types/node': registry.npmmirror.com/@types/node@18.16.18
+    dev: true
+
   registry.npmmirror.com/@types/node@18.16.18:
     resolution: {integrity: sha512-/aNaQZD0+iSBAGnvvN2Cx92HqE5sZCPZtx2TsK+4nvV23fFe09jVDvpArXr2j9DnYlzuU9WuoykDDc6wqvpNcw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.16.18.tgz}
     name: '@types/node'
@@ -7295,6 +7321,14 @@ packages:
     name: asap
     version: 2.0.6
     dev: true
+
+  registry.npmmirror.com/asn1@0.2.6:
+    resolution: {integrity: sha512-ix/FxPn0MDjeyJ7i/yoHGFt/EX6LyNbxSEhPPXODPL+KB0VPk86UYfL0lMdy+KCnv+fmvIzySwaK5COwqVbWTQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/asn1/-/asn1-0.2.6.tgz}
+    name: asn1
+    version: 0.2.6
+    dependencies:
+      safer-buffer: registry.npmmirror.com/safer-buffer@2.1.2
+    dev: false
 
   registry.npmmirror.com/assert-never@1.2.1:
     resolution: {integrity: sha512-TaTivMB6pYI1kXwrFlEhLeGfOqoDNdTxjCdwRfFFkEA30Eu+k48W34nlok2EYWJfFFzqaEmichdNM7th6M5HNw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/assert-never/-/assert-never-1.2.1.tgz}
@@ -12568,6 +12602,12 @@ packages:
       - utf-8-validate
     dev: true
 
+  registry.npmmirror.com/jsencrypt@3.3.2:
+    resolution: {integrity: sha512-arQR1R1ESGdAxY7ZheWr12wCaF2yF47v5qpB76TtV64H1pyGudk9Hvw8Y9tb/FiTIaaTRUyaSnm5T/Y53Ghm/A==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/jsencrypt/-/jsencrypt-3.3.2.tgz}
+    name: jsencrypt
+    version: 3.3.2
+    dev: false
+
   registry.npmmirror.com/jsesc@0.5.0:
     resolution: {integrity: sha512-uZz5UnB7u4T9LvwmFqXii7pZSouaRPorGs5who1Ip7VO0wxanFvBL7GkM6dTHlgX+jhBApRetaWpnDabOeTcnA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/jsesc/-/jsesc-0.5.0.tgz}
     name: jsesc
@@ -14045,6 +14085,14 @@ packages:
     name: node-releases
     version: 2.0.14
     dev: true
+
+  registry.npmmirror.com/node-rsa@1.1.1:
+    resolution: {integrity: sha512-Jd4cvbJMryN21r5HgxQOpMEqv+ooke/korixNNK3mGqfGJmy0M77WDDzo/05969+OkMy3XW1UuZsSmW9KQm7Fw==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/node-rsa/-/node-rsa-1.1.1.tgz}
+    name: node-rsa
+    version: 1.1.1
+    dependencies:
+      asn1: registry.npmmirror.com/asn1@0.2.6
+    dev: false
 
   registry.npmmirror.com/nodemailer@6.9.4:
     resolution: {integrity: sha512-CXjQvrQZV4+6X5wP6ZIgdehJamI63MFoYFGGPtHudWym9qaEHDNdPzaj5bfMCvxG1vhAileSWW90q7nL0N36mA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/nodemailer/-/nodemailer-6.9.4.tgz}

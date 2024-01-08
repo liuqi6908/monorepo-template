@@ -1,5 +1,4 @@
 ---
-title: isUTF8
 description: 判断文件流是否为utf-8编码
 outline: deep
 ---

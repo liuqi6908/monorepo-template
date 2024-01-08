@@ -1,5 +1,4 @@
 ---
-title: validateAccount
 description: 校验一个账号是否符合要求
 outline: deep
 ---

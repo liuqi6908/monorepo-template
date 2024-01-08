@@ -1,5 +1,4 @@
 ---
-title: file2FormData
 description: 将指定文件转换为FormData
 outline: deep
 ---

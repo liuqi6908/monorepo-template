@@ -1,5 +1,4 @@
 ---
-title: omit
 description: 从对象中移除指定的属性组成新的对象
 outline: deep
 ---

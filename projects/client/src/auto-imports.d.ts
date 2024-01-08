@@ -188,6 +188,8 @@ declare global {
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
   const rolePermissionsToLabel: typeof import('../../shared/utils/rolePermissions')['rolePermissionsToLabel']
+  const rsaDecrypt: typeof import('../../shared/utils/rsa')['rsaDecrypt']
+  const rsaEncrypt: typeof import('../../shared/utils/rsa')['rsaEncrypt']
   const sendCodeApi: typeof import('../../shared/api/email')['sendCodeApi']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
@@ -618,6 +620,8 @@ declare module 'vue' {
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly rolePermissionsToLabel: UnwrapRef<typeof import('../../shared/utils/rolePermissions')['rolePermissionsToLabel']>
+    readonly rsaDecrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaDecrypt']>
+    readonly rsaEncrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaEncrypt']>
     readonly sendCodeApi: UnwrapRef<typeof import('../../shared/api/email')['sendCodeApi']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
@@ -1041,6 +1045,8 @@ declare module '@vue/runtime-core' {
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
     readonly rolePermissionsToLabel: UnwrapRef<typeof import('../../shared/utils/rolePermissions')['rolePermissionsToLabel']>
+    readonly rsaDecrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaDecrypt']>
+    readonly rsaEncrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaEncrypt']>
     readonly sendCodeApi: UnwrapRef<typeof import('../../shared/api/email')['sendCodeApi']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>

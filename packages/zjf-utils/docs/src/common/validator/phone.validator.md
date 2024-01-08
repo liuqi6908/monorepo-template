@@ -1,5 +1,4 @@
 ---
-title: validatePhone
 description: 校验一个手机号是否符合要求
 outline: deep
 ---

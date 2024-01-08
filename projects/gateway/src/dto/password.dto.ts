@@ -3,6 +3,7 @@ import { ApiProperty } from '@nestjs/swagger'
 import { Transform } from 'class-transformer'
 import { IsString, MaxLength, MinLength } from 'class-validator'
 import type { IPasswordDto, IPasswordOptionalDto } from 'zjf-types/types/dto/password.interface'
+import { rsaDecrypt } from 'src/utils/rsa'
 import { sharedVariableMarkdown } from 'src/utils/docs/shared-variable'
 import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
 import { IsValidPassword } from 'src/decorators/validators/is-valid-password'
@@ -11,7 +12,6 @@ import {
   PASSWORD_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   PASSWORD_REQUIREMENTS_DESC,
-  decryptPasswordInHttp,
 } from 'zjf-utils'
 
 export function Decorator(optional = false) {
@@ -30,7 +30,7 @@ export function Decorator(optional = false) {
       MinLength(PASSWORD_MIN_LENGTH, { message: `密码长度不能小于${PASSWORD_MIN_LENGTH}` }),
       MaxLength(PASSWORD_MAX_LENGTH, { message: `密码长度不能大于${PASSWORD_MAX_LENGTH}` }),
       IsString({ message: '密码必须是字符串' }),
-      Transform(({ value }) => decryptPasswordInHttp(value)),
+      Transform(({ value }) => rsaDecrypt(process.env.RSA_PRIVATE_KEY, value)),
     ],
     optional,
   )

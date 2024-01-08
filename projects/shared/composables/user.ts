@@ -2,7 +2,6 @@ import { computed, getCurrentInstance, onMounted, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
-import { encryptPasswordInHttp } from 'zjf-utils'
 import { Notify } from 'quasar'
 import type {
   ILoginByEmailCodeBodyDto,
@@ -15,6 +14,7 @@ import type {
 } from 'zjf-types'
 
 import { rolePermissionsToLabel } from '../utils/rolePermissions'
+import { rsaEncrypt } from '../utils/rsa'
 import {
   loginByEmailCodeApi,
   loginByPasswordApi,
@@ -45,7 +45,10 @@ const isDesktop = ref(false)
 /** 加载中 */
 const loading = ref(false)
 
+/** 是否已发送请求 */
 let isFetched = false
+/** 对密码进行rsa加密的公钥 */
+const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY
 
 export function useUser($router = useRouter()) {
   /**
@@ -56,7 +59,7 @@ export function useUser($router = useRouter()) {
     try {
       const res = await loginByPasswordApi({
         ...body,
-        password: encryptPasswordInHttp(body.password),
+        password: rsaEncrypt(publicKey, body.password),
       })
       if (res) {
         if (remember) {
@@ -64,7 +67,7 @@ export function useUser($router = useRouter()) {
             REMEMBER_LOGIN_INFO_KEY,
             JSON.stringify({
               userCode: body.account || body.email,
-              password: encryptPasswordInHttp(body.password),
+              password: rsaEncrypt(publicKey, body.password),
             }),
           )
         }
@@ -124,7 +127,7 @@ export function useUser($router = useRouter()) {
     try {
       const res = await registerApi({
         ...body,
-        password: encryptPasswordInHttp(body.password),
+        password: rsaEncrypt(publicKey, body.password),
       })
       if (res) {
         Notify.create({

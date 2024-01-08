@@ -1,5 +1,4 @@
 ---
-title: readFileAsDataURL
 description: 将文件读取为可预览的 URL
 outline: deep
 ---

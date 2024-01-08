@@ -1,5 +1,4 @@
 ---
-title: validateEmail
 description: 校验一个邮箱是否符合要求
 outline: deep
 ---

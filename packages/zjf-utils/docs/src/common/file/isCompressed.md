@@ -1,5 +1,4 @@
 ---
-title: isCompressedFile
 description: 判断指定文件是否为压缩文件
 outline: deep
 ---

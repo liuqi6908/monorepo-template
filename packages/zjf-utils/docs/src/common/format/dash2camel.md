@@ -1,5 +1,4 @@
 ---
-title: dashToCamel
 description: 横杠拼接 转 驼峰命名
 outline: deep
 ---

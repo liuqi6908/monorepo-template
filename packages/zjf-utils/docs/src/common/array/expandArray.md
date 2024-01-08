@@ -1,5 +1,4 @@
 ---
-title: expandArray
 description: 将任意的二维数组展开为一维数组
 outline: deep
 ---

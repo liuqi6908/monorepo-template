@@ -1,5 +1,4 @@
 ---
-title: enumMarkdown
 description: 枚举值 转 Markdown文本
 outline: deep
 ---

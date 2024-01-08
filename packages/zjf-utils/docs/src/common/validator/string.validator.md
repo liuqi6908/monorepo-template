@@ -1,5 +1,4 @@
 ---
-title: validateString
 description: 校验字符串包含大小写字母、数字和特殊字符中的几种
 outline: deep
 ---

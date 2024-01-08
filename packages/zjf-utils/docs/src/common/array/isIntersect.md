@@ -1,5 +1,4 @@
 ---
-title: hasIntersection
 description: 判断两个数组是否有交集
 outline: deep
 ---

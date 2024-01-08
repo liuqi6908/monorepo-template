@@ -98,10 +98,6 @@
         "link": "/common/info"
       },
       {
-        "text": "md5",
-        "link": "/common/md5"
-      },
-      {
         "text": "object",
         "items": [
           {
@@ -121,14 +117,6 @@
       {
         "text": "parser",
         "items": [
-          {
-            "text": "decryptPassword",
-            "link": "/common/parser/decryptPassword"
-          },
-          {
-            "text": "encryptPassword",
-            "link": "/common/parser/encryptPassword"
-          },
           {
             "text": "parseBoolRaw",
             "link": "/common/parser/parseBoolRaw"

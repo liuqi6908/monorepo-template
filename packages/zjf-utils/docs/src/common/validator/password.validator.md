@@ -1,5 +1,4 @@
 ---
-title: validatePassword
 description: 校验一个密码是否符合要求
 outline: deep
 ---

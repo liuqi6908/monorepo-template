@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { validateEmail, validatePassword, decryptPasswordInHttp } from 'zjf-utils'
+import { validateEmail, validatePassword } from 'zjf-utils'
 import { ErrorCode } from 'zjf-types'
 
 const { loginByPassword, loading } = useUser()
@@ -14,12 +14,12 @@ const remember = ref(false)
 /** 登录提示对话框 */
 const dialog = ref(false)
 
-onBeforeMount(() => {
+onBeforeMount(async () => {
   try {
     const loginInfo = JSON.parse(localStorage.getItem(REMEMBER_LOGIN_INFO_KEY) || '{}')
     if (loginInfo.userCode && loginInfo.password) {
       userCode.value = loginInfo.userCode
-      password.value = decryptPasswordInHttp(loginInfo.password)
+      password.value = rsaDecrypt(import.meta.env.VITE_PRIVATE_KEY, loginInfo.password)
       remember.value = true
     }
   }

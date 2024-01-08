@@ -1,5 +1,4 @@
 ---
-title: validatePath
 description: 校验路径并修复其中的错误
 outline: deep
 ---

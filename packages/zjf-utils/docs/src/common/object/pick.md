@@ -1,5 +1,4 @@
 ---
-title: pick
 description: 从对象中取出指定的属性组成新的对象
 outline: deep
 ---

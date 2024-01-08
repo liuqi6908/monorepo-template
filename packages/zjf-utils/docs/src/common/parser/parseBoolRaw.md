@@ -1,5 +1,4 @@
 ---
-title: parseBoolRaw
 description: 将 boolean 的字符串描述转换为 boolean 值，如果无法转换则返回 undefined
 outline: deep
 ---

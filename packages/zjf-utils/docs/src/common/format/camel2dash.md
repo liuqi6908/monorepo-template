@@ -1,5 +1,4 @@
 ---
-title: camel2Dash
 description: 驼峰命名 转 横杠拼接
 outline: deep
 ---
