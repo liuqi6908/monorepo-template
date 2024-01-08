@@ -74,12 +74,6 @@ importers:
       blueimp-md5:
         specifier: ^2.19.0
         version: registry.npmmirror.com/blueimp-md5@2.19.0
-      jsencrypt:
-        specifier: ^3.3.2
-        version: registry.npmmirror.com/jsencrypt@3.3.2
-      node-rsa:
-        specifier: ^1.1.1
-        version: registry.npmmirror.com/node-rsa@1.1.1
     devDependencies:
       '@types/blueimp-md5':
         specifier: ^2.18.0
@@ -87,9 +81,6 @@ importers:
       '@types/node':
         specifier: 18.16.18
         version: registry.npmmirror.com/@types/node@18.16.18
-      '@types/node-rsa':
-        specifier: ^1.1.4
-        version: registry.npmmirror.com/@types/node-rsa@1.1.4
       '@typescript-eslint/eslint-plugin':
         specifier: ^5.0.0
         version: registry.npmmirror.com/@typescript-eslint/eslint-plugin@5.62.0(@typescript-eslint/parser@5.62.0)(eslint@8.56.0)(typescript@5.3.3)
