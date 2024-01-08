@@ -24,7 +24,7 @@ import {
 import { isDesktopApi } from '../api/desktop'
 import { getOwnProfileApi, updateOwnPasswordByCodeApi } from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
-import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
+import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, LEADING_PAGE_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useSysConfig } from './app'
 
 const { isAdmin } = useSysConfig()
@@ -150,8 +150,8 @@ export function useUser($router = useRouter()) {
     const { sign, user } = res
     authToken.value = sign.access_token
     userInfo.value = user
-    await getOwnProfile()
-    $router.push('/')
+    await getOwnProfile(undefined, false)
+    $router.push(localStorage.getItem(LEADING_PAGE_KEY) || '/')
   }
 
   /**

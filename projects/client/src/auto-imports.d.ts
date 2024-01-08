@@ -16,6 +16,7 @@ declare global {
   const CMS_CONFIG: typeof import('../../shared/constants/cms')['CMS_CONFIG']
   const EXPORT_MENU: typeof import('./constants/export')['EXPORT_MENU']
   const EffectScope: typeof import('vue')['EffectScope']
+  const LEADING_PAGE_KEY: typeof import('../../shared/constants/storage')['LEADING_PAGE_KEY']
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
   const RichTextProcessor: typeof import('../../shared/utils/richText')['RichTextProcessor']
   const USER_MENU_LIST: typeof import('./constants/client')['USER_MENU_LIST']
@@ -449,6 +450,7 @@ declare module 'vue' {
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['LEADING_PAGE_KEY']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../shared/utils/richText')['RichTextProcessor']>
     readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client')['USER_MENU_LIST']>
@@ -875,6 +877,7 @@ declare module '@vue/runtime-core' {
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../shared/constants/cms')['CMS_CONFIG']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('./constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['LEADING_PAGE_KEY']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../shared/utils/richText')['RichTextProcessor']>
     readonly USER_MENU_LIST: UnwrapRef<typeof import('./constants/client')['USER_MENU_LIST']>

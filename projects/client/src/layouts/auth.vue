@@ -1,9 +1,12 @@
 <script setup lang="ts">
 import bg from '~/assets/bg/auth.webp'
 
-const $router = useRouter()
 const { width } = useWindowSize()
 const { app } = useSysConfig()
+
+const leadingPage = localStorage.getItem(LEADING_PAGE_KEY)
+
+onBeforeUnmount(() => localStorage.removeItem(LEADING_PAGE_KEY))
 </script>
 
 <template>
@@ -21,7 +24,7 @@ const { app } = useSysConfig()
         flex="~ gap2 items-center"
         absolute top-12 left-12
         cursor-pointer min-w-113
-        @click="$router.push('/')"
+        @click="$router.push(leadingPage || '/')"
       >
         <h2 v-text="app?.name" />
         <template v-if="app?.nameEn">
