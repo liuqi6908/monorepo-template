@@ -77,7 +77,7 @@ const processSvg = computed(() => {
         <!-- 使用中 -->
         <template v-else-if="requestStatus === DesktopQueueStatus.USING">
           您已经成功申请云桌面，前往
-          <span text="#F99E34" v-text="'「 用户中心 / 我的云桌面 」'" />
+          <span text="#F99E34" v-text="'「 用户中心 / 我的桌面 」'" />
           查看
         </template>
         <!-- 已驳回 -->

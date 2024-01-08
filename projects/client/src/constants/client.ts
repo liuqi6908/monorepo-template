@@ -7,11 +7,11 @@ export const USER_MENU_LIST = [
     to: '/userCenter/authentication',
   },
   {
-    name: '我的云桌面',
+    name: '我的桌面',
     to: '/userCenter/cloudDesktop',
   },
   {
-    name: '我的数据',
+    name: '我的外发',
     to: '/userCenter/myData',
   },
   {
