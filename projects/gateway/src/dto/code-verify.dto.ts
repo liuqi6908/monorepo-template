@@ -12,7 +12,7 @@ export class CodeVerifyDto implements ICodeVerifyDto {
   bizId: string
 
   @decorate(ApiProperty({
-    description: '发送到邮箱的验证码',
+    description: '发送到邮箱的验证码/图片验证码',
     maxLength: 6,
     minLength: 6,
     type: () => String,

@@ -3,6 +3,7 @@ import type { IUser } from '../../entities/user.interface'
 import type { IPasswordDto } from '../../dto/password.interface'
 import type { IEmailOptionalDto } from '../../dto/email.interface'
 import type { IAccountOptionalDto } from '../../dto/account.interface'
+import type { ICodeVerifyDto } from '../../dto/code-verify.interface'
 
 /**
  * 根据 账号/邮箱 + 密码 登录
@@ -12,7 +13,8 @@ export interface ILoginByPasswordBodyDto
   extends
   IPasswordDto,
   IAccountOptionalDto,
-  IEmailOptionalDto {}
+  IEmailOptionalDto,
+  ICodeVerifyDto {}
 
 /**
  * 登录成功的响应数据

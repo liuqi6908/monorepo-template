@@ -1,12 +1,14 @@
 import { ErrorCode } from 'zjf-types'
+import * as svgCaptcha from 'svg-captcha'
 import { Throttle } from '@nestjs/throttler'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { Body, Controller, Post, Put, Req } from '@nestjs/common'
+import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common'
 
 import { IsLogin } from 'src/guards/login.guard'
 import { ApiErrorResponse, ApiSuccessResponse } from 'src/utils/response'
 import { emailAccountAtLeastOne } from 'src/utils/validator/account-phone-at-least-one'
 
+import { CodeService } from '../code/code.service'
 import { JwtAuthService } from '../jwt-auth/jwt-auth.service'
 import { AuthService } from './auth.service'
 import { RegisterBodyDto } from './dto/register.body.dto'
@@ -20,15 +22,16 @@ import { LoginByEmailCodeBodyDto } from './dto/login-by-email-code.body.dto'
 export class AuthController {
   constructor(
     private readonly _authSrv: AuthService,
+    private readonly _codeSrv: CodeService,
     private readonly _jwtAuthSrv: JwtAuthService,
   ) {}
 
   @ApiOperation({ summary: '通过 账号/邮箱 + 密码 登录' })
   @ApiSuccessResponse(LoginSuccessResDto)
   @Post('login/password')
-  public async loginByPassword(@Body() body: LoginByPasswordBodyDto) {
+  public async loginByPassword(@Body() body: LoginByPasswordBodyDto, @Req() req: FastifyRequest) {
     emailAccountAtLeastOne(body)
-    return await this._authSrv.loginByPassword(body)
+    return await this._authSrv.loginByPassword(body, req.raw.ip)
   }
 
   @ApiOperation({ summary: '通过邮箱 + 验证码 登录' })
@@ -51,6 +54,24 @@ export class AuthController {
   @Put('register')
   public async register(@Body() body: RegisterBodyDto) {
     return await this._authSrv.register(body)
+  }
+
+  @Throttle(1, 1)
+  @ApiOperation({ summary: '获取图形验证码' })
+  @Get('captcha')
+  public async getCaptcha(@Req() req: FastifyRequest) {
+    const ip = req.raw.ip
+    const captcha = svgCaptcha.create({
+      size: 6,
+      width: 104,
+      height: 36,
+      color: true,
+    })
+    const { bizId } = await this._codeSrv.createCaptcha(ip, captcha.text)
+    return {
+      bizId,
+      img: captcha.data,
+    }
   }
 
   @ApiOperation({ summary: '登出' })

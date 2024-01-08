@@ -47,10 +47,12 @@ export class AuthService {
    * @param body
    * @returns
    */
-  public async loginByPassword(body: LoginByPasswordBodyDto) {
-    const { account, email, password } = body
+  public async loginByPassword(body: LoginByPasswordBodyDto, ip: string) {
+    const { account, email, password, bizId, code } = body
     if (!account && !email)
       throw new Error('手机号码或邮箱地址至少需要填写一个')
+    if (!(await this._codeSrv.verifyCaptcha(bizId, [ip, code])))
+      responseError(ErrorCode.AUTH_CODE_NOT_MATCHED)
     const qb = this._userSrv.qb().addSelect('u.password').addSelect('u.isDeleted')
     if (account)
       qb.where('account = :account', { account })

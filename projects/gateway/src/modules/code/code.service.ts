@@ -36,6 +36,28 @@ export class CodeService {
   }
 
   /**
+   * 将验证码存入 redis
+   * @param ip
+   * @param code
+   * @param expireInMinutes
+   * @returns
+   */
+  public async createCaptcha(
+    ip: string,
+    code: string,
+    expireInMinutes = 5,
+  ) {
+    const bizId = randomString(24, 24, '') + Date.now().toString(36)
+    // save code to redis
+    const client = await this._redisSrv.getClient(RedisType.CODE)
+    await client.setEx(bizId, expireInMinutes * 60, JSON.stringify([
+      ip,
+      code,
+    ]))
+    return { bizId }
+  }
+
+  /**
    * 校验一个验证码是否正确
    * @param bizId
    * @param compareInfo
@@ -51,6 +73,29 @@ export class CodeService {
     if (!codeInfo)
       return false
     const codeInfoArr = JSON.parse(codeInfo) as [string, CodeAction, string]
+    if (codeInfoArr.some((v, i) => v !== compareInfo[i]))
+      return false
+    if (deleteAfterVerify)
+      client.del(bizId)
+    return true
+  }
+
+  /**
+   * 校验一个验证码是否正确
+   * @param bizId
+   * @param compareInfo
+   * @param deleteAfterVerify
+   */
+  public async verifyCaptcha(
+    bizId: string,
+    compareInfo: [string, string],
+    deleteAfterVerify = true,
+  ) {
+    const client = await this._redisSrv.getClient(RedisType.CODE)
+    const codeInfo = await client.get(bizId)
+    if (!codeInfo)
+      return false
+    const codeInfoArr = JSON.parse(codeInfo) as [string, string]
     if (codeInfoArr.some((v, i) => v !== compareInfo[i]))
       return false
     if (deleteAfterVerify)
