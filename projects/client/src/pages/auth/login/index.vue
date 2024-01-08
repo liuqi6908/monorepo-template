@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { validateEmail, validatePassword } from 'zjf-utils'
 import { ErrorCode } from 'zjf-types'
+import CaptchaInput from 'shared/components/input/CaptchaInput.vue'
 
 const { loginByPassword, loading } = useUser()
 
@@ -10,9 +11,15 @@ const userCode = ref('')
 const password = ref('')
 /** 记住账号密码 */
 const remember = ref(false)
+/** 验证码 */
+const code = ref('')
+/** 邮箱验证校验码 */
+const bizId = ref('')
 
 /** 登录提示对话框 */
 const dialog = ref(false)
+/** 验证码输入框 */
+const captchaInput = ref<InstanceType<typeof CaptchaInput>>()
 
 onBeforeMount(async () => {
   try {
@@ -27,7 +34,13 @@ onBeforeMount(async () => {
 })
 
 /** 禁用登录 */
-const disable = computed(() => loading.value || !userCode.value || !!validatePassword(password.value))
+const disable = computed(() => (
+  loading.value
+  || !userCode.value
+  || !!validatePassword(password.value)
+  || code.value.length !== 6
+  || !bizId.value
+))
 
 /**
  * 登录
@@ -41,11 +54,15 @@ async function login() {
       {
         [validateEmail(userCode.value) ? 'account' : 'email']: userCode.value,
         password: password.value,
+        code: code.value,
+        bizId: bizId.value,
       },
       remember.value,
     )
   }
   catch (e: any) {
+    code.value = ''
+    captchaInput.value?.getCaptchaImg()
     const { status } = e.response?.data || {}
     if (status === ErrorCode.AUTH_PASSWORD_IS_NULL)
       dialog.value = true
@@ -62,18 +79,25 @@ async function login() {
           v-model="userCode"
           label="账号 / 邮箱"
           placeholder="请输入用户名/邮箱"
-          dark mb-6
+          dark mb6
         />
         <ZInput
           v-model="password"
           label="密码"
           placeholder="请输入密码"
-          dark password
+          dark password mb1
           :params="{
             rules: [
               (val: string) => validatePassword(val) || true
             ]
           }"
+          @keydown.enter="login"
+        />
+        <CaptchaInput
+          ref="captchaInput"
+          v-model="code"
+          v-model:biz-id="bizId"
+          dark
           @keydown.enter="login"
         />
         <q-checkbox

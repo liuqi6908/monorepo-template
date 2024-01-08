@@ -75,6 +75,8 @@ declare global {
   const getAccessLast7DaysApi: typeof import('../../shared/api/log')['getAccessLast7DaysApi']
   const getAccessTodayApi: typeof import('../../shared/api/log')['getAccessTodayApi']
   const getAccessTotalApi: typeof import('../../shared/api/log')['getAccessTotalApi']
+  const getCaptchaImg: typeof import('../../shared/api/auth')['getCaptchaImg']
+  const getCaptchaImgApi: typeof import('../../shared/api/auth')['getCaptchaImgApi']
   const getClusterStorageApi: typeof import('../../shared/api/desktopHost')['getClusterStorageApi']
   const getCmsApi: typeof import('../../shared/api/cms')['getCmsApi']
   const getConfigApi: typeof import('../../shared/api/config')['getConfigApi']
@@ -509,6 +511,7 @@ declare module 'vue' {
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../shared/api/log')['getAccessLast7DaysApi']>
     readonly getAccessTodayApi: UnwrapRef<typeof import('../../shared/api/log')['getAccessTodayApi']>
     readonly getAccessTotalApi: UnwrapRef<typeof import('../../shared/api/log')['getAccessTotalApi']>
+    readonly getCaptchaImgApi: UnwrapRef<typeof import('../../shared/api/auth')['getCaptchaImgApi']>
     readonly getClusterStorageApi: UnwrapRef<typeof import('../../shared/api/desktopHost')['getClusterStorageApi']>
     readonly getCmsApi: UnwrapRef<typeof import('../../shared/api/cms')['getCmsApi']>
     readonly getConfigApi: UnwrapRef<typeof import('../../shared/api/config')['getConfigApi']>
@@ -936,6 +939,7 @@ declare module '@vue/runtime-core' {
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../shared/api/log')['getAccessLast7DaysApi']>
     readonly getAccessTodayApi: UnwrapRef<typeof import('../../shared/api/log')['getAccessTodayApi']>
     readonly getAccessTotalApi: UnwrapRef<typeof import('../../shared/api/log')['getAccessTotalApi']>
+    readonly getCaptchaImgApi: UnwrapRef<typeof import('../../shared/api/auth')['getCaptchaImgApi']>
     readonly getClusterStorageApi: UnwrapRef<typeof import('../../shared/api/desktopHost')['getClusterStorageApi']>
     readonly getCmsApi: UnwrapRef<typeof import('../../shared/api/cms')['getCmsApi']>
     readonly getConfigApi: UnwrapRef<typeof import('../../shared/api/config')['getConfigApi']>

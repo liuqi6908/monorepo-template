@@ -63,9 +63,10 @@ export class AuthController {
     const ip = req.raw.ip
     const captcha = svgCaptcha.create({
       size: 6,
-      width: 104,
-      height: 36,
+      width: 120,
+      height: 40,
       color: true,
+      noise: 3,
     })
     const { bizId } = await this._codeSrv.createCaptcha(ip, captcha.text)
     return {

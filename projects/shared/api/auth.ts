@@ -8,7 +8,7 @@ import type {
 import { useRequest } from '../composables/request'
 import { authToken } from '../composables/user'
 
-const { $post, $put } = useRequest()
+const { $get, $post, $put } = useRequest()
 
 /**
  * 通过 账号/邮箱 + 密码 登录
@@ -36,6 +36,16 @@ export function loginByEmailLinkApi(body: ILoginByEmailLinkDto) {
  */
 export function registerApi(body: IRegisterBodyDto) {
   return $put<ILoginSuccessResData>('/auth/register', body)
+}
+
+/**
+ * 获取图形验证码
+ */
+export function getCaptchaImgApi() {
+  return $get<{
+    bizId: string
+    img: string
+  }>('/auth/captcha')
 }
 
 /**

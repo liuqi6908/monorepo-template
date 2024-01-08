@@ -96,7 +96,7 @@ export class CodeService {
     if (!codeInfo)
       return false
     const codeInfoArr = JSON.parse(codeInfo) as [string, string]
-    if (codeInfoArr.some((v, i) => v !== compareInfo[i]))
+    if (codeInfoArr.some((v, i) => v.toLocaleLowerCase() !== compareInfo[i].toLocaleLowerCase()))
       return false
     if (deleteAfterVerify)
       client.del(bizId)

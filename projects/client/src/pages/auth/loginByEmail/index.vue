@@ -13,12 +13,12 @@ const code = ref('')
 const bizId = ref('')
 
 /** 禁用提交 */
-const disable = computed(() => {
-  return loading.value
-    || !!validateEmail(email.value)
-    || code.value.length !== 6
-    || !bizId.value
-})
+const disable = computed(() => (
+  loading.value
+  || !!validateEmail(email.value)
+  || code.value.length !== 6
+  || !bizId.value
+))
 
 /** 提交表单 */
 const formArg = computed<ILoginByEmailCodeBodyDto>(() => {

@@ -16,6 +16,7 @@ declare module 'vue' {
     AppHeader: typeof import('./components/AppHeader.vue')['default']
     Avatar: typeof import('./components/user/Avatar.vue')['default']
     Banner: typeof import('./components/banner/index.vue')['default']
+    CaptchaInput: typeof import('./../../shared/components/input/CaptchaInput.vue')['default']
     Carousel: typeof import('./../../shared/components/cms/home/Carousel.vue')['default']
     Content: typeof import('./../../shared/components/cms/home/Content.vue')['default']
     DesktopDoc: typeof import('./components/protocol/DesktopDoc.vue')['default']
