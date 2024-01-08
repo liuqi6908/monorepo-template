@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 const { isDesktop, isVerify } = useUser()
 const { el, scrollTo } = useScrollApp()
+const { height } = useAppHeader()
 
 /** 标签页列表 */
 const tabList = computed(() => {
@@ -38,20 +39,25 @@ onMounted(() => {
   )
 })
 
-watch(
-  value,
-  () => {
-    if (el.value) {
-      if (el.value.getScrollPosition().top > 265)
-        scrollTo(265)
-    }
+/**
+ * 切换标签页时滚动
+ */
+function scroll(val: string) {
+  value.value = val
+  if (el.value) {
+    if (el.value.getScrollPosition().top > 265)
+      scrollTo(265)
   }
-)
+}
 </script>
 
 <template>
   <div flex="~ col">
-    <ZMenu1 v-model="value" :list="tabList" bg-grey-1 sticky top-41 z-1 pb4 />
+    <ZMenu1
+      :model-value="value" :list="tabList" bg-grey-1 sticky z-1 pb4
+      :style="{ top: `${height + 23}px` }"
+      @update:model-value="val => scroll(val)"
+    />
     <component :is="tabList.find(v => v.id === value)?.component" />
   </div>
 </template>

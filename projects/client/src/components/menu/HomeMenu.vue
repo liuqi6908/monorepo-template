@@ -28,14 +28,14 @@ onBeforeMount(getNavConfig)
 
 <template>
   <div flex="~ justify-center" b-b="1px grey-3">
-    <q-tabs class="client-menu" v-model="value">
+    <q-tabs class="client-menu" v-model="value" max-w-full>
       <q-route-tab
         v-for="item in navList"
         :key="item.to"
         :to="item.to"
         px8 opacity100
       >
-        <div text-base font-600 v-text="item.name" />
+        <div text-base font-600 max-w-full truncate v-text="item.name" />
       </q-route-tab>
     </q-tabs>
   </div>
@@ -43,21 +43,30 @@ onBeforeMount(getNavConfig)
 
 <style lang="scss" scoped>
 .client-menu {
-  :deep(.q-tab) {
-    .q-tab__content {
-      min-width: auto;
-    }
+  :deep(.q-tabs__content) {
+    flex-wrap: wrap;
+    justify-content: center;
 
-    .q-tab__indicator {
-      padding: 0 32px;
-      background: none;
-      height: 4px;
-      &::after {
-        display: block;
-        content: '';
-        width: 100%;
-        height: 100%;
-        background: #F99E34;
+    .q-tab {
+      flex: none;
+      max-width: 100%;
+
+      .q-tab__content {
+        min-width: auto;
+        max-width: 100%;
+      }
+
+      .q-tab__indicator {
+        padding: 0 32px;
+        background: none;
+        height: 4px;
+        &::after {
+          display: block;
+          content: '';
+          width: 100%;
+          height: 100%;
+          background: #F99E34;
+        }
       }
     }
   }

@@ -10,6 +10,6 @@ defineProps<BannerProps>()
 <template>
   <div relative>
     <img h64 w-full object-cover :src="img" />
-    <h1 absolute-center v-text="title" />
+    <h1 absolute-center w="90%" text-center line-clamp-5 v-text="title" />
   </div>
 </template>

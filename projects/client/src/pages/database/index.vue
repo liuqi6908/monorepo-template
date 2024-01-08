@@ -8,6 +8,7 @@ const { scrollTo } = useScrollApp()
 const { query } = useRoute()
 const { nav } = useSysConfig()
 const $router = useRouter()
+const { height } = useAppHeader()
 
 /** 加载中 */
 const loading = ref(false)
@@ -54,7 +55,10 @@ watch(rootId, () => scrollTo(0))
       <Empty v-if="!menu?.length" icon="database" />
       <div v-else w-limited-1 flex="~ gap4" sm="gap6" lg="gap8" xl="gap10">
         <div pt10>
-          <ZMenu v-model="rootId" :list="menu" sticky top-41 />
+          <ZMenu
+            v-model="rootId" :list="menu" sticky
+            :style="{ top: `${height + 23}px` }"
+          />
         </div>
         <Root :key="rootId" flex-1 w0 />
       </div>

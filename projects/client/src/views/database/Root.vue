@@ -6,6 +6,7 @@ const { rootId, rootData, databaseId, getDataByRootId } = useDatabase()
 const { query } = useRoute()
 const $router = useRouter()
 const { el, scrollTo } = useScrollApp()
+const { height } = useAppHeader()
 
 /** 加载中 */
 const loading = ref(false)
@@ -61,7 +62,10 @@ watch(
     <ZLoading :value="loading" />
     <div flex="~ col">
       <!-- Header -->
-      <div flex="~ row gap4" p="t10 b6" bg-grey-1 sticky top-31 z-1>
+      <div
+        flex="~ row gap4" p="t10 b6" bg-grey-1 sticky z-1
+        :style="{ top: `${height - 17}px` }"
+      >
         <div flex-1 w0>
           <ZMenu1 v-model="databaseId" :list="menu" />
         </div>

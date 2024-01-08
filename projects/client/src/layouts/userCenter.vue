@@ -4,6 +4,7 @@ import HomeLayout from './home.vue'
 
 const $route = useRoute()
 const { nav } = useSysConfig()
+const { height } = useAppHeader()
 
 const value = computed(() => $route.path)
 </script>
@@ -21,7 +22,8 @@ const value = computed(() => $route.path)
               label: name,
               to,
             }))"
-            sticky top-41
+            sticky
+            :style="{ top: `${height + 23}px` }"
           />
         </div>
         <RouterView pt10 flex-1 w0 />

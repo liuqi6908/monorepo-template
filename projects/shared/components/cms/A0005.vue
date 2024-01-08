@@ -19,6 +19,9 @@ const value = useRouteQuery<number | undefined>('index', undefined, { transform:
 const { isAdmin } = useSysConfig()
 let type = false
 
+/** 粘性定位 */
+const top = ref(0)
+
 /** 目录 */
 const tocList = computed(() => {
   return props.list?.map(({ title, richText }, index) => {
@@ -31,11 +34,15 @@ const tocList = computed(() => {
 })
 
 onMounted(() => {
-  if (typeof value.value === 'number') {
-    nextTick(() => {
+  nextTick(() => {
+    if (!isClient)
+      return
+    const appHeader = document.querySelector('.app-header')
+    if (!isAdmin.value && appHeader)
+      top.value = appHeader.clientHeight
+    if (typeof value.value === 'number')
       scroll(value.value)
-    })
-  }
+  })
 })
 
 /** 激活目录，滚动 */
@@ -59,7 +66,7 @@ function scroll(id?: number) {
 
 <template>
   <div
-    class="A0006"
+    class="A0005"
     w-limited-1 p="t10 b20"
     flex="~ gap2" sm="gap4" lg="gap6"
     xl="gap8"
@@ -67,11 +74,12 @@ function scroll(id?: number) {
     <!-- Toc -->
     <div>
       <q-scroll-area
-        sticky top-36
+        sticky
         :style="{
           maxHeight: 'calc(100vh - 144px)',
           height: `${height}px`,
-          width: `${width + 1}px`
+          width: `${width + 1}px`,
+          top: `${top + 3}px`
         }"
       >
         <ZMenu
@@ -86,11 +94,14 @@ function scroll(id?: number) {
     <div flex="~ 1 col gap10" w0 pb10>
       <template v-for="(item, index) in tocList" :key="index">
         <div flex="~ col">
-          <div :id="`question_${index}`" relative :top="isAdmin ? -4 : -35" />
+          <div
+            :id="`question_${index}`" relative
+            :style="{ top: `-${top}px` }"
+          />
           <q-item
             clickable flex="~ items-center gap-2"
-            p2 min-h-auto sticky top-35
-            bg-grey-1 z-1
+            p2 min-h-auto sticky bg-grey-1 z-1
+            :style="{ top: `${top}px` }"
             @click="() => {
               if (value === index)
                 value = undefined

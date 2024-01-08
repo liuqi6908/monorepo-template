@@ -12,6 +12,7 @@ const { query } = useRoute() as {
 const $router = useRouter()
 const { width, height } = useElementSize(toc)
 const { el, scrollTo } = useScrollApp()
+const { height: appHeaderHeight } = useAppHeader()
 
 /** 数据库的英文名 */
 const nameEN = ref<string>()
@@ -166,11 +167,12 @@ function scroll(id: string) {
         <!-- Toc -->
         <div>
           <q-scroll-area
-            sticky top-36
+            sticky
             :style="{
-              maxHeight: 'calc(100vh - 144px)',
+              maxHeight: `calc(100vh - ${appHeaderHeight + 3}px)`,
               height: `${height}px`,
-              width: `${width + 1}px`
+              width: `${width + 1}px`,
+              top: `${appHeaderHeight + 3}px`
             }"
           >
             <ZMenu
