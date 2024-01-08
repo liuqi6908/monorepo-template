@@ -115,7 +115,7 @@ function formatterSeries(data: number[], color: string, label: string) {
 
   const index = FILE_SIZE_UNITS.findIndex(v => unit.toUpperCase().startsWith(v))
   if (index >= 0)
-    data = data.map(v => Number(v) / 1024 ** index + 1)
+    data = data.map(v => v ? Number(v) / 1024 ** index + 1 : v)
 
   return {
     type: 'line',
