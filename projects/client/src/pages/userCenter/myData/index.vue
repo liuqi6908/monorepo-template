@@ -14,12 +14,7 @@ const tabList = computed(() => {
     {
       label: '历史记录',
       id: 'history',
-      component: defineAsyncComponent(() => import('~/views/userCenter/myData/History.vue'))
-    },
-    {
-      label: '数据上传',
-      id: 'uploading',
-      component: defineAsyncComponent(() => import('~/views/userCenter/myData/Uploading.vue')),
+      component: defineAsyncComponent(() => import('~/views/userCenter/myData/History.vue')),
       flag: true
     },
   ].filter(v => (isDesktop.value && isVerify.value) || v.flag)

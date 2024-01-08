@@ -71,9 +71,4 @@ export const CMS_CONFIG: CmsConfig[] = [
     label: '页脚管理',
     component: 'A0003',
   },
-  {
-    id: 'uploadDescribe',
-    label: '数据上传说明',
-    component: 'A0004',
-  },
 ]

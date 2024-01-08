@@ -9,7 +9,7 @@ const props = defineProps<{
 defineEmits(['update:modelValue'])
 
 const value = useVModel(props, 'modelValue')
-const { getOwnProfile } = useUser()
+const { userInfo, getOwnProfile } = useUser()
 
 /** 邮箱 */
 const email = ref('')
@@ -50,7 +50,7 @@ async function confirm() {
 <template>
   <ZDialog
     v-model="value"
-    title="修改邮箱"
+    :title="`${userInfo?.email ? '修改' : '设置'}邮箱`"
     :wrapper-style="{
       width: '488px',
     }"

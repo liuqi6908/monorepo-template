@@ -10,6 +10,7 @@ type ExportForm = Record<FileType, {
 }>
 
 const { app, fileExport, getFileExportConfig } = useSysConfig()
+const { userInfo } = useUser()
 
 /** 当前页面 */
 const value = ref(EXPORT_MENU[0].value)
@@ -146,7 +147,7 @@ async function exportFile() {
         />
         <div flex="~ gap8 self-center">
           <ZBtn
-            label="更改邮箱"
+            :label="`${userInfo?.email ? '修改' : '设置'}邮箱`"
             size="big" w36
             text-color="primary-1"
             :params="{
@@ -157,7 +158,7 @@ async function exportFile() {
           <ZBtn
             label="外发"
             size="big" w36
-            :disable="!exportForm[value].file"
+            :disable="!userInfo?.email || !exportForm[value].file"
             @click="exportFile"
           />
         </div>
