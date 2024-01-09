@@ -111,7 +111,7 @@ const processSvg = computed(() => {
           requestStatus !== DesktopQueueStatus.PENDING
           && requestStatus !== DesktopQueueStatus.QUEUEING
         " size="big"
-        label="申请使用"
+        :label="`${!requestStatus || '再次'}申请使用`"
         @click="requestDialog = true"
       />
     </div>
