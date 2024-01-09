@@ -18,11 +18,14 @@ const dialog = ref(false)
         <div pt10 flex="~ col gap2">
           <ZMenu
             v-model="value"
-            :list="USER_MENU_LIST.filter(v => v.userCenter).map(({ name, to }) => ({
-              id: to!,
-              label: name,
-              to,
-            }))"
+            :list="
+              USER_MENU_LIST.filter(v => v.userCenter && v.config !== false)
+                .map(({ name, to }) => ({
+                  id: to!,
+                  label: name,
+                  to,
+                }))
+            "
             class="sticky mb14"
             :style="{ top: `${height + 23}px` }"
           />

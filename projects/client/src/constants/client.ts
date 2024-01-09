@@ -21,6 +21,7 @@ export const USER_MENU_LIST = [
     name: '我的作品',
     to: '/userCenter/myWorks',
     userCenter: true,
+    config: getEnvVariable('VITE_WORKS_MANAGE'),
   },
   {
     name: '更多信息',

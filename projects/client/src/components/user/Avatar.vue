@@ -37,7 +37,7 @@ const dialog = ref(false)
       >
         <q-list py2 w40>
           <q-item
-            v-for="(item, index) in USER_MENU_LIST"
+            v-for="(item, index) in USER_MENU_LIST.filter(v => v.config !== false)"
             :key="index"
             v-close-popup
             clickable
