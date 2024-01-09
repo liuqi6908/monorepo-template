@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import user from '~/assets/icons/user.svg?raw'
 
-const { userInfo, isLogin, logout } = useUser()
+const { userInfo, isLogin } = useUser()
 const { width } = useWindowSize()
 
 /** 用户名的首个字符 */
@@ -72,18 +72,7 @@ const dialog = ref(false)
     </RouterLink>
 
     <!-- 退出登录对话框 -->
-    <ZDialog
-      v-model="dialog"
-      title="退出登录"
-      confirm-text="退出"
-      footer
-      :wrapperStyle="{
-        width: '488px'
-      }"
-      @ok="logout"
-    >
-      是否退出登录？
-    </ZDialog>
+    <LogoutDialog v-model="dialog" />
   </div>
 </template>
 
