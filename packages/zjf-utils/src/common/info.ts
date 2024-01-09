@@ -1,13 +1,15 @@
 /**
  * 隐藏敏感信息
- * @param info 需处理的信息（邮箱/身份证号）
+ * @param info 需处理的信息（邮箱/身份证号/姓名）
  * @returns 隐藏后的信息
  */
 export function hideSensitiveInfo(info?: string) {
-  let result = ''
+  if (!info)
+    return ''
 
+  let result = ''
   // 邮箱
-  if (info?.includes('@')) {
+  if (info.includes('@') && !info.startsWith('@') && !info.endsWith('@')) {
     const atIndex = info.indexOf('@')
     if (atIndex) {
       const username = info.slice(0, atIndex)
@@ -23,8 +25,15 @@ export function hideSensitiveInfo(info?: string) {
     }
   }
   // 身份证号
-  else if (info && info.length > 7) {
+  else if (/^(\d{17}[\dXx])$/.test(info)) {
     result = `${info.slice(0, 3)}${'*'.repeat(info.length - 7)}${info.slice(info.length - 4)}`
+  }
+  // 姓名
+  else {
+    const firstChar = info.charAt(0)
+    result = `${firstChar}${'*'.repeat(info.length - (info.length > 2 ? 2 : 1))}`
+    if (info.length > 2)
+      result += info.charAt(info.length - 1)
   }
 
   return result || info

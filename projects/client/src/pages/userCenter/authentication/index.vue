@@ -64,7 +64,7 @@ const authInfo = computed(() => {
     },
     name: {
       label: '真实姓名',
-      val: obj?.name,
+      val: hideSensitiveInfo(obj?.name),
     },
     idCard: {
       label: '身份证',
