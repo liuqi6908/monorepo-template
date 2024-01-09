@@ -48,7 +48,7 @@ const loading = ref(false)
 /** 是否已发送请求 */
 let isFetched = false
 /** 对密码进行rsa加密的公钥 */
-const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY
+const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY ?? ''
 
 export function useUser($router = useRouter()) {
   /**

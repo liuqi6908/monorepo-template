@@ -26,7 +26,7 @@ onBeforeMount(async () => {
     const loginInfo = JSON.parse(localStorage.getItem(REMEMBER_LOGIN_INFO_KEY) || '{}')
     if (loginInfo.userCode && loginInfo.password) {
       userCode.value = loginInfo.userCode
-      password.value = rsaDecrypt(import.meta.env.VITE_PRIVATE_KEY, loginInfo.password)
+      password.value = rsaDecrypt(import.meta.env.VITE_PRIVATE_KEY ?? '', loginInfo.password)
       remember.value = true
     }
   }
