@@ -1,6 +1,7 @@
 import type { IAccountDto } from '../dto/account.interface'
-import type { IPasswordOptionalDto } from '../dto/password.interface'
 import type { IEmailOptionalDto } from '../dto/email.interface'
+import type { IPhoneOptionalDto } from '../dto/phone.interface'
+import type { IPasswordOptionalDto } from '../dto/password.interface'
 import type { INicknameOptionalDto } from '../dto/nickname.interface'
 import type { IRole } from './role.interface'
 import type { ILogin } from './login.interface'
@@ -20,9 +21,10 @@ import type { IWork } from './work.interface'
 export interface IUser extends
   ICreatedAt,
   IUpdatedAt,
-  IPasswordOptionalDto,
   IAccountDto,
   IEmailOptionalDto,
+  IPhoneOptionalDto,
+  IPasswordOptionalDto,
   INicknameOptionalDto {
   /** 用户唯一标识（UUID, v4) */
   id: string

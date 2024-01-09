@@ -1,7 +1,8 @@
 import type { IUser } from '../../entities/user.interface'
-import type { IPasswordOptionalDto } from '../../dto/password.interface'
 import type { IAccountDto } from '../../dto/account.interface'
-import type { IEmailDto } from '../../dto/email.interface'
+import type { IEmailOptionalDto } from '../../dto/email.interface'
+import type { IPhoneOptionalDto } from '../../dto/phone.interface'
+import type { IPasswordOptionalDto } from '../../dto/password.interface'
 import type { INicknameOptionalDto } from '../../dto/nickname.interface'
 
 /**
@@ -10,7 +11,8 @@ import type { INicknameOptionalDto } from '../../dto/nickname.interface'
  */
 export interface ICreateUserBodyDto extends
   IAccountDto,
-  IEmailDto,
+  IEmailOptionalDto,
+  IPhoneOptionalDto,
   IPasswordOptionalDto,
   INicknameOptionalDto {}
 

@@ -117,6 +117,8 @@ export class UserService implements OnModuleInit {
           responseError(ErrorCode.USER_ACCOUNT_REGISTERED)
         else if (value === user.email)
           responseError(ErrorCode.USER_EMAIL_REGISTERED)
+        else if (value === user.phone)
+          responseError(ErrorCode.USER_PHONE_NUMBER_REGISTERED)
       }
       throw e
     }

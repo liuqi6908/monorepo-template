@@ -19,7 +19,7 @@ import { comparePassword } from 'src/utils/encrypt/encrypt-password'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { UniversalOperationResDto } from 'src/dto/universal-operation.dto'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
-import { emailAccountAtLeastOne } from 'src/utils/validator/account-phone-at-least-one'
+import { emailPhoneAtLeastOne } from 'src/utils/validator/email-phone-at-least-one'
 
 import { AuthService } from '../auth/auth.service'
 import { DesktopService } from '../desktop/desktop.service'
@@ -52,7 +52,7 @@ export class UserController {
   @HasPermission(PermissionType.ACCOUNT_CREATE)
   @Put()
   public async createUser(@Body() body: CreateUserBodyDto) {
-    emailAccountAtLeastOne(body)
+    emailPhoneAtLeastOne(body)
     return await this._userSrv.insertUser(body)
   }
 

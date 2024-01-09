@@ -40,7 +40,14 @@ export class User extends BaseTimeStamp implements IUser {
   @Column({ nullable: true, unique: true })
   email?: string
 
-  // @ApiProperty({ description: '密码（加密后）' })
+  @ApiPropertyOptional({
+    description: '手机号码',
+    example: '18888888888',
+  })
+  @Column({ nullable: true, unique: true })
+  phone?: string
+
+  @ApiPropertyOptional({ description: '密码' })
   @Column({ nullable: true, select: false })
   password?: string
 

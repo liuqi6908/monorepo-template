@@ -2,11 +2,12 @@ import type { IBasicResponse } from '../basic.interface'
 import type { IUser } from '../../entities/user.interface'
 import type { IPasswordDto } from '../../dto/password.interface'
 import type { IEmailOptionalDto } from '../../dto/email.interface'
+import type { IPhoneOptionalDto } from '../../dto/phone.interface'
 import type { IAccountOptionalDto } from '../../dto/account.interface'
 import type { ICodeVerifyDto } from '../../dto/code-verify.interface'
 
 /**
- * 根据 账号/邮箱 + 密码 登录
+ * 根据 账号/邮箱/手机号码 + 密码 登录
  * 请求参数
  */
 export interface ILoginByPasswordBodyDto
@@ -14,6 +15,7 @@ export interface ILoginByPasswordBodyDto
   IPasswordDto,
   IAccountOptionalDto,
   IEmailOptionalDto,
+  IPhoneOptionalDto,
   ICodeVerifyDto {}
 
 /**

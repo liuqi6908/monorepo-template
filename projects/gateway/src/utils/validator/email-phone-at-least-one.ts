@@ -1,7 +1,7 @@
 import { responseParamsError } from '../response/validate-exception-factory'
 
 /**
- * 检查参数中的 email 和 phone 是否至少有一个，如果没有，给客户端返回错误信息
+ * 检查参数中的 email和phone 是否至少有一个，如果没有，给客户端返回错误信息
  * @param info
  * @returns
  */

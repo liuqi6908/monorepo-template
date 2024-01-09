@@ -14,9 +14,17 @@ const _userErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '邮箱已被注册',
   },
+  [ErrorCode.USER_PHONE_NUMBER_REGISTERED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '手机号码已被注册',
+  },
   [ErrorCode.USER_EMAIL_NOT_REGISTERED]: {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '邮箱未注册',
+  },
+  [ErrorCode.USER_PHONE_NUMBER_NOT_REGISTERED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '手机号码未注册',
   },
   [ErrorCode.USER_EXISTED]: {
     httpStatus: HttpStatus.BAD_REQUEST,

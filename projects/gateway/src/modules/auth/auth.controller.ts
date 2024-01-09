@@ -6,7 +6,7 @@ import { Body, Controller, Get, Post, Put, Req } from '@nestjs/common'
 
 import { IsLogin } from 'src/guards/login.guard'
 import { ApiErrorResponse, ApiSuccessResponse } from 'src/utils/response'
-import { emailAccountAtLeastOne } from 'src/utils/validator/account-phone-at-least-one'
+import { accountEmailPhoneAtLeastOne } from 'src/utils/validator/account-email-phone-at-least-one'
 
 import { CodeService } from '../code/code.service'
 import { JwtAuthService } from '../jwt-auth/jwt-auth.service'
@@ -26,11 +26,11 @@ export class AuthController {
     private readonly _jwtAuthSrv: JwtAuthService,
   ) {}
 
-  @ApiOperation({ summary: '通过 账号/邮箱 + 密码 登录' })
+  @ApiOperation({ summary: '通过 账号/邮箱/手机号码 + 密码 登录' })
   @ApiSuccessResponse(LoginSuccessResDto)
   @Post('login/password')
   public async loginByPassword(@Body() body: LoginByPasswordBodyDto, @Req() req: FastifyRequest) {
-    emailAccountAtLeastOne(body)
+    accountEmailPhoneAtLeastOne(body)
     return await this._authSrv.loginByPassword(body, req.raw.ip)
   }
 

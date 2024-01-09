@@ -30,6 +30,10 @@ const _authErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '验证码错误',
   },
+  [ErrorCode.AUTH_PHONE_NUMBER_REGISTERED]: {
+    httpStatus: HttpStatus.FORBIDDEN,
+    message: '手机号码已注册',
+  },
   [ErrorCode.AUTH_EMAIL_REGISTERED]: {
     httpStatus: HttpStatus.FORBIDDEN,
     message: '邮箱已注册',
