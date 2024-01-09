@@ -6,6 +6,7 @@ import RequestDialog from './Dialog.vue'
 const emits = defineEmits(['loading'])
 
 const { width } = useWindowSize()
+const { app } = useSysConfig()
 const { requestStatus, queueLen, rejectReason, getDesktopRequest } = useDesktop()
 
 /** 驳回对话框 */
@@ -18,6 +19,8 @@ onBeforeMount(async () => {
   try {
     await getDesktopRequest()
   }
+  catch (e) {console.error(e);
+  }
   finally {
     emits('loading', false)
   }
@@ -29,7 +32,8 @@ onBeforeMount(async () => {
  */
 const processSvg = computed(() => {
   const w = (width.value >= 1284 ? 1284 : width.value <= APP_MIN_WIDTH ? APP_MIN_WIDTH : width.value) - 64
-  return request.replace(/width="(\d+)"/, `width="${w}"`)
+  return request.replace('智能云科研平台', app.value?.name ?? '')
+    .replace(/width="(\d+)"/, `width="${w}"`)
     .replace(/height="(\d+)"/, `height="${w / 1220 * 334}"`)
 })
 </script>

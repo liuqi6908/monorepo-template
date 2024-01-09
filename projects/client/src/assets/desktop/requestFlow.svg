@@ -21,8 +21,10 @@
 <text x="1014" y="117.6" fill="#025CB9" font-size="20px" font-weight="600">3</text>
 <text x="891.8" y="167.8" fill="black">
 <tspan>用户登录云桌面，并在云桌面中使用</tspan>
-<tspan x="948.2" dy="24">“智能云科研平台”</tspan>
 </text>
+<g style="transform: translateX(-50%); transform-box: fill-box;">
+<text x="1020.2" y="191.8" fill="black">“智能云科研平台”</text>
+</g>
 <path d="M1020 236.4L1014 230.4L1015.4 229L1020 233.6L1024.6 229L1026 230.4L1020 236.4Z" fill="#025CB9"/>
 <path d="M793.5 256.997C868.871 256.997 1020 256.997 1020 256.997L1020 201.5M1020 133.5L1020 147" stroke="#025CB9"/>
 <path d="M329 257L747 257" stroke="#025CB9"/>
