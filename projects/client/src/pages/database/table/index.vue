@@ -217,7 +217,7 @@ async function downloadData() {
         </div>
 
         <div text-primary-1>
-          引用规范：{{ rootData?.find(v => v.id === databaseId)?.reference || '暂无引用规范' }}
+          引用规范：{{ rootData?.find(v => v.id === databaseId)?.reference || '管理员正在配置中' }}
         </div>
       </div>
     </div>
