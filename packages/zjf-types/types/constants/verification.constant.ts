@@ -13,6 +13,10 @@ export const VERIFICATION_NUMBER_MAX = 20
 export const VERIFICATION_ID_CARD_MAX = 18
 /** 身份证号的最小长度 */
 export const VERIFICATION_ID_CARD_MIN = 18
+/** 真实姓名的最小长度 */
+export const VERIFICATION_NAME_MIN = 2
+/** 真实姓名的最大长度 */
+export const VERIFICATION_NAME_MAX = 20
 
 /** 身份认证上传文件大小限制 */
 export const VERIFICATION_UPLOAD_DFT_SIZE_LIMIT = 1024 * 1024 * 2

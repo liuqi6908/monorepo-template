@@ -2,6 +2,8 @@ import {
   VERIFICATION_COLLEGE_MAX,
   VERIFICATION_ID_CARD_MAX,
   VERIFICATION_ID_CARD_MIN,
+  VERIFICATION_NAME_MAX,
+  VERIFICATION_NAME_MIN,
   VERIFICATION_NUMBER_MAX,
   VERIFICATION_SCHOOL_MAX,
 } from 'zjf-types'
@@ -58,5 +60,9 @@ export function validateNumber(val?: string) {
 export function validateName(val?: string) {
   if (!val)
     return '请输入您的真实姓名'
+  if (val.length < VERIFICATION_NAME_MIN)
+    return `姓名长度不得小于 ${VERIFICATION_NAME_MIN}`
+  if (val.length > VERIFICATION_NAME_MAX)
+    return `姓名长度不得大于 ${VERIFICATION_NAME_MAX}`
   return ''
 }
