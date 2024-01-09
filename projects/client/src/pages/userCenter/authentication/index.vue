@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { isClient } from '@vueuse/core'
 import { VerificationStatus } from 'zjf-types'
 import { hideSensitiveInfo } from 'zjf-utils'
 import ChangeEmailDialog from '~/views/userCenter/authentication/ChangeEmail.dialog.vue'
@@ -6,6 +7,8 @@ import ChangePasswordDialog from '~/views/userCenter/authentication/ChangePasswo
 import SetPasswordDialog from '~/views/userCenter/authentication/SetPassword.dialog.vue'
 import VerificationDialog from '~/views/userCenter/authentication/Verification.dialog.vue'
 
+const { query } = useRoute()
+const $router = useRouter()
 const { userInfo, latestVerify, verifyStatus, getOwnProfile, getVerify } = useUser()
 
 /** 修改邮箱对话框 */
@@ -84,6 +87,19 @@ onBeforeMount(async () => {
     await getVerify()
   }
   finally {
+    if (Object.keys(query).find(v => v === 'verify') && isClient) {
+      nextTick(() => {
+        const el = document.querySelector('.verify-status')
+        if (el) {
+          el.scrollIntoView({
+            behavior: 'smooth',
+            block: 'end'
+          })
+        }
+        verifyDialog.value = true
+        $router.replace({ query: {} })
+      })
+    }
     loading.value = false
   }
 })
@@ -164,7 +180,7 @@ async function cancelAuth() {
       </div>
     </div>
     <!-- 认证状态 -->
-    <div flex="~ col gap6">
+    <div flex="~ col gap6" class="verify-status">
       <div flex="~ justify-center gap8">
         <VerifyStatus :status="verifyStatus" />
         <ZBtn

@@ -48,7 +48,11 @@ onBeforeMount(async () => {
           <VerifyStatus v-if="isLogin && verifyStatus" :status="verifyStatus" />
           <RouterLink
             v-if="!isLogin || verifyStatus !== VerificationStatus.PENDING"
-            :to="!isLogin ? '/auth/login' : '/userCenter/authentication'"
+            :to="
+              !isLogin
+              ? '/auth/login'
+              : '/userCenter/authentication?verify'
+            "
           >
             <ZBtn
               px="14.5!" size="big" right

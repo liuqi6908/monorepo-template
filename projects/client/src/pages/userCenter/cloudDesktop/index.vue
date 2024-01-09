@@ -61,7 +61,7 @@ const emptyLabel = computed(() => {
         <VerifyStatus v-if="verifyStatus" :status="verifyStatus" />
         <RouterLink
           v-if="verifyStatus !== VerificationStatus.PENDING"
-          to="/userCenter/authentication"
+          to="/userCenter/authentication?verify"
         >
           <ZBtn
             px="14.5!" size="big" right
