@@ -42,6 +42,10 @@ const _desktopErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '用户已分配了其他的云桌面',
   },
+  [ErrorCode.DESKTOP_RESOURCE_ALLOCATED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '云桌面资源已被分配完毕',
+  },
 }
 
 export default _desktopErrors

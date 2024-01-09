@@ -30,6 +30,12 @@ export class GetOwnDesktopReqResData implements IGetOwnDesktopReqResData {
     type: () => Desktop,
   })
   lastExpired?: Desktop
+
+  @ApiPropertyOptional({
+    description: '云桌面资源是否已经被分配完毕，当状态为 排队中 时存在',
+    type: Boolean,
+  })
+  isResourcesAllocated?: boolean
 }
 
 export class GetOwnDesktopReqResDto

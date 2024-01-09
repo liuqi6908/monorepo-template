@@ -24,6 +24,8 @@ export interface IConfigDto {
     acceptLimit?: string[]
     /** 上传提示信息 */
     hint?: string
+    /** 云桌面资源最大数量 */
+    max?: number
   }
 
   /** 外发配置 */

@@ -16,6 +16,8 @@ export interface IGetOwnDesktopReqResData {
   lastRejected?: IDesktopQueueHistory
   /** 用户上一次过期的云桌面，与 `lastRejected` 二选一 */
   lastExpired?: IDesktop
+  /** 云桌面资源是否已经被分配完毕，当状态为 排队中 时存在 */
+  isResourcesAllocated?: boolean
 }
 
 /**

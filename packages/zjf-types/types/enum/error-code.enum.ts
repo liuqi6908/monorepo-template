@@ -116,6 +116,8 @@ export enum ErrorCode {
   DESKTOP_ALREADY_ASSIGNED = 800009,
   /** 用户已分配了其他的云桌面 */
   DESKTOP_USER_ASSIGNED_OTHERS = 800010,
+  /** 云桌面资源已被分配完毕 */
+  DESKTOP_RESOURCE_ALLOCATED = 800011,
 
   // ---- 外发相关错误码 ----
   /** 当日的外发次数已达上限 */

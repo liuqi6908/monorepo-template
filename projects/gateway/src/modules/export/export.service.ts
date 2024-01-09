@@ -63,7 +63,7 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig<SysConfig.EXPORT>({ version: SysConfig.EXPORT })
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: SysConfig.EXPORT })
     const {
       sizeLimitSm = EXPORT_DFT_SM_SIZE_LIMIT,
       dailyLimit = EXPORT_DFT_SM_DAILY_LIMIT,
@@ -139,7 +139,7 @@ export class ExportService {
     if (!email)
       responseError(ErrorCode.USER_EMAIL_NOT_EXISTS)
 
-    const sysCfg = await this._sysCfgSrv.getConfig<SysConfig.EXPORT>({ version: SysConfig.EXPORT })
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: SysConfig.EXPORT })
     const { sizeLimitLg = EXPORT_DFT_LG_SIZE_LIMIT } = sysCfg || {}
     // 检查文件尺寸
     if (fileSize > sizeLimitLg)

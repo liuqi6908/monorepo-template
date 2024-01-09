@@ -1,7 +1,14 @@
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req } from '@nestjs/common'
 import { In } from 'typeorm'
-import { DesktopQueueHistoryStatus, DesktopQueueStatus, ErrorCode, PermissionType } from 'zjf-types'
+import {
+  DESKTOP_MAX_COUNT,
+  DesktopQueueHistoryStatus,
+  DesktopQueueStatus,
+  ErrorCode,
+  PermissionType,
+  SysConfig,
+} from 'zjf-types'
 
 import type { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
@@ -13,6 +20,7 @@ import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 
 import { NotifyService } from '../notify/notify.service'
+import { SysConfigService } from '../config/config.service'
 import { DesktopService } from './desktop.service'
 import { DesktopResDto } from './dto/desktop.res.dto'
 import { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
@@ -31,6 +39,7 @@ export class DesktopController {
     private readonly _desktopReqSrv: DesktopRequestService,
     private readonly _desktopHisSrv: DesktopQueueHistoryService,
     private readonly _zstackSrv: ZstackService,
+    private readonly _sysCfgSrv: SysConfigService,
   ) {}
 
   @ApiOperation({ summary: '判断当前客户端是否在云桌面内使用' })
@@ -45,13 +54,22 @@ export class DesktopController {
   @Put()
   public async createDesktop(@Body() body: CreateDesktopBodyDto) {
     try {
+      const sysCfg = await this._sysCfgSrv.getConfig({ version: SysConfig.DESKTOP })
+      const { max = DESKTOP_MAX_COUNT } = sysCfg || {}
+      const count = await this._desktopSrv.repo().count({
+        where: {
+          disabled: false,
+        },
+      })
+      if (count >= max)
+        responseError(ErrorCode.DESKTOP_RESOURCE_ALLOCATED)
       return await this._desktopSrv.createDesktop(body)
     }
     catch (e) {
       const sqlErr = parseSqlError(e)
       if (sqlErr === SqlError.DUPLICATE_ENTRY)
         responseError(ErrorCode.DESKTOP_ID_EXISTS)
-      responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
+      throw e
     }
   }
 

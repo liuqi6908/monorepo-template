@@ -1,6 +1,15 @@
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Get, Param, Post, Put, Req } from '@nestjs/common'
-import { DesktopQueueHistoryStatus, DesktopQueueStatus, ErrorCode, PermissionType } from 'zjf-types'
+import {
+  DESKTOP_MAX_COUNT,
+  DesktopQueueHistoryStatus,
+  DesktopQueueStatus,
+  ErrorCode,
+  PermissionType,
+  SysConfig,
+} from 'zjf-types'
+import { IsNull, Not } from 'typeorm'
+import type { IGetOwnDesktopReqResData } from 'zjf-types'
 
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { UserIdDto } from 'src/dto/id/user.dto'
@@ -13,6 +22,7 @@ import { ApiSuccessResponse, responseError } from 'src/utils/response'
 
 import { DesktopService } from '../desktop.service'
 import { DesktopQueueHistoryService } from '../desktop-queue-history/desktop-queue-history.service'
+import { SysConfigService } from '../../config/config.service'
 import { DesktopRequestService } from './desktop-request.service'
 import { GetOwnDesktopReqResDto } from './dto/get-own-desktop-req.res.dto'
 import { RejectDesktopReqBodyDto } from './dto/reject-desktop-req.body.dto'
@@ -25,6 +35,7 @@ export class DesktopRequestController {
     private readonly _desktopSrv: DesktopService,
     private readonly _desktopReqSrv: DesktopRequestService,
     private readonly _desktopReqHistorySrv: DesktopQueueHistoryService,
+    private readonly _sysCfgSrv: SysConfigService,
   ) {}
 
   @ApiOperation({ summary: '发起一个云桌面使用申请' })
@@ -99,7 +110,7 @@ export class DesktopRequestController {
         order: { expiredAt: 'DESC' },
       }) ?? null
 
-    const res: any = { queue, queueLength }
+    const res: IGetOwnDesktopReqResData = { queue, queueLength }
     if (lastRejected && lastExpired) {
       if (lastRejected.createdAt > lastExpired.expiredAt)
         res.lastRejected = lastRejected
@@ -111,6 +122,17 @@ export class DesktopRequestController {
     }
     else if (lastExpired) {
       res.lastExpired = lastExpired
+    }
+    if (queue?.status === DesktopQueueStatus.QUEUEING) {
+      const sysCfg = await this._sysCfgSrv.getConfig({ version: SysConfig.DESKTOP })
+      const { max = DESKTOP_MAX_COUNT } = sysCfg || {}
+      const count = await this._desktopSrv.repo().count({
+        where: {
+          disabled: false,
+          userId: Not(IsNull()),
+        },
+      })
+      res.isResourcesAllocated = count >= max
     }
     return res
   }

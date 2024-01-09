@@ -42,7 +42,7 @@ export class WorkController {
 
     const fileSize = buffer.byteLength
 
-    const sysCfg = await this._sysCfgSrv.getConfig<SysConfig.WORK>({ version: SysConfig.WORK })
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: SysConfig.WORK })
     const {
       sizeLimit = UPLOAD_WORK_DFT_SIZE_LIMIT,
       acceptLimit = UPLOAD_WORK_DFT_ACCEPT_LIMIT,
