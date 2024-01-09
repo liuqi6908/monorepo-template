@@ -7,7 +7,7 @@ const emits = defineEmits(['loading'])
 
 const { width } = useWindowSize()
 const { app } = useSysConfig()
-const { requestStatus, queueLen, rejectReason, getDesktopRequest } = useDesktop()
+const { requestStatus, queueLen, rejectReason, isAllocated, getDesktopRequest } = useDesktop()
 
 /** 驳回对话框 */
 const rejectDialog = ref(false)
@@ -69,7 +69,10 @@ const processSvg = computed(() => {
         </template>
         <!-- 排队中 -->
         <template v-else-if="requestStatus === DesktopQueueStatus.QUEUEING" >
-          <template v-if="queueLen">
+          <template v-if="isAllocated">
+            云桌面资源已被分配完毕，请耐心等待
+          </template>
+          <template v-else-if="queueLen">
             您正在排队中，前面有
             <span text="#F99E34" v-text="`${queueLen} 个`" />
             用户正在排队，请耐心等待

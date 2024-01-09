@@ -4,7 +4,7 @@ import DesktopOperate from '~/views/userCenter/cloudDesktop/DesktopOperate.vue'
 import DesktopInfo from '~/views/userCenter/cloudDesktop/DesktopInfo.vue'
 
 const { isVerify, verifyStatus, getOwnProfile, getVerify } = useUser()
-const { requestStatus, queueLen, rejectReason, getDesktopRequest, getVmInfo } = useDesktop()
+const { requestStatus, queueLen, rejectReason, isAllocated, getDesktopRequest, getVmInfo } = useDesktop()
 
 /** 加载中 */
 const loading = ref(false)
@@ -33,7 +33,9 @@ const emptyLabel = computed(() => {
   if (status === DesktopQueueStatus.PENDING)
     return '您的云桌面使用申请正在审核中，请耐心等待'
   if (status === DesktopQueueStatus.QUEUEING) {
-    if (queueLen.value)
+    if (isAllocated.value)
+      return '云桌面资源已被分配完毕，请耐心等待'
+    else if (queueLen.value)
       return `您正在排队中，前面有 ${queueLen.value}个 用户正在排队，请耐心等待`
     else
       return '管理员正在为您创建云桌面，请耐心等待并留意邮件通知'

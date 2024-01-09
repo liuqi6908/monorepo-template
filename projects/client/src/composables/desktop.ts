@@ -8,6 +8,8 @@ const requestStatus = ref<DesktopQueueStatus | DesktopQueueHistoryStatus>()
 const queueLen = ref<number>()
 /** 申请驳回理由 */
 const rejectReason = ref<string>()
+/** 云桌面资源是否已经被分配完毕 */
+const isAllocated = ref<boolean>()
 /** 云桌面信息 */
 const desktopInfo = ref<IDesktop>()
 /** 虚拟机信息 */
@@ -20,7 +22,7 @@ export function useDesktop() {
   async function getDesktopRequest() {
     const res = await getOwnDesktopRequestApi()
     if (res) {
-      const { lastExpired, lastRejected, queue, queueLength } = res
+      const { lastExpired, lastRejected, queue, queueLength, isResourcesAllocated } = res
       let status = queue?.status || lastRejected?.status || (lastExpired?.id ? DesktopQueueHistoryStatus.EXPIRED : undefined)
       if (status === DesktopQueueStatus.USING && !desktopInfo.value) {
         desktopInfo.value = await getOwnDesktopApi()
@@ -30,6 +32,7 @@ export function useDesktop() {
       requestStatus.value = status
       queueLen.value = queueLength ?? 0
       rejectReason.value = lastRejected?.rejectReason
+      isAllocated.value = isResourcesAllocated
     }
   }
 
@@ -46,6 +49,7 @@ export function useDesktop() {
     requestStatus,
     queueLen,
     rejectReason,
+    isAllocated,
     desktopInfo,
     vmInfo,
     getDesktopRequest,
