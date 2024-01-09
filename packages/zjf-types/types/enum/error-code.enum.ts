@@ -146,6 +146,10 @@ export enum ErrorCode {
   ROLE_NAME_IS_EXIST = 120004,
   /** 禁止更新root用户的权限 */
   ROLE_UPDATE_ROOT_ROLE = 120005,
+
+  // ---- 上传作品相关错误码 ----
+  /** 作品数量超出指定上限 */
+  WORK_QUANTITY_OVER_LIMIT = 130001,
 }
 
 export type ErrorMessageCollection = Partial<

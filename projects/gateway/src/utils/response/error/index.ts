@@ -9,6 +9,7 @@ import _roleErrors from './_role.error'
 import _suggestError from './_suggest.error'
 import _userErrors from './_user.error'
 import _verificationErrors from './_verification.error'
+import _work from './_work.error'
 
 export const errorMessages: ErrorMessageCollection = {
   ..._authErrors,
@@ -22,4 +23,5 @@ export const errorMessages: ErrorMessageCollection = {
   ..._suggestError,
   ..._userErrors,
   ..._verificationErrors,
+  ..._work,
 }

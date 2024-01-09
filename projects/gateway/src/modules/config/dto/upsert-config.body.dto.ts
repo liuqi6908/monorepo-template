@@ -3,6 +3,7 @@ import {
   APP_ICON,
   APP_NAME,
   APP_NAME_EN,
+  DESKTOP_MAX_COUNT,
   DESKTOP_REQUEST_DURATION_OPTION,
   DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
   DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
@@ -20,6 +21,7 @@ import {
   NAV_REQUEST_DESC,
   NAV_REQUEST_LABEL,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
+  UPLOAD_WORK_DFT_AMOUNT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
   UPLOAD_WORK_HINT,
   VERIFICATION_UPLOAD_DFT_ACCEPT_LIMIT,
@@ -53,6 +55,7 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
       amountLimit: DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
       acceptLimit: DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
       hint: DESKTOP_REQUEST_UPLOAD_HINT,
+      max: DESKTOP_MAX_COUNT,
     },
   })
   desktop?: IConfigDto[SysConfig.DESKTOP]
@@ -99,6 +102,7 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
       sizeLimit: UPLOAD_WORK_DFT_SIZE_LIMIT,
       acceptLimit: UPLOAD_WORK_DFT_ACCEPT_LIMIT,
       hint: UPLOAD_WORK_HINT,
+      amount: UPLOAD_WORK_DFT_AMOUNT_LIMIT,
     },
   })
   work?: IConfigDto[SysConfig.WORK]

@@ -5,6 +5,7 @@ import {
   PermissionType,
   SysConfig,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
+  UPLOAD_WORK_DFT_AMOUNT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
 } from 'zjf-types'
 
@@ -46,8 +47,22 @@ export class WorkController {
     const {
       sizeLimit = UPLOAD_WORK_DFT_SIZE_LIMIT,
       acceptLimit = UPLOAD_WORK_DFT_ACCEPT_LIMIT,
+      amount = UPLOAD_WORK_DFT_AMOUNT_LIMIT,
     } = sysCfg || {}
 
+    if (amount > 0) {
+      const count = await this._workSrv.repo().count({
+        where: {
+          userId: req.raw.user?.id,
+        },
+      })
+      if (count >= amount) {
+        responseError(
+          ErrorCode.WORK_QUANTITY_OVER_LIMIT,
+          `单个用户仅允许上传 ${amount} 个作品`,
+        )
+      }
+    }
     if (fileSize > sizeLimit)
       responseError(ErrorCode.FILE_TOO_LARGE)
     const filename: string = body.file.filename

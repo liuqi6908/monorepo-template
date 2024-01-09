@@ -78,5 +78,7 @@ export interface IConfigDto {
     acceptLimit?: string[]
     /** 上传提示信息 */
     hint?: string
+    /** 上传作品数量限制（0表示没有限制） */
+    amount?: number
   }
 }
