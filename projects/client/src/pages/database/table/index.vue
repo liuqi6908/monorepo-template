@@ -52,7 +52,10 @@ const previewCols: QTableProps['columns'] = reactive([])
 const previewRows: any[] = reactive([])
 
 /** 是否预购 */
-const isPurchased = computed(() => rootList.value?.find(v => v.id === rootId.value)?.nameZH.includes('预购'))
+const isPurchased = computed(() => (
+  getEnvVariable('VITE_DATA_PRE_PURCHASE')
+  && rootList.value?.find(v => v.id === rootId.value)?.nameZH.includes('预购')
+))
 /** 是否申请了云桌面 */
 const isApplyDesktop = ref(false)
 /** 表格文件是否存在 */
