@@ -12,10 +12,7 @@ const props = defineProps<Props>()
 const emits = defineEmits(['update:modelValue', 'queryWorks'])
 
 const value = useVModel(props, 'modelValue')
-const { app, works, getWorkConfig } = useSysConfig()
-
-/** 加载中 */
-const loading = ref(false)
+const { app, works } = useSysConfig()
 
 /** 题目 */
 const title = ref<string>()
@@ -50,12 +47,6 @@ watch(
 /** 禁用提交 */
 const disableConfirm = computed(() => !title.value || !author.value || !file.value || !checked.value)
 
-onBeforeMount(async () => {
-  loading.value = true
-  await getWorkConfig()
-  loading.value = false
-})
-
 /**
  * 新增作品
  */
@@ -89,7 +80,6 @@ async function confirm() {
     footer
     confirm-text="提交"
     :disable-confirm="disableConfirm"
-    :loading="loading"
     @ok="confirm"
   >
     <div flex="~ col gap1">

@@ -5,6 +5,8 @@ import type { IWork } from 'zjf-types'
 import moment from 'moment'
 import AddWorksDialog from '~/views/userCenter/myWorks/AddWorks.dialog.vue'
 
+const { works, getWorkConfig } = useSysConfig()
+
 /** 加载中 */
 const loading = ref(false)
 /** 增加/编辑 作品对话框 */
@@ -57,6 +59,7 @@ const tableRows = ref<(IWork)[]>()
 onBeforeMount(() => {
   tableCols.forEach(v => v.align = 'center')
   queryWorks()
+  getWorkConfig()
 })
 
 /**
@@ -121,7 +124,14 @@ async function deleteWork() {
       captions="点击左上角增加作品按钮，可以上传作品"
     />
     <div v-else flex="~ col gap3">
-      我的作品
+      <div font-600 flex="~ gap1">
+        我的作品
+        <div
+          v-if="works?.amount"
+          font-400 text-grey-6
+          v-text="`（作品上传数量限制：${tableRows?.length}/${works.amount}）`"
+        />
+      </div>
       <ZTable
         :cols="tableCols"
         :rows="tableRows"

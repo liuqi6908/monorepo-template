@@ -4,6 +4,7 @@ import {
   APP_ICON,
   APP_NAME,
   APP_NAME_EN,
+  DESKTOP_MAX_COUNT,
   DESKTOP_REQUEST_DURATION_OPTION,
   DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
   DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
@@ -22,6 +23,7 @@ import {
   NAV_REQUEST_LABEL,
   SysConfig,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
+  UPLOAD_WORK_DFT_AMOUNT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
   UPLOAD_WORK_HINT,
   VERIFICATION_UPLOAD_DFT_ACCEPT_LIMIT,
@@ -72,6 +74,7 @@ export function useSysConfig() {
       amountLimit = DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
       acceptLimit = DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
       hint = DESKTOP_REQUEST_UPLOAD_HINT,
+      max = DESKTOP_MAX_COUNT,
     } = await getConfigApi(SysConfig.DESKTOP) || {}
     desktop.value = {
       duration,
@@ -79,6 +82,7 @@ export function useSysConfig() {
       amountLimit,
       acceptLimit,
       hint,
+      max,
     }
   }
 
@@ -158,11 +162,13 @@ export function useSysConfig() {
       sizeLimit = UPLOAD_WORK_DFT_SIZE_LIMIT,
       acceptLimit = UPLOAD_WORK_DFT_ACCEPT_LIMIT,
       hint = UPLOAD_WORK_HINT,
+      amount = UPLOAD_WORK_DFT_AMOUNT_LIMIT,
     } = await getConfigApi(SysConfig.WORK) || {}
     works.value = {
       sizeLimit,
       acceptLimit,
       hint,
+      amount,
     }
   }
 
