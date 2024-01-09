@@ -17,7 +17,7 @@ const value = computed(() => $route.path)
         <div pt10>
           <ZMenu
             v-model="value"
-            :list="USER_MENU_LIST.filter(v => v.to).map(({ name, to }) => ({
+            :list="USER_MENU_LIST.filter(v => v.userCenter).map(({ name, to }) => ({
               id: to!,
               label: name,
               to,
