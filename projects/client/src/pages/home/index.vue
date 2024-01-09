@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CmsJson } from 'shared/types/cms.interface'
+import HomeExpand from '~/views/home/HomeExpand.vue'
 
 const { getCms, getComponentById } = useCms()
 
@@ -14,10 +15,11 @@ const cmsList = reactive(CMS_CONFIG.filter((_, i) => i < 2).map((v) => {
     props: [] as CmsJson[] | undefined,
   }
 }))
-/** 首页拓展参数 */
-const expandProps = ref<CmsJson[]>()
 /** 问答管理参数 */
 const questionProps = ref<CmsJson[]>()
+
+/** 是否展示首页拓展 */
+const isShowHomeExpand = getEnvVariable('VITE_HOME_EXPAND')
 
 onBeforeMount(async () => {
   loading.value = true
@@ -25,7 +27,6 @@ onBeforeMount(async () => {
     cmsList.forEach(async (item) => {
       item.props = await getCms(item.id, true)
     })
-    expandProps.value = await getCms('homeExpand', true)
     questionProps.value = await getCms('question', true)
   }
   finally {
@@ -46,12 +47,7 @@ onBeforeMount(async () => {
     />
 
     <!-- 首页拓展 -->
-    <component
-      :is="getComponentById(item.componentId)"
-      v-for="(item, index) in expandProps"
-      :key="index"
-      :list="[item]"
-    />
+    <HomeExpand v-if="isShowHomeExpand" />
 
     <!-- 常见问题 -->
     <div py20 bg="grey-2">

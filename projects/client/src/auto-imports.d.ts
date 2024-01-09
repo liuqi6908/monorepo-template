@@ -88,6 +88,7 @@ declare global {
   const getDesktopRequestAttachmentsUrl: typeof import('../../shared/api/file')['getDesktopRequestAttachmentsUrl']
   const getDownloadExportLgFileUrl: typeof import('../../shared/api/exportLg')['getDownloadExportLgFileUrl']
   const getDownloadExportSmFileUrl: typeof import('../../shared/api/exportSm')['getDownloadExportSmFileUrl']
+  const getEnvVariable: typeof import('../../shared/utils/env')['getEnvVariable']
   const getFieldsByTableApi: typeof import('../../shared/api/data')['getFieldsByTableApi']
   const getFolderFilesApi: typeof import('../../shared/api/file')['getFolderFilesApi']
   const getHostAllocationApi: typeof import('../../shared/api/desktopHost')['getHostAllocationApi']
@@ -523,6 +524,7 @@ declare module 'vue' {
     readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
     readonly getDownloadExportLgFileUrl: UnwrapRef<typeof import('../../shared/api/exportLg')['getDownloadExportLgFileUrl']>
     readonly getDownloadExportSmFileUrl: UnwrapRef<typeof import('../../shared/api/exportSm')['getDownloadExportSmFileUrl']>
+    readonly getEnvVariable: UnwrapRef<typeof import('../../shared/utils/env')['getEnvVariable']>
     readonly getFieldsByTableApi: UnwrapRef<typeof import('../../shared/api/data')['getFieldsByTableApi']>
     readonly getFolderFilesApi: UnwrapRef<typeof import('../../shared/api/file')['getFolderFilesApi']>
     readonly getHostAllocationApi: UnwrapRef<typeof import('../../shared/api/desktopHost')['getHostAllocationApi']>
@@ -951,6 +953,7 @@ declare module '@vue/runtime-core' {
     readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
     readonly getDownloadExportLgFileUrl: UnwrapRef<typeof import('../../shared/api/exportLg')['getDownloadExportLgFileUrl']>
     readonly getDownloadExportSmFileUrl: UnwrapRef<typeof import('../../shared/api/exportSm')['getDownloadExportSmFileUrl']>
+    readonly getEnvVariable: UnwrapRef<typeof import('../../shared/utils/env')['getEnvVariable']>
     readonly getFieldsByTableApi: UnwrapRef<typeof import('../../shared/api/data')['getFieldsByTableApi']>
     readonly getFolderFilesApi: UnwrapRef<typeof import('../../shared/api/file')['getFolderFilesApi']>
     readonly getHostAllocationApi: UnwrapRef<typeof import('../../shared/api/desktopHost')['getHostAllocationApi']>

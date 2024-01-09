@@ -20,7 +20,6 @@ export default ({ mode }: any) => {
   }
 
   return defineConfig({
-    envDir: './shared/.env',
     base: process.env.VITE_BASE_CLIENT,
     define: {
       'process.env': {},

@@ -8,6 +8,7 @@ const { app, getAppConfig } = useSysConfig()
 const { el, scrollTo } = useScrollApp()
 
 onBeforeMount(async () => {
+  // 设置网站标题和logo
   await getAppConfig()
   useHead({
     title: app.value?.name,
@@ -26,6 +27,7 @@ onBeforeMount(async () => {
   })
 })
 
+/** 跳转路由滚动页面到顶部 */
 watch(
   () => $route.name,
   () => {
@@ -33,27 +35,28 @@ watch(
   },
 )
 
+/** 监听窗口大小，缩放页面 */
 watch(
   width,
   (newVal) => {
-  if (isClient) {
-    nextTick(() => {
-      const body = document.body
-      if (body) {
-        if (newVal < APP_MIN_WIDTH) {
-          body.style.transform = `scale(${newVal / APP_MIN_WIDTH})`
-          body.style.width = `${APP_MIN_WIDTH / newVal * 100}%`
-          body.style.height = `${APP_MIN_WIDTH / newVal * 100}%`
+    if (isClient) {
+      nextTick(() => {
+        const body = document.body
+        if (body) {
+          if (newVal < APP_MIN_WIDTH) {
+            body.style.transform = `scale(${newVal / APP_MIN_WIDTH})`
+            body.style.width = `${APP_MIN_WIDTH / newVal * 100}%`
+            body.style.height = `${APP_MIN_WIDTH / newVal * 100}%`
+          }
+          else {
+            body.style.transform = ''
+            body.style.width = '100%'
+            body.style.height = '100%'
+          }
         }
-        else {
-          body.style.transform = ''
-          body.style.width = '100%'
-          body.style.height = '100%'
-        }
-      }
-    })
-  }
-},
+      })
+    }
+  },
   {
     immediate: true,
   },
