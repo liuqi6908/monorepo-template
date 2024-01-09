@@ -65,7 +65,8 @@ defineExpose({
   >
     <template #append>
       <div
-        w30 h10 cursor-pointer flex-center
+        w36 h12 cursor-pointer flex-center
+        relative left-3
         :bg="dark ? 'white-2' : 'primary-1/12'"
         @click="getCaptchaImg"
       >
