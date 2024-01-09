@@ -65,7 +65,6 @@ export class AuthController {
       size: 6,
       width: 120,
       height: 40,
-      color: true,
       noise: 3,
     })
     const { bizId } = await this._codeSrv.createCaptcha(ip, captcha.text)

@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { onBeforeMount, ref } from 'vue'
-import { useVModel } from '@vueuse/core'
+import { useVModel, isClient } from '@vueuse/core'
 import { getCaptchaImgApi } from '../../api/auth'
 import ZInput from './ZInput.vue'
 import type { ZInputProps } from './ZInput.vue'
@@ -33,7 +33,7 @@ async function getCaptchaImg() {
   loading.value = true
   try {
     const res = await getCaptchaImgApi()
-    if (res) {
+    if (res && isClient) {
       emits('update:bizId', res.bizId)
       img.value = res.img
     }
@@ -72,8 +72,19 @@ defineExpose({
         <div v-if="!img" text-base font-400>
           获取验证码
         </div>
-        <div v-else v-html="img" />
+        <div v-else class="captcha" v-html="img" />
       </div>
     </template>
   </ZInput>
 </template>
+
+<style lang="scss" scoped>
+.captcha {
+  :deep(svg) {
+    path[fill]:not([fill="none"]) {
+      fill: black;
+      stroke: black;
+    }
+  }
+}
+</style>
