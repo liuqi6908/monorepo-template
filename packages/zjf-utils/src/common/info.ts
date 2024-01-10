@@ -1,6 +1,8 @@
+import { validateEmail, validatePhone } from './validator'
+
 /**
  * 隐藏敏感信息
- * @param info 需处理的信息（邮箱/身份证号/姓名）
+ * @param info 需处理的信息（邮箱/手机号/身份证号/姓名）
  * @returns 隐藏后的信息
  */
 export function hideSensitiveInfo(info?: string) {
@@ -9,7 +11,7 @@ export function hideSensitiveInfo(info?: string) {
 
   let result = ''
   // 邮箱
-  if (info.includes('@') && !info.startsWith('@') && !info.endsWith('@')) {
+  if (!validateEmail(info)) {
     const atIndex = info.indexOf('@')
     if (atIndex) {
       const username = info.slice(0, atIndex)
@@ -23,6 +25,10 @@ export function hideSensitiveInfo(info?: string) {
         hiddenUsername = `${username.slice(0, 1)}*`
       result = `${hiddenUsername}@${domain}`
     }
+  }
+  // 手机号
+  else if (!validatePhone(info)) {
+    result = `${info.slice(0, 3)}****${info.slice(info.length - 4)}`
   }
   // 身份证号
   else if (/^(\d{17}[\dXx])$/.test(info)) {

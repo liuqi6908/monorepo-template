@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { validateEmail, validatePhone, validatePassword } from 'zjf-utils'
+import { validateEmail, validatePhone } from 'zjf-utils'
 import { CodeAction, PhoneCodeAction } from 'zjf-types'
-import type { IUpdatePasswordByEmailCodeBodyDto, IUpdatePasswordByPhoneCodeBodyDto } from 'zjf-types'
+import type { ILoginByEmailCodeBodyDto, ILoginByPhoneCodeBodyDto } from 'zjf-types'
 
-const { loading, isPhone, updatePasswordByEmailCode, updatePasswordByPhoneCode } = useUser()
+const { loading, isPhone, loginByEmailCode, loginByPhoneCode } = useUser()
 
 /** 邮箱 */
 const email = ref('')
@@ -13,23 +13,17 @@ const phone = ref('')
 const code = ref('')
 /** 验证校验码 */
 const bizId = ref('')
-/** 密码 */
-const password = ref('')
-/** 确认密码 */
-const repeatPassword = ref('')
 /** 找回类型（true：邮箱找回，false：手机号找回） */
 const type = ref(true)
 
 /** 禁用提交 */
-const disable = computed(() => {
-  return loading.value
-    || (type.value && !!validateEmail(email.value))
-    || (!type.value && !!validatePhone(phone.value))
-    || code.value.length !== 6
-    || !bizId.value
-    || !!validatePassword(password.value)
-    || password.value !== repeatPassword.value
-})
+const disable = computed(() => (
+  loading.value
+  || (type.value && !!validateEmail(email.value))
+  || (!type.value && !!validatePhone(phone.value))
+  || code.value.length !== 6
+  || !bizId.value
+))
 
 /** 提交表单 */
 const formArg = computed(() => {
@@ -38,21 +32,20 @@ const formArg = computed(() => {
     ...obj,
     code: code.value,
     bizId: bizId.value,
-    password: password.value
   }
 })
 
 /**
- * 找回密码
+ * 验证码登录
  */
 function confirm() {
   if (disable.value)
     return
 
   if (type.value)
-    updatePasswordByEmailCode(formArg.value as IUpdatePasswordByEmailCodeBodyDto)
+    loginByEmailCode(formArg.value as ILoginByEmailCodeBodyDto)
   else
-    updatePasswordByPhoneCode(formArg.value as IUpdatePasswordByPhoneCodeBodyDto)
+    loginByPhoneCode(formArg.value as ILoginByPhoneCodeBodyDto)
 }
 </script>
 
@@ -66,7 +59,7 @@ function confirm() {
       >
         <div absolute-y-center left-0 text="xl grey-1" i-mingcute:left-line />
       </RouterLink>
-      {{ type ? '邮箱' : '手机号' }}找回
+      {{ type ? '邮箱' : '手机号' }}登录
     </h2>
     <div flex="~ col gap10">
       <div flex="~ col gap1">
@@ -99,45 +92,23 @@ function confirm() {
           v-model:biz-id="bizId"
           :email="email"
           :phone="phone"
-          :action="type ? CodeAction.CHANGE_PASSWORD : PhoneCodeAction.CHANGE_PASSWORD"
+          :action="type ? CodeAction.LOGIN : PhoneCodeAction.LOGIN"
           :type="type"
           dark
-        />
-        <ZInput
-          v-model="password"
-          label="密码"
-          placeholder="请输入密码"
-          dark password
-          :params="{
-            rules: [
-              (val: string) => validatePassword(val) || true
-            ]
-          }"
-        />
-        <ZInput
-          v-model="repeatPassword"
-          label="确认密码"
-          placeholder="请确认密码"
-          dark password
-          :params="{
-            rules: [
-              (val: string) => val === password || '两次密码不一致'
-            ],
-            reactiveRules: true
-          }"
+          @keydown.enter="confirm"
         />
         <div
           v-if="isPhone"
           cursor-pointer self-end font-400
           @click="type = !type"
-          v-text="`切换${type ? '手机号' : '邮箱'}找回`"
+          v-text="`切换${type ? '手机号' : '邮箱'}登录`"
         />
       </div>
       <ZBtn
         size="big"
         color="grey-1"
         text-color="primary-1"
-        label="完成"
+        label="登录"
         :disable="disable"
         @click="confirm"
       />

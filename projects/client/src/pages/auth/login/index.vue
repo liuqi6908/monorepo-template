@@ -83,8 +83,8 @@ async function login() {
       <div flex="~ col">
         <ZInput
           v-model="userCode"
-          :label="`账号 / 邮箱${isPhone && ' / 手机号'}`"
-          :placeholder="`请输入用户名/邮箱${isPhone && '/手机号'}`"
+          :label="`账号 / 邮箱${isPhone ? ' / 手机号' : ''}`"
+          :placeholder="`请输入用户名/邮箱${isPhone ? '/手机号' : ''}`"
           dark mb6
         />
         <ZInput
@@ -123,7 +123,7 @@ async function login() {
           <RouterLink
             text-grey-1
             :to="{
-              path: '/auth/loginByEmail'
+              path: '/auth/loginByCode'
             }"
             v-text="'使用验证码登录'"
           />

@@ -3,16 +3,19 @@ import { isClient } from '@vueuse/core'
 import { VerificationStatus } from 'zjf-types'
 import { hideSensitiveInfo } from 'zjf-utils'
 import ChangeEmailDialog from '~/views/userCenter/authentication/ChangeEmail.dialog.vue'
+import ChangePhoneDialog from '~/views/userCenter/authentication/ChangePhone.dialog.vue'
 import ChangePasswordDialog from '~/views/userCenter/authentication/ChangePassword.dialog.vue'
 import SetPasswordDialog from '~/views/userCenter/authentication/SetPassword.dialog.vue'
 import VerificationDialog from '~/views/userCenter/authentication/Verification.dialog.vue'
 
 const { query } = useRoute()
 const $router = useRouter()
-const { userInfo, latestVerify, verifyStatus, getOwnProfile, getVerify } = useUser()
+const { userInfo, latestVerify, verifyStatus, isPhone, getOwnProfile, getVerify } = useUser()
 
 /** 修改邮箱对话框 */
 const changeEmail = ref(false)
+/** 修改手机号对话框 */
+const changePhone = ref(false)
 /** 修改密码对话框 */
 const changePassword = ref(false)
 /** 设置密码对话框 */
@@ -33,6 +36,12 @@ const baseInfo = computed(() => ({
     caption: '可用于接收平台信息',
     val: hideSensitiveInfo(userInfo.value?.email),
     active: () => changeEmail.value = true,
+  },
+  phone: isPhone.value && {
+    label: '手机号',
+    caption: '可用于登录平台',
+    val: hideSensitiveInfo(userInfo.value?.phone),
+    active: () => changePhone.value = true,
   },
   password: {
     label: '密码',
@@ -136,29 +145,27 @@ async function cancelAuth() {
           基础信息
         </h4>
         <div flex="~ col gap8">
-          <div
-            v-for="(item, index) in baseInfo"
-            :key="index"
-            flex="~ items-end gap10"
-          >
-            <ReadonlyInput
-              :model-value="item.val"
-              :label="item.label"
-              :caption="`（${item.caption}）`"
-              flex-1 w0
-            />
-            <div w20>
-              <ZBtn
-                v-if="item.active"
-                :label="item.val ? '修改' : '设置'" size="big"
-                text-color="primary-1"
-                :params="{
-                  outline: true,
-                }"
-                @click="item.active"
+          <template v-for="item in baseInfo">
+            <div v-if="item" flex="~ items-end gap10">
+              <ReadonlyInput
+                :model-value="item.val"
+                :label="item.label"
+                :caption="`（${item.caption}）`"
+                flex-1 w0
               />
+              <div w20>
+                <ZBtn
+                  v-if="item.active"
+                  :label="item.val ? '修改' : '设置'" size="big"
+                  text-color="primary-1"
+                  :params="{
+                    outline: true,
+                  }"
+                  @click="item.active"
+                />
+              </div>
             </div>
-          </div>
+          </template>
         </div>
       </div>
       <div h1px bg-grey-3 />
@@ -215,6 +222,8 @@ async function cancelAuth() {
 
     <!-- 修改邮箱对话框 -->
     <ChangeEmailDialog v-model="changeEmail" />
+    <!-- 修改手机号对话框 -->
+    <ChangePhoneDialog v-model="changePhone" />
     <!-- 修改密码对话框 -->
     <ChangePasswordDialog v-model="changePassword" />
     <!-- 设置密码对话框 -->

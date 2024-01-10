@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
-import { CodeAction } from 'zjf-types'
-import { validatePassword } from 'zjf-utils'
+import { CodeAction, PhoneCodeAction } from 'zjf-types'
+import { validatePassword, validateEmail, validatePhone } from 'zjf-utils'
 
 const props = defineProps<{
   modelValue?: boolean
@@ -9,7 +9,7 @@ const props = defineProps<{
 defineEmits(['update:modelValue'])
 
 const value = useVModel(props, 'modelValue')
-const { userInfo } = useUser()
+const { userInfo, isPhone } = useUser()
 
 /** 新密码 */
 const newPassword = ref('')
@@ -20,14 +20,16 @@ const code = ref('')
 /** 邮箱验证校验码 */
 const bizId = ref('')
 
-/** 修改方式（true: 邮箱验证码、false: 旧密码） */
-const type = ref(true)
+/** 修改方式（0: 邮箱验证码、1手机验证码、2旧密码） */
+const type = ref(0)
 
 /** 禁用提交 */
 const disable = computed(() => (
   !!validatePassword(newPassword.value)
-  || (type.value && (code.value.length !== 6 || !bizId.value))
-  || (!type.value && !!validatePassword(oldPassword.value))
+  || ((type.value === 0 || type.value === 1) && (code.value.length !== 6 || !bizId.value))
+  || (type.value === 0 && !!validateEmail(userInfo.value?.email ?? ''))
+  || (type.value === 1 && !!validatePhone(userInfo.value?.phone ?? ''))
+  || (type.value === 2 && !!validatePassword(oldPassword.value))
 ))
 
 /**
@@ -38,9 +40,17 @@ async function confirm() {
     return
 
   let res
-  if (type.value) {
+  if (type.value === 0) {
     res = await updateOwnPasswordByEmailCodeApi({
       email: userInfo.value?.email!,
+      code: code.value,
+      bizId: bizId.value,
+      password: newPassword.value,
+    })
+  }
+  else if (type.value === 1) {
+    res = await updateOwnPasswordByPhoneCodeApi({
+      phone: userInfo.value?.phone!,
       code: code.value,
       bizId: bizId.value,
       password: newPassword.value,
@@ -59,13 +69,35 @@ async function confirm() {
     })
   }
 }
+
+/**
+ * 切换修改方式
+ */
+function changeType() {
+  if (type.value === 0) {
+    if (isPhone.value)
+      type.value = 1
+    else
+      type.value = 2
+  }
+  else if (type.value === 1) {
+    type.value = 2
+  }
+  else {
+    type.value = 0
+  }
+}
 </script>
 
 <template>
   <ZDialog
     v-model="value"
     title="修改密码"
-    :caption="`（通过${type ? '邮箱验证码' : '原密码'}修改）`"
+    :caption="`（通过${
+      type === 0
+        ? '邮箱验证码'
+        : type === 1 ? '手机验证码': '原密码'
+    }修改）`"
     :wrapper-style="{
       width: '488px',
     }"
@@ -87,11 +119,13 @@ async function confirm() {
         }"
       />
       <SMSInput
-        v-if="type"
+        v-if="type === 0 || type === 1"
         v-model="code"
         v-model:biz-id="bizId"
-        :email="userInfo?.email || ''"
-        :action="CodeAction.CHANGE_PASSWORD"
+        :email="userInfo?.email"
+        :phone="userInfo?.phone"
+        :action="type ? PhoneCodeAction.CHANGE_PASSWORD : CodeAction.CHANGE_PASSWORD"
+        :type="!type"
       />
       <ZInput
         v-else
@@ -107,9 +141,14 @@ async function confirm() {
       />
       <div
         text="sm primary-1" self-end cursor-pointer
-        @click="type = !type"
+        @click="changeType"
       >
-        切换{{ type ? '原密码' : '邮箱验证码' }}修改
+        切换{{
+          type === 0 && isPhone
+            ? '手机验证码'
+            : type === 0 && !isPhone || type === 1
+              ? '原密码' : '邮箱验证码'
+        }}修改
       </div>
     </div>
   </ZDialog>
