@@ -1,4 +1,5 @@
 import * as path from 'node:path'
+import * as dotenvFlow from 'dotenv-flow'
 import { validatePath } from '@catsjuice/utils'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
@@ -51,11 +52,8 @@ async function bootstrap() {
   globalThis.prefix = globalPrefix
   globalThis.version = packageJson.version
 
-  // enable cors
-  app.enableCors({
-    origin: ['https://r.qiyandata.com'],
-    methods: 'POST',
-  })
+  // add env
+  dotenvFlow.config({ path: '../shared' })
 
   // Start server
   await app.listen(Number.parseInt(cfgSrv.get('SERVER_PORT')) || 3000, '::')
