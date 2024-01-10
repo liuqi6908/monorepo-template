@@ -16,6 +16,7 @@ import { LoginSuccessResDto } from './dto/login-success.res.dto'
 import { LoginByEmailLinkDto } from './dto/login-by-email-link.body.dto'
 import { LoginByPasswordBodyDto } from './dto/login-by-password.body.dto'
 import { LoginByEmailCodeBodyDto } from './dto/login-by-email-code.body.dto'
+import { LoginByPhoneCodeBodyDto } from './dto/login-by-phone-code.body.dto'
 
 @ApiTags('Auth | 身份验证')
 @Controller('auth')
@@ -39,6 +40,13 @@ export class AuthController {
   @Post('login/email/code')
   public async loginByEmailCode(@Body() body: LoginByEmailCodeBodyDto) {
     return await this._authSrv.loginByEmailCode(body)
+  }
+
+  @ApiOperation({ summary: '通过手机号码 + 验证码 登录' })
+  @ApiSuccessResponse(LoginSuccessResDto)
+  @Post('login/phone/code')
+  public async loginByPhoneCode(@Body() body: LoginByPhoneCodeBodyDto) {
+    return await this._authSrv.loginByPhoneCode(body)
   }
 
   @Throttle(1, 30)

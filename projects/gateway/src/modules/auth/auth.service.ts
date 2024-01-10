@@ -3,7 +3,7 @@ import { objectOmit } from '@catsjuice/utils'
 import { InjectRepository } from '@nestjs/typeorm'
 import { LessThan, MoreThan, Repository } from 'typeorm'
 import { Inject, Injectable, forwardRef } from '@nestjs/common'
-import { CodeAction, ErrorCode } from 'zjf-types'
+import { CodeAction, ErrorCode, PhoneCodeAction } from 'zjf-types'
 import type { User } from 'src/entities/user'
 
 import { Login } from 'src/entities/login'
@@ -18,8 +18,9 @@ import { JwtAuthService } from '../jwt-auth/jwt-auth.service'
 
 import type { LoginByPasswordBodyDto } from './dto/login-by-password.body.dto'
 import type { RegisterBodyDto } from './dto/register.body.dto'
-import type { LoginByEmailCodeBodyDto } from './dto/login-by-email-code.body.dto'
 import type { LoginByEmailLinkDto } from './dto/login-by-email-link.body.dto'
+import type { LoginByEmailCodeBodyDto } from './dto/login-by-email-code.body.dto'
+import type { LoginByPhoneCodeBodyDto } from './dto/login-by-phone-code.body.dto'
 
 @Injectable()
 export class AuthService {
@@ -100,6 +101,27 @@ export class AuthService {
       .getOne()
     if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
+    if (user.isDeleted)
+      responseError(ErrorCode.AUTH_ACCOUNT_IS_DELETED)
+
+    return await this.signLoginTicket(user)
+  }
+
+  /**
+   * 通过手机号码验证码登录
+   * @param body
+   * @returns
+   */
+  public async loginByPhoneCode(body: LoginByPhoneCodeBodyDto) {
+    const { phone, bizId, code } = body
+    await this._codeSrv.verifyWithError(bizId, [phone, PhoneCodeAction.LOGIN, code])
+
+    const user = await this._userSrv.qb()
+      .addSelect('u.isDeleted')
+      .where('phone = :phone', { phone })
+      .getOne()
+    if (!user)
+      responseError(ErrorCode.AUTH_PHONE_NUMBER_NOT_REGISTERED)
     if (user.isDeleted)
       responseError(ErrorCode.AUTH_ACCOUNT_IS_DELETED)
 

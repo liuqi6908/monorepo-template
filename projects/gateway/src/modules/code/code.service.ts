@@ -66,7 +66,7 @@ export class CodeService {
    */
   public async verifyCode(
     bizId: string,
-    compareInfo: [string, CodeAction, string],
+    compareInfo: [string, CodeAction | PhoneCodeAction, string],
     deleteAfterVerify = true,
   ) {
     const client = await this._redisSrv.getClient(RedisType.CODE)
