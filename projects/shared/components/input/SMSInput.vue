@@ -4,7 +4,7 @@ import { useIntervalFn, useVModel } from '@vueuse/core'
 import { Notify } from 'quasar'
 import type { CodeAction } from 'zjf-types'
 import { pick, validateEmail } from 'zjf-utils'
-import { sendCodeApi } from '../../api/email'
+import { sendEmailCodeApi } from '../../api/email'
 import ZInput from './ZInput.vue'
 import type { ZInputProps } from './ZInput.vue'
 
@@ -43,7 +43,7 @@ async function getSmsCode() {
 
   loading.value = true
   try {
-    const res = await sendCodeApi(pick(props, 'email', 'action'))
+    const res = await sendEmailCodeApi(pick(props, 'email', 'action'))
     if (res) {
       Notify.create({
         type: 'success',

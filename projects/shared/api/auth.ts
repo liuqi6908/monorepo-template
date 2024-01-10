@@ -2,6 +2,7 @@ import type {
   ILoginByEmailCodeBodyDto,
   ILoginByEmailLinkDto,
   ILoginByPasswordBodyDto,
+  ILoginByPhoneCodeBodyDto,
   ILoginSuccessResData,
   IRegisterBodyDto,
 } from 'zjf-types'
@@ -11,7 +12,7 @@ import { authToken } from '../composables/user'
 const { $get, $post, $put } = useRequest()
 
 /**
- * 通过 账号/邮箱 + 密码 登录
+ * 通过 账号/邮箱/手机号码 + 密码 登录
  */
 export function loginByPasswordApi(body: ILoginByPasswordBodyDto) {
   return $post<ILoginSuccessResData>('/auth/login/password', body)
@@ -22,6 +23,13 @@ export function loginByPasswordApi(body: ILoginByPasswordBodyDto) {
  */
 export function loginByEmailCodeApi(body: ILoginByEmailCodeBodyDto) {
   return $post<ILoginSuccessResData>('/auth/login/email/code', body)
+}
+
+/**
+ * 通过 手机号码 + 验证码 登录
+ */
+export function loginByPhoneCodeApi(body: ILoginByPhoneCodeBodyDto) {
+  return $post<ILoginSuccessResData>('/auth/login/phone/code', body)
 }
 
 /**

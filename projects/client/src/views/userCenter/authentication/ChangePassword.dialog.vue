@@ -39,7 +39,7 @@ async function confirm() {
 
   let res
   if (type.value) {
-    res = await updateOwnPasswordByCodeApi({
+    res = await updateOwnPasswordByEmailCodeApi({
       email: userInfo.value?.email!,
       code: code.value,
       bizId: bizId.value,

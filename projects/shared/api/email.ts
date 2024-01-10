@@ -6,6 +6,6 @@ const { $post } = useRequest()
 /**
  * 发送验证码
  */
-export function sendCodeApi(body: ISendEmailCodeBodyDto) {
+export function sendEmailCodeApi(body: ISendEmailCodeBodyDto) {
   return $post<ISendEmailCodeResData>('/email/code', body)
 }

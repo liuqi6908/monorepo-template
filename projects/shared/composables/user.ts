@@ -8,7 +8,7 @@ import type {
   ILoginByPasswordBodyDto,
   ILoginSuccessResData,
   IRegisterBodyDto,
-  IUpdatePasswordByCodeBodyDto,
+  IUpdatePasswordByEmailCodeBodyDto,
   IUser,
   IVerificationHistory,
 } from 'zjf-types'
@@ -22,7 +22,7 @@ import {
   registerApi,
 } from '../api/auth'
 import { isDesktopApi } from '../api/desktop'
-import { getOwnProfileApi, updateOwnPasswordByCodeApi } from '../api/user'
+import { getOwnProfileApi, updateOwnPasswordByEmailCodeApi } from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
 import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, LEADING_PAGE_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useSysConfig } from './app'
@@ -101,10 +101,10 @@ export function useUser($router = useRouter()) {
   /**
    * 根据邮箱验证码修改密码
    */
-  async function updatePasswordByCode(body: IUpdatePasswordByCodeBodyDto) {
+  async function updatePasswordByCode(body: IUpdatePasswordByEmailCodeBodyDto) {
     loading.value = true
     try {
-      const res = await updateOwnPasswordByCodeApi(body)
+      const res = await updateOwnPasswordByEmailCodeApi(body)
       if (res) {
         Notify.create({
           type: 'success',

@@ -126,6 +126,7 @@ declare global {
   const loginByEmailCodeApi: typeof import('../../shared/api/auth')['loginByEmailCodeApi']
   const loginByEmailLinkApi: typeof import('../../shared/api/auth')['loginByEmailLinkApi']
   const loginByPasswordApi: typeof import('../../shared/api/auth')['loginByPasswordApi']
+  const loginByPhoneCodeApi: typeof import('../../shared/api/auth')['loginByPhoneCodeApi']
   const logoutApi: typeof import('../../shared/api/auth')['logoutApi']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
@@ -192,7 +193,8 @@ declare global {
   const rolePermissionsToLabel: typeof import('../../shared/utils/rolePermissions')['rolePermissionsToLabel']
   const rsaDecrypt: typeof import('../../shared/utils/rsa')['rsaDecrypt']
   const rsaEncrypt: typeof import('../../shared/utils/rsa')['rsaEncrypt']
-  const sendCodeApi: typeof import('../../shared/api/email')['sendCodeApi']
+  const sendEmailCodeApi: typeof import('../../shared/api/email')['sendEmailCodeApi']
+  const sendPhoneCodeApi: typeof import('../../shared/api/phone')['sendPhoneCodeApi']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
@@ -216,14 +218,17 @@ declare global {
   const tryOnScopeDispose: typeof import('@vueuse/core')['tryOnScopeDispose']
   const tryOnUnmounted: typeof import('@vueuse/core')['tryOnUnmounted']
   const unbindOwnEmailApi: typeof import('../../shared/api/user')['unbindOwnEmailApi']
+  const unbindOwnPhoneApi: typeof import('../../shared/api/user')['unbindOwnPhoneApi']
   const unref: typeof import('vue')['unref']
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
   const updateDesktopApi: typeof import('../../shared/api/desktop')['updateDesktopApi']
   const updateIntermediateTableApi: typeof import('../../shared/api/data')['updateIntermediateTableApi']
   const updateOwnEmailApi: typeof import('../../shared/api/user')['updateOwnEmailApi']
-  const updateOwnPasswordByCodeApi: typeof import('../../shared/api/user')['updateOwnPasswordByCodeApi']
+  const updateOwnPasswordByEmailCodeApi: typeof import('../../shared/api/user')['updateOwnPasswordByEmailCodeApi']
   const updateOwnPasswordByOldPasswordApi: typeof import('../../shared/api/user')['updateOwnPasswordByOldPasswordApi']
+  const updateOwnPasswordByPhoneCodeApi: typeof import('../../shared/api/user')['updateOwnPasswordByPhoneCodeApi']
+  const updateOwnPhoneApi: typeof import('../../shared/api/user')['updateOwnPhoneApi']
   const updateOwnProfileApi: typeof import('../../shared/api/user')['updateOwnProfileApi']
   const updateReferenceApi: typeof import('../../shared/api/data')['updateReferenceApi']
   const updateRootApi: typeof import('../../shared/api/data')['updateRootApi']
@@ -562,6 +567,7 @@ declare module 'vue' {
     readonly loginByEmailCodeApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByEmailCodeApi']>
     readonly loginByEmailLinkApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByEmailLinkApi']>
     readonly loginByPasswordApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByPasswordApi']>
+    readonly loginByPhoneCodeApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByPhoneCodeApi']>
     readonly logoutApi: UnwrapRef<typeof import('../../shared/api/auth')['logoutApi']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
@@ -628,7 +634,8 @@ declare module 'vue' {
     readonly rolePermissionsToLabel: UnwrapRef<typeof import('../../shared/utils/rolePermissions')['rolePermissionsToLabel']>
     readonly rsaDecrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaDecrypt']>
     readonly rsaEncrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaEncrypt']>
-    readonly sendCodeApi: UnwrapRef<typeof import('../../shared/api/email')['sendCodeApi']>
+    readonly sendEmailCodeApi: UnwrapRef<typeof import('../../shared/api/email')['sendEmailCodeApi']>
+    readonly sendPhoneCodeApi: UnwrapRef<typeof import('../../shared/api/phone')['sendPhoneCodeApi']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
@@ -652,14 +659,17 @@ declare module 'vue' {
     readonly tryOnScopeDispose: UnwrapRef<typeof import('@vueuse/core')['tryOnScopeDispose']>
     readonly tryOnUnmounted: UnwrapRef<typeof import('@vueuse/core')['tryOnUnmounted']>
     readonly unbindOwnEmailApi: UnwrapRef<typeof import('../../shared/api/user')['unbindOwnEmailApi']>
+    readonly unbindOwnPhoneApi: UnwrapRef<typeof import('../../shared/api/user')['unbindOwnPhoneApi']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly updateDesktopApi: UnwrapRef<typeof import('../../shared/api/desktop')['updateDesktopApi']>
     readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../shared/api/data')['updateIntermediateTableApi']>
     readonly updateOwnEmailApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnEmailApi']>
-    readonly updateOwnPasswordByCodeApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByCodeApi']>
+    readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
     readonly updateOwnPasswordByOldPasswordApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByOldPasswordApi']>
+    readonly updateOwnPasswordByPhoneCodeApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByPhoneCodeApi']>
+    readonly updateOwnPhoneApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPhoneApi']>
     readonly updateOwnProfileApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnProfileApi']>
     readonly updateReferenceApi: UnwrapRef<typeof import('../../shared/api/data')['updateReferenceApi']>
     readonly updateRootApi: UnwrapRef<typeof import('../../shared/api/data')['updateRootApi']>
@@ -991,6 +1001,7 @@ declare module '@vue/runtime-core' {
     readonly loginByEmailCodeApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByEmailCodeApi']>
     readonly loginByEmailLinkApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByEmailLinkApi']>
     readonly loginByPasswordApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByPasswordApi']>
+    readonly loginByPhoneCodeApi: UnwrapRef<typeof import('../../shared/api/auth')['loginByPhoneCodeApi']>
     readonly logoutApi: UnwrapRef<typeof import('../../shared/api/auth')['logoutApi']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
@@ -1057,7 +1068,8 @@ declare module '@vue/runtime-core' {
     readonly rolePermissionsToLabel: UnwrapRef<typeof import('../../shared/utils/rolePermissions')['rolePermissionsToLabel']>
     readonly rsaDecrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaDecrypt']>
     readonly rsaEncrypt: UnwrapRef<typeof import('../../shared/utils/rsa')['rsaEncrypt']>
-    readonly sendCodeApi: UnwrapRef<typeof import('../../shared/api/email')['sendCodeApi']>
+    readonly sendEmailCodeApi: UnwrapRef<typeof import('../../shared/api/email')['sendEmailCodeApi']>
+    readonly sendPhoneCodeApi: UnwrapRef<typeof import('../../shared/api/phone')['sendPhoneCodeApi']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
@@ -1081,14 +1093,17 @@ declare module '@vue/runtime-core' {
     readonly tryOnScopeDispose: UnwrapRef<typeof import('@vueuse/core')['tryOnScopeDispose']>
     readonly tryOnUnmounted: UnwrapRef<typeof import('@vueuse/core')['tryOnUnmounted']>
     readonly unbindOwnEmailApi: UnwrapRef<typeof import('../../shared/api/user')['unbindOwnEmailApi']>
+    readonly unbindOwnPhoneApi: UnwrapRef<typeof import('../../shared/api/user')['unbindOwnPhoneApi']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly updateDesktopApi: UnwrapRef<typeof import('../../shared/api/desktop')['updateDesktopApi']>
     readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../shared/api/data')['updateIntermediateTableApi']>
     readonly updateOwnEmailApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnEmailApi']>
-    readonly updateOwnPasswordByCodeApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByCodeApi']>
+    readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
     readonly updateOwnPasswordByOldPasswordApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByOldPasswordApi']>
+    readonly updateOwnPasswordByPhoneCodeApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPasswordByPhoneCodeApi']>
+    readonly updateOwnPhoneApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnPhoneApi']>
     readonly updateOwnProfileApi: UnwrapRef<typeof import('../../shared/api/user')['updateOwnProfileApi']>
     readonly updateReferenceApi: UnwrapRef<typeof import('../../shared/api/data')['updateReferenceApi']>
     readonly updateRootApi: UnwrapRef<typeof import('../../shared/api/data')['updateRootApi']>

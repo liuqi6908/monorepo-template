@@ -4,9 +4,12 @@ import type {
   IPaginatedResData,
   IQueryDto,
   IUnbindEmailOwnBodyDto,
+  IUnbindPhoneOwnBodyDto,
   IUpdateEmailOwnBodyDto,
-  IUpdatePasswordByCodeBodyDto,
+  IUpdatePasswordByEmailCodeBodyDto,
   IUpdatePasswordByOldBodyDto,
+  IUpdatePasswordByPhoneCodeBodyDto,
+  IUpdatePhoneOwnBodyDto,
   IUpdateProfileOwnBodyDto,
   IUser,
 } from 'zjf-types'
@@ -64,6 +67,20 @@ export function updateOwnEmailApi(body: IUpdateEmailOwnBodyDto) {
 }
 
 /**
+ * 解绑手机号
+ */
+export function unbindOwnPhoneApi(body: IUnbindPhoneOwnBodyDto) {
+  return $delete<boolean>('/user/own/phone', body)
+}
+
+/**
+ * 修改手机号
+ */
+export function updateOwnPhoneApi(body: IUpdatePhoneOwnBodyDto) {
+  return $patch<boolean>('/user/own/phone', body)
+}
+
+/**
  * 通过原密码修改密码（需要登录，账号未设置密码可直接修改）
  */
 export function updateOwnPasswordByOldPasswordApi(body: IUpdatePasswordByOldBodyDto) {
@@ -73,8 +90,15 @@ export function updateOwnPasswordByOldPasswordApi(body: IUpdatePasswordByOldBody
 /**
  * 通过邮箱验证码修改密码（不需要登录）
  */
-export function updateOwnPasswordByCodeApi(body: IUpdatePasswordByCodeBodyDto) {
-  return $patch<boolean>('/user/own/password/code', body)
+export function updateOwnPasswordByEmailCodeApi(body: IUpdatePasswordByEmailCodeBodyDto) {
+  return $patch<boolean>('/user/own/password/email', body)
+}
+
+/**
+ * 通过手机验证码修改密码（不需要登录）
+ */
+export function updateOwnPasswordByPhoneCodeApi(body: IUpdatePasswordByPhoneCodeBodyDto) {
+  return $patch<boolean>('/user/own/password/phone', body)
 }
 
 /**
