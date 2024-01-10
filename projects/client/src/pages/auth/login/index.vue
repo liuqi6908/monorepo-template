@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { validateEmail, validatePassword } from 'zjf-utils'
+import { validateEmail, validatePhone, validatePassword } from 'zjf-utils'
 import { ErrorCode } from 'zjf-types'
 import CaptchaInput from 'shared/components/input/CaptchaInput.vue'
 
-const { loginByPassword, loading } = useUser()
+const { loading, isPhone, loginByPassword } = useUser()
 
 /** 用户账号 */
 const userCode = ref('')
@@ -52,7 +52,13 @@ async function login() {
   try {
     await loginByPassword(
       {
-        [validateEmail(userCode.value) ? 'account' : 'email']: userCode.value,
+        [
+          !validateEmail(userCode.value)
+            ? 'email'
+            : isPhone.value && !validatePhone(userCode.value)
+              ? 'phone'
+              : 'account'
+        ]: userCode.value,
         password: password.value,
         code: code.value,
         bizId: bizId.value,
@@ -77,8 +83,8 @@ async function login() {
       <div flex="~ col">
         <ZInput
           v-model="userCode"
-          label="账号 / 邮箱"
-          placeholder="请输入用户名/邮箱"
+          :label="`账号 / 邮箱${isPhone && ' / 手机号'}`"
+          :placeholder="`请输入用户名/邮箱${isPhone && '/手机号'}`"
           dark mb6
         />
         <ZInput
@@ -153,7 +159,7 @@ async function login() {
       footer
       @ok="$router.push('/auth/forgetPassword')"
     >
-      您登录的账号密码不存在，为了您的账号安全，请先前往“邮箱找回”设置初始密码。
+      您登录的账号密码不存在，为了您的账号安全，请先前往“忘记密码？”设置初始密码。
     </ZDialog>
   </div>
 </template>

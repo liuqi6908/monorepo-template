@@ -2,21 +2,27 @@
 import { computed, ref } from 'vue'
 import { useIntervalFn, useVModel } from '@vueuse/core'
 import { Notify } from 'quasar'
-import type { CodeAction } from 'zjf-types'
-import { pick, validateEmail } from 'zjf-utils'
+import type { CodeAction, PhoneCodeAction } from 'zjf-types'
+import { validateEmail, validatePhone } from 'zjf-utils'
 import { sendEmailCodeApi } from '../../api/email'
+import { sendPhoneCodeApi } from '../../api/phone'
 import ZInput from './ZInput.vue'
 import type { ZInputProps } from './ZInput.vue'
 
 interface SMSInputProps {
   modelValue: string
-  email: string
-  action: CodeAction
+  action: CodeAction | PhoneCodeAction
+  email?: string
+  phone?: string
   dark?: boolean
+  /** 验证类型（true：邮箱，false：手机） */
+  type?: boolean
   params?: Omit<ZInputProps, 'modelValue' | 'dark'>
 }
 
-const props = defineProps<SMSInputProps>()
+const props = withDefaults(defineProps<SMSInputProps>(), {
+  type: true
+})
 const emits = defineEmits(['update:modelValue', 'update:bizId'])
 
 const value = useVModel(props, 'modelValue')
@@ -26,7 +32,12 @@ const interval = ref(0)
 /** 加载中 */
 const loading = ref(false)
 /** 禁用发送 */
-const disable = computed(() => loading.value || !!validateEmail(props.email) || interval.value > 0)
+const disable = computed(() => (
+  loading.value
+  || (props.type && !!validateEmail(props.email ?? ''))
+  || (!props.type && !!validatePhone(props.phone ?? ''))
+  || interval.value > 0
+))
 
 const { pause, resume } = useIntervalFn(() => {
   interval.value--
@@ -43,7 +54,20 @@ async function getSmsCode() {
 
   loading.value = true
   try {
-    const res = await sendEmailCodeApi(pick(props, 'email', 'action'))
+    let res
+    const { email, phone, action } = props
+    if (props.type) {
+      res = await sendEmailCodeApi({
+        email: email ?? '',
+        action: action as CodeAction
+      })
+    }
+    else {
+      res = await sendPhoneCodeApi({
+        phone: phone ?? '',
+        action: action as PhoneCodeAction
+      })
+    }
     if (res) {
       Notify.create({
         type: 'success',
@@ -66,7 +90,7 @@ async function getSmsCode() {
 <template>
   <ZInput
     v-model="value"
-    label="邮箱验证"
+    :label="`${type ? '邮箱' : '手机'}验证`"
     placeholder="请输入验证码"
     :params="{
       rules: [

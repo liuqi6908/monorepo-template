@@ -22,6 +22,7 @@ export class PhoneService {
   }
 
   getClient() {
+    console.log(this._phoneCfg)
     if (this._client)
       return this._client
     const config = new $OpenApi.Config({

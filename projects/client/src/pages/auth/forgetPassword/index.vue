@@ -1,25 +1,30 @@
 <script setup lang="ts">
-import { validateEmail, validatePassword } from 'zjf-utils'
-import { CodeAction } from 'zjf-types'
-import type { IUpdatePasswordByEmailCodeBodyDto } from 'zjf-types'
+import { validateEmail, validatePhone, validatePassword } from 'zjf-utils'
+import { CodeAction, PhoneCodeAction } from 'zjf-types'
+import type { IUpdatePasswordByEmailCodeBodyDto, IUpdatePasswordByPhoneCodeBodyDto } from 'zjf-types'
 
-const { loading, updatePasswordByEmailCode } = useUser()
+const { loading, isPhone, updatePasswordByEmailCode, updatePasswordByPhoneCode } = useUser()
 
 /** 邮箱 */
 const email = ref('')
+/** 手机号 */
+const phone = ref('')
 /** 验证码 */
 const code = ref('')
-/** 邮箱验证校验码 */
+/** 验证校验码 */
 const bizId = ref('')
 /** 密码 */
 const password = ref('')
 /** 确认密码 */
 const repeatPassword = ref('')
+/** 找回类型（true：邮箱找回，false：手机号找回） */
+const type = ref(true)
 
 /** 禁用提交 */
 const disable = computed(() => {
   return loading.value
-    || !!validateEmail(email.value)
+    || (type.value && !!validateEmail(email.value))
+    || (!type.value && !!validatePhone(phone.value))
     || code.value.length !== 6
     || !bizId.value
     || !!validatePassword(password.value)
@@ -27,14 +32,28 @@ const disable = computed(() => {
 })
 
 /** 提交表单 */
-const formArg = computed<IUpdatePasswordByEmailCodeBodyDto>(() => {
+const formArg = computed(() => {
+  const obj = type.value ? { email: email.value } : { phone: phone.value }
   return {
-    email: email.value,
+    ...obj,
     code: code.value,
     bizId: bizId.value,
     password: password.value
   }
 })
+
+/**
+ * 找回密码
+ */
+function confirm() {
+  if (disable.value)
+    return
+
+  if (type.value)
+    updatePasswordByEmailCode(formArg.value as IUpdatePasswordByEmailCodeBodyDto)
+  else
+    updatePasswordByPhoneCode(formArg.value as IUpdatePasswordByPhoneCodeBodyDto)
+}
 </script>
 
 <template>
@@ -47,11 +66,12 @@ const formArg = computed<IUpdatePasswordByEmailCodeBodyDto>(() => {
       >
         <div absolute-y-center left-0 text="xl grey-1" i-mingcute:left-line />
       </RouterLink>
-      邮箱找回
+      {{ type ? '邮箱' : '手机号' }}找回
     </h2>
-    <div flex="~ col gap5">
+    <div flex="~ col gap10">
       <div flex="~ col gap1">
         <ZInput
+          v-if="type"
           v-model="email"
           label="邮箱"
           placeholder="请输入邮箱"
@@ -62,11 +82,25 @@ const formArg = computed<IUpdatePasswordByEmailCodeBodyDto>(() => {
             ]
           }"
         />
+        <ZInput
+          v-else
+          v-model="phone"
+          label="手机号"
+          placeholder="请输入手机号"
+          dark
+          :params="{
+            rules: [
+              (val: string) => validatePhone(val) || true
+            ]
+          }"
+        />
         <SMSInput
           v-model="code"
           v-model:biz-id="bizId"
           :email="email"
-          :action="CodeAction.CHANGE_PASSWORD"
+          :phone="phone"
+          :action="type ? CodeAction.CHANGE_PASSWORD : PhoneCodeAction.CHANGE_PASSWORD"
+          :type="type"
           dark
         />
         <ZInput
@@ -92,6 +126,12 @@ const formArg = computed<IUpdatePasswordByEmailCodeBodyDto>(() => {
             reactiveRules: true
           }"
         />
+        <div
+          v-if="isPhone"
+          cursor-pointer self-end
+          @click="type = !type"
+          v-text="`切换${type ? '手机号' : '邮箱'}找回`"
+        />
       </div>
       <ZBtn
         size="big"
@@ -99,7 +139,7 @@ const formArg = computed<IUpdatePasswordByEmailCodeBodyDto>(() => {
         text-color="primary-1"
         label="完成"
         :disable="disable"
-        @click="updatePasswordByEmailCode(formArg)"
+        @click="confirm"
       />
     </div>
   </div>
