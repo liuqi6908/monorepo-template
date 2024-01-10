@@ -3,7 +3,7 @@ import { Throttle } from '@nestjs/throttler'
 import { ConfigService } from '@nestjs/config'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Query, Req, forwardRef } from '@nestjs/common'
-import { CodeAction, ErrorCode, PermissionType } from 'zjf-types'
+import { CodeAction, ErrorCode, PermissionType, PhoneCodeAction } from 'zjf-types'
 import { In } from 'typeorm'
 
 import type { SysAdmin } from 'src/config/_sa.config'
@@ -15,6 +15,7 @@ import { IsLogin } from 'src/guards/login.guard'
 import { HasPermission } from 'src/guards/permission.guard'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { EmailCodeVerify } from 'src/guards/email-code-verify.guard'
+import { PhoneCodeVerify } from 'src/guards/phone-code-verify.guard'
 import { comparePassword } from 'src/utils/encrypt/encrypt-password'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { UniversalOperationResDto } from 'src/dto/universal-operation.dto'
@@ -28,12 +29,15 @@ import { UserProfileResponseDto } from './dto/user.res.dto'
 import { CreateUserResDto } from './dto/create-user.res.dto'
 import { CreateUserBodyDto } from './dto/create-user.body.dto'
 import { GetProfileOwnQueryDto } from './dto/get-profile-own.query.dto'
-import { UpdateEmailOwnBodyDto } from './dto/update-email-own.body.dto'
 import { UnbindEmailOwnBodyDto } from './dto/unbind-email-own.body.dto'
+import { UnbindPhoneOwnBodyDto } from './dto/unbind-phone-own.body.dto'
+import { UpdateEmailOwnBodyDto } from './dto/update-email-own.body.dto'
+import { UpdatePhoneOwnBodyDto } from './dto/update-phone-own.body.dto'
 import { UpdateProfileOwnBodyDto } from './dto/update-profile-own.body.dto'
 import { UpdatePasswordByOldBodyDto } from './dto/update-pswd-by-old.body.dto'
 import { UpdateUserRoleParamDto } from './dto/role/update-user-role.param.dto'
-import { UpdatePasswordByCodeBodyDto } from './dto/update-pswd-by-code.body.dto'
+import { UpdatePasswordByEmailCodeBodyDto } from './dto/update-pswd-by-email-code.body.dto'
+import { UpdatePasswordByPhoneCodeBodyDto } from './dto/update-pswd-by-phone-code.body.dto'
 import { UpdateUserDataRoleParamDto } from './dto/role/update-user-data-role.param.dto'
 
 @ApiTags('User | 用户')
@@ -172,7 +176,37 @@ export class UserController {
     return await this._userSrv.updateUserEmail(user.id, body.email)
   }
 
-  @Throttle(1, 3)
+  @ApiOperation({ summary: '解绑手机号' })
+  @ApiSuccessResponse(UniversalOperationResDto)
+  @IsLogin()
+  @PhoneCodeVerify(PhoneCodeAction.UNBIND_PHONE)
+  @Delete('own/phone')
+  public async unbindOwnPhone(
+    @Body() body: UnbindPhoneOwnBodyDto,
+    @Req() req: FastifyRequest,
+  ) {
+    const user = req.raw.user!
+    const userPhone = user.phone
+    if (userPhone !== body.phone)
+      responseError(ErrorCode.USER_PHONE_NUMBER_NOT_MATCHED)
+    await this._userSrv.repo().update({ id: user.id }, { phone: null })
+    return true
+  }
+
+  @ApiOperation({ summary: '修改手机号，简单处理，只要用户处于登录状态就可以修改手机号，不需要校验原手机号的权限，发送验证码到新的手机号之后即可' })
+  @ApiSuccessResponse(UniversalOperationResDto)
+  @IsLogin()
+  @PhoneCodeVerify(PhoneCodeAction.BIND_PHONE)
+  @Patch('own/phone')
+  public async updateOwnPhone(
+    @Body() body: UpdatePhoneOwnBodyDto,
+    @Req() req: FastifyRequest,
+  ) {
+    const user = req.raw.user!
+    return await this._userSrv.updateUserPhone(user.id, body.phone)
+  }
+
+  @Throttle(1, 1)
   @ApiOperation({ summary: '通过原密码修改密码（需要登录，账号未设置密码可直接修改）' })
   @ApiSuccessResponse(UniversalOperationResDto)
   @IsLogin()
@@ -194,12 +228,27 @@ export class UserController {
   @ApiOperation({ summary: '通过邮箱验证码修改密码（不需要登录）' })
   @ApiSuccessResponse(UniversalOperationResDto)
   @EmailCodeVerify(CodeAction.CHANGE_PASSWORD)
-  @Patch('own/password/code')
-  public async updateOwnPasswordByCode(@Body() body: UpdatePasswordByCodeBodyDto) {
+  @Patch('own/password/email')
+  public async updateOwnPasswordByEmailCode(@Body() body: UpdatePasswordByEmailCodeBodyDto) {
     const { email, password } = body
     const user = await this._userSrv.repo().findOne({ where: { email } })
     if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
+    await this._userSrv.updateUserPassword({ id: user.id }, password)
+    // 登出当前用户的所有登录会话
+    this._authSrv.logoutUser(user.id)
+    return true
+  }
+
+  @ApiOperation({ summary: '通过手机验证码修改密码（不需要登录）' })
+  @ApiSuccessResponse(UniversalOperationResDto)
+  @PhoneCodeVerify(PhoneCodeAction.CHANGE_PASSWORD)
+  @Patch('own/password/phone')
+  public async updateOwnPasswordByPhoneCode(@Body() body: UpdatePasswordByPhoneCodeBodyDto) {
+    const { phone, password } = body
+    const user = await this._userSrv.repo().findOne({ where: { phone } })
+    if (!user)
+      responseError(ErrorCode.AUTH_PHONE_NUMBER_NOT_REGISTERED)
     await this._userSrv.updateUserPassword({ id: user.id }, password)
     // 登出当前用户的所有登录会话
     this._authSrv.logoutUser(user.id)

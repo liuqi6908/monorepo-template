@@ -143,6 +143,24 @@ export class UserService implements OnModuleInit {
   }
 
   /**
+   * 更新指定用户的手机号
+   * @param id
+   * @param newPhone
+   * @returns
+   */
+  public async updateUserPhone(id: User['id'], newPhone: string) {
+    try {
+      await this._userRepo.update({ id }, { phone: newPhone })
+      return true
+    }
+    catch (e) {
+      const sqlError = parseSqlError(e)
+      if (sqlError === SqlError.DUPLICATE_ENTRY)
+        responseError(ErrorCode.AUTH_PHONE_NUMBER_REGISTERED)
+    }
+  }
+
+  /**
    * 更新某个用户的密码
    * @param where
    * @param newPassword
