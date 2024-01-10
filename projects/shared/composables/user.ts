@@ -6,23 +6,31 @@ import { Notify } from 'quasar'
 import type {
   ILoginByEmailCodeBodyDto,
   ILoginByPasswordBodyDto,
+  ILoginByPhoneCodeBodyDto,
   ILoginSuccessResData,
   IRegisterBodyDto,
   IUpdatePasswordByEmailCodeBodyDto,
+  IUpdatePasswordByPhoneCodeBodyDto,
   IUser,
   IVerificationHistory,
 } from 'zjf-types'
 
 import { rolePermissionsToLabel } from '../utils/rolePermissions'
 import { rsaEncrypt } from '../utils/rsa'
+import { getEnvVariable } from '../utils/env'
 import {
   loginByEmailCodeApi,
   loginByPasswordApi,
+  loginByPhoneCodeApi,
   logoutApi,
   registerApi,
 } from '../api/auth'
 import { isDesktopApi } from '../api/desktop'
-import { getOwnProfileApi, updateOwnPasswordByEmailCodeApi } from '../api/user'
+import {
+  getOwnProfileApi,
+  updateOwnPasswordByEmailCodeApi,
+  updateOwnPasswordByPhoneCodeApi,
+} from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
 import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, LEADING_PAGE_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useSysConfig } from './app'
@@ -52,7 +60,7 @@ const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY ?? ''
 
 export function useUser($router = useRouter()) {
   /**
-   * 通过 账号/邮箱 + 密码 登录
+   * 通过 账号/邮箱/手机号码 + 密码 登录
    */
   async function loginByPassword(body: ILoginByPasswordBodyDto, remember = false) {
     loading.value = true
@@ -66,7 +74,7 @@ export function useUser($router = useRouter()) {
           localStorage.setItem(
             REMEMBER_LOGIN_INFO_KEY,
             JSON.stringify({
-              userCode: body.account || body.email,
+              userCode: body.account || body.email || body.phone,
               password: rsaEncrypt(publicKey, body.password),
             }),
           )
@@ -92,7 +100,21 @@ export function useUser($router = useRouter()) {
       if (res)
         processLoginInfo(res)
     }
-    catch (_) {}
+    finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * 通过 手机号码 + 验证码 登录
+   */
+  async function loginByPhoneCode(body: ILoginByPhoneCodeBodyDto) {
+    loading.value = true
+    try {
+      const res = await loginByPhoneCodeApi(body)
+      if (res)
+        processLoginInfo(res)
+    }
     finally {
       loading.value = false
     }
@@ -101,7 +123,7 @@ export function useUser($router = useRouter()) {
   /**
    * 根据邮箱验证码修改密码
    */
-  async function updatePasswordByCode(body: IUpdatePasswordByEmailCodeBodyDto) {
+  async function updatePasswordByEmailCode(body: IUpdatePasswordByEmailCodeBodyDto) {
     loading.value = true
     try {
       const res = await updateOwnPasswordByEmailCodeApi(body)
@@ -113,7 +135,26 @@ export function useUser($router = useRouter()) {
         $router.push('/auth/login')
       }
     }
-    catch (_) {}
+    finally {
+      loading.value = false
+    }
+  }
+
+  /**
+   * 根据手机验证码修改密码
+   */
+  async function updatePasswordByPhoneCode(body: IUpdatePasswordByPhoneCodeBodyDto) {
+    loading.value = true
+    try {
+      const res = await updateOwnPasswordByPhoneCodeApi(body)
+      if (res) {
+        Notify.create({
+          type: 'success',
+          message: '修改密码成功',
+        })
+        $router.push('/auth/login')
+      }
+    }
     finally {
       loading.value = false
     }
@@ -212,6 +253,11 @@ export function useUser($router = useRouter()) {
    */
   const isVerify = computed(() => isLogin.value && userInfo.value?.verification?.status === VerificationStatus.APPROVED)
 
+  /**
+   * 用户是否使用手机号
+   */
+  const isPhone = computed(() => getEnvVariable('VITE_USER_PHONE'))
+
   const instance = getCurrentInstance()
   if (instance) {
     onMounted(async () => {
@@ -229,12 +275,15 @@ export function useUser($router = useRouter()) {
     isLogin,
     isVerify,
     isDesktop,
+    isPhone,
     loading,
     latestVerify,
     verifyStatus,
     loginByPassword,
     loginByEmailCode,
-    updatePasswordByCode,
+    loginByPhoneCode,
+    updatePasswordByEmailCode,
+    updatePasswordByPhoneCode,
     register,
     logout,
     getOwnProfile,

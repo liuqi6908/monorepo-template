@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import { validateEmail, validatePassword } from 'zjf-utils'
 import { CodeAction } from 'zjf-types'
-import type { IUpdatePasswordByCodeBodyDto } from 'zjf-types'
+import type { IUpdatePasswordByEmailCodeBodyDto } from 'zjf-types'
 
-const { loading, updatePasswordByCode } = useUser()
+const { loading, updatePasswordByEmailCode } = useUser()
 
 /** 邮箱 */
 const email = ref('')
@@ -27,7 +27,7 @@ const disable = computed(() => {
 })
 
 /** 提交表单 */
-const formArg = computed<IUpdatePasswordByCodeBodyDto>(() => {
+const formArg = computed<IUpdatePasswordByEmailCodeBodyDto>(() => {
   return {
     email: email.value,
     code: code.value,
@@ -99,7 +99,7 @@ const formArg = computed<IUpdatePasswordByCodeBodyDto>(() => {
         text-color="primary-1"
         label="完成"
         :disable="disable"
-        @click="updatePasswordByCode(formArg)"
+        @click="updatePasswordByEmailCode(formArg)"
       />
     </div>
   </div>
