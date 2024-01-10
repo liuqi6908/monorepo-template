@@ -2,7 +2,6 @@ import * as nodemailer from 'nodemailer'
 import { Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { CodeAction } from 'zjf-types'
-import type { OnModuleInit } from '@nestjs/common'
 
 import { getLoginCodeHTML } from 'src/utils/html/templates/login-code'
 import { getRegisterCodeHTML } from 'src/utils/html/templates/register-code'
@@ -15,7 +14,7 @@ import type { LoginByEmailLinkDto } from '../auth/dto/login-by-email-link.body.d
 import type { SendEmailCodeBodyDto } from './dto/send-email-code.body.dto'
 
 @Injectable()
-export class EmailService implements OnModuleInit {
+export class EmailService {
   readonly transporter: nodemailer.Transporter
   private readonly _mailCfg: any
 
@@ -26,8 +25,6 @@ export class EmailService implements OnModuleInit {
     this._mailCfg = _cfgSrv.get('email.smtp')
     this.transporter = nodemailer.createTransport(this._mailCfg)
   }
-
-  onModuleInit() {}
 
   getClient() {
     return this.transporter

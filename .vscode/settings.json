@@ -1,6 +1,8 @@
 {
   "cSpell.words": [
     "aggs",
+    "alicloud",
+    "aliyuncs",
     "antfu",
     "arta",
     "Attributify",
@@ -9,6 +11,7 @@
     "composables",
     "customfav",
     "demi",
+    "dysmsapi",
     "execa",
     "Fastify",
     "iconify",
@@ -22,6 +25,7 @@
     "NOTIN",
     "NOTLIKE",
     "nprogress",
+    "openapi",
     "papaparse",
     "pnpm",
     "PSWD",

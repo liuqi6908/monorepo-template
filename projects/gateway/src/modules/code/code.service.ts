@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common'
-import { type CodeAction, ErrorCode } from 'zjf-types'
+import { ErrorCode } from 'zjf-types'
+import type { CodeAction, PhoneCodeAction } from 'zjf-types'
 import { randomString } from '@catsjuice/utils'
 
 import { responseError } from 'src/utils/response'
@@ -13,14 +14,14 @@ export class CodeService {
 
   /**
    * 创建一个验证码并存入 redis
-   * @param platformId 目前只能是 email， 后续可能是 phone
+   * @param platformId email/phone
    * @param action
    * @param expireInMinutes
    * @returns
    */
   public async createCode(
     platformId: string,
-    action: CodeAction,
+    action: CodeAction | PhoneCodeAction,
     expireInMinutes = 5,
   ) {
     const code = Math.random().toString().slice(-6)

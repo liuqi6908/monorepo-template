@@ -48,24 +48,30 @@ export enum ErrorCode {
   // ---- 用户相关错误码 ----
   /** 用户不存在 */
   USER_NOT_FOUND = 400001,
+  /** 用户已存在 */
+  USER_EXISTED = 400002,
   /** 账号已注册 */
-  USER_ACCOUNT_REGISTERED = 400002,
+  USER_ACCOUNT_REGISTERED = 400003,
   /** 邮箱已注册 */
-  USER_EMAIL_REGISTERED = 400003,
-  /** 手机号已注册 */
-  USER_PHONE_NUMBER_REGISTERED = 400004,
+  USER_EMAIL_REGISTERED = 400004,
   /** 邮箱未注册 */
   USER_EMAIL_NOT_REGISTERED = 400005,
-  /** 手机号未注册 */
-  USER_PHONE_NUMBER_NOT_REGISTERED = 400006,
-  /** 用户已存在 */
-  USER_EXISTED = 400007,
   /** 用户未绑定邮箱 */
-  USER_EMAIL_NOT_EXISTS = 400008,
+  USER_EMAIL_NOT_EXISTS = 400006,
   /** 用户邮箱已存在 */
-  USER_EMAIL_EXISTS = 400009,
+  USER_EMAIL_EXISTS = 400007,
   /** 用户邮箱不匹配 */
-  USER_EMAIL_NOT_MATCHED = 400010,
+  USER_EMAIL_NOT_MATCHED = 400008,
+  /** 手机号已注册 */
+  USER_PHONE_NUMBER_REGISTERED = 400009,
+  /** 手机号未注册 */
+  USER_PHONE_NUMBER_NOT_REGISTERED = 400010,
+  /** 用户未绑定手机号 */
+  USER_PHONE_NUMBER_NOT_EXISTS = 400011,
+  /** 用户手机号已存在 */
+  USER_PHONE_NUMBER_EXISTS = 400012,
+  /** 用户手机号不匹配 */
+  USER_PHONE_NUMBER_NOT_MATCHED = 400013,
 
   // ---- 身份认证相关错误码 ----
   /** 驳回原因必填 */
@@ -156,6 +162,10 @@ export enum ErrorCode {
   // ---- 上传作品相关错误码 ----
   /** 作品数量超出指定上限 */
   WORK_QUANTITY_OVER_LIMIT = 130001,
+
+  // ---- 短信服务相关错误码 ----
+  /** 短信发送失败 */
+  SMS_SEND_FAIL = 140001,
 }
 
 export type ErrorMessageCollection = Partial<

@@ -5,6 +5,7 @@ import _jwtConfig from './_jwt.config'
 import _minioConfig from './_minio.config'
 import _redisConfig from './_redis.config'
 import _saConfig from './_sa.config'
+import _sms from './_sms.config'
 import _zstackConfig from './_zstack.config'
 
 export default [
@@ -15,5 +16,6 @@ export default [
   _minioConfig,
   _redisConfig,
   _saConfig,
+  _sms,
   _zstackConfig,
 ]

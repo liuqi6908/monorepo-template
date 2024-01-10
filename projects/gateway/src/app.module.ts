@@ -24,6 +24,7 @@ import { DataModule } from './modules/data/data.module'
 import { WorkModule } from './modules/work/work.module'
 import { RedisModule } from './modules/redis/redis.module'
 import { EmailModule } from './modules/email/email.module'
+import { PhoneModule } from './modules/phone/phone.module'
 import { AuthMiddleware } from './middleware/auth.middleware'
 import { InfoMiddleware } from './middleware/info.middleware'
 import { ExportModule } from './modules/export/export.module'
@@ -50,6 +51,7 @@ import { ConfigModule as SysConfigModule } from './modules/config/config.module'
     DataModule,
     RedisModule,
     EmailModule,
+    PhoneModule,
     ExportModule,
     RequestModule,
     DesktopModule,

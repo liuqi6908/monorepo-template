@@ -6,6 +6,10 @@ const _userErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.NOT_FOUND,
     message: '用户不存在',
   },
+  [ErrorCode.USER_EXISTED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '用户已存在',
+  },
   [ErrorCode.USER_ACCOUNT_REGISTERED]: {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '账号已被注册',
@@ -14,21 +18,9 @@ const _userErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '邮箱已被注册',
   },
-  [ErrorCode.USER_PHONE_NUMBER_REGISTERED]: {
-    httpStatus: HttpStatus.BAD_REQUEST,
-    message: '手机号码已被注册',
-  },
   [ErrorCode.USER_EMAIL_NOT_REGISTERED]: {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '邮箱未注册',
-  },
-  [ErrorCode.USER_PHONE_NUMBER_NOT_REGISTERED]: {
-    httpStatus: HttpStatus.BAD_REQUEST,
-    message: '手机号码未注册',
-  },
-  [ErrorCode.USER_EXISTED]: {
-    httpStatus: HttpStatus.BAD_REQUEST,
-    message: '用户已存在',
   },
   [ErrorCode.USER_EMAIL_NOT_EXISTS]: {
     httpStatus: HttpStatus.BAD_REQUEST,
@@ -41,6 +33,26 @@ const _userErrors: ErrorMessageCollection = {
   [ErrorCode.USER_EMAIL_NOT_MATCHED]: {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '用户邮箱不匹配',
+  },
+  [ErrorCode.USER_PHONE_NUMBER_REGISTERED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '手机号码已被注册',
+  },
+  [ErrorCode.USER_PHONE_NUMBER_NOT_REGISTERED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '手机号码未注册',
+  },
+  [ErrorCode.USER_PHONE_NUMBER_NOT_EXISTS]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '用户未绑定手机号码',
+  },
+  [ErrorCode.USER_PHONE_NUMBER_EXISTS]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '用户手机号码已存在',
+  },
+  [ErrorCode.USER_PHONE_NUMBER_NOT_MATCHED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '用户手机号码不匹配',
   },
 }
 
