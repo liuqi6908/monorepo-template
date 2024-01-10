@@ -15,7 +15,7 @@ import Components from 'unplugin-vue-components/vite'
 export default ({ mode }: any) => {
   process.env = {
     ...process.env,
-    ...loadEnv(mode, path.relative(__dirname, '../shared/')),
+    ...loadEnv(mode, path.relative(__dirname, '../shared')),
     VITE_MODE: mode,
   }
 

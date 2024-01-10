@@ -109,28 +109,30 @@ async function deleteWork() {
 <template>
   <div relative flex="~ col gap10">
     <ZLoading :value="loading" />
-    <ZBtn
-      label="增加作品"
-      self-start size="big"
-      @click="dialog = true"
-    >
-      <template #icon>
-        <div text-xl i-material-symbols:add />
-      </template>
-    </ZBtn>
+    <div flex="~ justify-between">
+      <ZBtn
+        label="增加作品"
+        self-start size="big"
+        @click="dialog = true"
+      >
+        <template #icon>
+          <div text-xl i-material-symbols:add />
+        </template>
+      </ZBtn>
+      <div
+        v-if="works?.amount"
+        px4 bg-grey-2 flex-center
+        v-text="`作品上传数量限制：${tableRows?.length} / ${works.amount}`"
+      />
+    </div>
     <Empty
       v-if="!tableRows?.length"
       label="您还未添加任何作品"
       captions="点击左上角增加作品按钮，可以上传作品"
     />
     <div v-else flex="~ col gap3">
-      <div font-600 flex="~ gap1">
+      <div font-600>
         我的作品
-        <div
-          v-if="works?.amount"
-          font-400 text-grey-6
-          v-text="`（作品上传数量限制：${tableRows?.length}/${works.amount}）`"
-        />
       </div>
       <ZTable
         :cols="tableCols"
