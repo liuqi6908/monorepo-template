@@ -37,6 +37,8 @@ interface ImportMetaEnv {
   VITE_HOST_LOAD?: boolean
   /** 云桌面开关机调用 */
   VITE_DESKTOP_ON_OFF?: boolean
+  /** 云桌面文件传输 */
+  VITE_DESKTOP_FTP?: boolean
 
   /** ----------------管理后台 ---------------- */
   /** 自动分配云桌面 */

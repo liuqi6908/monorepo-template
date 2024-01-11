@@ -15,7 +15,7 @@ defineProps<ReadonlyInputProps>()
       v-if="label"
       text="sm grey-8" font-500 flex="~ gap1"
     >
-      <div v-if="required" text-alert-error>*</div>
+      <div v-if="required" text-alerts-error>*</div>
       {{ label }}
       <div
         v-if="caption"

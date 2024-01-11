@@ -36,7 +36,7 @@ import { getConfigApi } from '../api/config'
 
 /** App配置 */
 const app = ref<IConfigDto[SysConfig.APP]>()
-/** 云桌面申请配置 */
+/** 云桌面配置 */
 const desktop = ref<IConfigDto[SysConfig.DESKTOP]>()
 /** 外发配置 */
 const fileExport = ref<IConfigDto[SysConfig.EXPORT]>()
@@ -63,7 +63,7 @@ export function useSysConfig() {
   }
 
   /**
-   * 获取云桌面申请配置
+   * 获取云桌面配置
    */
   async function getDesktopConfig(useCache = true) {
     if (useCache && desktop.value)

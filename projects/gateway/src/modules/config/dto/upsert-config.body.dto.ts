@@ -3,6 +3,7 @@ import {
   APP_ICON,
   APP_NAME,
   APP_NAME_EN,
+  DESKTOP_FTP_QUOTA,
   DESKTOP_MAX_COUNT,
   DESKTOP_REQUEST_DURATION_OPTION,
   DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
@@ -48,7 +49,7 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
   app?: IConfigDto[SysConfig.APP]
 
   @ApiPropertyOptional({
-    description: '云桌面申请配置',
+    description: '云桌面配置',
     example: {
       duration: DESKTOP_REQUEST_DURATION_OPTION,
       sizeLimit: DESKTOP_REQUEST_UPLOAD_DFT_SIZE_LIMIT,
@@ -56,6 +57,7 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
       acceptLimit: DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
       hint: DESKTOP_REQUEST_UPLOAD_HINT,
       max: DESKTOP_MAX_COUNT,
+      ftpQuota: DESKTOP_FTP_QUOTA,
     },
   })
   desktop?: IConfigDto[SysConfig.DESKTOP]

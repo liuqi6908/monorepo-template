@@ -121,11 +121,11 @@ async function exportFile() {
             v-text="item"
           />
         </div>
-        <div text-alert-error>
+        <div text-alerts-error>
           注：您的所有数据外发行为将被保留，用于平台行为审查，请严格遵守平台外发规则！
         </div>
       </div>
-      <div text="sm alert-error" font-400 p="y2 x4" bg="alert-error/8">
+      <div text="sm alerts-error" font-400 p="y2 x4" bg="alerts-error/8">
         您申请外发的文件，可能被误认为垃圾邮件。若您在【收件箱】中无法查找到该邮件，请前往【垃圾邮件】查看，或者您可以将 noreply@qiyandata.com 添加为可信任的电子邮箱
       </div>
       <div flex="~ col gap8">

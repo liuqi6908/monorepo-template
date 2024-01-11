@@ -58,7 +58,7 @@ function deleteFile(index: number) {
   <div flex="~ col gap2" text-sm font-400>
     <div flex="~ justify-between items-center">
       <div v-if="label" font-500 flex="~ gap1">
-        <div v-if="required" text-alert-error>*</div>
+        <div v-if="required" text-alerts-error>*</div>
         {{ label }}
       </div>
       <div>

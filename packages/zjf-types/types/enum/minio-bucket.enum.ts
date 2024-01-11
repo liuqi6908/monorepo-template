@@ -8,6 +8,8 @@ export enum MinioBucket {
   PRIVATE = 'pri',
   /** 公共目录 */
   PUBLIC = 'pub',
+  /** 文件传输目录 */
+  FTP = 'ftp',
 }
 
 /**
@@ -17,4 +19,5 @@ export const minioBucketDescriptions: Record<MinioBucket, string> = {
   [MinioBucket.DATA]: '数据目录',
   [MinioBucket.PRIVATE]: '私有目录',
   [MinioBucket.PUBLIC]: '公共目录',
+  [MinioBucket.FTP]: '文件传输目录',
 }

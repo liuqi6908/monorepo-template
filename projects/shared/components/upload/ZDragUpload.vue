@@ -54,7 +54,7 @@ function dragFile(e: DragEvent) {
       v-if="label"
       font-500 flex="~ gap1 wrap"
     >
-      <div v-if="required" text-alert-error>*</div>
+      <div v-if="required" text-alerts-error>*</div>
       {{ label }}
       <div
         v-if="caption"

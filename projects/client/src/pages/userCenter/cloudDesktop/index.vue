@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { DesktopQueueStatus, DesktopQueueHistoryStatus, VerificationStatus } from 'zjf-types'
 import DesktopOperate from '~/views/userCenter/cloudDesktop/DesktopOperate.vue'
+import DesktopFtp from '~/views/userCenter/cloudDesktop/DesktopFtp.vue'
 import DesktopInfo from '~/views/userCenter/cloudDesktop/DesktopInfo.vue'
 
 const { isVerify, verifyStatus, getOwnProfile, getVerify } = useUser()
@@ -8,6 +9,9 @@ const { requestStatus, queueLen, rejectReason, isAllocated, getDesktopRequest, g
 
 /** 加载中 */
 const loading = ref(false)
+
+/** 是否展示云桌面文件传输 */
+const isDesktopFtp = getEnvVariable('VITE_DESKTOP_FTP')
 
 onBeforeMount(async () => {
   loading.value = true
@@ -102,6 +106,7 @@ const emptyLabel = computed(() => {
     <!-- 我云桌面 -->
     <div v-else flex="~ col gap10">
       <DesktopOperate @loading="val => loading = val" />
+      <DesktopFtp v-if="isDesktopFtp" />
       <DesktopInfo />
     </div>
   </div>

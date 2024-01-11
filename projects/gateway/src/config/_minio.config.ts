@@ -46,6 +46,7 @@ export default registerAs('minio', (): MinioConfig => {
       pub: process.env.MINIO_BUCKET_PUBLIC,
       pri: process.env.MINIO_BUCKET_PRIVATE,
       data: process.env.MINIO_BUCKET_DATA,
+      ftp: process.env.MINIO_BUCKET_FTP,
     },
   }
 })

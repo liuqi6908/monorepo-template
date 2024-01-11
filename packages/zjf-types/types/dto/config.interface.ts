@@ -1,4 +1,4 @@
-import type { DESKTOP_REQUEST_DURATION_OPTION } from '../constants/desktop-request.constant'
+import type { DESKTOP_REQUEST_DURATION_OPTION } from '../constants/desktop.constant'
 import type { SysConfig } from '../enum/config.enum'
 
 export interface IConfigDto {
@@ -12,7 +12,7 @@ export interface IConfigDto {
     nameEn?: string
   }
 
-  /** 云桌面申请配置 */
+  /** 云桌面配置 */
   [SysConfig.DESKTOP]?: {
     /** 申请时长配置 */
     duration?: typeof DESKTOP_REQUEST_DURATION_OPTION
@@ -26,6 +26,8 @@ export interface IConfigDto {
     hint?: string
     /** 云桌面资源最大数量 */
     max?: number
+    /** 云桌面FTP文件传输配额 */
+    ftpQuota?: number
   }
 
   /** 外发配置 */

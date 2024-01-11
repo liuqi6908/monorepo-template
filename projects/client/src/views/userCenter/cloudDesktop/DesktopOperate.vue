@@ -92,7 +92,7 @@ function copyText(text: string) {
       <div h12 px6 b="1px primary-1" flex="~ items-center gap2" font-600>
         状态：
         <div flex="~ items-center gap1">
-          <div i-material-symbols:check-circle w6 h6 text-alert-success />
+          <div i-material-symbols:check-circle w6 h6 text-alerts-success />
           使用中（倒计时{{ countDown }}天）
         </div>
       </div>

@@ -33,7 +33,7 @@ const isPwd = ref(true)
       text-sm font-500 flex="~ gap1"
       :text="dark ? 'grey-1' : 'grey-8'"
     >
-      <div v-if="required" text-alert-error>*</div>
+      <div v-if="required" text-alerts-error>*</div>
       {{ label }}
       <div
         v-if="caption"
