@@ -69,7 +69,7 @@ export default ({ mode }: any) => {
           '@vueuse/head',
           '@vueuse/core',
         ],
-        dts: 'src/auto-imports.d.ts',
+        dts: 'src/types/auto-imports.d.ts',
         dirs: [
           'src/constants',
           'src/composables',
@@ -88,7 +88,7 @@ export default ({ mode }: any) => {
         extensions: ['vue', 'md'],
         // allow auto import and register components used in markdown
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-        dts: 'src/components.d.ts',
+        dts: 'src/types/components.d.ts',
         dirs: [
           'src/components',
           '../shared/components',

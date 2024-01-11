@@ -35,8 +35,6 @@ import { getLatestVerificationApi } from '../api/verification'
 import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, LEADING_PAGE_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useSysConfig } from './app'
 
-const { isAdmin } = useSysConfig()
-
 /** 用户token */
 export const authToken = useStorage(AUTH_TOKEN_KEY, '')
 /** 用户信息 */
@@ -59,6 +57,8 @@ let isFetched = false
 const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY ?? ''
 
 export function useUser($router = useRouter()) {
+  const { isAdmin } = useSysConfig()
+
   /**
    * 通过 账号/邮箱/手机号码 + 密码 登录
    */

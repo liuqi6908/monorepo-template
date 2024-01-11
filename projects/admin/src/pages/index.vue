@@ -1,7 +1,9 @@
 <script setup></script>
 
 <template>
-  <div>
-    首页
-  </div>
+  <div />
 </template>
+
+<route lang="yaml">
+redirect: /home
+</route>
