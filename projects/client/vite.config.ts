@@ -137,7 +137,7 @@ export default ({ mode }: any) => {
 
     ssr: {
       // TODO: workaround until they support native ESM
-      noExternal: ['workbox-window', 'echarts', 'vue-echarts', 'resize-detector', 'zrender'],
+      noExternal: ['workbox-window', 'echarts', 'vue-echarts', 'resize-detector', 'zrender', 'minio-vite-js'],
     },
   })
 }
