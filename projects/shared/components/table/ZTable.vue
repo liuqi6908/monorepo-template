@@ -85,8 +85,14 @@ const { params } = defineProps<ZTableProps>()
       }
 
       .q-table__control {
-        .q-btn i {
-          font-size: 16px;
+        .q-btn, .q-field__append {
+          i {
+            font-size: 16px;
+          }
+        }
+
+        .q-field__append i {
+          bottom: 1px;
         }
       }
     }
