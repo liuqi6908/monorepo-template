@@ -42,7 +42,7 @@ const vmTable = computed(() => [
   },
   {
     label: '最后操作时间',
-    value: moment(vmInfo.value?.lastOpDate).format('YYYY-MM-DD HH:mm:ss')
+    value: moment(vmInfo.value?.lastOpDate, 'MMM D, YYYY h:mm:ss A').format('YYYY-MM-DD HH:mm:ss')
   },
 ])
 </script>

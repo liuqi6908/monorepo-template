@@ -108,7 +108,7 @@ async function login() {
         />
         <q-checkbox
           v-model="remember"
-          dark color="primary" size="sm"
+          dark size="sm"
           label="记住账号密码"
           relative right-2 self-start
         />

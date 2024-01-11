@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import type { QTableProps } from 'quasar'
 import { QTableSlots } from 'quasar'
+import { useVModel } from '@vueuse/core'
+import type { QTableProps } from 'quasar'
 import { PAGINATION_SIZE_DFT, ROWS_PER_PAGE_OPTIONS } from 'zjf-types'
 import ZLoading from '../loading/ZLoading.vue'
 
@@ -10,10 +11,14 @@ interface ZTableProps {
   loading?: boolean
   /** 是否启用分页，禁用后，强制显示全部的数据 */
   disablePagination?: boolean
-  params?: Omit<QTableProps, 'rows' | 'columns' | 'loading' | 'hideBottom'>
+  selected?: any[]
+  params?: Omit<QTableProps, 'rows' | 'columns' | 'loading' | 'hideBottom' | 'selected'>
 }
 
-const { params } = defineProps<ZTableProps>()
+const props = defineProps<ZTableProps>()
+defineEmits(['update:selected'])
+
+const value = useVModel(props, 'selected')
 </script>
 
 <template>
@@ -29,6 +34,7 @@ const { params } = defineProps<ZTableProps>()
     }"
     :rows-per-page-options="ROWS_PER_PAGE_OPTIONS"
     bordered
+    v-model:selected="value"
     v-bind="params"
   >
     <template
@@ -47,29 +53,42 @@ const { params } = defineProps<ZTableProps>()
 <style lang="scss" scoped>
 .z-table {
   :deep() {
-    .q-table__top,
-    thead tr:first-child th {
-      background: var(--primary-1-7);
-      color: #fff;
+    .q-table__middle {
+      thead tr {
+        background: var(--primary-1-7);
+      }
+
+      thead tr th {
+        background: transparent;
+        color: #fff;
+      }
+
+      tr {
+        min-height: 40px;
+        height: auto;
+
+        th, td {
+          height: auto;
+          padding: 8px 16px;
+          font-weight: 400;
+          font-size: 16px;
+          line-height: 24px;
+          color: var(--grey-8);
+          border-color: var(--grey-3);
+        }
+
+        th {
+          text-align: center;
+        }
+      }
+
+      .q-checkbox .q-checkbox__inner {
+        font-size: 36px;
+      }
     }
 
-    tr {
-      min-height: 40px;
-      height: auto;
-
-      th, td {
-        height: auto;
-        padding: 8px 16px;
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 24px;
-        color: var(--grey-8);
-        border-color: var(--grey-3);
-      }
-
-      th {
-        text-align: center;
-      }
+    .q-table__top {
+      background: var(--primary-1-7);
     }
 
     .q-table__bottom {

@@ -123,7 +123,7 @@ const filterTableRows = computed(() => {
   ))
     .filter((row) => (
       !text.value
-      || row.fileName.toLocaleUpperCase().includes(text.value.toLocaleUpperCase())
+      || row.fileName.toLowerCase().includes(text.value.toLowerCase())
     ))
 })
 </script>
@@ -159,6 +159,9 @@ const filterTableRows = computed(() => {
       <ZTable
         :cols="tableCols.filter(v => value === 'big' || !['status', 'rejectReason'].includes(v.name))"
         :rows="filterTableRows"
+        :params="{
+          noDataLabel: '暂无数据'
+        }"
       >
         <template #body-cell-note="props">
           <td>

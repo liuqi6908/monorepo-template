@@ -1,5 +1,5 @@
 interface ImportMetaEnv {
-  /** ----------------仅开发模式 ---------------- */
+  /** ---------------- 仅开发模式 ---------------- */
   /** 客户端启动端口 */
   VITE_PORT_CLIENT?: number
   /** 管理后台启动端口 */
@@ -14,13 +14,28 @@ interface ImportMetaEnv {
   /** API基础路径 */
   VITE_API_BASE?: string
 
+  /** ---------------- RSA密钥对 ---------------- */
   /** 登录密码加密公钥 */
   VITE_PUBLIC_KEY?: string
   /** 登录密码解密私钥 */
   VITE_PRIVATE_KEY?: string
 
-  /** ----------------功能划分 ---------------- */
-  /** ----------------通用 ---------------- */
+  /** ---------------- MINIO ---------------- */
+  /** MINIO访问地址 */
+  VITE_MINIO_ENDPOINT?: string
+  /** MINIO端口 */
+  VITE_MINIO_PORT?: number
+  /** MINIO AccessKey ID */
+  VITE_MINIO_AK?: string
+  /** MINIO AccessKey Secret */
+  VITE_MINIO_SK?: string
+  /** 是否使用SSL */
+  VITE_MINIO_USE_SSL?: boolean
+  /** FTP桶名 */
+  VITE_MINIO_BUCKET_FTP?: string
+
+  /** ---------------- 功能划分 ---------------- */
+  /** ---------------- 通用 ---------------- */
   /** 首页拓展 */
   VITE_HOME_EXPAND?: boolean
   /** 动态数据列表（2-5级） */
@@ -32,7 +47,7 @@ interface ImportMetaEnv {
   /** 用户手机号 */
   VITE_USER_PHONE?: boolean
 
-  /** ----------------客户端 ---------------- */
+  /** ---------------- 客户端 ---------------- */
   /** 实验室物理主机负载 */
   VITE_HOST_LOAD?: boolean
   /** 云桌面开关机调用 */
@@ -40,7 +55,7 @@ interface ImportMetaEnv {
   /** 云桌面文件传输 */
   VITE_DESKTOP_FTP?: boolean
 
-  /** ----------------管理后台 ---------------- */
+  /** ---------------- 管理后台 ---------------- */
   /** 自动分配云桌面 */
   VITE_DESKTOP_AUTO_ALLOT?: boolean
   /** 手动分配云桌面 */

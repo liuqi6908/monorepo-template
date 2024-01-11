@@ -1,0 +1,1 @@
+declare module 'minio-vite-js'

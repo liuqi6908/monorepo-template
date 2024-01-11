@@ -4,6 +4,7 @@ import {
   APP_ICON,
   APP_NAME,
   APP_NAME_EN,
+  DESKTOP_FTP_QUOTA,
   DESKTOP_MAX_COUNT,
   DESKTOP_REQUEST_DURATION_OPTION,
   DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
@@ -75,6 +76,7 @@ export function useSysConfig() {
       acceptLimit = DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
       hint = DESKTOP_REQUEST_UPLOAD_HINT,
       max = DESKTOP_MAX_COUNT,
+      ftpQuota = DESKTOP_FTP_QUOTA,
     } = await getConfigApi(SysConfig.DESKTOP) || {}
     desktop.value = {
       duration,
@@ -83,6 +85,7 @@ export function useSysConfig() {
       acceptLimit,
       hint,
       max,
+      ftpQuota,
     }
   }
 

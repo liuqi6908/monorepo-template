@@ -65,7 +65,6 @@ const dialog: boolean[] = reactive([])
     .q-checkbox__inner--truthy {
       .q-checkbox__bg {
         background-color: var(--primary-1);
-        border-color: var(--primary-1);
 
         & > svg {
           transform: scale(0.8);

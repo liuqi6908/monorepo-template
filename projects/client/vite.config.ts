@@ -13,8 +13,15 @@ import WebfontDownload from 'vite-plugin-webfont-dl'
 import Components from 'unplugin-vue-components/vite'
 
 export default ({ mode }: any) => {
+  const minio = loadEnv(mode, path.relative(__dirname, '../gateway'), 'MINIO')
   process.env = {
     ...process.env,
+    VITE_MINIO_ENDPOINT: minio.MINIO_ENDPOINT_INTERNAL || minio.MINIO_ENDPOINT_EXTERNAL,
+    VITE_MINIO_PORT: minio.MINIO_PORT,
+    VITE_MINIO_AK: minio.MINIO_AK,
+    VITE_MINIO_SK: minio.MINIO_SK,
+    VITE_MINIO_USE_SSL: minio.MINIO_USE_SSL,
+    VITE_MINIO_BUCKET_FTP: minio.MINIO_BUCKET_FTP,
     ...loadEnv(mode, path.relative(__dirname, '../shared')),
     VITE_MODE: mode,
   }
@@ -69,7 +76,7 @@ export default ({ mode }: any) => {
           '@vueuse/head',
           '@vueuse/core',
         ],
-        dts: 'src/auto-imports.d.ts',
+        dts: 'src/types/auto-imports.d.ts',
         dirs: [
           'src/constants',
           'src/composables',
@@ -88,7 +95,7 @@ export default ({ mode }: any) => {
         extensions: ['vue', 'md'],
         // allow auto import and register components used in markdown
         include: [/\.vue$/, /\.vue\?vue/, /\.md$/],
-        dts: 'src/components.d.ts',
+        dts: 'src/types/components.d.ts',
         dirs: [
           'src/components',
           '../shared/components',

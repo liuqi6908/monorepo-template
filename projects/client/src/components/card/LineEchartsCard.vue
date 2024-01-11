@@ -24,7 +24,6 @@ const options = computed<ECBasicOption>(() => {
   const { data, unit, title } = props
 
   const lineStyle = { color: '#D4DDEA' }
-  const textStyle = { color: '#6E7686' }
   const baseOpt: any = {
     color,
     legend: {
@@ -50,7 +49,7 @@ const options = computed<ECBasicOption>(() => {
         lineStyle,
       },
       axisLabel: {
-        textStyle,
+        color: '#6E7686',
         interval: 0,
         align: 'left'
       },
@@ -63,7 +62,7 @@ const options = computed<ECBasicOption>(() => {
       },
       axisLabel: {
         show: props.yAxis,
-        textStyle,
+        color: '#6E7686',
         formatter: `{value}${unit}`
       },
       splitLine: {
