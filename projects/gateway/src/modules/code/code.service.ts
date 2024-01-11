@@ -24,7 +24,9 @@ export class CodeService {
     action: CodeAction | PhoneCodeAction,
     expireInMinutes = 5,
   ) {
-    const code = Math.random().toString().slice(-6)
+    let code: string
+    while (!code || code.startsWith('0'))
+      code = Math.random().toString().slice(-6)
     const bizId = randomString(24, 24, '') + Date.now().toString(36)
     // save code to redis
     const client = await this._redisSrv.getClient(RedisType.CODE)
