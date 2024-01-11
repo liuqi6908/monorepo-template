@@ -142,15 +142,15 @@ const filterTableRows = computed(() => {
             v-if="value === 'big'"
             v-model="select"
             :options="statusList"
-            min-w-65
+            min-w-65 size="medium"
           />
           <ZInput
             v-model="text"
             placeholder="搜索文件名"
-            w60
+            w60 size="medium"
           >
             <template #prepend>
-              <div w6 h6 text-grey-5 i-material-symbols:search />
+              <div w5 h5 text-grey-5 i-material-symbols:search />
             </template>
           </ZInput>
         </div>

@@ -11,12 +11,14 @@ export interface ZInputProps {
   dark?: boolean
   password?: boolean
   required?: boolean
-  params?: Omit<QInputProps, 'modelValue' | 'placeholder' | 'dark'>
+  size?: 'small' | 'medium' | 'big'
+  params?: Omit<QInputProps, 'modelValue' | 'label' | 'placeholder' | 'dark'>
 }
 
 const props = withDefaults(defineProps<ZInputProps>(), {
   dark: false,
   password: false,
+  size: 'big',
 })
 defineEmits(['update:modelValue'])
 
@@ -44,6 +46,7 @@ const isPwd = ref(true)
     </div>
     <q-input
       v-model="value"
+      :class="size"
       dense outlined
       :dark="dark"
       :color="dark ? 'grey-1' : 'primary-1'"
@@ -62,7 +65,9 @@ const isPwd = ref(true)
         <div
           v-if="password"
           :class="isPwd ? 'i-material-symbols:visibility-off-outline' : 'i-material-symbols:visibility-outline' "
-          cursor-pointer text-xl :text="dark ? 'grey-1' : 'grey-4'"
+          cursor-pointer :text="dark ? 'grey-1' : 'grey-4'"
+          :w="size === 'small' ? 5 : 6"
+          :h="size === 'small' ? 5 : 6"
           @click="isPwd = !isPwd"
         />
         <slot name="append" />

@@ -9,12 +9,14 @@ export interface ZSelectProps {
   placeholder?: string
   dark?: boolean
   required?: boolean
-  params?: Omit<QSelectProps, 'modelValue' | 'options' | 'placeholder' | 'dark'>
+  size?: 'small' | 'medium' | 'big'
+  params?: Omit<QSelectProps, 'modelValue' | 'options' | 'label' | 'placeholder' | 'dark'>
 }
 
 const props = withDefaults(defineProps<ZSelectProps>(), {
   dark: false,
   password: false,
+  size: 'big',
 })
 defineEmits(['update:modelValue'])
 
@@ -33,6 +35,7 @@ const value = useVModel(props, 'modelValue')
     </div>
     <q-select
       v-model="value"
+      :class="size"
       dense outlined
       :options="options"
       :dark="dark"
@@ -43,7 +46,11 @@ const value = useVModel(props, 'modelValue')
       v-bind="params"
     >
       <template v-if="placeholder && !value" #prepend>
-        <div text="base grey-5" font-400 opacity-70 v-text="placeholder" />
+        <div
+          text-grey-5 font-400 opacity-70
+          :text="size === 'small' ? 'sm' : 'base'"
+          v-text="placeholder"
+        />
       </template>
     </q-select>
   </div>
@@ -63,6 +70,11 @@ const value = useVModel(props, 'modelValue')
           font-size: 14px;
           color: var(--grey-4);
         }
+      }
+
+      .q-field__native {
+        min-height: auto;
+        padding: 0;
       }
     }
 

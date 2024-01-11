@@ -4,8 +4,6 @@
 
   .q-field {
     .q-field__control {
-      min-height: 48px;
-      height: 48px;
       border-radius: 0;
 
       .q-field__prepend {
@@ -17,23 +15,13 @@
         margin-left: 6px;
       }
 
-      .text-negative {
-        font-size: 20px;
-      }
-
-      .q-field__label {
-        top: 14px;
-        color: var(--grey-5);
-      }
-
       .q-field__control-container {
         height: 100%;
       }
 
       input {
-        font-size: 16px;
-        line-height: 24px;
         color: var(--grey-8);
+        padding: 0;
         &::-webkit-input-placeholder {
           color: var(--grey-5);
         }
@@ -75,6 +63,54 @@
 
     .q-field__bottom {
       padding-left: 0;
+    }
+
+    &.big {
+      .q-field__control {
+        min-height: 48px;
+        height: 48px;
+
+        .text-negative {
+          font-size: 20px;
+        }
+
+        input {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+
+    &.medium {
+      .q-field__control {
+        min-height: 40px;
+        height: 40px;
+
+        .text-negative {
+          font-size: 18px;
+        }
+
+        input {
+          font-size: 16px;
+          line-height: 24px;
+        }
+      }
+    }
+
+    &.small {
+      .q-field__control {
+        min-height: 32px;
+        height: 32px;
+
+        .text-negative {
+          font-size: 16px;
+        }
+
+        input {
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
     }
   }
 }

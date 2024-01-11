@@ -28,33 +28,59 @@ const value = useVModel(props, 'modelValue')
 
 <style lang="scss" scoped>
 .z-chip-select {
-  :deep(.q-field__control) {
-    .q-field__native {
-      gap: 16px;
+  :deep(.q-field) {
+    .q-field__control {
+      .q-field__native {
+        gap: 16px;
 
-      .q-chip {
-        margin: 0;
-        padding: 4px 8px;
-        height: auto;
-        gap: 2px;
-        background: var(--grey-2);
+        .q-chip {
+          margin: 0;
+          padding: 4px 8px;
+          height: auto;
+          gap: 2px;
+          background: var(--grey-2);
+          border-radius: 24px;
 
+          .q-chip__content {
+            color: var(--grey-8);
+          }
+
+          .q-icon {
+            color: var(--grey-4);
+            margin: 0;
+          }
+        }
+      }
+
+      .q-field__append {
+        margin-left: 16px;
+      }
+    }
+
+    &.big, &.medium {
+      .q-field__control .q-field__native .q-chip {
         .q-chip__content {
-          color: var(--grey-8);
           font-size: 16px;
           line-height: 24px;
         }
 
         .q-icon {
           font-size: 16px;
-          color: var(--grey-4);
-          margin: 0;
         }
       }
     }
 
-    .q-field__append {
-      margin-left: 16px;
+    &.small {
+      .q-field__control .q-field__native .q-chip {
+        .q-chip__content {
+          font-size: 14px;
+          line-height: 20px;
+        }
+
+        .q-icon {
+          font-size: 14px;
+        }
+      }
     }
   }
 }
