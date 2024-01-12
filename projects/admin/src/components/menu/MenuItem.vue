@@ -33,6 +33,7 @@ async function dynamicImport(state: 'default' | 'active' = 'default') {
     :px="isExpand ? 8 : 3.5" h12 cursor-pointer transition
     rounded-2 :bg="active ? 'white-1' : 'transparent'"
     :text="active ? 'grey-1' : 'grey-4'" hover:bg-white-1
+    select-none
   >
     <div v-html="active ? icon.active : icon.default" />
     <div v-if="isShow" truncate text-sm font-500 v-text="label" />

@@ -2,11 +2,25 @@
 import left from '~/assets/icons/ident/left.svg?raw'
 import right from '~/assets/icons/ident/right.svg?raw'
 
+const { width } = useWindowSize()
 const { app } = useSysConfig()
-const { isExpand, isShow, time, changeState } = useSidebar()
+const { baseWidth, isExpand, isShow, time, changeState } = useSidebar()
 
 /** 退出登录对话框 */
 const dialog = ref(false)
+
+watch(
+  width,
+  (newVal, oldVal) => {
+    if ((!oldVal || oldVal >= baseWidth) && newVal < baseWidth)
+      changeState(false)
+    else if ((!oldVal || oldVal < baseWidth) && newVal >= baseWidth)
+      changeState(true)
+  },
+  {
+    immediate: true,
+  }
+)
 </script>
 
 <template>
@@ -37,7 +51,7 @@ const dialog = ref(false)
           :mx="isShow ? 4 : 'auto'"
           cursor-pointer
           v-html="isExpand ? left : right"
-          @click="changeState"
+          @click="changeState()"
         />
       </div>
     </div>

@@ -7,6 +7,8 @@ const isShow = ref(true)
 
 /** 过渡动画时间(ms) */
 const time = 300
+/** 基本宽度 */
+const baseWidth = 800
 /** 定时器 */
 let timeout: number | undefined
 
@@ -14,12 +16,13 @@ export function useSidebar() {
   /**
    * 切换侧边栏的展开状态
    */
-  function changeState() {
+  function changeState(flag?: boolean) {
     if (!isClient)
       return
 
     clearTimeout(timeout)
-    isExpand.value = !isExpand.value
+
+    isExpand.value = flag === undefined ? !isExpand.value : flag
     if (isExpand.value) {
       isShow.value = true
     }
@@ -34,6 +37,7 @@ export function useSidebar() {
     isExpand,
     isShow,
     time,
+    baseWidth,
     changeState,
   }
 }
