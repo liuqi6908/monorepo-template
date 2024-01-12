@@ -3,7 +3,6 @@ import { PermissionType } from 'zjf-types'
 interface AdminMenu {
   name: string
   to: string
-  icon: string
   permission: PermissionType[]
 }
 
@@ -14,7 +13,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '页面管理',
     to: '/home',
-    icon: 'fas fa-home',
     permission: [
       PermissionType.CMS_CREATE,
       PermissionType.CMS_UPDATE,
@@ -25,7 +23,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '用户管理',
     to: '/user',
-    icon: 'fas fa-user',
     permission: [
       PermissionType.ACCOUNT_CREATE,
       PermissionType.ACCOUNT_DELETE,
@@ -41,7 +38,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '数据管理',
     to: '/data',
-    icon: 'fas fa-chart-bar',
     permission: [
       PermissionType.DATA_UPLOAD,
       PermissionType.DATA_UPLOAD_INTRO,
@@ -56,7 +52,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '日志管理',
     to: '/log',
-    icon: 'fas fa-clipboard-list',
     permission: [
       PermissionType.LOG_VIEW,
     ],
@@ -64,7 +59,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '用户权限管理',
     to: '/authority',
-    icon: 'fas fa-address-card',
     permission: [
       PermissionType.ACCOUNT_UPDATE_DATA_ROLE,
       PermissionType.DATA_PERMISSION_CREATE,
@@ -77,7 +71,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '桌面管理',
     to: '/desktop',
-    icon: 'fas fa-cloud',
     permission: [
       PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT,
       PermissionType.DESKTOP_REQUEST_CREATE,
@@ -97,7 +90,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '管理员分配',
     to: '/admin',
-    icon: 'fas fa-user-cog',
     permission: [
       PermissionType.ACCOUNT_UPDATE_ROLE,
       PermissionType.ROLE_CREATE,
@@ -109,7 +101,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '作品管理',
     to: '/work',
-    icon: 'fas fa-book',
     permission: [
       PermissionType.WORK_QUERY_ALL,
       PermissionType.WORK_DOWNLOAD,
@@ -119,7 +110,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '申请采购',
     to: '/purchase',
-    icon: 'fas fa-edit',
     permission: [
       PermissionType.DATA_SUGGEST_QUERY_ALL,
     ],
@@ -127,7 +117,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '文件外发',
     to: '/export',
-    icon: 'fas fa-file-export',
     permission: [
       PermissionType.EXPORT_LG_QUERY_ALL,
       PermissionType.EXPORT_SM_QUERY_ALL,
