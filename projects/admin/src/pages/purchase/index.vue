@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    首页
+    申请采购
   </div>
 </template>
 

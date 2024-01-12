@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    首页
+    作品管理
   </div>
 </template>
 

@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    首页
+    用户权限管理
   </div>
 </template>
 

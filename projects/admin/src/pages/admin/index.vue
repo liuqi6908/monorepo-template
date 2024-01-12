@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    首页
+    管理员分配
   </div>
 </template>
 

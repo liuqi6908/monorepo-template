@@ -3,7 +3,7 @@
 
 <template>
   <div>
-    首页
+    数据管理
   </div>
 </template>
 
