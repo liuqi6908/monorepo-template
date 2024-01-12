@@ -2,9 +2,10 @@
 import { isClient } from '@vueuse/core'
 
 const { width } = useWindowSize()
-const { app, getAppConfig } = useSysConfig()
+const { app, isAdmin, getAppConfig } = useSysConfig()
 
 onBeforeMount(async () => {
+  isAdmin.value = true
   // 设置网站标题和logo
   await getAppConfig()
   useHead({

@@ -22,7 +22,7 @@ declare module 'vue' {
     ExportStatus: typeof import('./../../../shared/components/status/ExportStatus.vue')['default']
     HomeMenu: typeof import('./../components/menu/HomeMenu.vue')['default']
     LineEchartsCard: typeof import('./../components/card/LineEchartsCard.vue')['default']
-    LogoutDialog: typeof import('./../components/user/LogoutDialog.vue')['default']
+    LogoutDialog: typeof import('./../../../shared/components/dialog/LogoutDialog.vue')['default']
     PrivacyDoc: typeof import('./../components/protocol/PrivacyDoc.vue')['default']
     Protocol: typeof import('./../components/protocol/index.vue')['default']
     QuestionCard: typeof import('./../components/card/QuestionCard.vue')['default']

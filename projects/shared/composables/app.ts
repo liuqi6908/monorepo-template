@@ -1,5 +1,4 @@
-import { computed, ref } from 'vue'
-import { isClient } from '@vueuse/core'
+import { ref } from 'vue'
 import {
   APP_ICON,
   APP_NAME,
@@ -47,6 +46,9 @@ const nav = ref<IConfigDto[SysConfig.NAV]>()
 const verification = ref<IConfigDto[SysConfig.VERIFICATION]>()
 /** 上传作品配置 */
 const works = ref<IConfigDto[SysConfig.WORK]>()
+
+/** 是否在管理后台 */
+const isAdmin = ref(false)
 
 export function useSysConfig() {
   /**
@@ -174,11 +176,6 @@ export function useSysConfig() {
       amount,
     }
   }
-
-  /**
-   * 是否在管理后台
-   */
-  const isAdmin = computed(() => isClient && window.location.href.includes('/admin'))
 
   return {
     app,

@@ -4,6 +4,9 @@ import right from '~/assets/icons/ident/right.svg?raw'
 
 const { app } = useSysConfig()
 const { isExpand, isShow, time, changeState } = useSidebar()
+
+/** 退出登录对话框 */
+const dialog = ref(false)
 </script>
 
 <template>
@@ -43,7 +46,11 @@ const { isExpand, isShow, time, changeState } = useSidebar()
       <MenuItem
         label="退出登录"
         icon="exit"
+        @click="dialog = true"
       />
     </div>
+
+    <!-- 退出登录对话框 -->
+    <LogoutDialog v-model="dialog" />
   </div>
 </template>

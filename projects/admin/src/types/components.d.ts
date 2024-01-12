@@ -16,6 +16,7 @@ declare module 'vue' {
     CaptchaInput: typeof import('./../../../shared/components/input/CaptchaInput.vue')['default']
     ExportStatus: typeof import('./../../../shared/components/status/ExportStatus.vue')['default']
     HomeMenu: typeof import('./../components/menu/HomeMenu.vue')['default']
+    LogoutDialog: typeof import('./../../../shared/components/dialog/LogoutDialog.vue')['default']
     MenuItem: typeof import('./../components/menu/MenuItem.vue')['default']
     ReadonlyInput: typeof import('./../../../shared/components/input/ReadonlyInput.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

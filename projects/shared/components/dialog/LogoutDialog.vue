@@ -1,4 +1,8 @@
 <script lang="ts" setup>
+import { useVModel } from '@vueuse/core'
+import { useUser } from '../../composables/user'
+import ZDialog from './ZDialog.vue'
+
 const props = defineProps<{
   modelValue: boolean,
 }>()
