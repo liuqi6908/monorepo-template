@@ -5,7 +5,7 @@ import { browser } from 'zjf-utils'
 const client = createClient({
   endPoint: import.meta.env.VITE_MINIO_ENDPOINT ?? 'localhost',
   port: getEnvVariable('VITE_MINIO_PORT'),
-  useSSL: getEnvVariable('VITE_MINIO_USE_SSL'),
+  useSSL: getEnvVariable('VITE_MINIO_USE_SSL', false),
   accessKey: import.meta.env.VITE_MINIO_AK ?? '',
   secretKey: import.meta.env.VITE_MINIO_SK ?? '',
 })

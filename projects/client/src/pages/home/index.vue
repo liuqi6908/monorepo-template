@@ -19,7 +19,7 @@ const cmsList = reactive(CMS_CONFIG.filter((_, i) => i < 2).map((v) => {
 const questionProps = ref<CmsJson[]>()
 
 /** 是否展示首页拓展 */
-const isShowHomeExpand = getEnvVariable('VITE_HOME_EXPAND')
+const isShowHomeExpand = getEnvVariable('VITE_HOME_EXPAND', false)
 
 onBeforeMount(async () => {
   loading.value = true

@@ -53,7 +53,7 @@ const previewRows: any[] = reactive([])
 
 /** 是否预购 */
 const isPurchased = computed(() => (
-  getEnvVariable('VITE_DATA_PRE_PURCHASE')
+  getEnvVariable('VITE_DATA_PRE_PURCHASE', false)
   && rootList.value?.find(v => v.id === rootId.value)?.nameZH.includes('预购')
 ))
 /** 是否申请了云桌面 */

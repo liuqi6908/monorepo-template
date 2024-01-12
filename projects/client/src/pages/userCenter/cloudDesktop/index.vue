@@ -11,7 +11,7 @@ const { requestStatus, queueLen, rejectReason, isAllocated, getDesktopRequest, g
 const loading = ref(false)
 
 /** 是否展示云桌面文件传输 */
-const isDesktopFtp = getEnvVariable('VITE_DESKTOP_FTP')
+const isDesktopFtp = getEnvVariable('VITE_DESKTOP_FTP', false)
 
 onBeforeMount(async () => {
   loading.value = true

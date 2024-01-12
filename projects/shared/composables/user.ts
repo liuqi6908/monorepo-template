@@ -256,7 +256,7 @@ export function useUser($router = useRouter()) {
   /**
    * 用户是否使用手机号
    */
-  const isPhone = computed(() => getEnvVariable('VITE_USER_PHONE'))
+  const isPhone = computed(() => getEnvVariable('VITE_USER_PHONE', false))
 
   const instance = getCurrentInstance()
   if (instance) {
