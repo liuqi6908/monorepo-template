@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { MinioBucket } from 'zjf-types'
-import { formatFileSize, numberArrSum } from 'zjf-utils'
+import { COMPRESSED_FILE_SUFFIX, formatFileSize, numberArrSum } from 'zjf-utils'
 import moment from 'moment'
 import { Notify } from 'quasar'
 import type { QTableProps } from 'quasar'
@@ -96,7 +96,7 @@ watch(
     await loadingNotify(async () => {
       await uploadFile(newVal)
       await getFileList()
-    }, '正在上传中...', '上传成功', '上传失败')
+      }, '正在上传中...', '上传成功', '上传失败')
     file.value = undefined
   }
 )
@@ -194,6 +194,10 @@ function deleteSelectedFile() {
               v-if="!isDesktop"
               v-model="file"
               :disable="!usableQuota"
+              :accept="COMPRESSED_FILE_SUFFIX.map(v => `.${v}`).join(',')"
+              :hintMessage="{
+                accept: '仅允许上传压缩文件'
+              }"
             >
               <ZBtn
                 label="上传"

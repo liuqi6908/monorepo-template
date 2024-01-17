@@ -25,9 +25,9 @@ export function useMinio() {
   async function uploadFile(file: File) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader()
-      reader.onload = () => {
+      reader.onload = async () => {
         const buf = Bufferfrom(reader.result)
-        const res = client.putObject(bucket, `${basePath.value}${file.name}`, buf)
+        const res = await client.putObject(bucket, `${basePath.value}${file.name}`, buf)
         resolve(res)
       }
       reader.onerror = () => {

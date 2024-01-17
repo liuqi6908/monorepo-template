@@ -6,6 +6,7 @@ import type { QFileProps } from 'quasar'
 import { browser } from 'zjf-utils'
 import ZBtn from '../btn/ZBtn.vue'
 import { onRejected } from '../../utils/uploadFile'
+import type { hint } from '../../utils/uploadFile'
 
 interface ZUploadProps {
   modelValue?: File | File[]
@@ -20,6 +21,7 @@ interface ZUploadProps {
   disable?: boolean
   type?: 'file' | 'image'
   showFileList?: boolean
+  hintMessage?: hint
   params?: Omit<
     QFileProps,
     'modelValue' | 'label' | 'hint' | 'accept' | 'multiple'
@@ -72,7 +74,7 @@ function deleteFile(index: number) {
           :max-file-size="maxFileSize"
           :disable="disable"
           append
-          @rejected="onRejected"
+          @rejected="(e) => onRejected(e, hintMessage)"
         />
         <div cursor-pointer @click="clickUpload">
           <slot>
