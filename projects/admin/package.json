@@ -26,6 +26,7 @@
     "@vueuse/head": "^1.1.26",
     "@wangeditor/editor": "^5.1.23",
     "@wangeditor/editor-for-vue": "^5.1.12",
+    "@watermarkify/vue-watermark": "^0.0.5",
     "axios": "^1.4.0",
     "lodash": "^4.17.21",
     "lodash-es": "^4.17.21",

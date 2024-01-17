@@ -56,6 +56,8 @@ interface ImportMetaEnv {
   VITE_DESKTOP_FTP?: boolean
 
   /** ---------------- 管理后台 ---------------- */
+  /** 截图水印 */
+  VITE_WATERMARK?: boolean
   /** 自动分配云桌面 */
   VITE_DESKTOP_AUTO_ALLOT?: boolean
   /** 手动分配云桌面 */

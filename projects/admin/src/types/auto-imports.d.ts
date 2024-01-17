@@ -115,8 +115,6 @@ declare global {
   const inject: typeof import('vue')['inject']
   const isDefined: typeof import('@vueuse/core')['isDefined']
   const isDesktopApi: typeof import('../../../shared/api/desktop')['isDesktopApi']
-  const isExpand: typeof import('../composables/sidebar')['isExpand']
-  const isExpandSidebar: typeof import('../composables/sidebar')['isExpandSidebar']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
@@ -155,6 +153,7 @@ declare global {
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const provide: typeof import('vue')['provide']
   const proxyQueryEsApi: typeof import('../../../shared/api/log')['proxyQueryEsApi']
+  const pubRouter: typeof import('../../../shared/composables/pubRouter')['pubRouter']
   const queryAllExportLgApi: typeof import('../../../shared/api/exportLg')['queryAllExportLgApi']
   const queryAllExportSmApi: typeof import('../../../shared/api/exportSm')['queryAllExportSmApi']
   const queryAllVerificationsApi: typeof import('../../../shared/api/verification')['queryAllVerificationsApi']
@@ -588,6 +587,7 @@ declare module 'vue' {
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly proxyQueryEsApi: UnwrapRef<typeof import('../../../shared/api/log')['proxyQueryEsApi']>
+    readonly pubRouter: UnwrapRef<typeof import('../../../shared/composables/pubRouter')['pubRouter']>
     readonly queryAllExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryAllExportLgApi']>
     readonly queryAllExportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['queryAllExportSmApi']>
     readonly queryAllVerificationsApi: UnwrapRef<typeof import('../../../shared/api/verification')['queryAllVerificationsApi']>
@@ -1014,6 +1014,7 @@ declare module '@vue/runtime-core' {
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
     readonly proxyQueryEsApi: UnwrapRef<typeof import('../../../shared/api/log')['proxyQueryEsApi']>
+    readonly pubRouter: UnwrapRef<typeof import('../../../shared/composables/pubRouter')['pubRouter']>
     readonly queryAllExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryAllExportLgApi']>
     readonly queryAllExportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['queryAllExportSmApi']>
     readonly queryAllVerificationsApi: UnwrapRef<typeof import('../../../shared/api/verification')['queryAllVerificationsApi']>

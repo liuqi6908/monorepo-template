@@ -1,5 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
+import { useRouter } from 'vue-router'
 import { $http } from '../api'
+import { pubRouter } from './pubRouter'
 
 const cache = new Map<string, any>()
 
@@ -7,6 +9,9 @@ export function useRequest() {
   const requestControllers = new Set<AbortController>()
 
   function newController() {
+    if (!pubRouter.value)
+      pubRouter.value = useRouter()
+
     const abortController = new AbortController()
     const signal = abortController.signal
     requestControllers.add(abortController)
@@ -27,7 +32,10 @@ export function useRequest() {
     if (query)
       url = queryParamsUrl(url, query)
 
-    const response = await $http.get(url, { signal, ...(options || {}) })
+    const response = await $http.get(url, {
+      signal,
+      ...(options || {}),
+    })
     requestControllers.delete(abortController)
     useCache && cache.set(cacheKey, response.data)
 

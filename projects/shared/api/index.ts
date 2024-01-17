@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { Notify } from 'quasar'
-import { useRouter } from 'vue-router'
-import { ErrorCode } from 'zjf-types'
 import { API_BASE_URL } from '../constants/app'
 import { useSysConfig } from '../composables/app'
 import { authToken, useUser } from '../composables/user'
+import { pubRouter } from '../composables/pubRouter'
 
 const $http = axios.create({
   baseURL: API_BASE_URL,
@@ -45,7 +44,7 @@ $http.interceptors.response.use(
     if (!response)
       return
 
-    const { status, detail, message } = response.data
+    const { detail, message } = response.data
     const notify = config.headers.notify !== false
 
     // 判断登录是否有效（未登录/登录过期）
@@ -57,13 +56,9 @@ $http.interceptors.response.use(
     const { isAdmin } = useSysConfig()
     // 管理后台，跳转路由
     if (isAdmin.value) {
-      const $router = useRouter()
-      // 判断是否有权限
-      if (status === ErrorCode.PERMISSION_DENIED)
-        $router.replace({ path: '/denied' })
       // 判断登录是否有效
-      else if (response.status === 401)
-        $router.replace({ path: '/auth/login' })
+      if (response.status === 401)
+        pubRouter.value?.replace({ path: '/auth/login' })
     }
 
     if (notify) {
