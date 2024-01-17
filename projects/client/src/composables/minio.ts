@@ -1,7 +1,11 @@
 import type { Readable } from 'node:stream'
-import { Bufferfrom, createClient } from 'minio-vite-js'
+import $http from 'axios'
+import { createClient } from 'minio-vite-js'
 import { browser } from 'zjf-utils'
+import type { AxiosRequestConfig } from 'axios'
+import type { QNotifyUpdateOptions } from 'quasar'
 
+/** MinIo 客服端 */
 const client = createClient({
   endPoint: import.meta.env.VITE_MINIO_ENDPOINT ?? 'localhost',
   port: getEnvVariable('VITE_MINIO_PORT'),
@@ -9,6 +13,7 @@ const client = createClient({
   accessKey: import.meta.env.VITE_MINIO_AK ?? '',
   secretKey: import.meta.env.VITE_MINIO_SK ?? '',
 })
+/** FTP 文件上传桶名 */
 const bucket = import.meta.env.VITE_MINIO_BUCKET_FTP ?? ''
 
 export function useMinio() {
@@ -22,19 +27,21 @@ export function useMinio() {
   /**
    * 上传文件
    */
-  async function uploadFile(file: File) {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.onload = async () => {
-        const buf = Bufferfrom(reader.result)
-        const res = await client.putObject(bucket, `${basePath.value}${file.name}`, buf)
-        resolve(res)
-      }
-      reader.onerror = () => {
-        reject(reader.error)
-      }
-      reader.readAsArrayBuffer(file)
-    })
+  async function uploadFile(file: File, notify: (props?: QNotifyUpdateOptions | undefined) => void) {
+    // 获取临时上传的预签名 URL
+    const url = await client.presignedUrl('put', bucket, `${basePath.value}${file.name}`, 60)
+
+    // 使用 Axios 上传文件，并监听上传进度
+    const config: AxiosRequestConfig = {
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(progressEvent.loaded / (progressEvent.total ?? 1) * 100)
+        notify({
+          caption: `上传进度：${percentCompleted}%`,
+        })
+      },
+    }
+
+    return await $http.put(url, file, config)
   }
 
   /**

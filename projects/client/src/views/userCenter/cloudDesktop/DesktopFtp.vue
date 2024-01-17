@@ -93,10 +93,27 @@ watch(
         message: '文件大小超出可用存储空间'
       })
     }
-    await loadingNotify(async () => {
-      await uploadFile(newVal)
+    const notify = Notify.create({
+      type: 'loading',
+      message: '正在上传中，请耐心等待...',
+      caption: '上传进度：0%'
+    })
+    try {
+      await uploadFile(newVal, notify)
       await getFileList()
-      }, '正在上传中...', '上传成功', '上传失败')
+      notify({
+        type: 'success',
+        message: '上传成功',
+        caption: undefined
+      })
+    }
+    catch (_) {
+      notify({
+        type: 'danger',
+        message: '上传失败',
+        caption: undefined
+      })
+    }
     file.value = undefined
   }
 )
