@@ -1,4 +1,3 @@
-import type { Readable } from 'node:stream'
 import $http from 'axios'
 import { createClient } from 'minio-vite-js'
 import { browser } from 'zjf-utils'
@@ -54,34 +53,25 @@ export function useMinio() {
   /**
    * 下载文件
    */
-  async function downloadFile(path: string) {
-    loadingNotify(
-      () => new Promise((resolve, reject) => {
-        client.getObject(bucket, path, (err: Error | null, dataStream: Readable) => {
-          if (err || !dataStream)
-            return reject(err)
+  async function downloadFile(path: string, notify: (props?: QNotifyUpdateOptions | undefined) => void) {
+    // 获取临时下载的预签名 URL
+    const url = await client.presignedUrl('get', bucket, path, 60)
 
-          // 切片，将对象数据转换为Blob
-          const chunks: any[] = []
-          dataStream.on('data', (chunk) => {
-            chunks.push(chunk)
-          })
-          dataStream.on('end', () => {
-            const blob = new Blob(chunks)
-            const downloadUrl = URL.createObjectURL(blob)
-            browser.downloadUrl(downloadUrl, path.split('/').pop())
-            URL.revokeObjectURL(downloadUrl)
-            resolve(downloadUrl)
-          })
-          dataStream.on('error', (err) => {
-            reject(err)
-          })
+    // 使用 Axios 下载文件，并监听下载进度
+    const config: AxiosRequestConfig = {
+      responseType: 'blob',
+      onDownloadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(progressEvent.loaded / (progressEvent.total ?? 1) * 100)
+        notify({
+          caption: `下载进度：${percentCompleted}%`,
         })
-      }),
-      '正在下载中...',
-      '下载成功',
-      '文件不存在',
-    )
+      },
+    }
+
+    const { data } = await $http.get(url, config)
+    const downloadUrl = URL.createObjectURL(new Blob([data]))
+    browser.downloadUrl(downloadUrl, path.split('/').pop())
+    URL.revokeObjectURL(downloadUrl)
   }
 
   return {
