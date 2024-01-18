@@ -6,8 +6,7 @@
 export {}
 declare global {
   const $http: typeof import('../../../shared/api/index')['$http']
-  const ADMIN_MENU_LIST: typeof import('../../../shared/constants/admin')['ADMIN_MENU_LIST']
-  const ADMIN_ROLE_KEY: typeof import('../../../shared/constants/storage')['ADMIN_ROLE_KEY']
+  const ADMIN_MENU_LIST: typeof import('../constants/admin')['ADMIN_MENU_LIST']
   const API_BASE_URL: typeof import('../../../shared/constants/app')['API_BASE_URL']
   const APP_MIN_WIDTH: typeof import('../../../shared/constants/app')['APP_MIN_WIDTH']
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
@@ -119,7 +118,6 @@ declare global {
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
-  const labelToRolePermissions: typeof import('../../../shared/utils/rolePermissions')['labelToRolePermissions']
   const loadingNotify: typeof import('../../../shared/utils/notify')['loadingNotify']
   const logClusterAnalysisApi: typeof import('../../../shared/api/log')['logClusterAnalysisApi']
   const loginByEmailCodeApi: typeof import('../../../shared/api/auth')['loginByEmailCodeApi']
@@ -190,7 +188,6 @@ declare global {
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
-  const rolePermissionsToLabel: typeof import('../../../shared/utils/rolePermissions')['rolePermissionsToLabel']
   const rsaDecrypt: typeof import('../../../shared/utils/rsa')['rsaDecrypt']
   const rsaEncrypt: typeof import('../../../shared/utils/rsa')['rsaEncrypt']
   const sendEmailCodeApi: typeof import('../../../shared/api/email')['sendEmailCodeApi']
@@ -440,8 +437,7 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface ComponentCustomProperties {
     readonly $http: UnwrapRef<typeof import('../../../shared/api/index')['$http']>
-    readonly ADMIN_MENU_LIST: UnwrapRef<typeof import('../../../shared/constants/admin')['ADMIN_MENU_LIST']>
-    readonly ADMIN_ROLE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['ADMIN_ROLE_KEY']>
+    readonly ADMIN_MENU_LIST: UnwrapRef<typeof import('../constants/admin')['ADMIN_MENU_LIST']>
     readonly API_BASE_URL: UnwrapRef<typeof import('../../../shared/constants/app')['API_BASE_URL']>
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
@@ -553,7 +549,6 @@ declare module 'vue' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
-    readonly labelToRolePermissions: UnwrapRef<typeof import('../../../shared/utils/rolePermissions')['labelToRolePermissions']>
     readonly loadingNotify: UnwrapRef<typeof import('../../../shared/utils/notify')['loadingNotify']>
     readonly logClusterAnalysisApi: UnwrapRef<typeof import('../../../shared/api/log')['logClusterAnalysisApi']>
     readonly loginByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByEmailCodeApi']>
@@ -624,7 +619,6 @@ declare module 'vue' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
-    readonly rolePermissionsToLabel: UnwrapRef<typeof import('../../../shared/utils/rolePermissions')['rolePermissionsToLabel']>
     readonly rsaDecrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaDecrypt']>
     readonly rsaEncrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaEncrypt']>
     readonly sendEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/email')['sendEmailCodeApi']>
@@ -867,8 +861,7 @@ declare module 'vue' {
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     readonly $http: UnwrapRef<typeof import('../../../shared/api/index')['$http']>
-    readonly ADMIN_MENU_LIST: UnwrapRef<typeof import('../../../shared/constants/admin')['ADMIN_MENU_LIST']>
-    readonly ADMIN_ROLE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['ADMIN_ROLE_KEY']>
+    readonly ADMIN_MENU_LIST: UnwrapRef<typeof import('../constants/admin')['ADMIN_MENU_LIST']>
     readonly API_BASE_URL: UnwrapRef<typeof import('../../../shared/constants/app')['API_BASE_URL']>
     readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
@@ -980,7 +973,6 @@ declare module '@vue/runtime-core' {
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
-    readonly labelToRolePermissions: UnwrapRef<typeof import('../../../shared/utils/rolePermissions')['labelToRolePermissions']>
     readonly loadingNotify: UnwrapRef<typeof import('../../../shared/utils/notify')['loadingNotify']>
     readonly logClusterAnalysisApi: UnwrapRef<typeof import('../../../shared/api/log')['logClusterAnalysisApi']>
     readonly loginByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByEmailCodeApi']>
@@ -1051,7 +1043,6 @@ declare module '@vue/runtime-core' {
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
-    readonly rolePermissionsToLabel: UnwrapRef<typeof import('../../../shared/utils/rolePermissions')['rolePermissionsToLabel']>
     readonly rsaDecrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaDecrypt']>
     readonly rsaEncrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaEncrypt']>
     readonly sendEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/email')['sendEmailCodeApi']>

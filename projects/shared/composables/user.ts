@@ -13,9 +13,9 @@ import type {
   IUpdatePasswordByPhoneCodeBodyDto,
   IUser,
   IVerificationHistory,
+  PermissionType,
 } from 'zjf-types'
 
-import { rolePermissionsToLabel } from '../utils/rolePermissions'
 import { rsaEncrypt } from '../utils/rsa'
 import { getEnvVariable } from '../utils/env'
 import {
@@ -32,7 +32,7 @@ import {
   updateOwnPasswordByPhoneCodeApi,
 } from '../api/user'
 import { getLatestVerificationApi } from '../api/verification'
-import { ADMIN_ROLE_KEY, AUTH_TOKEN_KEY, LEADING_PAGE_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
+import { AUTH_TOKEN_KEY, LEADING_PAGE_KEY, REMEMBER_LOGIN_INFO_KEY } from '../constants/storage'
 import { useSysConfig } from './app'
 
 /** 用户token */
@@ -42,7 +42,7 @@ const userInfo = ref<IUser>()
 /** 用户信息获取时间 */
 const getTime = ref<number>()
 /** 用户管理权限 */
-const adminRole = useStorage<string[]>(ADMIN_ROLE_KEY, [])
+const adminRole = ref<PermissionType[]>()
 /** 认证信息 */
 const latestVerify = ref<IVerificationHistory>()
 
@@ -224,8 +224,7 @@ export function useUser($router = useRouter()) {
     const res = await getOwnProfileApi({ relation })
     if (res) {
       userInfo.value = res
-      const permissions = res.role?.permissions?.map(v => v.name)
-      adminRole.value = rolePermissionsToLabel(permissions)
+      adminRole.value = res.role?.permissions?.map(v => v.name)
     }
     return res
   }
