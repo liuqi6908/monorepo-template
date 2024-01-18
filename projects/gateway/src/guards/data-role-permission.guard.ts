@@ -33,8 +33,13 @@ export class DataRolePermission extends PermissionGuard implements CanActivate {
 
     const user = req.raw.user
 
-    // 检查用户是否拥有管理权限，有管理权限直接返回
-    const isAdmin = user?.role?.permissions?.some(p => p.name === PermissionType.DATA_PERMISSION_QUERY)
+    // 检查用户是否拥有数据管理相关权限，有权限直接返回
+    const isAdmin = user?.role?.permissions?.some(p => ([
+      PermissionType.DATA_ROOT_QUERY,
+      PermissionType.DATA_QUERY,
+      PermissionType.DATA_UPLOAD_QUERY,
+      PermissionType.DATA_INTRO_QUERY,
+    ].includes(p.name)))
     if (isAdmin) {
       req.dataRole = '*'
       return true

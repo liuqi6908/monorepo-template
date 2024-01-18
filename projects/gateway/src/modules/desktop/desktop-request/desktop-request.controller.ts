@@ -138,7 +138,10 @@ export class DesktopRequestController {
   }
 
   @ApiOperation({ summary: '查询云桌面申请' })
-  @HasPermission(PermissionType.DESKTOP_REQUEST_QUERY)
+  @HasPermission([
+    PermissionType.DESKTOP_REQUEST_QUERY,
+    PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
+  ])
   @ApiSuccessResponse(QueryResDto<DesktopQueue>)
   @Post('query')
   async queryRequests(@Body() body: QueryDto<DesktopQueue>) {

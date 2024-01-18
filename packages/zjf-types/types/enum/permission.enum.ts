@@ -46,22 +46,28 @@ export enum PermissionType {
   CMS_DELETE = 'cms:delete',
 
   // ------------------ 数据管理-资源 ---------------------
-  /** 上传中间表 */
-  DATA_UPLOAD = 'data:upload',
-  /** 上传数据库介绍 */
-  DATA_UPLOAD_INTRO = 'data:upload-intro',
-  /** 上传表格样例/下载文件 */
-  DATA_UPLOAD_TABLE = 'data:upload-table',
-  /** 编辑数据引用规范 */
-  DATA_EDIT_REFERENCE = 'data:edit-reference',
-  /** 查询所有的数据资源 */
-  DATA_QUERY_ALL = 'data:query-all',
+  /** 查询数据大类 */
+  DATA_ROOT_QUERY = 'data-root:query',
   /** 创建数据大类 */
   DATA_ROOT_CREATE = 'data-root:create',
   /** 更新数据大类 */
   DATA_ROOT_UPDATE = 'data-root:update',
   /** 删除数据大类 */
   DATA_ROOT_DELETE = 'data-root:delete',
+  /** 查询数据资源结构 */
+  DATA_QUERY = 'data:query',
+  /** 上传中间表 */
+  DATA_UPLOAD = 'data:upload',
+  /** 查询数据资源上传情况 */
+  DATA_UPLOAD_QUERY = 'data-upload:query',
+  /** 上传表格样例/下载文件 */
+  DATA_UPLOAD_TABLE = 'data-upload:table',
+  /** 查询数据资源介绍 */
+  DATA_INTRO_QUERY = 'data-intro:query',
+  /** 上传数据资源介绍 */
+  DATA_UPLOAD_INTRO = 'data-intro:upload',
+  /** 编辑数据引用规范 */
+  DATA_EDIT_REFERENCE = 'data-intro:reference',
 
   // ------------------ 数据管理-权限 ---------------------
   /** 创建数据角色 */
@@ -72,10 +78,14 @@ export enum PermissionType {
   DATA_PERMISSION_DELETE = 'data-permission:delete',
   /** 查询数据角色 */
   DATA_PERMISSION_QUERY = 'data-permission:query',
+  /** 查询数据角色分配列表 */
+  DATA_PERMISSION_ASSIGN_QUERY = 'data-permission:assign-query',
 
   // ------------------ 日志访问 ---------------------
   /** 查看日志 */
   LOG_VIEW = 'log:view',
+  /** 管理日志 */
+  LOG_MANAGE = 'log:manage',
 
   // ------------------ 云桌面-申请 ---------------------
   /** 查看云桌面申请附件 */
@@ -88,6 +98,8 @@ export enum PermissionType {
   DESKTOP_REQUEST_REJECT = 'desktop-request:reject',
   /** 查询云桌面申请 */
   DESKTOP_REQUEST_QUERY = 'desktop-request:query',
+  /** 查询排队中云桌面申请 */
+  DESKTOP_REQUEST_QUEUEING_QUERY = 'desktop-request:queueing-query',
 
   // ------------------ 云桌面-管理 ---------------------
   /** 创建云桌面 */
@@ -98,10 +110,18 @@ export enum PermissionType {
   DESKTOP_UPDATE = 'desktop:update',
   /** 删除云桌面 */
   DESKTOP_DELETE = 'desktop:delete',
+  /** 自动创建云桌面并分配给指定用户 */
+  DESKTOP_CREATE_ASSIGN = 'desktop:create-assign',
   /** 分配云桌面给指定用户 */
   DESKTOP_ASSIGN = 'desktop:assign',
   /** 查询云桌面 */
   DESKTOP_QUERY = 'desktop:query',
+  /** 查询已停用云桌面 */
+  DESKTOP_DISABLE_QUERY = 'desktop:disable-query',
+  /** 查询数据上传云桌面 */
+  DESKTOP_FTP_QUERY = 'desktop:ftp-query',
+  /** 删除云桌面数据 */
+  DESKTOP_FTP_DELETE = 'desktop:ftp-delete',
   /** 云桌面过期检查 */
   DESKTOP_EXPIRE_CHECK = 'desktop:expire-check',
 
@@ -114,10 +134,14 @@ export enum PermissionType {
   ROLE_DELETE = 'role:delete',
   /** 查询角色权限 */
   ROLE_QUERY = 'role:query',
+  /** 查询角色权限分配列表 */
+  ROLE_ASSIGN_QUERY = 'role:assign-query',
 
   // ------------------ 数据外发 ---------------------
   /** 查询所有大文件外发历史 */
   EXPORT_LG_QUERY_ALL = 'export-lg:query-all',
+  /** 查询待审核大文件外发历史 */
+  EXPORT_LG_QUERY_PENDING = 'export-lg:query-pending',
   /** 查询所有小文件外发历史 */
   EXPORT_SM_QUERY_ALL = 'export-sm:query-all',
   /** 下载小文件外发的文件 */
@@ -192,42 +216,54 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.CMS_UPDATE]: '更新内容',
   [PermissionType.CMS_DELETE]: '删除内容',
 
-  [PermissionType.DATA_UPLOAD]: '上传中间表',
-  [PermissionType.DATA_UPLOAD_INTRO]: '上传数据库介绍',
-  [PermissionType.DATA_UPLOAD_TABLE]: '上传表格样例/下载文件',
-  [PermissionType.DATA_EDIT_REFERENCE]: '编辑数据引用规范',
-  [PermissionType.DATA_QUERY_ALL]: '查询所有的数据资源',
+  [PermissionType.DATA_ROOT_QUERY]: '查询数据大类',
   [PermissionType.DATA_ROOT_CREATE]: '创建数据大类',
   [PermissionType.DATA_ROOT_UPDATE]: '更新数据大类',
   [PermissionType.DATA_ROOT_DELETE]: '删除数据大类',
+  [PermissionType.DATA_QUERY]: '查询数据资源结构',
+  [PermissionType.DATA_UPLOAD]: '上传中间表',
+  [PermissionType.DATA_UPLOAD_QUERY]: '查询数据资源上传情况',
+  [PermissionType.DATA_UPLOAD_TABLE]: '上传表格样例/下载文件',
+  [PermissionType.DATA_INTRO_QUERY]: '查询数据资源介绍',
+  [PermissionType.DATA_UPLOAD_INTRO]: '上传数据资源介绍',
+  [PermissionType.DATA_EDIT_REFERENCE]: '编辑数据引用规范',
 
   [PermissionType.DATA_PERMISSION_CREATE]: '创建数据角色',
   [PermissionType.DATA_PERMISSION_UPDATE]: '更新数据角色',
   [PermissionType.DATA_PERMISSION_DELETE]: '删除数据角色',
   [PermissionType.DATA_PERMISSION_QUERY]: '查询数据角色',
+  [PermissionType.DATA_PERMISSION_ASSIGN_QUERY]: '查询数据角色分配列表',
 
   [PermissionType.LOG_VIEW]: '查看日志',
+  [PermissionType.LOG_MANAGE]: '管理日志',
 
   [PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT]: '查看云桌面申请附件',
   [PermissionType.DESKTOP_REQUEST_CREATE]: '创建云桌面申请',
   [PermissionType.DESKTOP_REQUEST_APPROVE]: '通过云桌面申请',
   [PermissionType.DESKTOP_REQUEST_REJECT]: '驳回云桌面申请',
   [PermissionType.DESKTOP_REQUEST_QUERY]: '查询云桌面申请',
+  [PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY]: '查询排队中云桌面申请',
 
   [PermissionType.DESKTOP_CREATE]: '创建云桌面',
   [PermissionType.DESKTOP_DISABLE]: '停用云桌面',
   [PermissionType.DESKTOP_UPDATE]: '更新云桌面',
   [PermissionType.DESKTOP_DELETE]: '删除云桌面',
+  [PermissionType.DESKTOP_CREATE_ASSIGN]: '自动创建云桌面并分配给指定用户',
   [PermissionType.DESKTOP_ASSIGN]: '分配云桌面给指定用户',
   [PermissionType.DESKTOP_QUERY]: '查询云桌面',
+  [PermissionType.DESKTOP_DISABLE_QUERY]: '查询已停用云桌面',
+  [PermissionType.DESKTOP_FTP_QUERY]: '查询数据上传云桌面',
+  [PermissionType.DESKTOP_FTP_DELETE]: '删除云桌面数据',
   [PermissionType.DESKTOP_EXPIRE_CHECK]: '云桌面过期检查',
 
   [PermissionType.ROLE_CREATE]: '创建角色权限',
   [PermissionType.ROLE_UPDATE]: '更新角色权限',
   [PermissionType.ROLE_DELETE]: '删除角色权限',
   [PermissionType.ROLE_QUERY]: '查询角色权限',
+  [PermissionType.ROLE_ASSIGN_QUERY]: '查询角色权限分配列表',
 
   [PermissionType.EXPORT_LG_QUERY_ALL]: '查询所有大文件外发历史',
+  [PermissionType.EXPORT_LG_QUERY_PENDING]: '查询待审核大文件外发历史',
   [PermissionType.EXPORT_SM_QUERY_ALL]: '查询所有小文件外发历史',
   [PermissionType.EXPORT_SM_DOWNLOAD]: '下载小文件外发的文件',
   [PermissionType.EXPORT_LG_APPROVE]: '通过大文件外发申请',

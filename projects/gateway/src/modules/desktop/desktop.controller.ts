@@ -162,7 +162,11 @@ export class DesktopController {
   }
 
   @ApiOperation({ summary: '查询云桌面列表' })
-  @HasPermission(PermissionType.DESKTOP_QUERY)
+  @HasPermission([
+    PermissionType.DESKTOP_QUERY,
+    PermissionType.DESKTOP_DISABLE_QUERY,
+    PermissionType.DESKTOP_FTP_QUERY,
+  ])
   @ApiSuccessResponse(QueryResDto<Desktop>)
   @Post('query')
   public async queryDesktop(@Body() body: QueryDto<Desktop>) {

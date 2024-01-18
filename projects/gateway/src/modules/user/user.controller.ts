@@ -256,7 +256,11 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '查询用户列表' })
-  @HasPermission(PermissionType.ACCOUNT_QUERY)
+  @HasPermission([
+    PermissionType.ACCOUNT_QUERY,
+    PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
+    PermissionType.ROLE_ASSIGN_QUERY,
+  ])
   @Post('query')
   public async queryUserList(@Body() body: QueryDto<User>) {
     return await getQuery(this._userSrv.repo(), body || {})
