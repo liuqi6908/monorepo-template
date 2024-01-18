@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const { adminMenu } = usePermission()
+const { adminMenu } = useRole()
 </script>
 
 <template>

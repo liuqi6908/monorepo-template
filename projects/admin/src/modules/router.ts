@@ -4,10 +4,9 @@ export const install: UserModule = ({ isClient, router }) => {
   if (isClient) {
     router.beforeEach(async (to, _, next) => {
       const { path } = to
-      console.log('to: ', path)
       const isLogin = !!authToken.value
       const { userInfo, getOwnProfile } = useUser()
-      const { adminMenu } = usePermission()
+      const { adminMenu } = useRole()
 
       // 前往登录页面
       if (isLoginPage(path)) {
@@ -36,6 +35,10 @@ export const install: UserModule = ({ isClient, router }) => {
             // 前往的页面没有权限 重定向到 有权限的第一个页面
             else if (!adminMenu.value.some(({ to }) => to === path))
               return next(adminMenu.value[0].to)
+          }
+          // 前往denied页面，有权限 重定向到 有权限的第一个页面
+          else if (adminMenu.value.length) {
+            return next(adminMenu.value[0].to)
           }
         }
       }

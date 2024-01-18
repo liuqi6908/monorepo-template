@@ -258,7 +258,7 @@ export function useUser($router = useRouter()) {
   const isPhone = computed(() => getEnvVariable('VITE_USER_PHONE', false))
 
   const instance = getCurrentInstance()
-  if (instance) {
+  if (!isAdmin.value && instance) {
     onMounted(async () => {
       if (!isFetched) {
         isFetched = true
