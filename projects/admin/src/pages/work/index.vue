@@ -1,4 +1,7 @@
 <script setup lang="ts">
+onBeforeMount(() => {
+  console.log('init：作品管理')
+})
 </script>
 
 <template>

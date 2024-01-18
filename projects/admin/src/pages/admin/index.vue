@@ -1,4 +1,7 @@
 <script setup lang="ts">
+onBeforeMount(() => {
+  console.log('init：管理员分配')
+})
 </script>
 
 <template>

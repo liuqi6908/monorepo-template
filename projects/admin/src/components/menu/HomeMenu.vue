@@ -1,10 +1,11 @@
 <script setup lang="ts">
+const { adminMenu } = usePermission()
 </script>
 
 <template>
   <div flex="~ col gap1">
     <RouterLink
-      v-for="item in ADMIN_MENU_LIST"
+      v-for="item in adminMenu"
       :key="item.to"
       :to="item.to"
     >

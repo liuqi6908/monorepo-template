@@ -1,9 +1,6 @@
 <script setup lang="ts">
 const { width } = useWindowSize()
 const { baseWidth, isExpand, changeState } = useSidebar()
-const { getOwnProfile } = useUser()
-
-onMounted(getOwnProfile)
 </script>
 
 <template>

@@ -1,4 +1,7 @@
 <script setup lang="ts">
+onBeforeMount(() => {
+  console.log('init：用户管理')
+})
 </script>
 
 <template>

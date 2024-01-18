@@ -1,6 +1,6 @@
 import { PermissionType } from 'zjf-types'
 
-interface PermissionItem {
+export interface PermissionItem {
   name: string
   desc?: string
   value?: PermissionType[]

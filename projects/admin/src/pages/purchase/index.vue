@@ -1,4 +1,7 @@
 <script setup lang="ts">
+onBeforeMount(() => {
+  console.log('init：申请采购')
+})
 </script>
 
 <template>
