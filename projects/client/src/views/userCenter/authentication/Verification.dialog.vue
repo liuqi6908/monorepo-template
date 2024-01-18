@@ -195,7 +195,7 @@ async function confirm() {
       <ZSelect
         v-model="verifyForm.dataRole"
         :options="dataRoleNames"
-        label="身份"
+        label="身份（用户角色）"
         placeholder="请选择您的身份"
         required
       />
