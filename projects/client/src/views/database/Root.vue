@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import type { ZMenu1Props } from 'shared/components/menu/ZMenu1.vue'
+import type { SubMenuProps } from '~/components/menu/SubMenu.vue'
 import Database from './Database.vue'
 
 const { rootId, rootData, databaseId, getDataByRootId } = useDatabase()
@@ -27,7 +27,7 @@ onBeforeMount(async () => {
 })
 
 /** 数据库菜单 */
-const menu = computed<ZMenu1Props['list']>(() => {
+const menu = computed<SubMenuProps['list']>(() => {
   return rootData.value?.map((item) => {
     const { id, nameZH } = item
     return {
@@ -67,7 +67,7 @@ watch(
         :style="{ top: `${height - 17}px` }"
       >
         <div flex-1 w0>
-          <ZMenu1 v-model="databaseId" :list="menu" />
+          <SubMenu v-model="databaseId" :list="menu" />
         </div>
         <RouterLink
           :to="!nameEN ? '' : {

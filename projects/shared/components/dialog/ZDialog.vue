@@ -38,7 +38,7 @@ const value = useVModel(props, 'modelValue')
     v-bind="params"
   >
     <q-card
-      :rounded="isAdmin ? '2!' : '0!'" flex="~ col gap6" py6
+      :rounded="isAdmin ? '3!' : '0!'" flex="~ col gap6" py6
       :style="{
         minWidth: '460px',
         height: scroll ? 'calc(100vh - 100px)' : 'auto',

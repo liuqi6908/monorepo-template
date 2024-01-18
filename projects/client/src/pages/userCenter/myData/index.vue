@@ -48,7 +48,7 @@ function scroll(val: string) {
 
 <template>
   <div flex="~ col">
-    <ZMenu1
+    <SubMenu
       :model-value="value" :list="tabList" bg-grey-1 sticky z-1 pb4
       :style="{ top: `${height + 23}px` }"
       @update:model-value="val => scroll(val)"
@@ -58,7 +58,7 @@ function scroll(val: string) {
 </template>
 
 <style lang="scss" scoped>
-.z-menu-1 {
+.sub-menu {
   &::before {
     content: '';
     position: absolute;

@@ -31,7 +31,6 @@ declare module 'vue' {
     ZInput: typeof import('./../../../shared/components/input/ZInput.vue')['default']
     ZLoading: typeof import('./../../../shared/components/loading/ZLoading.vue')['default']
     ZMenu: typeof import('./../../../shared/components/menu/ZMenu.vue')['default']
-    ZMenu1: typeof import('./../../../shared/components/menu/ZMenu1.vue')['default']
     ZSelect: typeof import('./../../../shared/components/select/ZSelect.vue')['default']
     ZTable: typeof import('./../../../shared/components/table/ZTable.vue')['default']
     ZUpload: typeof import('./../../../shared/components/upload/ZUpload.vue')['default']
