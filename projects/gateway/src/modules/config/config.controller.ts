@@ -30,7 +30,9 @@ export class ConfigController {
   })
   @HasPermission([
     PermissionType.CONFIG_UPSERT_APP,
+    PermissionType.CONFIG_UPSERT_DESKTOP_REQUEST,
     PermissionType.CONFIG_UPSERT_DESKTOP,
+    PermissionType.CONFIG_UPSERT_DESKTOP_FTP,
     PermissionType.CONFIG_UPSERT_EXPORT,
     PermissionType.CONFIG_UPSERT_VERIFICATION,
     PermissionType.CONFIG_UPSERT_WORK,

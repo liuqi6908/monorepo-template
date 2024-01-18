@@ -36,6 +36,8 @@ export enum PermissionType {
   VERIFICATION_CANCEL = 'verification:cancel',
 
   // ------------------ 内容管理 ---------------------
+  /** 查询内容 */
+  CMS_QUERY = 'cms:query',
   /** 创建内容 */
   CMS_CREATE = 'cms:create',
   /** 更新内容 */
@@ -128,15 +130,33 @@ export enum PermissionType {
   EXPORT_LG_DOWNLOAD = 'export-lg:download',
 
   // ------------------ 全局配置 ---------------------
+  /** 查询应用全局配置 */
+  CONFIG_QUERY_APP = 'config:query-app',
   /** 创建/更新应用全局配置 */
   CONFIG_UPSERT_APP = 'config:upsert-app',
-  /** 创建/更新云桌面全局配置 */
+  /** 查询云桌面申请配置 */
+  CONFIG_QUERY_DESKTOP_REQUEST = 'config:query-desktop-request',
+  /** 创建/更新云桌面申请配置 */
+  CONFIG_UPSERT_DESKTOP_REQUEST = 'config:upsert-desktop-request',
+  /** 查询云桌面配置 */
+  CONFIG_QUERY_DESKTOP = 'config:query-desktop',
+  /** 创建/更新云桌面配置 */
   CONFIG_UPSERT_DESKTOP = 'config:upsert-desktop',
-  /** 创建/更新文件外发全局配置 */
+  /** 查询云桌面文件传输配置 */
+  CONFIG_QUERY_DESKTOP_FTP = 'config:query-desktop-fto',
+  /** 创建/更新云桌面文件传输配置 */
+  CONFIG_UPSERT_DESKTOP_FTP = 'config:upsert-desktop-ftp',
+  /** 查询文件外发配置 */
+  CONFIG_QUERY_EXPORT = 'config:query-export',
+  /** 创建/更新文件外发配置 */
   CONFIG_UPSERT_EXPORT = 'config:upsert-export',
-  /** 创建/更新身份认证上传全局配置 */
+  /** 查询身份认证上传配置 */
+  CONFIG_QUERY_VERIFICATION = 'config:query-verification',
+  /** 创建/更新身份认证上传配置 */
   CONFIG_UPSERT_VERIFICATION = 'config:upsert-verification',
-  /** 创建/更新作品管理全局配置 */
+  /** 查询作品管理配置 */
+  CONFIG_QUERY_WORK = 'config:query-work',
+  /** 创建/更新作品管理配置 */
   CONFIG_UPSERT_WORK = 'config:upsert-work',
 
   // ------------------ 作品/成果 ---------------------
@@ -167,6 +187,7 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.VERIFICATION_REJECT]: '驳回身份验证申请',
   [PermissionType.VERIFICATION_CANCEL]: '取消一个用户的认证',
 
+  [PermissionType.CMS_QUERY]: '查询内容',
   [PermissionType.CMS_CREATE]: '创建内容',
   [PermissionType.CMS_UPDATE]: '更新内容',
   [PermissionType.CMS_DELETE]: '删除内容',
@@ -213,10 +234,19 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.EXPORT_LG_REJECT]: '驳回大文件外发申请',
   [PermissionType.EXPORT_LG_DOWNLOAD]: '下载大文件外发的文件',
 
+  [PermissionType.CONFIG_QUERY_APP]: '查询应用全局配置',
   [PermissionType.CONFIG_UPSERT_APP]: '创建/更新应用全局配置',
-  [PermissionType.CONFIG_UPSERT_DESKTOP]: '创建/更新云桌面全局配置',
+  [PermissionType.CONFIG_QUERY_DESKTOP_REQUEST]: '查询云桌面申请配置',
+  [PermissionType.CONFIG_UPSERT_DESKTOP_REQUEST]: '创建/更新云桌面申请配置',
+  [PermissionType.CONFIG_QUERY_DESKTOP]: '查询云桌面配置',
+  [PermissionType.CONFIG_UPSERT_DESKTOP]: '创建/更新云桌面配置',
+  [PermissionType.CONFIG_QUERY_DESKTOP_FTP]: '查询云桌面文件传输配置',
+  [PermissionType.CONFIG_UPSERT_DESKTOP_FTP]: '创建/更新云桌面文件传输配置',
+  [PermissionType.CONFIG_QUERY_EXPORT]: '查询文件外发全局配置',
   [PermissionType.CONFIG_UPSERT_EXPORT]: '创建/更新文件外发全局配置',
+  [PermissionType.CONFIG_QUERY_VERIFICATION]: '查询身份认证上传全局配置',
   [PermissionType.CONFIG_UPSERT_VERIFICATION]: '创建/更新身份认证上传全局配置',
+  [PermissionType.CONFIG_QUERY_WORK]: '查询作品管理全局配置',
   [PermissionType.CONFIG_UPSERT_WORK]: '创建/更新作品管理全局配置',
 
   [PermissionType.WORK_QUERY_ALL]: '查询所有作品/成果',

@@ -40,11 +40,16 @@ export class SysConfigService implements OnModuleInit {
     SysConfigService._appName = value
   }
 
+  /**
+   * 判断用户是否具有修改该配置的权限
+   */
   public hasPermission(version: SysConfig, user: IUser) {
     const permissions = user.role?.permissions.map(v => v.name)
     if (
-      (version === SysConfig.APP && !permissions.includes(PermissionType.CONFIG_UPSERT_APP))
+      ((version === SysConfig.APP || version === SysConfig.NAV) && !permissions.includes(PermissionType.CONFIG_UPSERT_APP))
+      || (version === SysConfig.DESKTOP_REQUEST && !permissions.includes(PermissionType.CONFIG_UPSERT_DESKTOP_REQUEST))
       || (version === SysConfig.DESKTOP && !permissions.includes(PermissionType.CONFIG_UPSERT_DESKTOP))
+      || (version === SysConfig.DESKTOP_FTP && !permissions.includes(PermissionType.CONFIG_UPSERT_DESKTOP_FTP))
       || (version === SysConfig.EXPORT && !permissions.includes(PermissionType.CONFIG_UPSERT_EXPORT))
       || (version === SysConfig.VERIFICATION && !permissions.includes(PermissionType.CONFIG_UPSERT_VERIFICATION))
       || (version === SysConfig.WORK && !permissions.includes(PermissionType.CONFIG_UPSERT_WORK))

@@ -1,9 +1,15 @@
 import { PermissionType } from 'zjf-types'
 
+interface PermissionItem {
+  name: string
+  value?: PermissionType[]
+  children?: PermissionItem[]
+}
+
 interface AdminMenu {
   name: string
   to: string
-  permission: PermissionType[]
+  permission: PermissionItem[]
 }
 
 /**
@@ -14,117 +20,239 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
     name: '页面管理',
     to: '/home',
     permission: [
-      PermissionType.CMS_CREATE,
-      PermissionType.CMS_UPDATE,
-      PermissionType.CMS_DELETE,
-      PermissionType.CONFIG_UPSERT_APP,
+      {
+        name: '页面管理',
+        children: [
+          {
+            name: '只读访问页面管理',
+            value: [
+              PermissionType.CMS_QUERY,
+            ],
+          },
+          {
+            name: '管理页面',
+            value: [
+              PermissionType.CMS_QUERY,
+              PermissionType.CMS_CREATE,
+              PermissionType.CMS_UPDATE,
+              PermissionType.CMS_DELETE,
+            ],
+          },
+        ],
+      },
+      {
+        name: '全局配置',
+        children: [
+          {
+            name: '只读访问全局配置页面',
+            value: [
+              PermissionType.CONFIG_QUERY_APP,
+            ],
+          },
+          {
+            name: '管理全局配置',
+            value: [
+              PermissionType.CONFIG_QUERY_APP,
+              PermissionType.CONFIG_UPSERT_APP,
+            ],
+          },
+        ],
+      },
     ],
   },
   {
     name: '用户管理',
     to: '/user',
     permission: [
-      PermissionType.ACCOUNT_CREATE,
-      PermissionType.ACCOUNT_DELETE,
-      PermissionType.ACCOUNT_UPDATE,
-      PermissionType.ACCOUNT_QUERY,
-      PermissionType.VERIFICATION_LIST_ALL,
-      PermissionType.VERIFICATION_CAT_ATTACHMENT,
-      PermissionType.VERIFICATION_APPROVE,
-      PermissionType.VERIFICATION_REJECT,
-      PermissionType.VERIFICATION_CANCEL,
+      {
+        name: '用户信息管理',
+        children: [
+          {
+            name: '查询用户列表',
+            value: [
+              PermissionType.ACCOUNT_QUERY,
+            ],
+          },
+          {
+            name: '创建用户信息',
+            value: [
+              PermissionType.ACCOUNT_QUERY,
+              PermissionType.ACCOUNT_CREATE,
+            ],
+          },
+          {
+            name: '停用和启用用户账号',
+            value: [
+              PermissionType.ACCOUNT_QUERY,
+              PermissionType.ACCOUNT_DELETE,
+              PermissionType.ACCOUNT_UPDATE,
+            ],
+          },
+        ],
+      },
+      {
+        name: '用户认证管理',
+        children: [
+          {
+            name: '查询认证列表',
+            value: [
+              PermissionType.VERIFICATION_LIST_ALL,
+            ],
+          },
+          {
+            name: '认证审核',
+            value: [
+              PermissionType.VERIFICATION_LIST_ALL,
+              PermissionType.VERIFICATION_CAT_ATTACHMENT,
+              PermissionType.VERIFICATION_APPROVE,
+              PermissionType.VERIFICATION_REJECT,
+            ],
+          },
+          {
+            name: '重置认证',
+            value: [
+              PermissionType.VERIFICATION_LIST_ALL,
+              PermissionType.VERIFICATION_CAT_ATTACHMENT,
+              PermissionType.VERIFICATION_CANCEL,
+            ],
+          },
+        ],
+      },
+      {
+        name: '用户权限管理',
+        children: [
+          {
+            name: '查询用户角色列表',
+            value: [
+              PermissionType.DATA_PERMISSION_QUERY,
+            ],
+          },
+          {
+            name: '创建用户角色',
+            value: [
+              PermissionType.DATA_PERMISSION_QUERY,
+              PermissionType.DATA_PERMISSION_CREATE,
+            ],
+          },
+          {
+            name: '删除用户角色',
+            value: [
+              PermissionType.DATA_PERMISSION_QUERY,
+              PermissionType.DATA_PERMISSION_DELETE,
+            ],
+          },
+          {
+            name: '修改角色权限和信息',
+            value: [
+              PermissionType.DATA_PERMISSION_QUERY,
+              PermissionType.DATA_PERMISSION_UPDATE,
+            ],
+          },
+          {
+            name: '用户角色分配',
+            value: [
+              PermissionType.DATA_PERMISSION_QUERY,
+              PermissionType.ACCOUNT_UPDATE_DATA_ROLE,
+            ],
+          },
+        ],
+      },
     ],
   },
   {
     name: '数据管理',
     to: '/data',
     permission: [
-      PermissionType.DATA_UPLOAD,
-      PermissionType.DATA_UPLOAD_INTRO,
-      PermissionType.DATA_UPLOAD_TABLE,
-      PermissionType.DATA_EDIT_REFERENCE,
-      PermissionType.DATA_QUERY_ALL,
-      PermissionType.DATA_ROOT_CREATE,
-      PermissionType.DATA_ROOT_UPDATE,
-      PermissionType.DATA_ROOT_DELETE,
+      {
+        name: '创建数据资源类型',
+        children: [
+          {
+            name: '只读访问数据资源类型',
+            value: [
+              PermissionType.ACCOUNT_CREATE,
+            ],
+          },
+          {
+            name: '管理数据资源类型',
+            value: [],
+          },
+        ],
+      },
+      {
+        name: '设置数据资源结构',
+        children: [
+          {
+            name: '只读访问数据资源结构',
+            value: [],
+          },
+          {
+            name: '管理数据资源结构',
+            value: [],
+          },
+        ],
+      },
+      {
+        name: '数据资源上传',
+        children: [
+          {
+            name: '只读访问数据上传情况',
+            value: [],
+          },
+          {
+            name: '管理数据资源上传',
+            value: [],
+          },
+        ],
+      },
+      {
+        name: '设置数据资源介绍',
+        children: [
+          {
+            name: '查看数据资源说明和引用规范',
+            value: [],
+          },
+          {
+            name: '管理数据资源说明和引用规范',
+            value: [],
+          },
+        ],
+      },
     ],
   },
   {
     name: '日志管理',
     to: '/log',
-    permission: [
-      PermissionType.LOG_VIEW,
-    ],
+    permission: [],
   },
   {
     name: '用户权限管理',
     to: '/authority',
-    permission: [
-      PermissionType.ACCOUNT_UPDATE_DATA_ROLE,
-      PermissionType.DATA_PERMISSION_CREATE,
-      PermissionType.DATA_PERMISSION_UPDATE,
-      PermissionType.DATA_PERMISSION_DELETE,
-      PermissionType.DATA_PERMISSION_QUERY,
-    ],
+    permission: [],
   },
 
   {
     name: '桌面管理',
     to: '/desktop',
-    permission: [
-      PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT,
-      PermissionType.DESKTOP_REQUEST_CREATE,
-      PermissionType.DESKTOP_REQUEST_APPROVE,
-      PermissionType.DESKTOP_REQUEST_REJECT,
-      PermissionType.DESKTOP_REQUEST_QUERY,
-      PermissionType.DESKTOP_CREATE,
-      PermissionType.DESKTOP_DISABLE,
-      PermissionType.DESKTOP_UPDATE,
-      PermissionType.DESKTOP_DELETE,
-      PermissionType.DESKTOP_ASSIGN,
-      PermissionType.DESKTOP_QUERY,
-      PermissionType.DESKTOP_EXPIRE_CHECK,
-      PermissionType.CONFIG_UPSERT_DESKTOP,
-    ],
+    permission: [],
   },
   {
     name: '管理员分配',
     to: '/admin',
-    permission: [
-      PermissionType.ACCOUNT_UPDATE_ROLE,
-      PermissionType.ROLE_CREATE,
-      PermissionType.ROLE_UPDATE,
-      PermissionType.ROLE_DELETE,
-      PermissionType.ROLE_QUERY,
-    ],
+    permission: [],
   },
   {
     name: '作品管理',
     to: '/work',
-    permission: [
-      PermissionType.WORK_QUERY_ALL,
-      PermissionType.WORK_DOWNLOAD,
-      PermissionType.CONFIG_UPSERT_WORK,
-    ],
+    permission: [],
   },
   {
     name: '申请采购',
     to: '/purchase',
-    permission: [
-      PermissionType.DATA_SUGGEST_QUERY_ALL,
-    ],
+    permission: [],
   },
   {
     name: '文件外发',
     to: '/export',
-    permission: [
-      PermissionType.EXPORT_LG_QUERY_ALL,
-      PermissionType.EXPORT_SM_QUERY_ALL,
-      PermissionType.EXPORT_SM_DOWNLOAD,
-      PermissionType.EXPORT_LG_APPROVE,
-      PermissionType.EXPORT_LG_REJECT,
-      PermissionType.EXPORT_LG_DOWNLOAD,
-      PermissionType.CONFIG_UPSERT_EXPORT,
-    ],
+    permission: [],
   },
 ]

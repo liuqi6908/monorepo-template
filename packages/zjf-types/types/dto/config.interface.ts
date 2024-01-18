@@ -12,8 +12,8 @@ export interface IConfigDto {
     nameEn?: string
   }
 
-  /** 云桌面配置 */
-  [SysConfig.DESKTOP]?: {
+  /** 云桌面申请配置 */
+  [SysConfig.DESKTOP_REQUEST]?: {
     /** 申请时长配置 */
     duration?: typeof DESKTOP_REQUEST_DURATION_OPTION
     /** 上传尺寸限制，单位为 字节 */
@@ -24,9 +24,17 @@ export interface IConfigDto {
     acceptLimit?: string[]
     /** 上传提示信息 */
     hint?: string
+  }
+
+  /** 云桌面配置 */
+  [SysConfig.DESKTOP]?: {
     /** 云桌面资源最大数量 */
     max?: number
-    /** 云桌面FTP文件传输配额 */
+  }
+
+  /** 云桌面文件传输配置 */
+  [SysConfig.DESKTOP_FTP]?: {
+    /** 文件传输配额 */
     ftpQuota?: number
   }
 
