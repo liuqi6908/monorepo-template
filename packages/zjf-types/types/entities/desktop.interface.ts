@@ -30,4 +30,7 @@ export interface IDesktop extends ICreatedAt, IUpdatedAt {
   lastUserId?: IUser['id']
   /** 是否已停用 */
   disabled?: boolean
+
+  /** 文件传输限额（单位：字节） */
+  ftpQuota?: number
 }

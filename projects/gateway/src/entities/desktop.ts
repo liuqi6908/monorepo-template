@@ -60,6 +60,10 @@ export class Desktop
   @Column({ nullable: true, default: false })
   disabled?: boolean
 
+  @ApiProperty({ description: '文件传输限额（单位：字节）' })
+  @Column({ nullable: true, type: 'bigint' })
+  ftpQuota?: number
+
   @ApiProperty({ description: '该云桌面上的大文件外发记录' })
   @OneToMany(() => FileExportLarge, feLg => feLg.desktop, { onDelete: 'SET NULL' })
   exportsLarge?: FileExportLarge[]
