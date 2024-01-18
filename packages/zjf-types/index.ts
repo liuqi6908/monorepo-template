@@ -102,6 +102,7 @@ export * from './types/http/user/update-pswd-by-phone-code.interface'
 export * from './types/http/user/update-pswd-by-email-code.interface'
 export * from './types/http/verification/reject-verification.interface'
 export * from './types/http/verification/create-verification.interface'
+export * from './types/http/desktop/update-desktop-ftp-quota.interface'
 export * from './types/http/data/permission/upsert-data-role.interface'
 export * from './types/http/data/permission/data-role-detail.interface'
 

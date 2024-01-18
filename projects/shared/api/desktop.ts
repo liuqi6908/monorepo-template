@@ -4,6 +4,7 @@ import type {
   IPaginatedResData,
   IQueryDto,
   IUpdateDesktopBodyDto,
+  IUpdateDesktopFtpQuotaBodyDto,
 } from 'zjf-types'
 import type { DesktopVM } from '../types/desktop.interface'
 import { useRequest } from '../composables/request'
@@ -64,6 +65,13 @@ export function queryDesktopApi(body: IQueryDto<IDesktop>) {
  */
 export function checkDesktopExpireManuallyApi(accessKey: string) {
   return $post<boolean>(`/desktop/check-expire-manually?accesskey=${accessKey}`)
+}
+
+/**
+ * 修改指定云桌面的文件传输配额
+ */
+export function updateDesktopFtpQuotaApi(desktopId: string, body: IUpdateDesktopFtpQuotaBodyDto) {
+  return $patch<boolean>(`/desktop/ftp/${desktopId}`, body)
 }
 
 /**
