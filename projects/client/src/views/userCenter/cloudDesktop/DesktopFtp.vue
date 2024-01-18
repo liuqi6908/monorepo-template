@@ -8,6 +8,7 @@ import type { FileItem } from 'shared/types/file.interface'
 
 const { isDesktop, userInfo } = useUser()
 const { desktopFtp, getDesktopFtpConfig } = useSysConfig()
+const { desktopInfo } = useDesktop()
 const { uploadFile, deleteFile, downloadFile } = useMinio()
 
 /** 加载中 */
@@ -23,9 +24,11 @@ const file = ref<File>()
 /** 删除对话框 */
 const deleteDialog = ref(false)
 
+/** 文件传输配额 */
+const ftpQuota = computed(() => desktopInfo.value?.ftpQuota ?? desktopFtp.value?.ftpQuota ?? 0)
 /** 可用内存配额 */
 const usableQuota = computed(() => {
-  let quota = desktopFtp.value?.ftpQuota ?? 0
+  let quota = ftpQuota.value
   quota -= numberArrSum(fileList.value?.map(v => v.size) ?? [])
   return quota > 0 ? quota : 0
 })
@@ -191,7 +194,7 @@ async function downloadFileByPath(path: string) {
       <ZLoading :value="loading" />
       <div flex="~ items-center justify-between gap-x-5 gap-y-4 wrap">
         <div flex="~ gap2" text="sm grey-5" font-500>
-          <div v-text="`配额：${formatFileSize(desktopFtp?.ftpQuota ?? 0)}`" />
+          <div v-text="`配额：${formatFileSize(ftpQuota)}`" />
           <div>/</div>
           <div v-text="`可用：${formatFileSize(usableQuota)}`" />
         </div>

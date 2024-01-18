@@ -220,6 +220,7 @@ declare global {
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
   const updateDesktopApi: typeof import('../../../shared/api/desktop')['updateDesktopApi']
+  const updateDesktopFtpQuotaApi: typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']
   const updateIntermediateTableApi: typeof import('../../../shared/api/data')['updateIntermediateTableApi']
   const updateOwnEmailApi: typeof import('../../../shared/api/user')['updateOwnEmailApi']
   const updateOwnPasswordByEmailCodeApi: typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']
@@ -651,6 +652,7 @@ declare module 'vue' {
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly updateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopApi']>
+    readonly updateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']>
     readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../../shared/api/data')['updateIntermediateTableApi']>
     readonly updateOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnEmailApi']>
     readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
@@ -1075,6 +1077,7 @@ declare module '@vue/runtime-core' {
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly updateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopApi']>
+    readonly updateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']>
     readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../../shared/api/data')['updateIntermediateTableApi']>
     readonly updateOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnEmailApi']>
     readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
