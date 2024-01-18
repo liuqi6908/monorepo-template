@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { QBtnProps } from 'quasar'
+import { useSysConfig } from '../../composables/app'
 
 interface ZBtnProps {
   color?: string
@@ -16,11 +17,14 @@ const { params } = withDefaults(defineProps<ZBtnProps>(), {
   textColor: 'grey-1',
   size: 'medium',
 })
+
+const { isAdmin } = useSysConfig()
 </script>
 
 <template>
   <q-btn
     class="z-btn"
+    :class="{ 'is-admin': isAdmin }"
     unelevated square
     min-h="auto!"
     :px="size === 'big' ? 6 : 4"
@@ -42,3 +46,11 @@ const { params } = withDefaults(defineProps<ZBtnProps>(), {
     </div>
   </q-btn>
 </template>
+
+<style lang="scss" scoped>
+.q-btn {
+  &.is-admin {
+    border-radius: 8px;
+  }
+}
+</style>
