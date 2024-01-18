@@ -9,7 +9,7 @@ const props = defineProps<{
 defineEmits(['update:modelValue'])
 
 const value = useVModel(props, 'modelValue')
-const { app, desktop, getDesktopConfig } = useSysConfig()
+const { app, desktopRequest, getDesktopRequestConfig } = useSysConfig()
 const { getDesktopRequest } = useDesktop()
 
 /** 加载中 */
@@ -35,15 +35,15 @@ const protocolList = computed<Protocol[]>(() => [
 
 onBeforeMount(async () => {
   loading.value = true
-  await getDesktopConfig()
-  duration.value = desktop.value?.duration?.[0]
+  await getDesktopRequestConfig()
+  duration.value = desktopRequest.value?.duration?.[0]
   loading.value = false
 })
 
 /** 禁用提交 */
 const disableConfirm = computed(() => !duration.value || !attachments.value.length || !checked.value)
 /** 禁用上传 */
-const disableUpload = computed(() => !desktop.value?.amountLimit || attachments.value.length >= desktop.value.amountLimit)
+const disableUpload = computed(() => !desktopRequest.value?.amountLimit || attachments.value.length >= desktopRequest.value.amountLimit)
 
 watch(
   files,
@@ -120,7 +120,7 @@ async function confirm() {
     <div flex="~ col gap6">
       <ZSelect
         v-model="duration"
-        :options="desktop?.duration"
+        :options="desktopRequest?.duration"
         label="云桌面使用时长"
         placeholder="请选择云桌面使用时长"
       />
@@ -128,12 +128,12 @@ async function confirm() {
         v-model="files"
         label="研究计划/其他材料"
         btn-label="提交文件"
-        :hint="desktop?.hint"
+        :hint="desktopRequest?.hint"
         required
-        :accept="desktop?.acceptLimit?.map(v => `.${v}`).join(',')"
+        :accept="desktopRequest?.acceptLimit?.map(v => `.${v}`).join(',')"
         :multiple="true"
-        :max-files="desktop?.amountLimit"
-        :max-file-size="desktop?.sizeLimit"
+        :max-files="desktopRequest?.amountLimit"
+        :max-file-size="desktopRequest?.sizeLimit"
         :disable="disableUpload"
         showFileList
       />

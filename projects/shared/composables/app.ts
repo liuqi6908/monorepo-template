@@ -36,8 +36,12 @@ import { getConfigApi } from '../api/config'
 
 /** App配置 */
 const app = ref<IConfigDto[SysConfig.APP]>()
+/** 云桌面申请配置 */
+const desktopRequest = ref<IConfigDto[SysConfig.DESKTOP_REQUEST]>()
 /** 云桌面配置 */
 const desktop = ref<IConfigDto[SysConfig.DESKTOP]>()
+/** 云桌面文件传输配置 */
+const desktopFtp = ref<IConfigDto[SysConfig.DESKTOP_FTP]>()
 /** 外发配置 */
 const fileExport = ref<IConfigDto[SysConfig.EXPORT]>()
 /** 首页导航栏配置 */
@@ -66,10 +70,10 @@ export function useSysConfig() {
   }
 
   /**
-   * 获取云桌面配置
+   * 获取云桌面申请配置
    */
-  async function getDesktopConfig(useCache = true) {
-    if (useCache && desktop.value)
+  async function getDesktopRequestConfig(useCache = true) {
+    if (useCache && desktopRequest.value)
       return
     const {
       duration = DESKTOP_REQUEST_DURATION_OPTION,
@@ -77,16 +81,40 @@ export function useSysConfig() {
       amountLimit = DESKTOP_REQUEST_UPLOAD_DFT_AMOUNT_LIMIT,
       acceptLimit = DESKTOP_REQUEST_UPLOAD_DFT_ACCEPT_LIMIT,
       hint = DESKTOP_REQUEST_UPLOAD_HINT,
-      max = DESKTOP_MAX_COUNT,
-      ftpQuota = DESKTOP_FTP_QUOTA,
-    } = await getConfigApi(SysConfig.DESKTOP) || {}
-    desktop.value = {
+    } = await getConfigApi(SysConfig.DESKTOP_REQUEST) || {}
+    desktopRequest.value = {
       duration,
       sizeLimit,
       amountLimit,
       acceptLimit,
       hint,
+    }
+  }
+
+  /**
+   * 获取云桌面配置
+   */
+  async function getDesktopConfig(useCache = true) {
+    if (useCache && desktop.value)
+      return
+    const {
+      max = DESKTOP_MAX_COUNT,
+    } = await getConfigApi(SysConfig.DESKTOP) || {}
+    desktop.value = {
       max,
+    }
+  }
+
+  /**
+   * 获取云桌面文件传输配置
+   */
+  async function getDesktopFtpConfig(useCache = true) {
+    if (useCache && desktopFtp.value)
+      return
+    const {
+      ftpQuota = DESKTOP_FTP_QUOTA,
+    } = await getConfigApi(SysConfig.DESKTOP_FTP) || {}
+    desktopFtp.value = {
       ftpQuota,
     }
   }
@@ -179,13 +207,17 @@ export function useSysConfig() {
 
   return {
     app,
+    desktopRequest,
     desktop,
+    desktopFtp,
     fileExport,
     nav,
     verification,
     works,
     getAppConfig,
+    getDesktopRequestConfig,
     getDesktopConfig,
+    getDesktopFtpConfig,
     getFileExportConfig,
     getNavConfig,
     getVerificationConfig,

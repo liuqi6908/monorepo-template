@@ -7,7 +7,7 @@ import type { QTableProps } from 'quasar'
 import type { FileItem } from 'shared/types/file.interface'
 
 const { isDesktop, userInfo } = useUser()
-const { desktop, getDesktopConfig } = useSysConfig()
+const { desktopFtp, getDesktopFtpConfig } = useSysConfig()
 const { uploadFile, deleteFile, downloadFile } = useMinio()
 
 /** 加载中 */
@@ -25,7 +25,7 @@ const deleteDialog = ref(false)
 
 /** 可用内存配额 */
 const usableQuota = computed(() => {
-  let quota = desktop.value?.ftpQuota ?? 0
+  let quota = desktopFtp.value?.ftpQuota ?? 0
   quota -= numberArrSum(fileList.value?.map(v => v.size) ?? [])
   return quota > 0 ? quota : 0
 })
@@ -78,7 +78,7 @@ onBeforeMount(() => {
     if (!v.align)
       v.align = 'left'
   })
-  getDesktopConfig()
+  getDesktopFtpConfig()
   getFileList()
 })
 
@@ -191,7 +191,7 @@ async function downloadFileByPath(path: string) {
       <ZLoading :value="loading" />
       <div flex="~ items-center justify-between gap-x-5 gap-y-4 wrap">
         <div flex="~ gap2" text="sm grey-5" font-500>
-          <div v-text="`配额：${formatFileSize(desktop?.ftpQuota ?? 0)}`" />
+          <div v-text="`配额：${formatFileSize(desktopFtp?.ftpQuota ?? 0)}`" />
           <div>/</div>
           <div v-text="`可用：${formatFileSize(usableQuota)}`" />
         </div>
