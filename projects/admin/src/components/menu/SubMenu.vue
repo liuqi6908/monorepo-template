@@ -4,10 +4,6 @@ export interface SubMenuProps {
   list?: {
     id: string | number
     label: string
-    to?: string | {
-      path?: string
-      query?: Record<string, string | undefined>
-    }
   }[]
 }
 
@@ -18,55 +14,51 @@ const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
-  <q-tabs v-model="value" class="sub-menu">
-    <q-route-tab
+  <q-tabs
+    v-model="value"
+    class="sub-menu"
+    bg-grey-1 p="y2 x10" b-b="1px grey-3"
+  >
+    <q-tab
       v-for="item in list"
       :key="item.id"
       :name="item.id"
-      :to="item.to"
-      px5 opacity100
+      opacity100 p="y3 x6" flex-1
+      rounded-2
       @click="value = item.id"
     >
       <div
-        text="base ellipsis" font-600
-        max-w-full overflow-hidden
+        text-base font-600
         v-text="item.label"
       />
-    </q-route-tab>
+    </q-tab>
   </q-tabs>
 </template>
 
 <style lang="scss" scoped>
 .q-tabs {
   :deep(.q-tabs__content) {
-    justify-content: start;
     flex-wrap: wrap;
-    row-gap: 24px;
-    flex: inherit;
+    column-gap: 40px;
+    row-gap: 10px;
 
     .q-tab {
-      flex: inherit;
-      max-width: 100%;
-
       &.q-tab--inactive {
         color: var(--grey-5);
       }
 
       .q-tab__content {
-        height: 100%;
+        padding: 0;
+      }
+
+      &:hover .q-focus-helper {
+        &::after {
+          opacity: 0.6;
+        }
       }
 
       .q-tab__indicator {
-        background: none;
-        height: 4px;
-        &::after {
-          display: block;
-          content: '';
-          width: calc(100% / 3 - 12px);
-          height: 100%;
-          background: var(--primary-1);
-          margin: auto;
-        }
+        display: none;
       }
     }
   }

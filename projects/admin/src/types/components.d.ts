@@ -22,6 +22,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     SMSInput: typeof import('./../../../shared/components/input/SMSInput.vue')['default']
+    SubMenu: typeof import('./../components/menu/SubMenu.vue')['default']
     ZBtn: typeof import('./../../../shared/components/btn/ZBtn.vue')['default']
     ZBtnToggle: typeof import('./../../../shared/components/btn/ZBtnToggle.vue')['default']
     ZChipSelect: typeof import('./../../../shared/components/select/ZChipSelect.vue')['default']
