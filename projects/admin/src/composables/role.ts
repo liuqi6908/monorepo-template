@@ -1,4 +1,4 @@
-import { hasIntersection } from 'zjf-utils'
+import { hasIntersection, omit } from 'zjf-utils'
 import type { PermissionType } from 'zjf-types'
 import type { PermissionItem } from '~/constants/admin'
 
@@ -13,7 +13,7 @@ export function useRole() {
         || (name === '作品管理' && getEnvVariable('VITE_WORKS_MANAGE'))
         || !['采购管理', '作品管理'].includes(name))
       && hasIntersection(getMenuAllPermission(name), adminRole.value ?? [])
-    )).map(({ name, to }) => ({ name, to }))
+    )).map(v => omit(v, 'permission'))
   })
 
   /**

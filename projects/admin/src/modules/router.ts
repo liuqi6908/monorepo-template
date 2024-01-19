@@ -5,7 +5,7 @@ export const install: UserModule = ({ isClient, router }) => {
     router.beforeEach(async (to, _, next) => {
       const { path } = to
       const isLogin = !!authToken.value
-      const { userInfo, getOwnProfile } = useUser()
+      const { userInfo, logout, getOwnProfile } = useUser()
       const { adminMenu } = useRole()
 
       // 前往登录页面
@@ -24,8 +24,16 @@ export const install: UserModule = ({ isClient, router }) => {
         }
         // 登录用户
         else {
-          if (!userInfo.value)
-            await getOwnProfile()
+          if (!userInfo.value) {
+            try {
+              await getOwnProfile()
+            }
+            catch (_) {
+              const { isAdmin } = useSysConfig()
+              isAdmin.value = true
+              logout()
+            }
+          }
 
           // 前往 非denied页面，判断权限
           if (path !== '/denied') {
