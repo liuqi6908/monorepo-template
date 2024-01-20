@@ -12,6 +12,7 @@ const { baseWidth, isExpand, changeState } = useSidebar()
         ? 'flex-1 w0'
         : 'absolute inset-0 left-20'
       "
+      class="bg-grey-2"
     />
     <div
       v-if="width < baseWidth && isExpand"

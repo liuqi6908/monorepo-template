@@ -36,6 +36,7 @@ const { isAdmin } = useSysConfig()
     v-bind="params"
   >
     <div flex="~ row items-center gap2">
+      <slot name="left" />
       {{ label }}
       <slot />
       <slot name="icon">

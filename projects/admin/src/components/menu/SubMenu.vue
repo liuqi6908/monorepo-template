@@ -37,29 +37,34 @@ const value = useVModel(props, 'modelValue')
 
 <style lang="scss" scoped>
 .q-tabs {
-  :deep(.q-tabs__content) {
-    flex-wrap: wrap;
-    column-gap: 40px;
-    row-gap: 10px;
+  :deep() {
+    .q-tabs__content {
+      column-gap: 40px;
+      row-gap: 10px;
 
-    .q-tab {
-      &.q-tab--inactive {
-        color: var(--grey-5);
-      }
+      .q-tab {
+        &.q-tab--inactive {
+          color: var(--grey-5);
+        }
 
-      .q-tab__content {
-        padding: 0;
-      }
+        .q-tab__content {
+          padding: 0;
+        }
 
-      &:hover .q-focus-helper {
-        &::after {
-          opacity: 0.6;
+        &:hover .q-focus-helper {
+          &::after {
+            opacity: 0.6;
+          }
+        }
+
+        .q-tab__indicator {
+          display: none;
         }
       }
+    }
 
-      .q-tab__indicator {
-        display: none;
-      }
+    .q-tabs__arrow {
+      font-size: 16px;
     }
   }
 }

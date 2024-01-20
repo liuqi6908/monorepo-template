@@ -2,6 +2,9 @@
 import { PermissionType } from 'zjf-types'
 import { omit } from 'zjf-utils'
 
+import CmsManage from '~/views/home/CmsManage.vue'
+import GlobalConfig from '~/views/home/GlobalConfig.vue'
+
 const { adminRole } = useUser()
 
 /** 菜单导航 */
@@ -31,7 +34,12 @@ watch(
 <template>
   <div flex="~ col">
     <SubMenu v-model="value" :list="menu" />
-    {{ value }}
+    <CmsManage
+      v-if="CMS_CONFIG.find(v => v.id === value)"
+      :key="value"
+      :config="CMS_CONFIG.find(v => v.id === value)!"
+    />
+    <GlobalConfig v-else />
   </div>
 </template>
 
