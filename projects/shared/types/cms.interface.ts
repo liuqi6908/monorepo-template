@@ -20,8 +20,10 @@ export type CmsComponent = Record<
 /**
  * Cms Json
  */
-export type CmsJson = Partial<Record<CmsConfigParam, string>> & {
-  componentId?: keyof CmsComponent
+export type CmsJson = Partial<Record<CmsConfigParam | 'id', string>> & {
+  id: string
+  componentId: keyof CmsComponent
+  json: Partial<Record<CmsConfigParam | 'id', string>>[]
 }
 
 /**

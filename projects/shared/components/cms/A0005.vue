@@ -40,6 +40,8 @@ onMounted(() => {
     const appHeader = document.querySelector('.app-header')
     if (!isAdmin.value && appHeader)
       top.value = appHeader.clientHeight
+    else if (isAdmin.value)
+      top.value = -27
     if (typeof value.value === 'number')
       scroll(value.value)
   })

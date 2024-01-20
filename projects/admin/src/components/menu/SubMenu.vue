@@ -39,9 +39,6 @@ const value = useVModel(props, 'modelValue')
 .q-tabs {
   :deep() {
     .q-tabs__content {
-      column-gap: 40px;
-      row-gap: 10px;
-
       .q-tab {
         &.q-tab--inactive {
           color: var(--grey-5);

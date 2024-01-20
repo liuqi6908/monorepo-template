@@ -16,6 +16,6 @@ onBeforeMount(async () => {
     :is="getComponentById(item.componentId)"
     v-for="(item, index) in expandProps"
     :key="index"
-    :list="[item]"
+    :list="item.json"
   />
 </template>
