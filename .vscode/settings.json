@@ -9,6 +9,7 @@
     "autoresize",
     "blueimp",
     "Bufferfrom",
+    "colorpicker",
     "composables",
     "customfav",
     "demi",
@@ -44,7 +45,9 @@
     "vitepress",
     "Vitesse",
     "vitest",
+    "vuedraggable",
     "vueuse",
+    "wangeditor",
     "WECHAT",
     "Zstack"
   ],

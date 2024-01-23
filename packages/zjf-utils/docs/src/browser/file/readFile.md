@@ -1,13 +1,13 @@
 ---
-description: 将文件读取为可预览的 URL
+description: 读取文件中的文本内容
 outline: deep
 ---
 
-# readFileAsDataURL
+# readFile
 
 ## 方法说明
 
-将文件读取为可预览的 URL
+读取文件中的文本内容
 
 ## 参数
 
@@ -19,4 +19,4 @@ outline: deep
 
 | 类型 | 描述 |
 | --- | --- |
-| `string` | 可预览的 URL |
+| `Promise<unknown>` | 文件中的文本内容 |

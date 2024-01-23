@@ -1,53 +1,101 @@
 <script lang="ts" setup>
-import moreIcon from '~/assets/icons/other/more.svg?raw'
+import Draggable from 'vuedraggable'
 
 interface ListProps {
-  modelValue: any
+  modelValue?: any
   list?: any[]
   labelText?: string
+  defaultLabel?: string
   valueText?: string
   isEdit?: boolean
 }
 
 const props = withDefaults(defineProps<ListProps>(), {
   labelText: 'label',
-  valueText: 'value'
+  defaultLabel: '未命名标题',
+  valueText: 'value',
 })
-defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue', 'update:list'])
 
-const value = useVModel(props, 'modelValue')
+const { modelValue, list } = useVModels(props, emits)
+const { byAbsolute } = usePosition()
+
+/** 当前激活菜单 */
+const active = ref<string>()
+
+watch(
+  () => props.list,
+  () => {
+    active.value = undefined
+  },
+  {
+    immediate: true,
+    deep: true,
+  }
+)
+
+/**
+ * 更改菜单状态
+ */
+function changeMenuState(id: string, state: boolean) {
+  if (state)
+    active.value = id
+  else
+    active.value = undefined
+}
 </script>
 
 <template>
-  <q-scroll-area rounded-3 bg-grey-1>
-    <div p4>
-      <div flex="~ col gap4">
+  <Draggable
+    v-model="list"
+    class="flex flex-col gap0.5"
+    :item-key="valueText"
+    :disabled="!isEdit"
+    animation="300"
+    chosenClass="chosen-item"
+    dragClass="drag-item"
+    filter=".edit-item"
+  >
+    <template #item="{ element, index }">
+      <div
+        :class="{
+          active: modelValue?.[valueText] === element[valueText]
+        }"
+        :cursor="isEdit ? 'move' : 'default'"
+        px2 rounded-2 h12 w-full
+        hover:bg-grey-2 flex="~ justify-between items-center gap2"
+        @click="() => {
+          if (modelValue?.[valueText] === element[valueText])
+            modelValue = undefined
+          else
+            modelValue = element
+        }"
+      >
         <div
-          v-for="(li, index) in list"
-          :key="index"
-          :class="{
-            active: modelValue === li[valueText]
-          }"
-          p="y3 x2" rounded-2
-          hover:bg-grey-2 flex="~ justify-between items-center gap2"
-          @click="value = li[valueText]"
+          truncate text-sm font-500
+          v-text="element[labelText] || defaultLabel"
+        />
+        <div
+          v-if="isEdit"
+          class="edit-item" w6 h6 flex-center
+          cursor-pointer rounded-1
+          hover="bg-black/10"
+          @click.stop
         >
-          <div
-            truncate text-sm font-500
-            v-text="li[labelText]"
-          />
-          <div
-            v-if="isEdit"
-            cursor-pointer rounded-1
-            hover="bg-black/10"
+          <div i-mingcute:more-2-fill text-grey-5 />
+          <q-menu
+            :model-value="active === element[valueText]"
+            class="more-menu"
+            :id="`cms-more-menu-${element[valueText]}`"
+            @update:model-value="val => changeMenuState(element[valueText], val)"
+            @before-show="byAbsolute(`cms-more-menu-${element[valueText]}`, [-40, 4])"
           >
-            <div v-html="moreIcon" />
-            <slot />
-          </div>
+            <slot :item="element" :index="index" />
+          </q-menu>
         </div>
       </div>
-    </div>
-  </q-scroll-area>
+    </template>
+  </Draggable>
 </template>
 
 <style lang="scss" scoped>
@@ -57,5 +105,9 @@ const value = useVModel(props, 'modelValue')
   > div:first-child {
     color: var(--primary-1);
   }
+}
+
+.drag-item, .chosen-item {
+  box-shadow: 0px 0px 8px 0px #00000014;
 }
 </style>

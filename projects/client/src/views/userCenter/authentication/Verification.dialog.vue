@@ -210,7 +210,7 @@ async function confirm() {
         :max-files="verification?.amountLimit"
         :max-file-size="verification?.sizeLimit"
         :disable="disableUpload"
-        showFileList
+        show-file-list
         type="image"
         my5
       />

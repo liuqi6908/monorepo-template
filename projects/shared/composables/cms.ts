@@ -38,7 +38,10 @@ export function useCms() {
     else if (index >= 0)
       cms.value.splice(index, 1)
 
-    const res = await getCmsApi(id)
+    const res = (await getCmsApi(id)) || {
+      id,
+      json: [],
+    }
     cms.value.push({
       ...res,
       time: Date.now(),

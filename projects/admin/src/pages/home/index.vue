@@ -6,6 +6,7 @@ import CmsManage from '~/views/home/cmsManage/index.vue'
 import GlobalConfig from '~/views/home/GlobalConfig.vue'
 
 const { adminRole } = useUser()
+const { page, pageConfig } = useEditCms()
 
 /** 菜单导航 */
 const menu = computed(() => {
@@ -17,13 +18,12 @@ const menu = computed(() => {
     menu.push({ id: 'config', label: '全局配置' })
   return menu
 })
-const value = ref<string>()
 
 watch(
   menu,
   (newVal) => {
-    if (newVal.length && !newVal.find(v => v.id === value.value))
-      value.value = newVal[0].id
+    if (newVal.length && !newVal.find(v => v.id === page.value))
+      page.value = newVal[0].id
   },
   {
     immediate: true,
@@ -33,11 +33,10 @@ watch(
 
 <template>
   <div flex="~ col">
-    <SubMenu v-model="value" :list="menu" />
+    <SubMenu v-model="page" :list="menu" />
     <CmsManage
-      v-if="CMS_CONFIG.find(v => v.id === value)"
-      :key="value"
-      :config="CMS_CONFIG.find(v => v.id === value)!"
+      v-if="pageConfig"
+      :key="page"
     />
     <GlobalConfig v-else />
   </div>

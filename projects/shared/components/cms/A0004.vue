@@ -1,16 +1,75 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
+import { useResizeObserver } from '@vueuse/core'
 import type { CmsJson } from '../../types/cms.interface'
 
 defineProps<{
   list?: CmsJson[]
 }>()
+
+const flexBox = ref<HTMLElement>()
+const linefeed = ref(false)
+
+useResizeObserver(flexBox, ([{ contentRect, target }]) => {
+  const { width } = contentRect
+  const { children } = target
+  let allWidth = Math.floor(children.length / 2)  * 49.5
+  for (let i = 0; i < children.length; i++) {
+    const { className, clientWidth } = children[i]
+    if (!className)
+      allWidth += clientWidth
+  }
+  linefeed.value = width < allWidth
+})
 </script>
 
 <template>
   <div
-    v-if="list?.length"
     class="A0004"
-    w-limited-1
-    v-html="list[0].richText"
-  />
+    text-grey-1 bg="#001020"
+    py36
+  >
+    <div
+      v-if="list?.length"
+      ref="flexBox"
+      w-limited-1
+      :flex="`~ justify-between items-start gap6 wrap ${linefeed ? 'col' : 'row'}`"
+    >
+      <template
+        v-for="(item, index) in list"
+        :key="index"
+      >
+        <div flex="~ col gap8">
+          <div text-lg font-500 v-text="item.title" />
+          <div v-if="item.richText" text-sm font-400 v-html="item.richText"/>
+        </div>
+        <div
+          v-if="index < list.length - 1"
+          :class="`line-${linefeed ? 'horizontal' : 'vertical'}`"
+          bg-white-3
+        />
+      </template>
+    </div>
+  </div>
 </template>
+
+<style lang="scss">
+.A0004 {
+  img {
+    display: inline;
+  }
+
+  .line {
+    &-vertical {
+      height: 65px;
+      width: 1px;
+      margin: auto 0;
+    }
+
+    &-horizontal {
+      height: 1px;
+      width: 100px;
+    }
+  }
+}
+</style>

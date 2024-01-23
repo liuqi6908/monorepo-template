@@ -6,12 +6,19 @@ import type { Component } from 'vue'
 export type CmsConfigParam = 'list' | 'title' | 'img' | 'svg' | 'mask' | 'richText'
 
 /**
+ * Cms 组件 key
+ */
+export type CmsKey = `A${number}${number}${number}${number}`
+
+/**
  * Cms 组件
  */
 export type CmsComponent = Record<
-  `A${number}${number}${number}${number}`,
+  CmsKey,
   {
     label: string
+    icon: string
+    color: string
     component: Component
     param: CmsConfigParam[]
   }
@@ -20,10 +27,11 @@ export type CmsComponent = Record<
 /**
  * Cms Json
  */
-export type CmsJson = Partial<Record<CmsConfigParam | 'id', string>> & {
+export type CmsJson = Partial<Record<CmsConfigParam, string>> & {
   id: string
-  componentId: keyof CmsComponent
-  json: Partial<Record<CmsConfigParam | 'id', string>>[]
+  componentId?: CmsKey
+  label?: string
+  json?: Partial<Record<CmsConfigParam | 'id', string>>[]
 }
 
 /**
@@ -32,5 +40,5 @@ export type CmsJson = Partial<Record<CmsConfigParam | 'id', string>> & {
 export interface CmsConfig {
   id: string
   label: string
-  component: keyof CmsComponent | true
+  component: CmsKey | true
 }

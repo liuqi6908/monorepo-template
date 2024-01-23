@@ -9,7 +9,7 @@ defineProps<{
 <template>
   <div
     v-if="list?.length"
-    class="A0005"
+    class="A0006"
     w-limited-1
     v-html="list[0].richText"
   />

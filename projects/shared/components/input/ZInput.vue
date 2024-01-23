@@ -2,6 +2,7 @@
 import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
 import type { QInputProps, QInputSlots } from 'quasar'
+import { useSysConfig } from '../../composables/app'
 
 export interface ZInputProps {
   modelValue?: string
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<ZInputProps>(), {
 defineEmits(['update:modelValue'])
 
 const value = useVModel(props, 'modelValue')
+const { isAdmin } = useSysConfig()
 
 /** 输入框类型是否为password */
 const isPwd = ref(true)
@@ -46,7 +48,7 @@ const isPwd = ref(true)
     </div>
     <q-input
       v-model="value"
-      :class="size"
+      :class="size + (isAdmin ? ' is-admin' : '')"
       dense outlined
       :dark="dark"
       :color="dark ? 'grey-1' : 'primary-1'"

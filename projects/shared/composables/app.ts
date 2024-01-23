@@ -1,4 +1,5 @@
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
+import { useWindowSize } from '@vueuse/core'
 import {
   APP_ICON,
   APP_NAME,
@@ -33,6 +34,9 @@ import {
 } from 'zjf-types'
 import type { IConfigDto } from 'zjf-types'
 import { getConfigApi } from '../api/config'
+import { APP_MIN_WIDTH } from '../constants/app'
+
+const { width } = useWindowSize()
 
 /** App配置 */
 const app = ref<IConfigDto[SysConfig.APP]>()
@@ -205,6 +209,11 @@ export function useSysConfig() {
     }
   }
 
+  /**
+   * 窗口缩放比例
+   */
+  const zoomRatio = computed(() => width.value >= APP_MIN_WIDTH ? 1 : width.value / APP_MIN_WIDTH)
+
   return {
     app,
     desktopRequest,
@@ -223,5 +232,6 @@ export function useSysConfig() {
     getVerificationConfig,
     getWorkConfig,
     isAdmin,
+    zoomRatio,
   }
 }

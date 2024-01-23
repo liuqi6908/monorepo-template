@@ -12,6 +12,7 @@ declare module 'vue' {
     A0003: typeof import('./../../../shared/components/cms/A0003.vue')['default']
     A0004: typeof import('./../../../shared/components/cms/A0004.vue')['default']
     A0005: typeof import('./../../../shared/components/cms/A0005.vue')['default']
+    A0006: typeof import('./../../../shared/components/cms/A0006.vue')['default']
     AppFooter: typeof import('./../components/AppFooter.vue')['default']
     AppHeader: typeof import('./../components/AppHeader.vue')['default']
     Avatar: typeof import('./../components/user/Avatar.vue')['default']

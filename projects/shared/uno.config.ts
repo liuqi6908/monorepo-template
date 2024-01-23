@@ -54,6 +54,7 @@ export default defineConfig({
       sm: '760px',
       lg: '900px',
       xl: '1360px',
+      xxl: '1800px',
     },
   },
 })

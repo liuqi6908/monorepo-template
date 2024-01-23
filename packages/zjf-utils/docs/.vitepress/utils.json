@@ -19,6 +19,10 @@
         "text": "file",
         "items": [
           {
+            "text": "fileToUrl",
+            "link": "/browser/file/fileToUrl"
+          },
+          {
             "text": "readFile",
             "link": "/browser/file/readFile"
           }
@@ -39,6 +43,10 @@
           {
             "text": "isIntersect",
             "link": "/common/array/isIntersect"
+          },
+          {
+            "text": "sum",
+            "link": "/common/array/sum"
           }
         ]
       },
@@ -126,6 +134,10 @@
       {
         "text": "random",
         "items": [
+          {
+            "text": "random-id",
+            "link": "/common/random/random-id"
+          },
           {
             "text": "random-int",
             "link": "/common/random/random-int"

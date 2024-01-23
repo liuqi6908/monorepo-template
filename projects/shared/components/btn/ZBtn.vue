@@ -37,7 +37,7 @@ const { isAdmin } = useSysConfig()
   >
     <div flex="~ row items-center gap2">
       <slot name="left" />
-      {{ label }}
+      <div v-text="label" />
       <slot />
       <slot name="icon">
         <svg v-if="right" width="24" height="24" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

@@ -1,94 +1,48 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 import { cloneDeep } from 'lodash'
-import { PermissionType } from 'zjf-types'
-import { hasIntersection, getRandomID } from 'zjf-utils'
-import type { CmsConfig, CmsJson } from 'shared/types/cms.interface'
-
-import addIcon from '~/assets/icons/other/add.svg?raw'
-import refreshIcon from '~/assets/icons/other/refresh.svg?raw'
-import documentIcon from '~/assets/icons/other/document.svg?raw'
-import saveIcon from '~/assets/icons/other/save.svg?raw'
 
 import ContentEditing from './ContentEditing.vue'
 
-const props = defineProps<{
-  config: CmsConfig
-}>()
-
-const { adminRole } = useUser()
-const { getCms, getComponentById } = useCms()
-
-/** 是否可以编辑 */
-const isEdit = computed(() => hasIntersection(adminRole.value ?? [], [
-  PermissionType.CMS_CREATE,
-  PermissionType.CMS_UPDATE,
-]))
-
-/** 加载中 */
-const loading = ref(false)
-/** 页面原始数据 */
-const pageData = ref<CmsJson[]>([])
-/** 可编辑数据 */
-const editData = ref<CmsJson[]>([])
+const { getComponentById } = useCms()
+const {
+  addComponent,
+  addItem,
+  pageData,
+  editData,
+  loading,
+  isEdit,
+  isItemList,
+  pageConfig,
+  selectComponent,
+  initPage,
+} = useEditCms()
 
 /** 预览弹窗 */
 const previewDialog = ref(false)
-/** 添加组件 */
-const addComponent = ref(false)
 
-onBeforeMount(getPageCms)
+onBeforeMount(initPage)
 
-/**
- * 获取页面Cms内容
- */
-async function getPageCms() {
-  loading.value = true
-  try {
-    pageData.value = await getCms(props.config.id) ?? []
-    editData.value = cloneDeep(pageData.value)
-  }
-  finally {
-    loading.value = false
-  }
-}
-
-/**
- * 新建
- */
-function addItem() {
-  const { component } = props.config
-  if (component === true) {
-    addComponent.value = true
-  }
-  else {
-    const param = CMS_COMPONENTS[component].param
-    if (param.includes('list')) {
-      const obj: any = {
-        id: getRandomID(),
-      }
-      for (const key of param) {
-        if (key !== 'list')
-          obj[key] = ''
-      }
-      editData.value.push(obj)
-    }
-  }
-}
+/** 禁用保存 */
+const disable = computed(() => JSON.stringify(pageData.value) === JSON.stringify(editData.value))
 
 /**
  * 保存CMS内容
  */
 async function saveCms() {
+  if (disable.value)
+    return
+
   loading.value = true
   try {
-    await upsertCmsApi(props.config.id, {
+    await upsertCmsApi(pageConfig.value!.id, {
       json: editData.value
     })
     Notify.create({
       type: 'success',
       message: '保存成功',
     })
+    pageData.value = cloneDeep(editData.value)
   }
   finally {
     loading.value = false
@@ -97,31 +51,48 @@ async function saveCms() {
 </script>
 
 <template>
-  <div flex="~ 1 col gap4" p="y4 x10" relative>
+  <div
+    flex="~ 1 col gap4" relative
+    class="reactive-padding"
+  >
     <ZLoading :value="loading" />
 
     <!-- 操作栏 -->
-    <div flex>
-      <ZBtn
-        v-if="isEdit && (config.component === true || CMS_COMPONENTS[config.component].param.includes('list'))"
-        label="新建"
-        @click="addItem"
-      >
-        <template #left>
-          <div v-html="addIcon" />
+    <div flex="~ justify-between gap4 wrap">
+      <div flex="~ gap4">
+        <template v-if="isEdit">
+          <ZBtn
+            v-if="pageConfig?.component === true"
+            label="新建组件"
+            :disable="typeof addComponent === 'number'"
+            @click="addComponent = editData.length"
+          >
+            <template #left>
+              <div w5 h5 i-mingcute:add-line />
+            </template>
+          </ZBtn>
+          <ZBtn
+            v-if="isItemList"
+            label="新建列表项"
+            @click="addItem = selectComponent?.json?.length"
+          >
+            <template #left>
+              <div w5 h5 i-mingcute:add-line />
+            </template>
+          </ZBtn>
         </template>
-      </ZBtn>
-      <div flex="~ gap4" ml-auto>
+      </div>
+      <div flex="~ gap4">
         <ZBtn
           label="刷新"
           text-color="primary-1"
           :params="{
             outline: true
           }"
-          @click="getPageCms"
+          @click="initPage"
         >
           <template #left>
-            <div v-html="refreshIcon" />
+            <div w5 h5 i-mingcute:refresh-1-line />
           </template>
         </ZBtn>
         <ZBtn
@@ -133,7 +104,7 @@ async function saveCms() {
           @click="previewDialog = true"
         >
           <template #left>
-            <div v-html="documentIcon" />
+            <div w5 h5 i-mingcute:document-line />
           </template>
         </ZBtn>
         <ZBtn
@@ -147,7 +118,7 @@ async function saveCms() {
           @click="saveCms"
         >
           <template #left>
-            <div v-html="saveIcon" />
+            <div w5 h5 i-mingcute:save-2-line />
           </template>
         </ZBtn>
       </div>
@@ -158,15 +129,17 @@ async function saveCms() {
 
     <!-- 预览 -->
     <ZDialog
+      v-if="pageConfig"
       v-model="previewDialog"
-      :title="config.label"
+      :title="pageConfig.label"
+      scroll
       :params="{
         fullWidth: true,
         fullHeight: true,
       }"
     >
       <component
-        v-if="config.component === true"
+        v-if="pageConfig.component === true"
         :is="getComponentById(item.componentId)"
         v-for="(item, index) in editData"
         :key="index"
@@ -175,7 +148,7 @@ async function saveCms() {
       />
       <component
         v-else
-        :is="getComponentById(config.id)"
+        :is="getComponentById(pageConfig.id)"
         :list="editData"
       />
     </ZDialog>
