@@ -2,13 +2,12 @@
 import CmsManage from '~/views/home/cmsManage/index.vue'
 import GlobalConfig from '~/views/home/globalConfig/index.vue'
 
-const { pageConfig } = useEditCms()
-const { active } = useMenu()
+const { active, menu } = useMenu()
 </script>
 
 <template>
-  <div bg-grey-2>
-    <CmsManage v-if="pageConfig" :key="active" full />
+  <div v-if="menu?.length" bg-grey-2>
+    <CmsManage v-if="active !== menu[CMS_CONFIG.length].id" :key="active" full />
     <GlobalConfig v-else full />
   </div>
 </template>

@@ -1,8 +1,11 @@
 <script lang="ts" setup>
 const { active, menu } = useMenu()
 
+/** 当前可用菜单 */
+const currenMenu = computed(() => menu.value?.filter(v => v.flag))
+
 watch(
-  menu,
+  currenMenu,
   (newVal) => {
     if (newVal?.length) {
       if (!newVal.find(v => v.id === active.value))
@@ -20,12 +23,12 @@ watch(
 
 <template>
   <q-tabs
-    v-if="menu?.length"
+    v-if="currenMenu?.length"
     v-model="active"
     bg-grey-1 p="y2 x10" b-b="1px grey-3"
   >
     <q-tab
-      v-for="item in menu"
+      v-for="item in currenMenu"
       :key="item.id"
       :name="item.id"
       opacity100 p="y3 x6" flex-1

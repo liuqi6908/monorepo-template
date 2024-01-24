@@ -22,7 +22,8 @@ export function useMenu() {
       home: [
         ...CMS_CONFIG.map(v => ({
           ...omit(v, 'component'),
-          flag: v.id !== 'homeExpand' || getEnvVariable('VITE_HOME_EXPAND', false),
+          flag: role?.includes(PermissionType.CMS_QUERY)
+            && (v.id !== 'homeExpand' || getEnvVariable('VITE_HOME_EXPAND', false)),
         })),
         {
           id: 'globalConfig',
@@ -53,7 +54,7 @@ export function useMenu() {
         },
       ],
     }
-    return menu[$route.path.substring(1)]?.filter(v => v.flag)
+    return menu[$route.path.substring(1)]
   })
 
   return {
