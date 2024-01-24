@@ -66,6 +66,7 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const exportLgApi: typeof import('../../../shared/api/exportLg')['exportLgApi']
   const exportSmApi: typeof import('../../../shared/api/exportSm')['exportSmApi']
+  const exportTableColumns: typeof import('../constants/table')['exportTableColumns']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fileIsExistApi: typeof import('../../../shared/api/file')['fileIsExistApi']
   const getAccessLast7DaysApi: typeof import('../../../shared/api/log')['getAccessLast7DaysApi']
@@ -200,6 +201,7 @@ declare global {
   const stopVMApi: typeof import('../../../shared/api/desktopVm')['stopVMApi']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
+  const tablePagination: typeof import('../constants/table')['tablePagination']
   const templateRef: typeof import('@vueuse/core')['templateRef']
   const throttledRef: typeof import('@vueuse/core')['throttledRef']
   const throttledWatch: typeof import('@vueuse/core')['throttledWatch']
@@ -502,6 +504,7 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
     readonly exportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['exportSmApi']>
+    readonly exportTableColumns: UnwrapRef<typeof import('../constants/table')['exportTableColumns']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fileIsExistApi: UnwrapRef<typeof import('../../../shared/api/file')['fileIsExistApi']>
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
@@ -636,6 +639,7 @@ declare module 'vue' {
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly tablePagination: UnwrapRef<typeof import('../constants/table')['tablePagination']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
@@ -931,6 +935,7 @@ declare module '@vue/runtime-core' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
     readonly exportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['exportSmApi']>
+    readonly exportTableColumns: UnwrapRef<typeof import('../constants/table')['exportTableColumns']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fileIsExistApi: UnwrapRef<typeof import('../../../shared/api/file')['fileIsExistApi']>
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
@@ -1065,6 +1070,7 @@ declare module '@vue/runtime-core' {
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
+    readonly tablePagination: UnwrapRef<typeof import('../constants/table')['tablePagination']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>

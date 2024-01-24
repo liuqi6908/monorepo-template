@@ -16,7 +16,7 @@ const { baseWidth, isExpand, changeState } = useSidebar()
     >
       <AppHeader />
       <RouterView
-        class="flex-1 reactive-padding"
+        class="flex-1 h0 reactive-padding"
       />
     </div>
     <div

@@ -1,9 +1,6 @@
 <script setup lang="ts">
-import { QTableSlots } from 'quasar'
-import { useVModel } from '@vueuse/core'
-import type { QTableProps } from 'quasar'
+import type { QTableProps, QTableSlots } from 'quasar'
 import { PAGINATION_SIZE_DFT, ROWS_PER_PAGE_OPTIONS } from 'zjf-types'
-import ZLoading from '../loading/ZLoading.vue'
 
 interface ZTableProps {
   rows: QTableProps['rows']
