@@ -5,13 +5,6 @@ import type { CmsJson, CmsKey } from 'shared/types/cms.interface'
 
 /** 加载中 */
 const loading = ref(false)
-/** 当前页面 */
-const page = ref<string>()
-
-/**
- * 当前页面的配置
- */
-const pageConfig = computed(() => CMS_CONFIG.find(v => v.id === page.value))
 
 /** 页面原始数据 */
 const pageData = ref<CmsJson[]>([])
@@ -59,6 +52,12 @@ watch(
 export function useEditCms() {
   const { adminRole } = useUser()
   const { getCms } = useCms()
+  const { active } = useMenu()
+
+  /**
+   * 当前页面的配置
+   */
+  const pageConfig = computed(() => CMS_CONFIG.find(v => v.id === active.value))
 
   /**
    * 是否可以编辑
@@ -141,7 +140,6 @@ export function useEditCms() {
 
   return {
     loading,
-    page,
     pageData,
     editData,
     addComponent,

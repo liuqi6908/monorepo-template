@@ -2,23 +2,13 @@
 import CmsManage from '~/views/home/cmsManage/index.vue'
 import GlobalConfig from '~/views/home/globalConfig/index.vue'
 
-const { page, pageConfig } = useEditCms()
+const { pageConfig } = useEditCms()
 const { active } = useMenu()
-
-watch(
-  active,
-  (newVal) => {
-    page.value = newVal
-  },
-  {
-    immediate: true,
-  },
-)
 </script>
 
 <template>
   <div bg-grey-2>
-    <CmsManage v-if="pageConfig" :key="page" full />
+    <CmsManage v-if="pageConfig" :key="active" full />
     <GlobalConfig v-else full />
   </div>
 </template>

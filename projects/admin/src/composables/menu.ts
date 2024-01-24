@@ -27,9 +27,31 @@ export function useMenu() {
           flag: v.id !== 'homeExpand' || getEnvVariable('VITE_HOME_EXPAND', false),
         })),
         {
-          id: 'config',
+          id: 'globalConfig',
           label: '全局配置',
           flag: role?.includes(PermissionType.CONFIG_QUERY_APP),
+        },
+      ],
+      export: [
+        {
+          id: 'exportAudit',
+          label: '大文件外发待审核',
+          flag: role?.includes(PermissionType.EXPORT_LG_QUERY_PENDING),
+        },
+        {
+          id: 'largeRecord',
+          label: '大文件外发审核记录',
+          flag: role?.includes(PermissionType.EXPORT_LG_QUERY_ALL),
+        },
+        {
+          id: 'smallRecord',
+          label: '小文件自动外发记录',
+          flag: role?.includes(PermissionType.EXPORT_SM_QUERY_ALL),
+        },
+        {
+          id: 'exportConfig',
+          label: '外发配置管理',
+          flag: role?.includes(PermissionType.CONFIG_QUERY_EXPORT),
         },
       ],
     }
