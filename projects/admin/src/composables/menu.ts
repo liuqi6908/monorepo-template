@@ -18,7 +18,7 @@ export function useMenu() {
   const $route = useRoute()
 
   /** 菜单 */
-  const menu = computed<MenuItem[]>(() => {
+  const menu = computed<MenuItem[] | undefined>(() => {
     const role = adminRole.value
     const menu: Record<string, MenuItem[]> = {
       home: [

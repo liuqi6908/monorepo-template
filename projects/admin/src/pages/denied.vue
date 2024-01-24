@@ -9,11 +9,9 @@ function backHome() {
 </script>
 
 <template>
-  <div bg="grey-1!">
-    <Empty label="您没有访问权限">
-      <ZBtn label="返回首页" size="big" self-center @click="backHome" />
-    </Empty>
-  </div>
+  <Empty label="您没有访问权限">
+    <ZBtn label="返回首页" size="big" self-center @click="backHome" />
+  </Empty>
 </template>
 
 <route lang="yaml">

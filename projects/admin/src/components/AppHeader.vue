@@ -4,6 +4,7 @@ const { active, menu } = useMenu()
 
 <template>
   <q-tabs
+    v-if="menu?.length"
     v-model="active"
     bg-grey-1 p="y2 x10" b-b="1px grey-3"
   >
