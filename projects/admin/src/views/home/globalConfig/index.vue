@@ -33,9 +33,7 @@ async function initPage() {
 </script>
 
 <template>
-  <div
-    flex="~ 1 col gap4" relative
-    class="global-config reactive-padding"
+  <div flex="~ 1 col gap4" relative class="global-config"
   >
     <ZLoading :value="loading" />
 

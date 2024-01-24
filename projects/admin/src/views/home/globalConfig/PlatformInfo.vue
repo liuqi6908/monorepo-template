@@ -29,7 +29,7 @@ const info = computed<(Omit<InfoItemProps, 'isEdit'> & {
     placeholder: APP_ICON,
     modelValue: app.value?.icon,
     type: 'image',
-    caption: '（ 只能上次 png、jpg 格式文件，且不大于 100KB）'
+    caption: '（ 只能上传 png、jpg 格式文件，且不大于 100KB）'
   },
   {
     label: '平台英文',

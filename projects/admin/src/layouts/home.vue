@@ -6,14 +6,19 @@ const { baseWidth, isExpand, changeState } = useSidebar()
 <template>
   <div flex>
     <AppSidebar z-999 />
-    <RouterView
+    <div
       :class="
         width >= baseWidth
         ? 'flex-1 w0'
         : 'absolute inset-0 left-20'
       "
-      class="bg-grey-2"
-    />
+      flex="~ col"
+    >
+      <AppHeader />
+      <RouterView
+        class="flex-1 reactive-padding"
+      />
+    </div>
     <div
       v-if="width < baseWidth && isExpand"
       bg="black/40" flex-1 w0 z-999

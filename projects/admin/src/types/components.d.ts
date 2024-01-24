@@ -13,6 +13,7 @@ declare module 'vue' {
     A0004: typeof import('./../../../shared/components/cms/A0004.vue')['default']
     A0005: typeof import('./../../../shared/components/cms/A0005.vue')['default']
     A0006: typeof import('./../../../shared/components/cms/A0006.vue')['default']
+    AppHeader: typeof import('./../components/AppHeader.vue')['default']
     AppSidebar: typeof import('./../components/AppSidebar.vue')['default']
     CaptchaInput: typeof import('./../../../shared/components/input/CaptchaInput.vue')['default']
     ColorPicker: typeof import('./../components/color/ColorPicker.vue')['default']
