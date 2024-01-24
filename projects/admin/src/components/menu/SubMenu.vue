@@ -14,21 +14,16 @@ const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
-  <q-tabs
-    v-model="value"
-    class="sub-menu"
-    bg-grey-1 p="y2 x10" b-b="1px grey-3"
-  >
+  <q-tabs v-model="value" class="sub-menu">
     <q-tab
       v-for="item in list"
       :key="item.id"
       :name="item.id"
-      opacity100 p="y3 x6" flex-1
-      rounded-2
+      no-caps :ripple="false"
       @click="value = item.id"
     >
       <div
-        text-base font-600
+        text-base truncate font-600 max-w-full
         v-text="item.label"
       />
     </q-tab>
@@ -37,31 +32,47 @@ const value = useVModel(props, 'modelValue')
 
 <style lang="scss" scoped>
 .q-tabs {
-  :deep() {
-    .q-tabs__content {
-      .q-tab {
-        &.q-tab--inactive {
-          color: var(--grey-5);
-        }
+  :deep(.q-tabs__content) {
+    justify-content: start;
+    flex-wrap: wrap;
+    gap: 8px 24px;
+    flex: inherit;
 
-        .q-tab__content {
-          padding: 0;
-        }
+    .q-tab {
+      flex: inherit;
+      max-width: 100%;
+      padding: 0;
+      opacity: 1;
+      min-height: auto;
+      height: 38px;
 
-        &:hover .q-focus-helper {
-          &::after {
-            opacity: 0.6;
-          }
-        }
+      .q-focus-helper {
+        display: none;
+      }
 
-        .q-tab__indicator {
-          display: none;
+      &.q-tab--inactive {
+        color: var(--grey-5);
+      }
+
+      .q-tab__content {
+        height: auto;
+        align-self: start;
+        padding: 0;
+      }
+
+      .q-tab__indicator {
+        background: none;
+        height: 6px;
+        &::after {
+          display: block;
+          content: '';
+          width: 50%;
+          height: 100%;
+          background: var(--primary-1);
+          margin: auto;
+          border-radius: 16px;
         }
       }
-    }
-
-    .q-tabs__arrow {
-      font-size: 16px;
     }
   }
 }

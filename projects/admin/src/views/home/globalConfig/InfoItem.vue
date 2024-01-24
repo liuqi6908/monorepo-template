@@ -53,7 +53,11 @@ const text = ref<string>()
     </div>
 
     <!-- 操作 -->
-    <div flex="~ gap6" class="btn-container" :class="{ disable: !isEdit }">
+    <div
+      flex="~ gap6" class="btn-container"
+      :class="{ disable: !isEdit }"
+      select-none
+    >
       <div
         class="btn"
         @click="() => {
@@ -99,7 +103,7 @@ const text = ref<string>()
       footer
       @ok="$emit('reset')"
     >
-      该操作将重置{{ label }}{{ resetText }}，是否继续？
+      该操作将重置 {{ label }} {{ resetText }}，是否继续？
     </ZDialog>
 
     <!-- 修改对话框 -->

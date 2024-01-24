@@ -13,6 +13,7 @@ declare module 'vue' {
     A0004: typeof import('./../../../shared/components/cms/A0004.vue')['default']
     A0005: typeof import('./../../../shared/components/cms/A0005.vue')['default']
     A0006: typeof import('./../../../shared/components/cms/A0006.vue')['default']
+    AppHeader: typeof import('./../components/AppHeader.vue')['default']
     AppSidebar: typeof import('./../components/AppSidebar.vue')['default']
     CaptchaInput: typeof import('./../../../shared/components/input/CaptchaInput.vue')['default']
     ColorPicker: typeof import('./../components/color/ColorPicker.vue')['default']
@@ -39,7 +40,7 @@ declare module 'vue' {
     ZLoading: typeof import('./../../../shared/components/loading/ZLoading.vue')['default']
     ZMenu: typeof import('./../../../shared/components/menu/ZMenu.vue')['default']
     ZSelect: typeof import('./../../../shared/components/select/ZSelect.vue')['default']
-    ZTable: typeof import('./../../../shared/components/table/ZTable.vue')['default']
+    ZTable: typeof import('./../components/table/ZTable.vue')['default']
     ZUpload: typeof import('./../../../shared/components/upload/ZUpload.vue')['default']
   }
 }

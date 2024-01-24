@@ -15,6 +15,7 @@ import type {
   IVerificationHistory,
   PermissionType,
 } from 'zjf-types'
+import type { Router } from 'vue-router'
 
 import { rsaEncrypt } from '../utils/rsa'
 import { getEnvVariable } from '../utils/env'
@@ -56,8 +57,22 @@ let isFetched = false
 /** 对密码进行rsa加密的公钥 */
 const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY ?? ''
 
-export function useUser($router = useRouter()) {
+export function useUser($router?: Router) {
   const { isAdmin } = useSysConfig()
+
+  const instance = getCurrentInstance()
+  if (instance) {
+    if (!$router)
+      $router = useRouter()
+    if (!isAdmin.value) {
+      onMounted(async () => {
+        if (!isFetched) {
+          isFetched = true
+          isDesktop.value = await isDesktopApi()
+        }
+      })
+    }
+  }
 
   /**
    * 通过 账号/邮箱/手机号码 + 密码 登录
@@ -132,7 +147,7 @@ export function useUser($router = useRouter()) {
           type: 'success',
           message: '修改密码成功',
         })
-        $router.push('/auth/login')
+        $router?.push('/auth/login')
       }
     }
     finally {
@@ -152,7 +167,7 @@ export function useUser($router = useRouter()) {
           type: 'success',
           message: '修改密码成功',
         })
-        $router.push('/auth/login')
+        $router?.push('/auth/login')
       }
     }
     finally {
@@ -192,7 +207,7 @@ export function useUser($router = useRouter()) {
     authToken.value = sign.access_token
     userInfo.value = user
     await getOwnProfile(undefined, false)
-    $router.push(localStorage.getItem(LEADING_PAGE_KEY) || '/')
+    $router?.push(localStorage.getItem(LEADING_PAGE_KEY) || '/')
   }
 
   /**
@@ -202,9 +217,9 @@ export function useUser($router = useRouter()) {
     if (!flag) {
       await logoutApi()
       if (isAdmin.value)
-        $router.push('/auth/login')
+        $router?.push('/auth/login')
       else
-        $router.push('/')
+        $router?.push('/')
     }
 
     authToken.value = ''
@@ -256,16 +271,6 @@ export function useUser($router = useRouter()) {
    * 用户是否使用手机号
    */
   const isPhone = computed(() => getEnvVariable('VITE_USER_PHONE', false))
-
-  const instance = getCurrentInstance()
-  if (!isAdmin.value && instance) {
-    onMounted(async () => {
-      if (!isFetched) {
-        isFetched = true
-        isDesktop.value = await isDesktopApi()
-      }
-    })
-  }
 
   return {
     adminRole,
