@@ -4,27 +4,13 @@ import { QScrollArea } from 'quasar'
 
 const $route = useRoute()
 const { width } = useWindowSize()
-const { app, getAppConfig } = useSysConfig()
+const { getAppConfig, updateAppHead } = useSysConfig()
 const { el, scrollTo } = useScrollApp()
 
 onBeforeMount(async () => {
   // 设置网站标题和logo
   await getAppConfig()
-  useHead({
-    title: app.value?.name,
-    meta: [
-      {
-        name: 'description',
-        content: `「${app.value?.name}」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。`,
-      },
-    ],
-    link: [
-      {
-        rel: 'icon',
-        href: app.value?.icon,
-      },
-    ],
-  })
+  updateAppHead()
 })
 
 /** 跳转路由滚动页面到顶部 */

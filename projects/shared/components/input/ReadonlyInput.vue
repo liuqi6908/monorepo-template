@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { useSysConfig } from '../../composables/app'
+
 export interface ReadonlyInputProps {
   modelValue?: string
   label?: string
@@ -7,6 +9,8 @@ export interface ReadonlyInputProps {
 }
 
 defineProps<ReadonlyInputProps>()
+
+const { isAdmin } = useSysConfig()
 </script>
 
 <template>
@@ -26,6 +30,7 @@ defineProps<ReadonlyInputProps>()
     <div
       p="y2 x3" b="1px grey-3" h12 flex="~ items-center"
       bg-grey-2 text="base grey-4" font-400 truncate
+      :rounded="isAdmin ? 2 : 0"
       v-text="modelValue"
     />
   </div>

@@ -1,5 +1,6 @@
 import { computed, ref } from 'vue'
-import { useWindowSize } from '@vueuse/core'
+import { useFavicon, useTitle, useWindowSize } from '@vueuse/core'
+import { useHead } from '@vueuse/head'
 import {
   APP_ICON,
   APP_NAME,
@@ -210,6 +211,28 @@ export function useSysConfig() {
   }
 
   /**
+   * 修改 APP Head
+   */
+  function updateAppHead(admin?: boolean) {
+    useTitle(`${app.value?.name}${admin ? ' - 管理后台' : ''}`)
+    useHead({
+      meta: [
+        {
+          name: 'description',
+          content: `「${app.value?.name}」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。`,
+        },
+      ],
+      link: [
+        {
+          rel: 'icon',
+          href: app.value?.icon,
+        },
+      ],
+    })
+    useFavicon(app.value?.icon)
+  }
+
+  /**
    * 窗口缩放比例
    */
   const zoomRatio = computed(() => width.value >= APP_MIN_WIDTH ? 1 : width.value / APP_MIN_WIDTH)
@@ -231,6 +254,7 @@ export function useSysConfig() {
     getNavConfig,
     getVerificationConfig,
     getWorkConfig,
+    updateAppHead,
     isAdmin,
     zoomRatio,
   }

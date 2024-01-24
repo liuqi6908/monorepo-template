@@ -3,7 +3,7 @@ import { PermissionType } from 'zjf-types'
 import { omit } from 'zjf-utils'
 
 import CmsManage from '~/views/home/cmsManage/index.vue'
-import GlobalConfig from '~/views/home/GlobalConfig.vue'
+import GlobalConfig from '~/views/home/globalConfig/index.vue'
 
 const { adminRole } = useUser()
 const { page, pageConfig } = useEditCms()
