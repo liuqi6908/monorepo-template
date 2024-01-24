@@ -11,8 +11,6 @@ const { adminRole } = useUser()
 
 /** 当前激活菜单 */
 const active = ref<string>()
-/** 是否已经对 menu 进行监听 */
-let isWatch = false
 
 export function useMenu() {
   const $route = useRoute()
@@ -57,25 +55,6 @@ export function useMenu() {
     }
     return menu[$route.path.substring(1)]?.filter(v => v.flag)
   })
-
-  if (!isWatch) {
-    isWatch = true
-    watch(
-      menu,
-      (newVal) => {
-        if (newVal?.length) {
-          if (!newVal.find(v => v.id === active.value))
-            active.value = newVal[0].id
-        }
-        else {
-          active.value = undefined
-        }
-      },
-      {
-        immediate: true,
-      },
-    )
-  }
 
   return {
     active,

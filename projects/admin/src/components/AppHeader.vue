@@ -1,5 +1,21 @@
 <script lang="ts" setup>
 const { active, menu } = useMenu()
+
+watch(
+  menu,
+  (newVal) => {
+    if (newVal?.length) {
+      if (!newVal.find(v => v.id === active.value))
+        active.value = newVal[0].id
+    }
+    else {
+      active.value = undefined
+    }
+  },
+  {
+    immediate: true,
+  },
+)
 </script>
 
 <template>
@@ -28,6 +44,8 @@ const { active, menu } = useMenu()
 .q-tabs {
   :deep() {
     .q-tabs__content {
+      gap: 40px;
+
       .q-tab {
         &.q-tab--inactive {
           color: var(--grey-5);
