@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { getRandomID } from 'zjf-utils'
 import { cloneDeep } from 'lodash'
+import type { CmsConfigParam, CmsJson } from 'shared/types/cms.interface'
 
 const {
   addItem,
@@ -8,48 +9,29 @@ const {
   selectComponent,
   selectItem,
   isEdit,
-  componentParams,
   pageConfig,
 } = useEditCms()
 const { byAbsolute } = usePosition()
 
 /** 列表项数组 */
 const itemList = computed({
-  get: () => (pageConfig.value?.component === true
-    ? selectComponent.value?.json
-    : editData.value
-  ),
+  get: () => selectComponent.value?.json,
   set: (newVal: any) => {
-    if (pageConfig.value?.component === true) {
-      if (selectComponent.value)
-        selectComponent.value.json = newVal
-    }
-    else {
+    if (selectComponent.value)
+      selectComponent.value.json = newVal
+    if (pageConfig.value?.component !== true)
       editData.value = newVal
-    }
   }
 })
 
-// 对 addItem 监听，添加列表项
-watch(
-  addItem,
-  (newVal) => {
-    const { component } = pageConfig.value ?? {}
-    if (typeof newVal === 'number' && component) {
-      if (componentParams.value?.includes('list')) {
-        const item: any = {
-          id: getRandomID()
-        }
-        for (const key of componentParams.value) {
-          item[key] = ''
-        }
-        itemList.value?.splice(newVal, 0, item)
-        selectItem.value = item
-      }
-    }
-    addItem.value = undefined
-  }
-)
+/**
+ * 删除列表项
+ */
+function deleteItem(index: number, item: Partial<Record<CmsConfigParam | 'id', string>>) {
+  selectComponent?.value?.json?.splice(index, 1)
+  if (selectItem.value?.id === item.id)
+    selectItem.value = selectComponent?.value?.json?.[0] as CmsJson
+}
 </script>
 
 <template>
@@ -118,7 +100,7 @@ watch(
             <q-item
               clickable
               v-close-popup
-              @click="itemList?.splice(index, 1)"
+              @click="deleteItem(index, item)"
             >
               <q-item-section>
                 <div i-mingcute:delete-2-line />

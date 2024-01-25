@@ -1,7 +1,7 @@
 import { cloneDeep } from 'lodash'
 import { PermissionType } from 'zjf-types'
 import { getRandomID, hasIntersection } from 'zjf-utils'
-import type { CmsJson, CmsKey } from 'shared/types/cms.interface'
+import type { CmsJson } from 'shared/types/cms.interface'
 
 /** 加载中 */
 const loading = ref(false)
@@ -24,10 +24,7 @@ const selectItem = ref<CmsJson>()
 watch(
   selectComponent,
   (newVal) => {
-    if (!newVal || CMS_COMPONENTS[newVal.componentId as CmsKey]?.param.includes('list'))
-      selectItem.value = undefined
-    else
-      selectItem.value = newVal.json?.[0] as CmsJson
+    selectItem.value = newVal?.json?.[0] as CmsJson
   },
 )
 
@@ -71,40 +68,23 @@ export function useEditCms() {
   ))
 
   /**
-   * 是否为列表项
-   */
-  const isItemList = computed(() => {
-    const { component } = pageConfig.value ?? {}
-    const { id } = selectComponent.value ?? {}
-    if (!component)
-      return false
-    return (
-      component === true
-      && CMS_COMPONENTS[editData.value.find(v => v.id === id)?.componentId as CmsKey]?.param.includes('list')
-    )
-    || (
-      component !== true
-      && CMS_COMPONENTS[component]?.param.includes('list')
-    )
-  })
-
-  /**
    * 当前组件的列表项参数
    */
   const componentParams = computed(() => {
-    const { component } = pageConfig.value ?? {}
-    if (!component)
+    const { componentId } = selectComponent.value ?? {}
+    if (!componentId)
       return
-
-    if (component === true)
-      return CMS_COMPONENTS[selectComponent.value?.componentId as CmsKey]?.param
-    else
-      return CMS_COMPONENTS[component]?.param
+    return CMS_COMPONENTS[componentId]?.param
   })
 
   /**
- * 初始化页面内容
- */
+   * 是否为列表项
+   */
+  const isItemList = computed(() => componentParams.value?.includes('list'))
+
+  /**
+   * 初始化页面内容
+   */
   async function initPage() {
     addComponent.value = undefined
     addItem.value = undefined
@@ -113,13 +93,17 @@ export function useEditCms() {
 
     const { id, component } = pageConfig.value ?? {}
 
-    if (!id)
+    if (!id || !component)
       return
 
     loading.value = true
     try {
       pageData.value = await getCms(id) ?? []
-      if (!pageData.value.length && pageConfig.value?.component !== true && !isItemList.value) {
+      if (
+        !pageData.value.length
+        && component !== true
+        && !CMS_COMPONENTS[component]?.param.includes('list')
+      ) {
         pageData.value = [{
           id: getRandomID(),
         }]
@@ -133,6 +117,9 @@ export function useEditCms() {
           componentId: component,
           json: editData.value,
         }
+      }
+      else if (editData.value.length) {
+        selectComponent.value = editData.value[0]
       }
       loading.value = false
     }
