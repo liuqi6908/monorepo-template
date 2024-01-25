@@ -43,7 +43,7 @@ export function useMenu() {
           flag: role?.includes(PermissionType.VERIFICATION_LIST_ALL),
         },
         {
-          id: 'userDataRole',
+          id: 'userRole',
           label: '用户权限管理',
           flag: hasIntersection(
             role ?? [],

@@ -1,12 +1,14 @@
 <script setup lang="ts">
-onBeforeMount(() => {
-  console.log('init：作品管理')
-})
+import WorkView from '~/views/work/WorkView.vue'
+import WorkConfig from '~/views/work/WorkConfig.vue'
+
+const { active, menu } = useMenu()
 </script>
 
 <template>
-  <div>
-    作品管理
+  <div v-if="menu?.length">
+    <WorkView v-if="active === menu[0].id" />
+    <WorkConfig v-else-if="active === menu[1].id" />
   </div>
 </template>
 

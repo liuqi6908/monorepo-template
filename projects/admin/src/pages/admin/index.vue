@@ -1,12 +1,14 @@
 <script setup lang="ts">
-onBeforeMount(() => {
-  console.log('init：管理员分配')
-})
+import AdminRole from '~/views/admin/AdminRole.vue'
+import AssignRole from '~/views/admin/AssignRole.vue'
+
+const { active, menu } = useMenu()
 </script>
 
 <template>
-  <div>
-    管理员分配
+  <div v-if="menu?.length">
+    <AdminRole v-if="active === menu[0].id" />
+    <AssignRole v-else-if="active === menu[1].id" />
   </div>
 </template>
 

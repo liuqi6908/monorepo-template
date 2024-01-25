@@ -1,12 +1,12 @@
 <script setup lang="ts">
-onBeforeMount(() => {
-  console.log('init：申请采购')
-})
+import PurchaseView from '~/views/purchase/PurchaseView.vue'
+
+const { active, menu } = useMenu()
 </script>
 
 <template>
-  <div>
-    申请采购
+  <div v-if="menu?.length">
+    <PurchaseView v-if="active === menu[0].id" />
   </div>
 </template>
 
