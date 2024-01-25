@@ -5,9 +5,8 @@ import type {
   IQueryDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/user'
 
-const { $getUri, $post, $put } = useRequest()
+const { $get, $post, $put } = useRequest()
 
 /**
  * 发起小文件外发的申请
@@ -33,10 +32,15 @@ export function queryOwnExportSmApi(body: IQueryDto<IFileExportSmall>) {
 }
 
 /**
- * 获取下载小文件外发附件的链接
+ * 下载小文件外发附件
  */
-export function getDownloadExportSmFileUrl(id: string) {
-  return $getUri(`/export-sm/file/${id}`, {
-    token: authToken.value,
-  })
+export function downloadExportSmFile(id: string) {
+  return $get<Blob>(
+    `/export-sm/file/${id}`,
+    undefined,
+    false,
+    {
+      responseType: 'blob',
+    },
+  )
 }

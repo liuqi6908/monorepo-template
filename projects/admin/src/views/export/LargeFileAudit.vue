@@ -170,7 +170,7 @@ async function handleReject() {
       :cols="cols"
       :loading="loading"
       :params="{
-        noDataLabel: '暂无待审核外发记录',
+        noDataLabel: '暂无大文件外发待审核记录',
       }"
       :fixed-last-column="isEdit"
       @request="queryPendingRecords"
