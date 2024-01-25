@@ -62,6 +62,7 @@ declare global {
   const deleteRootApi: typeof import('../../../shared/api/data')['deleteRootApi']
   const deleteUserApi: typeof import('../../../shared/api/user')['deleteUserApi']
   const deleteWorkApi: typeof import('../../../shared/api/work')['deleteWorkApi']
+  const downloadExportLgFile: typeof import('../../../shared/api/exportLg')['downloadExportLgFile']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const exportLgApi: typeof import('../../../shared/api/exportLg')['exportLgApi']
@@ -84,7 +85,6 @@ declare global {
   const getDataRoleNamesApi: typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']
   const getDbIntroApi: typeof import('../../../shared/api/file')['getDbIntroApi']
   const getDesktopRequestAttachmentsUrl: typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']
-  const getDownloadExportLgFileUrl: typeof import('../../../shared/api/exportLg')['getDownloadExportLgFileUrl']
   const getDownloadExportSmFileUrl: typeof import('../../../shared/api/exportSm')['getDownloadExportSmFileUrl']
   const getEnvVariable: typeof import('../../../shared/utils/env')['getEnvVariable']
   const getFieldsByTableApi: typeof import('../../../shared/api/data')['getFieldsByTableApi']
@@ -500,6 +500,7 @@ declare module 'vue' {
     readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
     readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
+    readonly downloadExportLgFile: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFile']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
@@ -522,7 +523,6 @@ declare module 'vue' {
     readonly getDataRoleNamesApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']>
     readonly getDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['getDbIntroApi']>
     readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
-    readonly getDownloadExportLgFileUrl: UnwrapRef<typeof import('../../../shared/api/exportLg')['getDownloadExportLgFileUrl']>
     readonly getDownloadExportSmFileUrl: UnwrapRef<typeof import('../../../shared/api/exportSm')['getDownloadExportSmFileUrl']>
     readonly getEnvVariable: UnwrapRef<typeof import('../../../shared/utils/env')['getEnvVariable']>
     readonly getFieldsByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getFieldsByTableApi']>
@@ -931,6 +931,7 @@ declare module '@vue/runtime-core' {
     readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
     readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
+    readonly downloadExportLgFile: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFile']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
@@ -953,7 +954,6 @@ declare module '@vue/runtime-core' {
     readonly getDataRoleNamesApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']>
     readonly getDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['getDbIntroApi']>
     readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
-    readonly getDownloadExportLgFileUrl: UnwrapRef<typeof import('../../../shared/api/exportLg')['getDownloadExportLgFileUrl']>
     readonly getDownloadExportSmFileUrl: UnwrapRef<typeof import('../../../shared/api/exportSm')['getDownloadExportSmFileUrl']>
     readonly getEnvVariable: UnwrapRef<typeof import('../../../shared/utils/env')['getEnvVariable']>
     readonly getFieldsByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getFieldsByTableApi']>
