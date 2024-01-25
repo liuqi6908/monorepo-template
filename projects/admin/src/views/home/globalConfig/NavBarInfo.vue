@@ -1,26 +1,15 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
-import {
-  NAV_HOME_LABEL,
-  NAV_HOME_DESC,
-  NAV_DATABASE_LABEL,
-  NAV_DATABASE_DESC,
-  NAV_QUESTION_LABEL,
-  NAV_QUESTION_DESC,
-  NAV_REQUEST_LABEL,
-  NAV_REQUEST_DESC,
-  SysConfig,
-} from 'zjf-types'
+import { SysConfig } from 'zjf-types'
 import type { IConfigDto } from 'zjf-types'
-import InfoItem from './InfoItem.vue'
-import type { InfoItemProps } from './InfoItem.vue'
+import type { InfoItemProps } from '~/components/item/InfoItem.vue'
 
 defineProps<{
   isEdit?: boolean
 }>()
 const emits = defineEmits(['loading'])
 
-const { nav } = useSysConfig()
+const { nav, getNavConfig } = useSysConfig()
 
 /** 菜单 */
 const menu = [
@@ -36,7 +25,7 @@ const menu = [
 /** 当前激活菜单 */
 const active = ref<string>(menu[0].id)
 
-/** 平台信息 */
+/** 导航栏信息 */
 const info = computed<(Omit<InfoItemProps, 'isEdit'> & {
   key: keyof Exclude<IConfigDto[SysConfig.NAV], undefined>
   menu: string
@@ -44,56 +33,48 @@ const info = computed<(Omit<InfoItemProps, 'isEdit'> & {
   {
     label: '首页',
     key: 'homeLabel',
-    placeholder: NAV_HOME_LABEL,
     modelValue: nav.value?.homeLabel,
     menu: 'nav',
   },
   {
     label: '数据库',
     key: 'databaseLabel',
-    placeholder: NAV_DATABASE_LABEL,
     modelValue: nav.value?.databaseLabel,
     menu: 'nav',
   },
   {
     label: '常见问题',
     key: 'questionLabel',
-    placeholder: NAV_QUESTION_LABEL,
     modelValue: nav.value?.questionLabel,
     menu: 'nav',
   },
   {
     label: '申请使用',
     key: 'requestLabel',
-    placeholder: NAV_REQUEST_LABEL,
     modelValue: nav.value?.requestLabel,
     menu: 'nav',
   },
   {
     label: '用户中心',
     key: 'homeDesc',
-    placeholder: NAV_HOME_DESC,
     modelValue: nav.value?.homeDesc,
     menu: 'banner',
   },
   {
     label: '数据库',
     key: 'databaseDesc',
-    placeholder: NAV_DATABASE_DESC,
     modelValue: nav.value?.databaseDesc,
     menu: 'banner',
   },
   {
     label: '常见问题',
     key: 'questionDesc',
-    placeholder: NAV_QUESTION_DESC,
     modelValue: nav.value?.questionDesc,
     menu: 'banner',
   },
   {
     label: '申请使用',
     key: 'requestDesc',
-    placeholder: NAV_REQUEST_DESC,
     modelValue: nav.value?.requestDesc,
     menu: 'banner',
   },
@@ -117,9 +98,7 @@ async function reset(item: typeof info.value[number]) {
       type: 'success',
       message: '重置成功',
     })
-
-    if (nav.value)
-      nav.value[item.key] = item.placeholder
+    await getNavConfig(false)
   }
   finally {
     emits('loading', false)

@@ -1,17 +1,16 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
-import { APP_NAME, APP_NAME_EN, APP_ICON, SysConfig } from 'zjf-types'
+import { SysConfig } from 'zjf-types'
 import { getRandomID } from 'zjf-utils'
 import type { IConfigDto } from 'zjf-types'
-import InfoItem from './InfoItem.vue'
-import type { InfoItemProps } from './InfoItem.vue'
+import type { InfoItemProps } from '~/components/item/InfoItem.vue'
 
 defineProps<{
   isEdit?: boolean
 }>()
 const emits = defineEmits(['loading'])
 
-const { app, updateAppHead } = useSysConfig()
+const { app, getAppConfig, updateAppHead } = useSysConfig()
 
 /** 平台信息 */
 const info = computed<(Omit<InfoItemProps, 'isEdit'> & {
@@ -20,13 +19,11 @@ const info = computed<(Omit<InfoItemProps, 'isEdit'> & {
   {
     label: '平台名称',
     key: 'name',
-    placeholder: APP_NAME,
     modelValue: app.value?.name,
   },
   {
     label: '平台logo',
     key: 'icon',
-    placeholder: APP_ICON,
     modelValue: app.value?.icon,
     type: 'image',
     caption: '（ 只能上传 png、jpg 格式文件，且不大于 100KB）'
@@ -34,7 +31,6 @@ const info = computed<(Omit<InfoItemProps, 'isEdit'> & {
   {
     label: '平台英文',
     key: 'nameEn',
-    placeholder: APP_NAME_EN,
     modelValue: app.value?.nameEn,
   }
 ]))
@@ -57,12 +53,9 @@ async function reset(item: typeof info.value[number]) {
       type: 'success',
       message: '重置成功',
     })
-
-    if (app.value) {
-      app.value[item.key] = item.placeholder
-      if (item.key === 'name' || item.key === 'icon')
-        updateAppHead(true)
-    }
+    await getAppConfig(false)
+    if (item.key === 'name' || item.key === 'icon')
+      updateAppHead(true)
   }
   finally {
     emits('loading', false)

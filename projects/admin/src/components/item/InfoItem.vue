@@ -1,15 +1,18 @@
 <script lang="ts" setup>
+import { FILE_SIZE_UNITS } from 'zjf-utils'
+
 export interface InfoItemProps {
-  modelValue?: string
-  type?: 'text' | 'image'
   label?: string
   caption?: string
-  placeholder?: string
+  modelValue?: string
+  type?: 'text' | 'image' | 'number' | 'fileSize'
+  text?: string | number
+  unit?: string
   isEdit?: boolean
   resetText?: string
 }
 
-withDefaults(defineProps<InfoItemProps>(), {
+const props = withDefaults(defineProps<InfoItemProps>(), {
   type: 'text',
 })
 defineEmits(['update:modelValue', 'reset'])
@@ -19,21 +22,34 @@ const resetDialog = ref(false)
 /** 修改对话框 */
 const updateDialog = ref(false)
 /** 修改文本 */
-const text = ref<string>()
+const text = ref<string | number>()
+/** 单位 */
+const unit = ref<string>()
+
+watch(
+  props,
+  (newVal) => {
+    text.value = newVal.text || newVal.modelValue
+    unit.value = newVal.unit
+  },
+  {
+    immediate: true,
+  }
+)
 </script>
 
 <template>
   <div flex="~ items-end gap10">
     <!-- 信息 -->
     <ReadonlyInput
-      v-if="type === 'text'"
-      :model-value="modelValue || placeholder"
+      v-if="type !== 'image'"
+      :model-value="modelValue"
       :label="label"
       :caption="caption"
       flex-1
     />
     <div
-      v-else-if="type === 'image'"
+      v-else
       flex="~ 1 col gap2" w0
     >
       <div
@@ -69,19 +85,17 @@ const text = ref<string>()
         重置
       </div>
       <div
-        v-if="type === 'text'"
+        v-if="type !== 'image'"
         class="btn"
         @click="() => {
-          if (isEdit) {
+          if (isEdit)
             updateDialog = true
-            text = modelValue
-          }
         }"
       >
         修改
       </div>
       <ZUpload
-        v-else-if="type === 'image'"
+        v-else
         accept=".png,.jpg,.jpeg"
         :max-file-size="100 * 1024"
         :disable="!isEdit"
@@ -111,16 +125,41 @@ const text = ref<string>()
     <ZDialog
       v-model="updateDialog"
       title="修改"
-      :disable-confirm="!text"
+      :disable-confirm="
+        (typeof text !== 'number' && !text)
+        || (typeof text === 'number' && text < 0)
+        || (type === 'fileSize'
+          && (typeof text !== 'number' || text >= 1024)
+        )
+      "
       confirm-text="保存"
       footer
-      @ok="$emit('update:modelValue', text)"
+      @ok="$emit('update:modelValue', text, unit)"
     >
       <ZInput
+        v-if="type === 'text'"
         v-model="text"
         :label="label"
         required
       />
+      <div
+        v-if="type === 'number' || type === 'fileSize'"
+        flex="~ gap10"
+      >
+        <ZInput
+          v-model.number="text"
+          :label="label"
+          type="number"
+          required flex-1
+        />
+        <ZSelect
+          v-if="type === 'fileSize'"
+          v-model="unit"
+          label="单位"
+          :options="FILE_SIZE_UNITS.filter((_, i) => i < 4)"
+          w26
+        />
+      </div>
     </ZDialog>
   </div>
 </template>

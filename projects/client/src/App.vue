@@ -4,10 +4,11 @@ import { QScrollArea } from 'quasar'
 
 const $route = useRoute()
 const { width } = useWindowSize()
-const { getAppConfig, updateAppHead } = useSysConfig()
+const { isAdmin, zoomRatio, getAppConfig, updateAppHead } = useSysConfig()
 const { el, scrollTo } = useScrollApp()
 
 onBeforeMount(async () => {
+  isAdmin.value = false
   // 设置网站标题和logo
   await getAppConfig()
   updateAppHead()
@@ -30,9 +31,10 @@ watch(
         const body = document.body
         if (body) {
           if (newVal < APP_MIN_WIDTH) {
-            body.style.transform = `scale(${newVal / APP_MIN_WIDTH})`
-            body.style.width = `${APP_MIN_WIDTH / newVal * 100}%`
-            body.style.height = `${APP_MIN_WIDTH / newVal * 100}%`
+            const ratio = zoomRatio.value
+            body.style.transform = `scale(${ratio})`
+            body.style.width = `${100 / ratio}%`
+            body.style.height = `${100 / ratio}%`
           }
           else {
             body.style.transform = ''
