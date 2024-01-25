@@ -505,6 +505,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         name: '管理采购',
         value: [
           PermissionType.DATA_SUGGEST_QUERY_ALL,
+          PermissionType.DATA_SUGGEST_DOWNLOAD,
         ],
       },
     ],
