@@ -1,12 +1,16 @@
 <script setup lang="ts">
-onBeforeMount(() => {
-  console.log('init：用户管理')
-})
+import UserInfo from '~/views/user/UserInfo.vue'
+import Verification from '~/views/user/Verification.vue'
+import UserRole from '~/views/user/UserRole.vue'
+
+const { active, menu } = useMenu()
 </script>
 
 <template>
-  <div>
-    用户管理
+  <div v-if="menu?.length">
+    <UserInfo v-if="active === menu[0].id" />
+    <Verification v-else-if="active === menu[1].id" />
+    <UserRole v-else-if="active === menu[2].id" />
   </div>
 </template>
 

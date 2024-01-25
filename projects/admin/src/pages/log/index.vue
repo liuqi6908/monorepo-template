@@ -1,12 +1,12 @@
 <script setup lang="ts">
-onBeforeMount(() => {
-  console.log('init：日志管理')
-})
+import LogView from '~/views/log/LogView.vue'
+
+const { active, menu } = useMenu()
 </script>
 
 <template>
-  <div>
-    日志管理
+  <div v-if="menu?.length">
+    <LogView v-if="active === menu[0].id" />
   </div>
 </template>
 

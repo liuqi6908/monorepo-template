@@ -2,7 +2,7 @@
 import { useSysConfig } from '../../composables/app'
 
 export interface ReadonlyInputProps {
-  modelValue?: string
+  modelValue?: string | number
   label?: string
   caption?: string
   required?: boolean

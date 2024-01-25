@@ -12,7 +12,7 @@ const { byAbsolute } = usePosition()
 function deleteComponent(index: number, item: CmsJson) {
   editData.value.splice(index, 1)
   if (selectComponent.value?.id === item.id)
-    selectComponent.value = undefined
+    selectComponent.value = editData.value[0]
 }
 </script>
 
@@ -29,8 +29,10 @@ function deleteComponent(index: number, item: CmsJson) {
         default-label="未命名组件"
         :isEdit="typeof addComponent !== 'number' && isEdit"
         @update:model-value="val => {
-          selectComponent = val
-          addComponent = undefined
+          if (selectComponent?.id !== val.id) {
+            selectComponent = val
+            addComponent = undefined
+          }
         }"
       >
         <template #default="{ item, index }">

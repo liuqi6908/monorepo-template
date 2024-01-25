@@ -192,6 +192,8 @@ export enum PermissionType {
   // ------------------ 采购建议 ----–––---------------
   /** 查询所有的采购建议 */
   DATA_SUGGEST_QUERY_ALL = 'data-suggest:query-all',
+  /** 下载所有的采购建议 */
+  DATA_SUGGEST_DOWNLOAD = 'data-suggest:download',
 }
 
 /**
@@ -289,4 +291,5 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.WORK_DOWNLOAD]: '下载指定作品/成果的附件',
 
   [PermissionType.DATA_SUGGEST_QUERY_ALL]: '查询所有的采购建议',
+  [PermissionType.DATA_SUGGEST_DOWNLOAD]: '下载所有的采购建议',
 }

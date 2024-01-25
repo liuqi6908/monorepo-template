@@ -11,6 +11,9 @@ export interface PermissionItem {
 interface AdminMenu {
   name: string
   to: string
+  /** 可访问菜单权限 */
+  menu: PermissionType[]
+  /** 粒子化权限分割 */
   permission: PermissionItem[]
 }
 
@@ -21,6 +24,10 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '页面管理',
     to: '/home',
+    menu: [
+      PermissionType.CMS_QUERY,
+      PermissionType.CONFIG_QUERY_APP,
+    ],
     permission: [
       {
         name: '页面管理',
@@ -48,7 +55,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         name: '全局配置',
         children: [
           {
-            name: '只读访问全局配置页面',
+            name: '只读访问全局配置',
             desc: '只读访问平台页面全局设置',
             value: [
               PermissionType.CONFIG_QUERY_APP,
@@ -69,12 +76,18 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '用户管理',
     to: '/user',
+    menu: [
+      PermissionType.ACCOUNT_QUERY,
+      PermissionType.VERIFICATION_LIST_ALL,
+      PermissionType.DATA_PERMISSION_QUERY,
+      PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
+    ],
     permission: [
       {
         name: '用户信息管理',
         children: [
           {
-            name: '只读访问用户列表',
+            name: '只读访问用户信息',
             value: [
               PermissionType.ACCOUNT_QUERY,
             ],
@@ -87,7 +100,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             ],
           },
           {
-            name: '停用和启用用户账号',
+            name: '停用和启用用户信息',
             value: [
               PermissionType.ACCOUNT_QUERY,
               PermissionType.ACCOUNT_DELETE,
@@ -125,14 +138,14 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             ],
           },
           {
-            name: '只读访问认证申请上传设置',
+            name: '只读访问申请认证上传配置',
             value: [
               PermissionType.VERIFICATION_LIST_ALL,
               PermissionType.CONFIG_QUERY_VERIFICATION,
             ],
           },
           {
-            name: '管理认证申请上传设置',
+            name: '管理申请认证上传配置',
             desc: '管理用户认证时需要上传哪些材料',
             value: [
               PermissionType.VERIFICATION_LIST_ALL,
@@ -184,9 +197,15 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '数据管理',
     to: '/data',
+    menu: [
+      PermissionType.DATA_ROOT_QUERY,
+      PermissionType.DATA_QUERY,
+      PermissionType.DATA_UPLOAD_QUERY,
+      PermissionType.DATA_INTRO_QUERY,
+    ],
     permission: [
       {
-        name: '创建数据资源类型',
+        name: '数据资源类型',
         children: [
           {
             name: '只读访问数据资源类型',
@@ -206,7 +225,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         ],
       },
       {
-        name: '设置数据资源结构',
+        name: '数据资源结构',
         children: [
           {
             name: '只读访问数据资源结构',
@@ -227,7 +246,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         name: '数据资源上传',
         children: [
           {
-            name: '只读访问数据上传情况',
+            name: '只读访问数据资源上传情况',
             value: [
               PermissionType.DATA_UPLOAD_QUERY,
             ],
@@ -242,16 +261,17 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         ],
       },
       {
-        name: '设置数据资源介绍',
+        name: '数据资源介绍',
         children: [
           {
-            name: '只读访问数据库介绍和引用规范',
+            name: '只读访问数据资源介绍',
+            desc: '查看数据库介绍和引用规范',
             value: [
               PermissionType.DATA_INTRO_QUERY,
             ],
           },
           {
-            name: '管理数据库介绍和引用规范',
+            name: '管理数据资源介绍',
             value: [
               PermissionType.DATA_INTRO_QUERY,
               PermissionType.DATA_UPLOAD_INTRO,
@@ -265,13 +285,20 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '云桌面管理',
     to: '/desktop',
+    menu: [
+      PermissionType.DESKTOP_REQUEST_QUERY,
+      PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
+      PermissionType.DESKTOP_QUERY,
+      PermissionType.DESKTOP_DISABLE_QUERY,
+      PermissionType.DESKTOP_FTP_QUERY,
+    ],
     permission: [
       {
         name: '云桌面申请',
         children: [
           {
             name: '只读访问云桌面申请列表',
-            desc: '查用户申请云桌面的信息列表',
+            desc: '查看用户申请云桌面的信息列表',
             value: [
               PermissionType.DESKTOP_REQUEST_QUERY,
             ],
@@ -304,7 +331,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         ],
       },
       {
-        name: '云桌面待分配',
+        name: '待分配列表',
         children: [
           {
             name: '只读访问待分配列表',
@@ -362,16 +389,16 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         ],
       },
       {
-        name: '云桌面停用',
+        name: '云桌面回收站',
         children: [
           {
-            name: '只读访问停用列表',
+            name: '只读访问云桌面停用列表',
             value: [
               PermissionType.DESKTOP_DISABLE_QUERY,
             ],
           },
           {
-            name: '管理停用列表',
+            name: '管理云桌面停用列表',
             value: [
               PermissionType.DESKTOP_DISABLE_QUERY,
               PermissionType.DESKTOP_DELETE,
@@ -390,7 +417,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             ],
           },
           {
-            name: '管理用户数据上传设置',
+            name: '管理用户数据上传',
             value: [
               PermissionType.DESKTOP_FTP_QUERY,
               PermissionType.DESKTOP_FTP_DELETE,
@@ -405,10 +432,12 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '日志管理',
     to: '/log',
+    menu: [
+      PermissionType.LOG_VIEW,
+    ],
     permission: [
       {
-        name: '只读访问日志',
-        desc: '只读查看日志页面',
+        name: '只读访问日志列表',
         value: [
           PermissionType.LOG_VIEW,
         ],
@@ -426,9 +455,13 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '作品管理',
     to: '/work',
+    menu: [
+      PermissionType.WORK_QUERY_ALL,
+      PermissionType.CONFIG_QUERY_WORK,
+    ],
     permission: [
       {
-        name: '只读访问作品',
+        name: '只读访问作品列表',
         value: [
           PermissionType.WORK_QUERY_ALL,
         ],
@@ -443,14 +476,12 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
       {
         name: '只读访问上传作品配置',
         value: [
-          PermissionType.WORK_QUERY_ALL,
           PermissionType.CONFIG_QUERY_WORK,
         ],
       },
       {
         name: '管理上传作品配置',
         value: [
-          PermissionType.WORK_QUERY_ALL,
           PermissionType.CONFIG_QUERY_WORK,
           PermissionType.CONFIG_UPSERT_WORK,
         ],
@@ -460,9 +491,12 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '采购管理',
     to: '/purchase',
+    menu: [
+      PermissionType.DATA_SUGGEST_QUERY_ALL,
+    ],
     permission: [
       {
-        name: '只读访问采购',
+        name: '只读访问采购列表',
         value: [
           PermissionType.DATA_SUGGEST_QUERY_ALL,
         ],
@@ -471,6 +505,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         name: '管理采购',
         value: [
           PermissionType.DATA_SUGGEST_QUERY_ALL,
+          PermissionType.DATA_SUGGEST_DOWNLOAD,
         ],
       },
     ],
@@ -478,6 +513,12 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '外发管理',
     to: '/export',
+    menu: [
+      PermissionType.EXPORT_LG_QUERY_PENDING,
+      PermissionType.EXPORT_LG_QUERY_ALL,
+      PermissionType.EXPORT_SM_QUERY_ALL,
+      PermissionType.CONFIG_QUERY_EXPORT,
+    ],
     permission: [
       {
         name: '大文件外发待审核',
@@ -536,16 +577,16 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         ],
       },
       {
-        name: '外发设置',
+        name: '外发配置管理',
         children: [
           {
-            name: '只读访问外发设置',
+            name: '只读访问外发配置',
             value: [
               PermissionType.CONFIG_QUERY_EXPORT,
             ],
           },
           {
-            name: '管理外发设置',
+            name: '管理外发配置',
             value: [
               PermissionType.CONFIG_QUERY_EXPORT,
               PermissionType.CONFIG_UPSERT_EXPORT,
@@ -558,6 +599,10 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '管理员配置',
     to: '/admin',
+    menu: [
+      PermissionType.ROLE_QUERY,
+      PermissionType.ROLE_ASSIGN_QUERY,
+    ],
     permission: [
       {
         name: '设置管理角色',
@@ -583,7 +628,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
         name: '分配管理角色',
         children: [
           {
-            name: '只读访问用户管理',
+            name: '只读访问用户管理列表',
             value: [
               PermissionType.ROLE_ASSIGN_QUERY,
             ],

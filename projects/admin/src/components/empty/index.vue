@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import denied from '~/assets/empty/denied.svg?raw'
+import item from '~/assets/empty/item.svg?raw'
 
 interface EmptyProps {
   icon?: keyof (typeof icons)
@@ -8,12 +9,13 @@ interface EmptyProps {
 }
 
 withDefaults(defineProps<EmptyProps>(), {
-  icon: 'denied',
+  icon: 'item',
   label: '暂无数据',
 })
 
 const icons = {
   denied,
+  item,
 }
 </script>
 

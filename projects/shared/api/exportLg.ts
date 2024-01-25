@@ -5,9 +5,8 @@ import type {
   IQueryDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/user'
 
-const { $getUri, $post, $put } = useRequest()
+const { $get, $post, $put } = useRequest()
 
 /**
  * 发起大文件外发的申请
@@ -49,10 +48,15 @@ export function rejectExportLgApi(id: string, body: {
 }
 
 /**
- * 获取下载大文件外发附件的链接
+ * 下载大文件外发附件
  */
-export function getDownloadExportLgFileUrl(id: string) {
-  return $getUri(`/export-lg/file/${id}`, {
-    token: authToken.value,
-  })
+export function downloadExportLgFile(id: string) {
+  return $get<Blob>(
+    `/export-lg/file/${id}`,
+    undefined,
+    false,
+    {
+      responseType: 'blob',
+    },
+  )
 }

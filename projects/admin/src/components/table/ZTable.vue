@@ -8,8 +8,14 @@ interface ZTableProps {
   cols: QTableProps['columns']
   loading?: boolean
   selected?: any[]
+  /** 分页信息 */
   pagination?: QTableProps['pagination']
+  /** 触发服务器请求 */
   onRequest?: QTableProps['onRequest']
+  /** 是否固定表格第一列 */
+  fixedFirstColumn?: boolean
+  /** 是否固定表格最后一列 */
+  fixedLastColumn?: boolean
   params?: Omit<QTableProps, 'rows' | 'columns' | 'loading' | 'selected' | 'pagination' | 'onRequest'>
 }
 
@@ -24,37 +30,73 @@ onMounted(() => {
   if (props.onRequest)
     tableRef.value?.requestServerInteraction()
 })
+
+/** 当前单元格的label */
+const cellLabel = ref<string>()
+/** 当前单元格的value */
+const cellValue = ref<string>()
+
+defineExpose({
+  tableRef,
+})
 </script>
 
 <template>
-  <q-table
-    class="z-table"
-    ref="tableRef"
-    v-model:selected="selected"
-    v-model:pagination="pagination"
-    :rows="rows"
-    :columns="cols"
-    :loading="loading"
-    :rows-per-page-options="ROWS_PER_PAGE_OPTIONS"
-    virtual-scroll
-    v-bind="params" flat full
-    bg-grey-1 rounded-3 b="1px grey-3"
-    @request="onRequest"
-  >
-    <template
-      v-for="(_, slotName) of ($slots as Readonly<QTableSlots>)"
-      :key="slotName"
-      #[slotName]="props"
+  <div full>
+    <q-table
+      class="z-table"
+      :class="{
+        'fixed-first-column': fixedFirstColumn,
+        'fixed-last-column': fixedLastColumn,
+      }"
+      ref="tableRef"
+      v-model:selected="selected"
+      v-model:pagination="pagination"
+      :rows="rows"
+      :columns="cols"
+      :loading="loading"
+      :rows-per-page-options="ROWS_PER_PAGE_OPTIONS"
+      virtual-scroll
+      v-bind="params" flat full
+      bg-grey-1 rounded-3 b="1px grey-3"
+      @request="onRequest"
     >
-      <slot :name="slotName" v-bind="props as any" />
-    </template>
-    /* <template #cell>
-      1
-    </template> */
-    <template #loading>
-      <ZLoading :value="loading" />
-    </template>
-  </q-table>
+      <template
+        v-for="(_, slotName) of ($slots as Readonly<QTableSlots>)"
+        :key="slotName"
+        #[slotName]="props"
+      >
+        <slot :name="slotName" v-bind="props as any" />
+      </template>
+      <template #loading>
+        <ZLoading :value="loading" />
+      </template>
+      <template #body-cell="{ col, value }">
+        <q-td
+          cursor-default
+          :style="{
+            textAlign: col.align,
+          }"
+          v-text="value || '—'"
+          @dblclick="() => {
+            cellLabel = col.label
+            cellValue = value
+          }"
+        />
+      </template>
+    </q-table>
+
+    <ZDialog
+      :model-value="!!cellValue"
+      :title="cellLabel ?? ''"
+      :params="{
+        persistent: false
+      }"
+      @update:model-value="cellValue = undefined"
+    >
+      {{ cellValue }}
+    </ZDialog>
+  </div>
 </template>
 
 <style lang="scss" scoped>
@@ -65,7 +107,7 @@ onMounted(() => {
         background: var(--grey-2);
         position: sticky;
         top: 0;
-        z-index: 1;
+        z-index: 2;
       }
 
       tr {
@@ -121,6 +163,49 @@ onMounted(() => {
         .q-field__append i {
           bottom: 1px;
         }
+      }
+    }
+  }
+
+  /** 固定表格第一列 */
+  &.fixed-first-column {
+    :deep(tr) {
+      > th, > td {
+        &:first-child {
+          position: sticky;
+          left: 0;
+          z-index: 1;
+        }
+      }
+
+      > th:first-child {
+        background-color: var(--grey-2);
+      }
+
+      > td:first-child {
+        background-color: var(--grey-1);
+      }
+    }
+  }
+
+
+  /** 固定表格最后一列 */
+  &.fixed-last-column {
+    :deep(tr) {
+      > th, > td {
+        &:last-child {
+          position: sticky;
+          right: 0;
+          z-index: 1;
+        }
+      }
+
+      > th:last-child {
+        background-color: var(--grey-2);
+      }
+
+      > td:last-child {
+        background-color: var(--grey-1);
       }
     }
   }

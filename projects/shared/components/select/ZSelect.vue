@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
 import type { QSelectProps } from 'quasar'
+import { useSysConfig } from '../../composables/app'
 
 export interface ZSelectProps {
   modelValue: any
@@ -21,6 +22,7 @@ const props = withDefaults(defineProps<ZSelectProps>(), {
 defineEmits(['update:modelValue'])
 
 const value = useVModel(props, 'modelValue')
+const { isAdmin } = useSysConfig()
 </script>
 
 <template>
@@ -35,13 +37,13 @@ const value = useVModel(props, 'modelValue')
     </div>
     <q-select
       v-model="value"
-      :class="size"
+      :class="size + (isAdmin ? ' is-admin' : '')"
       dense outlined
       :options="options"
       :dark="dark"
       :color="dark ? 'grey-1' : 'primary-1'"
       dropdown-icon="fa fa-chevron-down"
-      popup-content-class="z-select-dropdown-menu rounded-0 shadow-none py2 text-grey-8"
+      :popup-content-class="`z-select-dropdown-menu${isAdmin ? ' is-admin' : ''}`"
       :menu-offset="[0, 8]"
       v-bind="params"
     >
@@ -90,6 +92,10 @@ const value = useVModel(props, 'modelValue')
 
 .z-select-dropdown-menu {
   box-shadow: 0px 3px 6px -4px rgba(0, 0, 0, 0.12), 0px 6px 16px rgba(0, 0, 0, 0.08), 0px 9px 28px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 0;
+  padding: 8px 0;
+  color: var(--grey-8);
+
   .q-item {
     text-align: center;
 
@@ -99,6 +105,17 @@ const value = useVModel(props, 'modelValue')
 
     &:hover > .q-focus-helper {
       opacity: 0.1 !important;
+    }
+  }
+
+  &.is-admin {
+    border-radius: 8px;
+    border: 1px solid var(--grey-3);
+    padding: 4px;
+    box-shadow: 0px 0px 24px 0px #0C337314, 0px 0px 12px 0px #0C337314;
+
+    .q-item {
+      border-radius: 8px;
     }
   }
 }

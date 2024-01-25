@@ -9,7 +9,7 @@ function backHome() {
 </script>
 
 <template>
-  <Empty label="您没有访问权限">
+  <Empty label="您没有访问权限" icon="denied">
     <ZBtn label="返回首页" size="big" self-center @click="backHome" />
   </Empty>
 </template>

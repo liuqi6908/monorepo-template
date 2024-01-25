@@ -51,7 +51,7 @@ async function saveCms() {
 </script>
 
 <template>
-  <div flex="~ 1 col gap4" relative>
+  <div flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
     <!-- 操作栏 -->

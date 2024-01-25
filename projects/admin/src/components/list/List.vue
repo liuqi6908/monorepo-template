@@ -64,12 +64,7 @@ function changeMenuState(id: string, state: boolean) {
         :cursor="isEdit ? 'move' : 'default'"
         px2 rounded-2 h12 w-full
         hover:bg-grey-2 flex="~ justify-between items-center gap2"
-        @click="() => {
-          if (modelValue?.[valueText] === element[valueText])
-            modelValue = undefined
-          else
-            modelValue = element
-        }"
+        @click="modelValue = element"
       >
         <div
           truncate text-sm font-500

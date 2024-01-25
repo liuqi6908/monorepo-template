@@ -21,6 +21,7 @@ declare module 'vue' {
     Empty: typeof import('./../components/empty/index.vue')['default']
     ExportStatus: typeof import('./../../../shared/components/status/ExportStatus.vue')['default']
     HomeMenu: typeof import('./../components/menu/HomeMenu.vue')['default']
+    InfoItem: typeof import('./../components/item/InfoItem.vue')['default']
     List: typeof import('./../components/list/List.vue')['default']
     LogoutDialog: typeof import('./../../../shared/components/dialog/LogoutDialog.vue')['default']
     MenuItem: typeof import('./../components/menu/MenuItem.vue')['default']

@@ -33,12 +33,11 @@ async function initPage() {
 </script>
 
 <template>
-  <div flex="~ 1 col gap4" relative class="global-config"
-  >
+  <div flex="~ col gap4" relative class="global-config">
     <ZLoading :value="loading" />
 
     <!-- 操作栏 -->
-    <div flex="~ justify-end gap4">
+    <div flex="~ justify-end">
       <ZBtn
         label="刷新"
         text-color="primary-1"

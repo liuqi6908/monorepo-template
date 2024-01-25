@@ -10,7 +10,7 @@ const { addComponent, selectComponent, editData } = useEditCms()
 /**
  * 添加组件
  */
-function addComponentClick(key: CmsKey, item: CmsComponent['A00001']) {
+function addComponentClick(key: CmsKey, item: CmsComponent[CmsKey]) {
   if (typeof addComponent.value !== 'number')
     return
 
