@@ -3,7 +3,7 @@ import { Notify } from 'quasar'
 import { SysConfig } from 'zjf-types'
 import { getRandomID } from 'zjf-utils'
 import type { IConfigDto } from 'zjf-types'
-import type { InfoItemProps } from '~/components/item/InfoItem.vue'
+import type { InfoItemProps, UpdateParam } from '~/components/item/InfoItem.vue'
 
 defineProps<{
   isEdit?: boolean
@@ -65,23 +65,24 @@ async function reset(item: typeof info.value[number]) {
 /**
  * 更新
  */
-async function update(item: typeof info.value[number], val: string | File) {
+async function update(item: typeof info.value[number], val: UpdateParam) {
   emits('loading', true)
 
   try {
+    let { type, text, file } = val
     // 修改应用图标，上传文件
-    if (item.key === 'icon' && typeof val !== 'string') {
-      const suffix = val.name.split('.').pop()
+    if (type === 'image' && file) {
+      const suffix = file.name.split('.').pop()
       const res = await uploadPublicFileApi({
         path: `app/${getRandomID()}.${suffix}`,
-      }, val)
-      val = `/api/file/public?path=${res}`
+      }, file)
+      text = `/api/file/public?path=${res}`
     }
     await upsertConfigApi({
       version: SysConfig.APP,
       app: {
         ...app.value,
-        [item.key]: val
+        [item.key]: text
       }
     })
     Notify.create({
@@ -90,7 +91,7 @@ async function update(item: typeof info.value[number], val: string | File) {
     })
 
     if (app.value) {
-      app.value[item.key] = val as string
+      app.value[item.key] = text as string
       if (item.key === 'name' || item.key === 'icon')
         updateAppHead(true)
     }
@@ -112,7 +113,7 @@ async function update(item: typeof info.value[number], val: string | File) {
         :is-edit="isEdit"
         v-bind="item"
         @reset="reset(item)"
-        @update:model-value="val => update(item, val)"
+        @update="val => update(item, val)"
       />
       <div flex="~ gap1" text-sm font-500>
         修改平台主题色

@@ -2,7 +2,7 @@
 import { Notify } from 'quasar'
 import { SysConfig } from 'zjf-types'
 import type { IConfigDto } from 'zjf-types'
-import type { InfoItemProps } from '~/components/item/InfoItem.vue'
+import type { InfoItemProps, UpdateParam } from '~/components/item/InfoItem.vue'
 
 defineProps<{
   isEdit?: boolean
@@ -108,15 +108,16 @@ async function reset(item: typeof info.value[number]) {
 /**
  * 更新
  */
-async function update(item: typeof info.value[number], val: string) {
+async function update(item: typeof info.value[number], val: UpdateParam) {
   emits('loading', true)
 
   try {
+    const { text } = val
     await upsertConfigApi({
       version: SysConfig.NAV,
       nav: {
         ...nav.value,
-        [item.key]: val
+        [item.key]: text
       }
     })
     Notify.create({
@@ -125,7 +126,7 @@ async function update(item: typeof info.value[number], val: string) {
     })
 
     if (nav.value)
-      nav.value[item.key] = val
+      nav.value[item.key] = text as string
   }
   finally {
     emits('loading', false)
@@ -146,7 +147,7 @@ async function update(item: typeof info.value[number], val: string) {
         :resetText="menu.find(v => v.id === active)?.label"
         v-bind="item"
         @reset="reset(item)"
-        @update:model-value="val => update(item, val)"
+        @update="val => update(item, val)"
       />
     </div>
   </div>

@@ -1,21 +1,29 @@
 <script lang="ts" setup>
+import { cloneDeep } from 'lodash'
 import { FILE_SIZE_UNITS } from 'zjf-utils'
 
 export interface InfoItemProps {
   label?: string
   caption?: string
   modelValue?: string
-  type?: 'text' | 'image' | 'number' | 'fileSize'
+  type?: 'text' | 'image' | 'number' | 'fileSize' | 'fileSuffix'
   text?: string | number
   unit?: string
+  arr?: string[]
   isEdit?: boolean
   resetText?: string
+}
+export type UpdateParam = Pick<InfoItemProps, 'type' | 'text' | 'unit' | 'arr'> & {
+  file?: File
 }
 
 const props = withDefaults(defineProps<InfoItemProps>(), {
   type: 'text',
 })
-defineEmits(['update:modelValue', 'reset'])
+defineEmits<{
+  (e: 'update', val: UpdateParam): void
+  (e: 'reset'): void
+}>()
 
 /** 重置对话框 */
 const resetDialog = ref(false)
@@ -23,14 +31,17 @@ const resetDialog = ref(false)
 const updateDialog = ref(false)
 /** 修改文本 */
 const text = ref<string | number>()
-/** 单位 */
+/** 文件尺寸单位 */
 const unit = ref<string>()
+/** 文件后缀列表 */
+const arr = ref<string[]>([])
 
 watch(
   props,
   (newVal) => {
     text.value = newVal.text || newVal.modelValue
     unit.value = newVal.unit
+    arr.value = cloneDeep(props.arr) || []
   },
   {
     immediate: true,
@@ -103,7 +114,10 @@ watch(
           accept: '只能上传 png、jpg 格式文件',
           size: '图片大小不能超过 100KB'
         }"
-        @update:model-value="val => $emit('update:modelValue', val)"
+        @update:model-value="val => $emit('update', {
+          type,
+          file: val,
+        })"
       >
         <div class="btn">
           修改
@@ -134,7 +148,12 @@ watch(
       "
       confirm-text="保存"
       footer
-      @ok="$emit('update:modelValue', text, unit)"
+      @ok="$emit('update', {
+        type,
+        text,
+        unit,
+        arr,
+      })"
     >
       <ZInput
         v-if="type === 'text'"
@@ -143,7 +162,7 @@ watch(
         required
       />
       <div
-        v-if="type === 'number' || type === 'fileSize'"
+        v-else-if="type === 'number' || type === 'fileSize'"
         flex="~ gap10"
       >
         <ZInput
@@ -159,6 +178,39 @@ watch(
           :options="FILE_SIZE_UNITS.filter((_, i) => i < 4)"
           w26
         />
+      </div>
+      <div v-else-if="type === 'fileSuffix'" flex="~ gap6 wrap">
+        <ZInput
+          v-for="(_, i) in arr"
+          :key="i"
+          class="file-suffix"
+          :model-value="arr[i]"
+          :params="{
+            maxlength: 10,
+          }"
+          w25
+          @update:model-value="val => arr[i] = val"
+        >
+          <template #append>
+            <div
+              i-carbon:close
+              text-base cursor-pointer hidden
+              @click="arr.splice(i, 1)"
+            />
+          </template>
+        </ZInput>
+        <ZBtn
+          class="w12"
+          text-color="primary-1"
+          :params="{
+            outline: true
+          }"
+          :disable="arr.length > 20"
+          size="big"
+          @click="arr.push('')"
+        >
+          <div text-xl i-carbon:add />
+        </ZBtn>
       </div>
     </ZDialog>
   </div>
@@ -180,6 +232,16 @@ watch(
   &.disable .btn {
     cursor: not-allowed;
     opacity: 0.7;
+  }
+}
+
+.z-input.file-suffix {
+  &:hover {
+    :deep(.q-field__append) {
+      > div {
+        display: block;
+      }
+    }
   }
 }
 </style>

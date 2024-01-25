@@ -8,7 +8,7 @@ import {
   SysConfig,
 } from 'zjf-types'
 import type { IConfigDto } from 'zjf-types'
-import type { InfoItemProps } from '~/components/item/InfoItem.vue'
+import type { InfoItemProps, UpdateParam } from '~/components/item/InfoItem.vue'
 
 const { adminRole } = useUser()
 const { fileExport, getFileExportConfig } = useSysConfig()
@@ -99,17 +99,20 @@ async function reset(item: typeof info.value[number]) {
 /**
  * 更新
  */
-async function update(item: typeof info.value[number], val: number, unit?: string) {
+async function update(item: typeof info.value[number], val: UpdateParam) {
   loading.value = true
 
   try {
-    if (unit)
-      val = fileSizeToBytes(`${val} ${unit}`)
+    let { type, text, unit } = val
+    if (type === 'fileSize' && unit)
+      text = fileSizeToBytes(`${text} ${unit}`)
+    if (typeof text === 'number')
+      text = Math.floor(text)
     await upsertConfigApi({
       version: SysConfig.EXPORT,
       export: {
         ...fileExport.value,
-        [item.key]: val
+        [item.key]: text
       }
     })
     Notify.create({
@@ -118,7 +121,7 @@ async function update(item: typeof info.value[number], val: number, unit?: strin
     })
 
     if (fileExport.value)
-      fileExport.value[item.key] = val
+      fileExport.value[item.key] = text as number
   }
   finally {
     loading.value = false
@@ -154,7 +157,7 @@ async function update(item: typeof info.value[number], val: number, unit?: strin
           :is-edit="isEdit"
           v-bind="item"
           @reset="reset(item)"
-          @update:model-value="(val, unit) => update(item, val, unit)"
+          @update="val => update(item, val)"
         />
       </div>
     </q-scroll-area>

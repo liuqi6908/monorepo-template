@@ -7,7 +7,7 @@ import { FILE_SIZE_UNITS } from './formatFileSize'
  */
 export function fileSizeToBytes(size: string) {
   const num = Number.parseFloat(size)
-  const regex = new RegExp(`^(\\d+)\\s?(${FILE_SIZE_UNITS.join('|')})$`, 'i')
+  const regex = new RegExp(`^(-?\\d+(?:\\.\\d+)?)\\s?(${FILE_SIZE_UNITS.join('|')})$`, 'i')
   const matches = size.match(regex)
   if (!matches || !matches[2])
     return 0
