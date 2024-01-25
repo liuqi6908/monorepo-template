@@ -34,11 +34,12 @@ const text = ref<string>()
     />
     <div
       v-else-if="type === 'image'"
-      flex="~ 1 col gap2"
+      flex="~ 1 col gap2" w0
     >
       <div
         v-if="label"
         text="sm grey-8" font-500 flex="~ gap1"
+        whitespace-nowrap
       >
         {{ label }}
         <div
