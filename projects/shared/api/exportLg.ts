@@ -50,7 +50,7 @@ export function rejectExportLgApi(id: string, body: {
 /**
  * 下载大文件外发附件
  */
-export function downloadExportLgFile(id: string) {
+export function downloadExportLgFileApi(id: string) {
   return $get<Blob>(
     `/export-lg/file/${id}`,
     undefined,

@@ -86,7 +86,7 @@ async function handleDownload() {
   loading.value = true
   try {
     const item = downloadDialog.value
-    const res = await downloadExportSmFile(item.id)
+    const res = await downloadExportSmFileApi(item.id)
     browser.downloadBlob(res, item.fileName)
     Notify.create({
       type: 'success',

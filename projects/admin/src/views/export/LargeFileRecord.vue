@@ -136,7 +136,7 @@ async function handleDownload() {
   loading.value = true
   try {
     const item = downloadDialog.value
-    const res = await downloadExportLgFile(item.id)
+    const res = await downloadExportLgFileApi(item.id)
     browser.downloadBlob(res, item.fileName)
     Notify.create({
       type: 'success',

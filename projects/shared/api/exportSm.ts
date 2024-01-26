@@ -34,7 +34,7 @@ export function queryOwnExportSmApi(body: IQueryDto<IFileExportSmall>) {
 /**
  * 下载小文件外发附件
  */
-export function downloadExportSmFile(id: string) {
+export function downloadExportSmFileApi(id: string) {
   return $get<Blob>(
     `/export-sm/file/${id}`,
     undefined,

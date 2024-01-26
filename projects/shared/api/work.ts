@@ -5,9 +5,8 @@ import type {
   IWork,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
-import { authToken } from '../composables/user'
 
-const { $getUri, $delete, $patch, $post, $put } = useRequest()
+const { $get, $delete, $patch, $post, $put } = useRequest()
 
 /**
  * 上传作品
@@ -47,14 +46,19 @@ export function queryOwnWorksApi(body: IQueryDto<IWork>) {
  * 查询所有的作品列表
  */
 export function queryAllWorksApi(body: IQueryDto<IWork>) {
-  return $patch<IPaginatedResData<IWork>>('/work/query', body)
+  return $post<IPaginatedResData<IWork>>('/work/query', body)
 }
 
 /**
- * 获取下载指定作品附件的链接
+ * 下载指定作品附件
  */
-export function getWorkDownloadFileUrl(id: string) {
-  return $getUri(`/work/file/${id}`, {
-    token: authToken.value,
-  })
+export function downloadWorkFileApi(id: string) {
+  return $get<Blob>(
+    `/work/file/${id}`,
+    undefined,
+    false,
+    {
+      responseType: 'blob',
+    },
+  )
 }
