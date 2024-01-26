@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import { FileExportLargeStatus, fileExportLargeStatusDescriptions } from 'zjf-types'
 import { formatFileSize } from 'zjf-utils'
-import type { IFileExportSmall, IFileExportLarge, IQueryDto } from 'zjf-types'
-import type { QTableProps } from 'quasar'
+import type { IFileExportSmall, IFileExportLarge, IFileExportBasic, IQueryDto } from 'zjf-types'
+import type { QTableColumn } from 'quasar'
 import moment from 'moment'
 
-type ExportFile = IFileExportSmall | IFileExportLarge
+type ExportFile = IFileExportSmall & IFileExportLarge
 
 /** 当前页面 */
 const value = ref(EXPORT_MENU[0].value)
@@ -24,7 +24,7 @@ const select = ref(statusList)
 const text = ref('')
 
 /** 查询数据请求体 */
-const queryBody: IQueryDto<ExportFile> = {
+const queryBody: IQueryDto<IFileExportBasic> = {
   sort: [
     {
       field: 'createdAt',
@@ -39,7 +39,7 @@ const queryBody: IQueryDto<ExportFile> = {
 }
 
 /** 表格列字段 */
-const tableCols = reactive<Required<QTableProps>['columns']>([
+const tableCols = reactive<QTableColumn<ExportFile>[]>([
   {
     name: 'fileName',
     label: '文件名',
@@ -58,12 +58,12 @@ const tableCols = reactive<Required<QTableProps>['columns']>([
   {
     name: 'fileSize',
     label: '文件大小',
-    field: (row: ExportFile) => formatFileSize(row.fileSize),
+    field: row => formatFileSize(row.fileSize),
   },
   {
     name: 'name',
     label: '真实姓名',
-    field: (row: ExportFile) => row.founder?.verification?.name,
+    field: row => row.founder?.verification?.name,
   },
   {
     name: 'status',
@@ -78,7 +78,7 @@ const tableCols = reactive<Required<QTableProps>['columns']>([
   {
     name: 'createdAt',
     label: '外发时间',
-    field: (row: ExportFile) => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+    field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
   },
 ])
 /** 表格行信息 */
@@ -100,10 +100,12 @@ watch(
     loading.value = true
     tableRows.value = []
     try {
+      let res: any
       if (newVal === 'small')
-        tableRows.value = (await queryOwnExportSmApi(queryBody)).data
+        res = await queryOwnExportSmApi(queryBody)
       else if (newVal === 'big')
-        tableRows.value = (await queryOwnExportLgApi(queryBody)).data
+        res = await queryOwnExportLgApi(queryBody)
+      tableRows.value = res?.data
     }
     finally {
       loading.value = false

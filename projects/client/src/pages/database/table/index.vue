@@ -1,8 +1,8 @@
 <script lang="ts" setup>
-import type { QTableProps } from 'quasar'
+import type { QTableColumn, QTableProps } from 'quasar'
 import { DesktopQueueStatus, MinioBucket } from 'zjf-types'
 import { browser, pick } from 'zjf-utils'
-import type { IDataDirectory } from 'zjf-types'
+import type { IDataDirectory, IDataField } from 'zjf-types'
 import Purchase from '~/views/database/Purchase.dialog.vue'
 
 /** footer元素 */
@@ -39,7 +39,7 @@ const tableName = computed(() => {
 })
 
 /** 字段说明的列 */
-const fieldsCols: QTableProps['columns'] = [
+const fieldsCols: QTableColumn<IDataField>[] = [
   { label: '字段', name: 'nameZH', field: 'nameZH', align: 'left' },
   { label: '含义', name: 'description', field: 'description', align: 'left' },
 ]

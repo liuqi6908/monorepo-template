@@ -3,7 +3,7 @@ import { MinioBucket } from 'zjf-types'
 import { COMPRESSED_FILE_SUFFIX, formatFileSize, numberArrSum } from 'zjf-utils'
 import moment from 'moment'
 import { Notify } from 'quasar'
-import type { QTableProps } from 'quasar'
+import type { QTableColumn } from 'quasar'
 import type { FileItem } from 'shared/types/file.interface'
 
 const { isDesktop, userInfo } = useUser()
@@ -34,7 +34,7 @@ const usableQuota = computed(() => {
 })
 
 /** 表格列字段 */
-const tableCols = reactive<Required<QTableProps>['columns']>([
+const tableCols = reactive<QTableColumn[]>([
   {
     name: 'index',
     label: '序号',

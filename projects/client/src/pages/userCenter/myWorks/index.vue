@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Notify } from 'quasar'
-import type { QTableProps } from 'quasar'
+import type { QTableColumn, QTableProps } from 'quasar'
 import type { IWork } from 'zjf-types'
 import moment from 'moment'
 import AddWorksDialog from '~/views/userCenter/myWorks/AddWorks.dialog.vue'
@@ -17,7 +17,7 @@ const work = ref<IWork>()
 const deleteId = ref<string>()
 
 /** 表格列字段 */
-const tableCols = reactive<Required<QTableProps>['columns']>([
+const tableCols = reactive<QTableColumn<IWork>[]>([
   {
     name: 'title',
     label: '题目',
@@ -36,12 +36,12 @@ const tableCols = reactive<Required<QTableProps>['columns']>([
   {
     name: 'createdAt',
     label: '上传时间',
-    field: (row: IWork) => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+    field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
   },
   {
     name: 'updatedAt',
     label: '修改时间',
-    field: (row: IWork) => {
+    field: row => {
       if (row.createdAt === row.updatedAt)
         return '—'
       return moment(row.updatedAt).format('YYYY-MM-DD HH:mm:ss')
@@ -49,12 +49,12 @@ const tableCols = reactive<Required<QTableProps>['columns']>([
   },
   {
     name: 'operate',
-    field: 'operate',
     label: '操作',
+    field: 'id',
   },
 ])
 /** 表格行信息 */
-const tableRows = ref<(IWork)[]>()
+const tableRows = ref<QTableProps['rows']>()
 
 onBeforeMount(() => {
   tableCols.forEach(v => v.align = 'center')

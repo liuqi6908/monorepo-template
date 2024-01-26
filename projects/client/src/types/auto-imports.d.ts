@@ -63,8 +63,9 @@ declare global {
   const deleteRootApi: typeof import('../../../shared/api/data')['deleteRootApi']
   const deleteUserApi: typeof import('../../../shared/api/user')['deleteUserApi']
   const deleteWorkApi: typeof import('../../../shared/api/work')['deleteWorkApi']
-  const downloadExportLgFile: typeof import('../../../shared/api/exportLg')['downloadExportLgFile']
-  const downloadExportSmFile: typeof import('../../../shared/api/exportSm')['downloadExportSmFile']
+  const downloadExportLgFileApi: typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']
+  const downloadExportSmFileApi: typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']
+  const downloadWorkFileApi: typeof import('../../../shared/api/work')['downloadWorkFileApi']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const exportLgApi: typeof import('../../../shared/api/exportLg')['exportLgApi']
@@ -86,8 +87,6 @@ declare global {
   const getDataRoleNamesApi: typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']
   const getDbIntroApi: typeof import('../../../shared/api/file')['getDbIntroApi']
   const getDesktopRequestAttachmentsUrl: typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']
-  const getDownloadExportLgFileUrl: typeof import('../../../shared/api/exportLg')['getDownloadExportLgFileUrl']
-  const getDownloadExportSmFileUrl: typeof import('../../../shared/api/exportSm')['getDownloadExportSmFileUrl']
   const getEnvVariable: typeof import('../../../shared/utils/env')['getEnvVariable']
   const getFieldsByTableApi: typeof import('../../../shared/api/data')['getFieldsByTableApi']
   const getFolderFilesApi: typeof import('../../../shared/api/file')['getFolderFilesApi']
@@ -111,7 +110,6 @@ declare global {
   const getVMOverviewApi: typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']
   const getVMStateApi: typeof import('../../../shared/api/desktopVm')['getVMStateApi']
   const getVerifyAttachmentsUrl: typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']
-  const getWorkDownloadFileUrl: typeof import('../../../shared/api/work')['getWorkDownloadFileUrl']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
@@ -506,8 +504,9 @@ declare module 'vue' {
     readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
     readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
-    readonly downloadExportLgFile: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFile']>
-    readonly downloadExportSmFile: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFile']>
+    readonly downloadExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']>
+    readonly downloadExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']>
+    readonly downloadWorkFileApi: UnwrapRef<typeof import('../../../shared/api/work')['downloadWorkFileApi']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
@@ -552,7 +551,6 @@ declare module 'vue' {
     readonly getVMOverviewApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']>
     readonly getVMStateApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateApi']>
     readonly getVerifyAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']>
-    readonly getWorkDownloadFileUrl: UnwrapRef<typeof import('../../../shared/api/work')['getWorkDownloadFileUrl']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
@@ -940,8 +938,9 @@ declare module '@vue/runtime-core' {
     readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
     readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
-    readonly downloadExportLgFile: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFile']>
-    readonly downloadExportSmFile: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFile']>
+    readonly downloadExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']>
+    readonly downloadExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']>
+    readonly downloadWorkFileApi: UnwrapRef<typeof import('../../../shared/api/work')['downloadWorkFileApi']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
@@ -986,7 +985,6 @@ declare module '@vue/runtime-core' {
     readonly getVMOverviewApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']>
     readonly getVMStateApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateApi']>
     readonly getVerifyAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']>
-    readonly getWorkDownloadFileUrl: UnwrapRef<typeof import('../../../shared/api/work')['getWorkDownloadFileUrl']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
