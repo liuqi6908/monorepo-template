@@ -12,6 +12,7 @@ declare global {
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
   const CMS_COMPONENTS: typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']
   const CMS_CONFIG: typeof import('../../../shared/constants/cms')['CMS_CONFIG']
+  const EXPORT_TABLE_COLUMNS: typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']
   const EffectScope: typeof import('vue')['EffectScope']
   const LEADING_PAGE_KEY: typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
@@ -68,7 +69,6 @@ declare global {
   const effectScope: typeof import('vue')['effectScope']
   const exportLgApi: typeof import('../../../shared/api/exportLg')['exportLgApi']
   const exportSmApi: typeof import('../../../shared/api/exportSm')['exportSmApi']
-  const exportTableColumns: typeof import('../constants/table')['exportTableColumns']
   const extendRef: typeof import('@vueuse/core')['extendRef']
   const fileIsExistApi: typeof import('../../../shared/api/file')['fileIsExistApi']
   const getAccessLast7DaysApi: typeof import('../../../shared/api/log')['getAccessLast7DaysApi']
@@ -450,6 +450,7 @@ declare module 'vue' {
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
+    readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
@@ -506,7 +507,6 @@ declare module 'vue' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
     readonly exportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['exportSmApi']>
-    readonly exportTableColumns: UnwrapRef<typeof import('../constants/table')['exportTableColumns']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fileIsExistApi: UnwrapRef<typeof import('../../../shared/api/file')['fileIsExistApi']>
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
@@ -881,6 +881,7 @@ declare module '@vue/runtime-core' {
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
+    readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
@@ -937,7 +938,6 @@ declare module '@vue/runtime-core' {
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
     readonly exportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['exportSmApi']>
-    readonly exportTableColumns: UnwrapRef<typeof import('../constants/table')['exportTableColumns']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
     readonly fileIsExistApi: UnwrapRef<typeof import('../../../shared/api/file')['fileIsExistApi']>
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>

@@ -19,7 +19,7 @@ export function tablePagination() {
 /**
  * 文件外发表格基础字段
  */
-export const exportTableColumns: QTableColumn<IFileExportBasic>[] = [
+export const EXPORT_TABLE_COLUMNS: QTableColumn<IFileExportBasic>[] = [
   {
     name: 'account',
     label: '用户',

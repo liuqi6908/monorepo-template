@@ -20,7 +20,7 @@ const loading = ref(false)
 const rows = ref<QTableProps['rows']>([])
 /** 表格列 */
 const cols = computed<QTableProps['columns']>(() => {
-  const cols = cloneDeep(exportTableColumns)
+  const cols = cloneDeep(EXPORT_TABLE_COLUMNS)
   if (isEdit.value) {
     cols.push({
       name: 'action',

@@ -22,7 +22,7 @@ const rows = ref<QTableProps['rows']>([])
 /** 表格列 */
 const cols = computed<QTableProps['columns']>(() => {
   const cols: QTableColumn<IFileExportLarge>[] = [
-    ...cloneDeep(exportTableColumns),
+    ...cloneDeep(EXPORT_TABLE_COLUMNS),
     {
       name: 'status',
       label: '状态',
