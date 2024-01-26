@@ -222,12 +222,6 @@ export function useSysConfig() {
           content: `「${app.value?.name}」是一整套供科研人员处理分析大数据和开展学术研究的云端超融合系统的简称。`,
         },
       ],
-      link: [
-        {
-          rel: 'icon',
-          href: app.value?.icon,
-        },
-      ],
     })
     useFavicon(app.value?.icon)
   }
