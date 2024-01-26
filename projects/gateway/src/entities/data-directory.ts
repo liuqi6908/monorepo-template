@@ -20,21 +20,27 @@ export class DataDirectory implements IDataDirectory {
   @Column()
   nameEN: string
 
-  @ApiProperty({ description: '父目录', type: () => DataDirectory })
-  @ManyToOne(() => DataDirectory, directory => directory.children, {
-    onDelete: 'CASCADE',
-  })
-  parent?: DataDirectory
-
   @ApiProperty({ type: () => [DataDirectory], description: '子目录' })
   @OneToMany(() => DataDirectory, directory => directory.parent, {
     onDelete: 'CASCADE',
   })
   children?: DataDirectory[]
 
+  @ApiProperty({ description: '父目录', type: () => DataDirectory })
+  @ManyToOne(() => DataDirectory, directory => directory.children, {
+    onDelete: 'CASCADE',
+  })
+  parent?: DataDirectory
+
   @ApiProperty({ description: '所属的目录 id' })
   @Column({ nullable: true })
   parentId?: string
+
+  @ApiProperty({ description: '字段' })
+  @OneToMany(() => DataField, field => field.directory, {
+    onDelete: 'CASCADE',
+  })
+  fields?: DataField[]
 
   @ApiProperty({ description: '根目录的唯一标识（方便快速删除指定的大类）' })
   @Column()
@@ -48,14 +54,13 @@ export class DataDirectory implements IDataDirectory {
   @Column()
   order?: number
 
+  @ApiProperty({ description: '当前数据目录的路径' })
+  @Column({ type: 'simple-array', nullable: true })
+  path?: string[]
+
   @ApiProperty({ description: '引用规范' })
   @Column({ nullable: true })
   reference?: string
-
-  @OneToMany(() => DataField, field => field.directory, {
-    onDelete: 'CASCADE',
-  })
-  fields?: DataField[]
 
   @ApiProperty({ description: '拥有查看权限的数据角色列表' })
   @ManyToMany(() => DataRole, role => role.viewDirectories, {
@@ -68,9 +73,6 @@ export class DataDirectory implements IDataDirectory {
     onDelete: 'CASCADE',
   })
   downloadDataRoles?: DataRole[]
-
-  @Column({ type: 'simple-array', nullable: true })
-  path?: string[]
 
   @ApiProperty({ description: '用户发起的建议' })
   @OneToMany(() => DataSuggestion, sug => sug.dataDirectory, {
