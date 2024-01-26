@@ -65,42 +65,55 @@ export class DataService implements OnModuleInit {
    */
   public async saveLog(
     options: {
-      dataDirectory: DataDirectory
+      dataDirectory?: DataDirectory
       action: LogDataAction
       status: number
       user?: User
       ip: string
     },
   ) {
+    const { dataDirectory, ...logOptions } = options
     // 非表格的下载/预览。不记录
-    if (options.dataDirectory?.level !== 4)
+    if (dataDirectory?.level !== 4)
       return
 
-    const tableId = options.dataDirectory.id
-    const tableName = options.dataDirectory.nameZH
-    const module = await this.getDirCache(options.dataDirectory.parentId)
-    const subDb = await this.getDirCache(module?.parentId)
-    const db = await this.getDirCache(subDb?.parentId)
-    const root = await this.getDirCache(db?.parentId)
-
-    const { dataDirectory, ...logOptions } = options
-
+    const { id, nameZH } = dataDirectory
     const log: ILog = {
       ...logOptions,
       target: {
-        tableId,
-        tableName,
-        moduleId: module.id,
-        moduleName: module.nameZH,
-        subDbId: subDb.id,
-        subDbName: subDb.nameZH,
-        dbId: db.id,
-        dbName: db.nameZH,
-        rootId: root.id,
-        rootName: root.nameZH,
+        tableId: id,
+        tableName: nameZH,
       },
       time: new Date(),
     }
+
+    let data = dataDirectory
+    if (data.parentId) {
+      while (true) {
+        data = await this.getDirCache(data.parentId)
+        const { id, level, nameZH, parentId } = data ?? {}
+        if (level === 0) {
+          log.target.rootId = id
+          log.target.rootName = nameZH
+        }
+        else if (level === 1) {
+          log.target.dbId = id
+          log.target.dbName = nameZH
+        }
+        else if (level === 2) {
+          log.target.subDbId = id
+          log.target.subDbName = nameZH
+        }
+        else if (level === 3) {
+          log.target.moduleId = id
+          log.target.moduleName = nameZH
+        }
+
+        if (!parentId || level === 0)
+          break
+      }
+    }
+
     const logSrv = this._modRef.get(LogService, { strict: false })
     logSrv.log(log)
   }

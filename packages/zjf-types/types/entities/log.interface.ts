@@ -16,25 +16,25 @@ export interface ILog {
   /** 目标 */
   target: {
     /** 数据大类id */
-    rootId: string
+    rootId?: string
     /** 数据大类中文名 */
-    rootName: string
+    rootName?: string
     /** 数据库id */
-    dbId: string
+    dbId?: string
     /** 数据库中文名 */
-    dbName: string
+    dbName?: string
     /** 子库id */
-    subDbId: string
+    subDbId?: string
     /** 子库中文名 */
-    subDbName: string
+    subDbName?: string
     /** 模块id */
-    moduleId: string
+    moduleId?: string
     /** 模块中文名 */
-    moduleName: string
+    moduleName?: string
     /** 表格id */
-    tableId: string
+    tableId?: string
     /** 表格中文名 */
-    tableName: string
+    tableName?: string
   }
   time: Date
 }
