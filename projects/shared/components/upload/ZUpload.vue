@@ -5,15 +5,16 @@ import { QFile } from 'quasar'
 import type { QFileProps } from 'quasar'
 import { browser } from 'zjf-utils'
 import ZBtn from '../btn/ZBtn.vue'
+
+import ZLabel from '../label/ZLabel.vue'
+import type { ZLabelProps } from '../label/ZLabel.vue'
 import { onRejected } from '../../utils/uploadFile'
 import type { hint } from '../../utils/uploadFile'
 
-interface ZUploadProps {
+interface ZUploadProps extends ZLabelProps {
   modelValue?: File | File[]
-  label?: string
   btnLabel?: string
   hint?: string
-  required?: boolean
   accept?: string
   multiple?: boolean
   maxFiles?: number
@@ -59,10 +60,7 @@ function deleteFile(index: number) {
 <template>
   <div flex="~ col gap2" text-sm font-400>
     <div flex="~ justify-between items-center">
-      <div v-if="label" font-500 flex="~ gap1">
-        <div v-if="required" text-alerts-error>*</div>
-        {{ label }}
-      </div>
+      <ZLabel v-bind="props" />
       <div>
         <QFile
           ref="ZUploadRef"

@@ -3,14 +3,14 @@ import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
 import { QFile } from 'quasar'
 import type { QFileProps } from 'quasar'
+
+import ZLabel from '../label/ZLabel.vue'
+import type { ZLabelProps } from '../label/ZLabel.vue'
 import { onRejected } from '../../utils/uploadFile'
 
-interface ZDragUploadProps {
+interface ZDragUploadProps extends ZLabelProps {
   modelValue?: File
-  label?: string
-  caption?: string
   hint?: string
-  required?: boolean
   accept?: string
   maxFileSize?: number
   showFileList?: boolean
@@ -50,19 +50,7 @@ function dragFile(e: DragEvent) {
 
 <template>
   <div flex="~ col gap2" text-sm>
-    <div
-      v-if="label"
-      font-500 flex="~ gap1 wrap"
-    >
-      <div v-if="required" text-alerts-error>*</div>
-      {{ label }}
-      <div
-        v-if="caption"
-        text-grey-5
-        font-400
-        v-text="caption"
-      />
-    </div>
+    <ZLabel v-bind="props" />
     <QFile
       ref="ZUploadRef"
       v-model="value"

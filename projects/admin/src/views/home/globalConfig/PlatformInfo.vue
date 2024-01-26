@@ -115,12 +115,7 @@ async function update(item: typeof info.value[number], val: UpdateParam) {
         @reset="reset(item)"
         @update="val => update(item, val)"
       />
-      <div flex="~ gap1" text-sm font-500>
-        修改平台主题色
-        <div text-grey-6 font-400>
-          （ 请联系技术支持单位 ）
-        </div>
-      </div>
+      <ZLabel label="修改平台主题色" caption="（ 请联系技术支持单位 ）" />
     </div>
   </div>
 </template>

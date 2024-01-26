@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
 import type { QSelectProps } from 'quasar'
+
+import ZLabel from '../label/ZLabel.vue'
+import type { ZLabelProps } from '../label/ZLabel.vue'
 import { useSysConfig } from '../../composables/app'
 
-export interface ZSelectProps {
+export interface ZSelectProps extends ZLabelProps {
   modelValue: any
   options?: any[]
-  label?: string
   placeholder?: string
-  dark?: boolean
-  required?: boolean
   size?: 'small' | 'medium' | 'big'
   params?: Omit<QSelectProps, 'modelValue' | 'options' | 'label' | 'placeholder' | 'dark'>
 }
 
 const props = withDefaults(defineProps<ZSelectProps>(), {
-  dark: false,
   password: false,
   size: 'big',
 })
@@ -27,14 +26,7 @@ const { isAdmin } = useSysConfig()
 
 <template>
   <div class="z-select" flex="~ col gap2">
-    <div
-      v-if="label"
-      text-sm font-500 flex="~ gap1"
-      :text="dark ? 'grey-1' : 'grey-8'"
-    >
-      <div v-if="required" text-alerts-error>*</div>
-      {{ label }}
-    </div>
+    <ZLabel v-bind="props" />
     <q-select
       v-model="value"
       :class="size + (isAdmin ? ' is-admin' : '')"

@@ -2,16 +2,15 @@
 import { useVModel } from '@vueuse/core'
 import { ref } from 'vue'
 import type { QInputProps, QInputSlots } from 'quasar'
+
+import ZLabel from '../label/ZLabel.vue'
+import type { ZLabelProps } from '../label/ZLabel.vue'
 import { useSysConfig } from '../../composables/app'
 
-export interface ZInputProps {
+export interface ZInputProps extends ZLabelProps {
   modelValue?: string | number
-  label?: string
-  caption?: string
   placeholder?: string
-  dark?: boolean
   password?: boolean
-  required?: boolean
   size?: 'small' | 'medium' | 'big'
   type?: QInputProps['type']
   params?: Omit<QInputProps, 'modelValue' | 'label' | 'placeholder' | 'dark' | 'type'>
@@ -46,20 +45,7 @@ function valuePlusMinus(type: 'plus' |'minus') {
 
 <template>
   <div class="z-input" flex="~ col gap2">
-    <div
-      v-if="label"
-      text-sm font-500 flex="~ gap1"
-      :text="dark ? 'grey-1' : 'grey-8'"
-    >
-      <div v-if="required" text-alerts-error>*</div>
-      {{ label }}
-      <div
-        v-if="caption"
-        :text="dark ? 'white-7' : 'grey-6'"
-        font-400
-        v-text="caption"
-      />
-    </div>
+    <ZLabel v-bind="props" />
     <q-input
       v-model="value"
       :class="size + (isAdmin ? ' is-admin' : '')"

@@ -2,9 +2,9 @@
 import { cloneDeep } from 'lodash'
 import { FILE_SIZE_UNITS } from 'zjf-utils'
 
-export interface InfoItemProps {
-  label?: string
-  caption?: string
+import type { ZLabelProps } from 'shared/components/label/ZLabel.vue'
+
+export interface InfoItemProps extends ZLabelProps {
   modelValue?: string
   type?: 'text' | 'image' | 'number' | 'fileSize' | 'fileSuffix'
   text?: string | number
@@ -37,11 +37,13 @@ const unit = ref<string>()
 const arr = ref<string[]>([])
 
 watch(
-  props,
+  updateDialog,
   (newVal) => {
-    text.value = newVal.text || newVal.modelValue
-    unit.value = newVal.unit
-    arr.value = cloneDeep(props.arr) || []
+    if (newVal) {
+      text.value = props.text || props.modelValue
+      unit.value = props.unit
+      arr.value = cloneDeep(props.arr) || []
+    }
   },
   {
     immediate: true,
@@ -63,18 +65,7 @@ watch(
       v-else
       flex="~ 1 col gap2" w0
     >
-      <div
-        v-if="label"
-        text="sm grey-8" font-500 flex="~ gap1"
-        whitespace-nowrap
-      >
-        {{ label }}
-        <div
-          v-if="caption"
-          text-grey-6 font-400
-          v-text="caption"
-        />
-      </div>
+      <ZLabel v-bind="props" />
       <div w24 h24 rounded-2 b="1px grey-3" overflow-hidden>
         <img :src="modelValue" full />
       </div>
@@ -142,9 +133,8 @@ watch(
       :disable-confirm="
         (typeof text !== 'number' && !text)
         || (typeof text === 'number' && text < 0)
-        || (type === 'fileSize'
-          && (typeof text !== 'number' || text >= 1024)
-        )
+        || (type === 'fileSize' && (typeof text !== 'number' || text >= 1024))
+        || (type === 'fileSuffix' && !arr.filter(Boolean).length)
       "
       confirm-text="保存"
       footer
@@ -179,38 +169,41 @@ watch(
           w26
         />
       </div>
-      <div v-else-if="type === 'fileSuffix'" flex="~ gap6 wrap">
-        <ZInput
-          v-for="(_, i) in arr"
-          :key="i"
-          class="file-suffix"
-          :model-value="arr[i]"
-          :params="{
-            maxlength: 10,
-          }"
-          w25
-          @update:model-value="val => arr[i] = val"
-        >
-          <template #append>
-            <div
-              i-carbon:close
-              text-base cursor-pointer hidden
-              @click="arr.splice(i, 1)"
-            />
-          </template>
-        </ZInput>
-        <ZBtn
-          class="w12"
-          text-color="primary-1"
-          :params="{
-            outline: true
-          }"
-          :disable="arr.length > 20"
-          size="big"
-          @click="arr.push('')"
-        >
-          <div text-xl i-carbon:add />
-        </ZBtn>
+      <div v-else-if="type === 'fileSuffix'" flex="~ col gap2">
+        <ZLabel v-bind="props" required />
+        <div flex="~ gap6 wrap">
+          <ZInput
+            v-for="(_, i) in arr"
+            :key="i"
+            class="file-suffix"
+            :model-value="arr[i]"
+            :params="{
+              maxlength: 10,
+            }"
+            w25
+            @update:model-value="val => arr[i] = val"
+          >
+            <template #append>
+              <div
+                i-carbon:close
+                text-base cursor-pointer hidden
+                @click="arr.splice(i, 1)"
+              />
+            </template>
+          </ZInput>
+          <ZBtn
+            class="w12"
+            text-color="primary-1"
+            :params="{
+              outline: true
+            }"
+            :disable="arr.length > 20"
+            size="big"
+            @click="arr.push('')"
+          >
+            <div text-xl i-carbon:add />
+          </ZBtn>
+        </div>
       </div>
     </ZDialog>
   </div>
