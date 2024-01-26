@@ -156,6 +156,7 @@ const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
       :params="{
         noDataLabel: '暂无申请采购记录',
       }"
+      flex-1 h0
       @request="queryPurchaseRecords"
     />
   </div>

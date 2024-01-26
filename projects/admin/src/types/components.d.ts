@@ -34,6 +34,7 @@ declare module 'vue' {
     ZBtn: typeof import('./../../../shared/components/btn/ZBtn.vue')['default']
     ZBtnToggle: typeof import('./../../../shared/components/btn/ZBtnToggle.vue')['default']
     ZChipSelect: typeof import('./../../../shared/components/select/ZChipSelect.vue')['default']
+    ZDate: typeof import('./../components/date/ZDate.vue')['default']
     ZDialog: typeof import('./../../../shared/components/dialog/ZDialog.vue')['default']
     ZDragUpload: typeof import('./../../../shared/components/upload/ZDragUpload.vue')['default']
     ZExpansion: typeof import('./../../../shared/components/expansion/ZExpansion.vue')['default']

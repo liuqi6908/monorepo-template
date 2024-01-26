@@ -28,14 +28,15 @@
       }
 
       &::before {
-        border-color: var(--grey-3)
+        border-color: var(--grey-3);
+        border-style: solid;
       }
       &:hover::before {
-        border-color: var(--grey-4)
+        border-color: var(--grey-4);
       }
       &::after {
         height: 100%;
-        border-width: 1px !important
+        border-width: 1px !important;
       }
     }
 

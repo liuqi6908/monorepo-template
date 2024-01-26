@@ -15,6 +15,8 @@ const { byTranslate } = usePosition()
 const { zoomRatio } = useSysConfig()
 
 const colorPicker = ref<InstanceType<typeof ColorPicker>>()
+/** 遮罩 */
+const model = ref(false)
 
 /**
  * 对 PickerRef 重新进行定位
@@ -28,6 +30,7 @@ function calibrationPickerPosition() {
         byTranslate(el)
       }
       else if (popper === 'bottom') {
+        model.value = true
         el.style.top = '50%'
         el.style.left = '50%'
         el.style.transform = 'translate(-50%, -50%)'
@@ -52,6 +55,13 @@ function calibrationPickerPosition() {
       use-type="both"
       @update:gradient-color="val => value = val"
     />
+
+    <Teleport v-if="model && zoomRatio < 1" to="body">
+      <div
+        bg="black/40" z-999 absolute inset-0
+        @click="model = false"
+      />
+    </Teleport>
   </div>
 </template>
 
