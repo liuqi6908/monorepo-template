@@ -8,7 +8,7 @@ import type { IFileExportBasic } from 'zjf-types'
 /**
  * 返回表格分页配置
  */
-export function tablePagination() {
+export function TABLE_PAGINATION() {
   return ref<Exclude<QTableProps['pagination'], undefined>>({
     page: 1,
     rowsPerPage: PAGINATION_SIZE_DFT,

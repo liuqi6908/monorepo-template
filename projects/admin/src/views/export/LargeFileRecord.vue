@@ -62,7 +62,7 @@ const cols = computed<QTableProps['columns']>(() => {
   }))
 })
 /** 表格分页信息 */
-const pagination = tablePagination()
+const pagination = TABLE_PAGINATION()
 
 /** 下载对话框 */
 const downloadDialog = ref<IFileExportLarge>()

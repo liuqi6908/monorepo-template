@@ -17,6 +17,7 @@ declare global {
   const LEADING_PAGE_KEY: typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
   const RichTextProcessor: typeof import('../../../shared/utils/richText')['RichTextProcessor']
+  const TABLE_PAGINATION: typeof import('../constants/table')['TABLE_PAGINATION']
   const approveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']
   const approveExportLgApi: typeof import('../../../shared/api/exportLg')['approveExportLgApi']
   const approveVerificationApi: typeof import('../../../shared/api/verification')['approveVerificationApi']
@@ -65,6 +66,7 @@ declare global {
   const deleteWorkApi: typeof import('../../../shared/api/work')['deleteWorkApi']
   const downloadExportLgFile: typeof import('../../../shared/api/exportLg')['downloadExportLgFile']
   const downloadExportSmFile: typeof import('../../../shared/api/exportSm')['downloadExportSmFile']
+  const downloadTableData: typeof import('../utils/download')['downloadTableData']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
   const exportLgApi: typeof import('../../../shared/api/exportLg')['exportLgApi']
@@ -201,7 +203,6 @@ declare global {
   const stopVMApi: typeof import('../../../shared/api/desktopVm')['stopVMApi']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
-  const tablePagination: typeof import('../constants/table')['tablePagination']
   const templateRef: typeof import('@vueuse/core')['templateRef']
   const throttledRef: typeof import('@vueuse/core')['throttledRef']
   const throttledWatch: typeof import('@vueuse/core')['throttledWatch']
@@ -455,6 +456,7 @@ declare module 'vue' {
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
+    readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['approveVerificationApi']>
@@ -503,6 +505,7 @@ declare module 'vue' {
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
     readonly downloadExportLgFile: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFile']>
     readonly downloadExportSmFile: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFile']>
+    readonly downloadTableData: UnwrapRef<typeof import('../utils/download')['downloadTableData']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
@@ -639,7 +642,6 @@ declare module 'vue' {
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
-    readonly tablePagination: UnwrapRef<typeof import('../constants/table')['tablePagination']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
@@ -886,6 +888,7 @@ declare module '@vue/runtime-core' {
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
+    readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['approveVerificationApi']>
@@ -934,6 +937,7 @@ declare module '@vue/runtime-core' {
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
     readonly downloadExportLgFile: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFile']>
     readonly downloadExportSmFile: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFile']>
+    readonly downloadTableData: UnwrapRef<typeof import('../utils/download')['downloadTableData']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
     readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
@@ -1070,7 +1074,6 @@ declare module '@vue/runtime-core' {
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
-    readonly tablePagination: UnwrapRef<typeof import('../constants/table')['tablePagination']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
     readonly throttledRef: UnwrapRef<typeof import('@vueuse/core')['throttledRef']>
     readonly throttledWatch: UnwrapRef<typeof import('@vueuse/core')['throttledWatch']>
