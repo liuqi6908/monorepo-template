@@ -63,7 +63,14 @@ export class VerificationController {
   public async queryAllVerifications(
     @Body() body: QueryDto<VerificationHistory>,
   ) {
-    return await getQuery(this._verificationSrv.repo(), body)
+    return await getQuery(
+      this._verificationSrv.repo(),
+      body,
+      (qb) => {
+        if (body.relations?.founder)
+          qb.addSelect('entity_founder.isDeleted')
+      }
+    )
   }
 
   @ApiOperation({ summary: '取消一个认证申请' })
