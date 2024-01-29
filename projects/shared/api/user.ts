@@ -12,6 +12,7 @@ import type {
   IUpdatePhoneOwnBodyDto,
   IUpdateProfileOwnBodyDto,
   IUser,
+  IUserIdDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
 
@@ -25,17 +26,17 @@ export function createUserApi(body: ICreateUserBodyDto) {
 }
 
 /**
- * 删除指定用户
+ * 批量停用用户
  */
-export function deleteUserApi(userId: string) {
-  return $delete<boolean>(`/user/${userId}`)
+export function deleteUserApi(body: IUserIdDto['userId'][]) {
+  return $delete<number>('/user', body)
 }
 
 /**
- * 恢复指定用户
+ * 批量恢复用户
  */
-export function recoverUserApi(userId: string) {
-  return $patch<boolean>(`/user/${userId}`)
+export function recoverUserApi(body: IUserIdDto['userId'][]) {
+  return $patch<number>('/user', body)
 }
 
 /**
