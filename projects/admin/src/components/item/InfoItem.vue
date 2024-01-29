@@ -185,8 +185,8 @@ watch(
           >
             <template #append>
               <div
-                i-carbon:close
-                text-base cursor-pointer hidden
+                i-mingcute:close-line
+                text-sm cursor-pointer hidden
                 @click="arr.splice(i, 1)"
               />
             </template>
@@ -201,7 +201,7 @@ watch(
             size="big"
             @click="arr.push('')"
           >
-            <div text-xl i-carbon:add />
+            <div text-lg i-mingcute:add-line />
           </ZBtn>
         </div>
       </div>

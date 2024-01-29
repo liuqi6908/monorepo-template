@@ -4,6 +4,7 @@ export interface ZLabelProps {
   caption?: string
   dark?: boolean
   required?: boolean
+  aligning?: boolean
 }
 
 defineProps<ZLabelProps>()
@@ -15,7 +16,15 @@ defineProps<ZLabelProps>()
     text-sm font-500 flex="~ gap1 wrap"
     :text="dark ? 'grey-1' : 'grey-8'"
   >
-    <div v-if="required" text-alerts-error>*</div>
+    <div
+      v-if="required || aligning"
+      text-alerts-error
+      :style="{
+        visibility: required ? 'visible' : 'hidden',
+      }"
+    >
+      *
+    </div>
     {{ label }}
     <div
       v-if="caption"
