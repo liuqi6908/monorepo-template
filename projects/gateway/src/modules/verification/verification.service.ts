@@ -1,5 +1,5 @@
 import { objectPick } from '@catsjuice/utils'
-import { Injectable } from '@nestjs/common'
+import { Injectable, Inject, forwardRef } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { ErrorCode, VerificationStatus } from 'zjf-types'
@@ -16,6 +16,7 @@ export class VerificationService {
   constructor(
     @InjectRepository(VerificationHistory)
     private readonly _vhRepo: Repository<VerificationHistory>,
+    @Inject(forwardRef(() => UserService))
     private readonly _usrSrv: UserService,
     private readonly _notifySrv: NotifyService,
   ) {}

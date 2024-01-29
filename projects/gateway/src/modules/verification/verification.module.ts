@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common'
+import { Module, forwardRef } from '@nestjs/common'
 import { TypeOrmModule } from '@nestjs/typeorm'
 
 import { VerificationHistory } from 'src/entities/verification'
@@ -11,7 +11,7 @@ import { VerificationController } from './verification.controller'
 @Module({
   imports: [
     TypeOrmModule.forFeature([VerificationHistory]),
-    UserModule,
+    forwardRef(() => UserModule),
     NotifyModule,
     DataModule,
   ],
