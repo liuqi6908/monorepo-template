@@ -1,15 +1,15 @@
 import { Mixin } from 'ts-mixer'
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import { ArrayNotEmpty, IsOptional, IsBoolean, IsString, MaxLength, MinLength } from 'class-validator'
+import { ArrayNotEmpty, IsBoolean, IsOptional, IsString, MaxLength, MinLength } from 'class-validator'
 import type { ICreateUserBodyDto } from 'zjf-types'
 import {
   VERIFICATION_COLLEGE_MAX,
   VERIFICATION_ID_CARD_MAX,
   VERIFICATION_ID_CARD_MIN,
   VERIFICATION_NUMBER_MAX,
-  VERIFICATION_SCHOOL_MAX,
   VERIFICATION_REJECT_REASON_MAX,
   VERIFICATION_REJECT_REASON_MIN,
+  VERIFICATION_SCHOOL_MAX,
 } from 'zjf-types'
 import { AccountDto } from 'src/dto/account.dto'
 import { EmailDto } from 'src/dto/email.dto'
