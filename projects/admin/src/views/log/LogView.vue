@@ -143,14 +143,15 @@ watch(
     <div flex="~ gap4 wrap">
       <ZInput
         v-model="text"
+        class="rounded"
         placeholder="搜索用户账号"
         :params="{
-          debounce: 500
+          debounce: 500,
         }"
         size="medium"
         w70
       >
-        <template #append>
+        <template #prepend>
           <div w5 h5 i-carbon:search />
         </template>
       </ZInput>

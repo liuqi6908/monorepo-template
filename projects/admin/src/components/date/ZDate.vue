@@ -36,6 +36,7 @@ watch(
 
 <template>
   <ZInput
+    class="rounded"
     :model-value="
       range && typeof modelValue !== 'string' && modelValue
         ? `${modelValue.from} 至 ${modelValue.to}`
@@ -47,7 +48,7 @@ watch(
     }"
     v-bind="inputParams"
   >
-    <template #append>
+    <template #prepend>
       <div
         w5 h5 cursor-pointer
         hover:text-grey-8

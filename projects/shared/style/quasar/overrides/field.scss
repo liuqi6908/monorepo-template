@@ -8,6 +8,7 @@
 
       .q-field__prepend {
         height: 100%;
+        margin-left: 4px;
       }
 
       .q-field__append {
@@ -118,6 +119,25 @@
       .q-field__control {
         border-radius: 8px;
       }
+
+      &.medium {
+        .q-field__control {
+          .text-negative {
+            font-size: 16px;
+          }
+
+          input {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
+  }
+
+  &.rounded {
+    .q-field__control {
+      border-radius: 32px !important;
     }
   }
 }
