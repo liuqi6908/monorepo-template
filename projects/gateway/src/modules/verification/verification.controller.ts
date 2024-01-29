@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req, Inject, forwardRef } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { ErrorCode, PermissionType, VerificationStatus } from 'zjf-types'
 
@@ -25,6 +25,7 @@ export class VerificationController {
   constructor(
     private readonly _verificationSrv: VerificationService,
     private readonly _notifySrv: NotifyService,
+    @Inject(forwardRef(() => UserService))
     private readonly _userSrv: UserService,
     private readonly _dataPerSrc: DataPermissionService,
   ) {}

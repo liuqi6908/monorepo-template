@@ -5,10 +5,12 @@ import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Query, Req, forwardRef } from '@nestjs/common'
 import { CodeAction, ErrorCode, PermissionType, PhoneCodeAction } from 'zjf-types'
 import { In } from 'typeorm'
+import { VerificationStatus } from 'zjf-types'
 
 import type { SysAdmin } from 'src/config/_sa.config'
 import type { User } from 'src/entities/user'
 import type { UserIdDto } from 'src/dto/id/user.dto'
+import { VerificationHistory } from 'src/entities/verification'
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
 import { IsLogin } from 'src/guards/login.guard'
@@ -24,6 +26,7 @@ import { emailPhoneAtLeastOne } from 'src/utils/validator/email-phone-at-least-o
 
 import { AuthService } from '../auth/auth.service'
 import { DesktopService } from '../desktop/desktop.service'
+import { VerificationService } from '../verification/verification.service'
 import { UserService } from './user.service'
 import { UserProfileResponseDto } from './dto/user.res.dto'
 import { CreateUserResDto } from './dto/create-user.res.dto'
@@ -47,6 +50,8 @@ export class UserController {
     private readonly _userSrv: UserService,
     @Inject(forwardRef(() => AuthService))
     private readonly _authSrv: AuthService,
+    @Inject(forwardRef(() => VerificationService))
+    private readonly _verSrv: VerificationService,
     private readonly _cfgSrv: ConfigService,
     private readonly _deskSrv: DesktopService,
   ) {}
@@ -268,13 +273,44 @@ export class UserController {
   ])
   @Post('query')
   public async queryUserList(@Body() body: QueryDto<User>) {
-    return await getQuery(
+    const queryRes = await getQuery(
       this._userSrv.repo(),
       body || {},
       (qb) => {
         qb.addSelect('entity.isDeleted')
       },
     )
+
+    const verifys = await this._verSrv.qb()
+      .where(
+        'vh.status != :status',
+        {
+          status: VerificationStatus.APPROVED
+        }
+      )
+      .andWhere((qb) => {
+        const subQuery = qb.subQuery()
+          .select('MAX(createdAt)')
+          .from(VerificationHistory, 'sub')
+          .where('sub.founderId = vh.founderId')
+          .getQuery()
+
+        return `vh.createdAt = (${subQuery})`
+      })
+      .getMany()
+
+    if (verifys.length) {
+      queryRes.data.forEach((user) => {
+        const { id, verification } = user
+        if (!verification) {
+          const verify = verifys.find(v => v.founderId === id)
+          if (verify)
+            user.verification = verify
+        }
+      })
+    }
+
+    return queryRes
   }
 
   @ApiOperation({ summary: '更新指定用户的角色' })
