@@ -123,7 +123,7 @@ const userInfo = computed<UserInfo[]>(() => {
           label: '认证材料',
           value: verify?.attachments,
           type: 'image',
-          flag: adminRole.value?.includes(PermissionType.VERIFICATION_CAT_ATTACHMENT),
+          flag: adminRole.value?.includes(PermissionType.VERIFICATION_CAT_ATTACHMENT) && !!verify?.attachments.length,
         },
         {
           label: '驳回理由',
@@ -210,7 +210,7 @@ const userInfo = computed<UserInfo[]>(() => {
                   aligning w34
                 />
                 <div
-                  v-if="userId && Array.isArray(item.value) && item.value.length"
+                  v-if="userId && Array.isArray(item.value)"
                   flex="~ 1 gap2" w0
                 >
                   <img

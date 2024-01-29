@@ -6,6 +6,7 @@ import type { QTableColumn, QTableProps } from 'quasar'
 import type { IUser } from 'zjf-types'
 
 import UserDetails from '../UserDetails.vue'
+import AddUser from './AddUser.vue'
 
 const { adminRole } = useUser()
 
@@ -127,13 +128,7 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
     <div flex="~ gap4 wrap">
       <div flex="~ gap4 wrap" mr-auto>
         <template v-if="adminRole?.includes(PermissionType.ACCOUNT_CREATE)">
-          <ZBtn
-            label="添加用户"
-          >
-            <template #left>
-              <div w5 h5 i-mingcute:add-line />
-            </template>
-          </ZBtn>
+          <AddUser />
           <ZBtn
             label="批量添加用户"
           >
