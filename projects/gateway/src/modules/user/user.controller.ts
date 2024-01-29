@@ -3,9 +3,8 @@ import { Throttle } from '@nestjs/throttler'
 import { ConfigService } from '@nestjs/config'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Query, Req, forwardRef } from '@nestjs/common'
-import { CodeAction, ErrorCode, PermissionType, PhoneCodeAction } from 'zjf-types'
+import { CodeAction, ErrorCode, PermissionType, PhoneCodeAction, VerificationStatus } from 'zjf-types'
 import { In } from 'typeorm'
-import { VerificationStatus } from 'zjf-types'
 
 import type { SysAdmin } from 'src/config/_sa.config'
 import type { User } from 'src/entities/user'
@@ -22,7 +21,6 @@ import { comparePassword } from 'src/utils/encrypt/encrypt-password'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 import { UniversalOperationResDto } from 'src/dto/universal-operation.dto'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
-import { emailPhoneAtLeastOne } from 'src/utils/validator/email-phone-at-least-one'
 
 import { AuthService } from '../auth/auth.service'
 import { DesktopService } from '../desktop/desktop.service'
@@ -61,8 +59,24 @@ export class UserController {
   @HasPermission(PermissionType.ACCOUNT_CREATE)
   @Put()
   public async createUser(@Body() body: CreateUserBodyDto) {
-    emailPhoneAtLeastOne(body)
-    return await this._userSrv.insertUser(body)
+    const {
+      account,
+      email,
+      phone,
+      password,
+      nickname,
+      isDeleted,
+      status,
+      ...verification
+    } = body
+    return await this._userSrv.insertUser({
+      account,
+      email,
+      phone,
+      password,
+      nickname,
+      isDeleted,
+    })
   }
 
   @ApiOperation({ summary: '批量停用用户' })
@@ -281,12 +295,12 @@ export class UserController {
       },
     )
 
-    const verifys = await this._verSrv.qb()
+    const verifications = await this._verSrv.qb()
       .where(
         'vh.status != :status',
         {
-          status: VerificationStatus.APPROVED
-        }
+          status: VerificationStatus.APPROVED,
+        },
       )
       .andWhere((qb) => {
         const subQuery = qb.subQuery()
@@ -299,11 +313,11 @@ export class UserController {
       })
       .getMany()
 
-    if (verifys.length) {
+    if (verifications.length) {
       queryRes.data.forEach((user) => {
         const { id, verification } = user
         if (!verification) {
-          const verify = verifys.find(v => v.founderId === id)
+          const verify = verifications.find(v => v.founderId === id)
           if (verify)
             user.verification = verify
         }

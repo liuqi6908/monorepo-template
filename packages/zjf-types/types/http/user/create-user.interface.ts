@@ -1,9 +1,11 @@
 import type { IUser } from '../../entities/user.interface'
+import type { IVerificationHistory } from '../../entities/verification.interface'
 import type { IAccountDto } from '../../dto/account.interface'
-import type { IEmailOptionalDto } from '../../dto/email.interface'
+import type { IEmailDto } from '../../dto/email.interface'
 import type { IPhoneOptionalDto } from '../../dto/phone.interface'
 import type { IPasswordOptionalDto } from '../../dto/password.interface'
 import type { INicknameOptionalDto } from '../../dto/nickname.interface'
+import type { IVerifyStatusOptionalDto } from '../../dto/verify-status.interface'
 
 /**
  * 创建用户
@@ -11,10 +13,18 @@ import type { INicknameOptionalDto } from '../../dto/nickname.interface'
  */
 export interface ICreateUserBodyDto extends
   IAccountDto,
-  IEmailOptionalDto,
+  IEmailDto,
   IPhoneOptionalDto,
   IPasswordOptionalDto,
-  INicknameOptionalDto {}
+  INicknameOptionalDto,
+  IVerifyStatusOptionalDto,
+  Partial<Pick<
+    IVerificationHistory,
+    'school' | 'college' | 'idCard' | 'number' | 'name' | 'dataRole' | 'attachments' | 'rejectReason'
+  >> {
+  /** 账号是否被删除 */
+  isDeleted?: boolean
+}
 
 /**
  * 创建用户

@@ -1,4 +1,4 @@
-import type { VerificationStatus } from '../enum/verification.enum'
+import type { IVerifyStatusDto } from '../dto/verify-status.interface'
 import type { IUser } from './user.interface'
 import type { IDataRole } from './data-role.interface'
 import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
@@ -6,7 +6,10 @@ import type { ICreatedAt, IUpdatedAt } from './_timestamp.interface'
 /**
  * 认证信息历史记录
  */
-export interface IVerificationHistory extends ICreatedAt, IUpdatedAt {
+export interface IVerificationHistory extends
+  ICreatedAt,
+  IUpdatedAt,
+  IVerifyStatusDto {
   /** 认证记录的唯一标识 */
   id: string
   /** 真实姓名 */
@@ -38,8 +41,6 @@ export interface IVerificationHistory extends ICreatedAt, IUpdatedAt {
   userId?: IUser['id']
   /** 处理时间： 通过/驳回/取消 */
   handledAt?: Date
-  /** 认证状态 */
-  status: VerificationStatus
   /** 驳回原因（仅当状态为驳回时存在） */
   rejectReason?: string
 }
