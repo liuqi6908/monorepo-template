@@ -40,7 +40,7 @@ const cols = computed<QTableProps['columns']>(() => {
   }))
 })
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION()
+const pagination = TABLE_PAGINATION('createdAt', true)
 
 /** 下载对话框 */
 const downloadDialog = ref<IFileExportLarge>()
@@ -55,7 +55,7 @@ const rejectReason = ref<string>()
  * 查询大文件外发待审核记录
  */
 const queryPendingRecords: QTableProps['onRequest'] = async (props) => {
-  const { page, rowsPerPage } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
   loading.value = true
 
   try {
@@ -73,8 +73,8 @@ const queryPendingRecords: QTableProps['onRequest'] = async (props) => {
       ],
       sort: [
         {
-          field: 'createdAt',
-          order: 'DESC',
+          field: sortBy as keyof IFileExportLarge,
+          order: descending ? 'DESC' : 'ASC',
         },
       ],
       relations: {
@@ -92,6 +92,8 @@ const queryPendingRecords: QTableProps['onRequest'] = async (props) => {
   finally {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
+    pagination.value.sortBy = sortBy
+    pagination.value.descending = descending
     loading.value = false
   }
 }
@@ -171,6 +173,7 @@ async function handleReject() {
       :loading="loading"
       :params="{
         noDataLabel: '暂无大文件外发待审核记录',
+        binaryStateSort: true,
       }"
       :fixed-last-column="isEdit"
       @request="queryPendingRecords"

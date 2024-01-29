@@ -34,7 +34,7 @@ const cols = computed<QTableProps['columns']>(() => {
   }))
 })
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION()
+const pagination = TABLE_PAGINATION('createdAt', true)
 
 /** 下载对话框 */
 const downloadDialog = ref<IFileExportSmall>()
@@ -43,7 +43,7 @@ const downloadDialog = ref<IFileExportSmall>()
  * 查询小文件自动外发记录
  */
 const queryExportSmRecords: QTableProps['onRequest'] = async (props) => {
-  const { page, rowsPerPage } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
   loading.value = true
 
   try {
@@ -54,8 +54,8 @@ const queryExportSmRecords: QTableProps['onRequest'] = async (props) => {
       },
       sort: [
         {
-          field: 'createdAt',
-          order: 'DESC',
+          field: sortBy as keyof IFileExportSmall,
+          order: descending ? 'DESC' : 'ASC',
         },
       ],
       relations: {
@@ -73,6 +73,8 @@ const queryExportSmRecords: QTableProps['onRequest'] = async (props) => {
   finally {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
+    pagination.value.sortBy = sortBy
+    pagination.value.descending = descending
     loading.value = false
   }
 }
@@ -109,6 +111,7 @@ async function handleDownload() {
       :loading="loading"
       :params="{
         noDataLabel: '暂无小文件自动外发记录',
+        binaryStateSort: true,
       }"
       :fixed-last-column="isEdit"
       @request="queryExportSmRecords"

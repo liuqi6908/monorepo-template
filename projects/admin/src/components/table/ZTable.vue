@@ -108,6 +108,14 @@ defineExpose({
         position: sticky;
         top: 0;
         z-index: 2;
+
+        th.sortable {
+          > .q-table__sort-icon {
+            font-size: 16px;
+            position: relative;
+            bottom: 1px;
+          }
+        }
       }
 
       tr {

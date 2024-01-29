@@ -52,6 +52,7 @@ const cols = computed<QTableProps['columns']>(() => {
       name: 'createdAt',
       label: '上传时间',
       field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+      sortable: true,
     },
     {
       name: 'updatedAt',
@@ -75,7 +76,7 @@ const cols = computed<QTableProps['columns']>(() => {
   }))
 })
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION()
+const pagination = TABLE_PAGINATION('createdAt', true)
 
 /** 下载对话框 */
 const downloadDialog = ref<IWork>()
@@ -84,7 +85,7 @@ const downloadDialog = ref<IWork>()
  * 查询作品记录列表
  */
 const queryWorksRecords: QTableProps['onRequest'] = async (props) => {
-  const { page, rowsPerPage } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
   loading.value = true
 
   try {
@@ -95,8 +96,8 @@ const queryWorksRecords: QTableProps['onRequest'] = async (props) => {
       },
       sort: [
         {
-          field: 'createdAt',
-          order: 'DESC',
+          field: sortBy as keyof IWork,
+          order: descending ? 'DESC' : 'ASC',
         },
       ],
       relations: {
@@ -114,6 +115,8 @@ const queryWorksRecords: QTableProps['onRequest'] = async (props) => {
   finally {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
+    pagination.value.sortBy = sortBy
+    pagination.value.descending = descending
     loading.value = false
   }
 }
@@ -149,6 +152,7 @@ async function handleDownload() {
       :loading="loading"
       :params="{
         noDataLabel: '暂无作品记录',
+        binaryStateSort: true,
       }"
       @request="queryWorksRecords"
     >

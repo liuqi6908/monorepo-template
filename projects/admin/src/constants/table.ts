@@ -8,11 +8,13 @@ import type { IFileExportBasic } from 'zjf-types'
 /**
  * 返回表格分页配置
  */
-export function TABLE_PAGINATION() {
+export function TABLE_PAGINATION(sortBy?: string, descending?: boolean) {
   return ref<Exclude<QTableProps['pagination'], undefined>>({
     page: 1,
     rowsPerPage: PAGINATION_SIZE_DFT,
     rowsNumber: 0,
+    sortBy,
+    descending,
   })
 }
 
@@ -59,5 +61,6 @@ export const EXPORT_TABLE_COLUMNS: QTableColumn<IFileExportBasic>[] = [
     name: 'createdAt',
     label: '外发时间',
     field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+    sortable: true,
   },
 ]

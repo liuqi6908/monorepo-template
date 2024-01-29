@@ -27,6 +27,7 @@ const cols = computed<QTableProps['columns']>(() => {
       name: 'status',
       label: '状态',
       field: 'status',
+      sortable: true,
     },
     {
       name: 'rejectReason',
@@ -37,6 +38,7 @@ const cols = computed<QTableProps['columns']>(() => {
       name: 'handleAt',
       label: '审核时间',
       field: row => row.handleAt ? moment(row.handleAt).format('YYYY-MM-DD HH:mm:ss') : '',
+      sortable: true,
     },
     {
       name: 'handlerAccount',
@@ -62,7 +64,7 @@ const cols = computed<QTableProps['columns']>(() => {
   }))
 })
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION()
+const pagination = TABLE_PAGINATION('createdAt', true)
 
 /** 下载对话框 */
 const downloadDialog = ref<IFileExportLarge>()
@@ -79,7 +81,7 @@ const statusTag = ref(
  * 查询大文件外发审核记录
  */
 const queryExportLgRecords: QTableProps['onRequest'] = async (props) => {
-  const { page, rowsPerPage } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
   loading.value = true
 
   try {
@@ -101,8 +103,8 @@ const queryExportLgRecords: QTableProps['onRequest'] = async (props) => {
       ],
       sort: [
         {
-          field: 'createdAt',
-          order: 'DESC',
+          field: sortBy as keyof IFileExportLarge,
+          order: descending ? 'DESC' : 'ASC',
         },
       ],
       relations: {
@@ -123,6 +125,8 @@ const queryExportLgRecords: QTableProps['onRequest'] = async (props) => {
   finally {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
+    pagination.value.sortBy = sortBy
+    pagination.value.descending = descending
     loading.value = false
   }
 }
@@ -182,6 +186,7 @@ function changeTagStatus(item: typeof statusTag.value[number]) {
       :loading="loading"
       :params="{
         noDataLabel: '暂无大文件外发审核记录',
+        binaryStateSort: true,
       }"
       :fixed-last-column="isEdit"
       flex-1 h0

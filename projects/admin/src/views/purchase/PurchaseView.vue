@@ -64,10 +64,11 @@ const cols = reactive<QTableColumn<IDataSuggestion>[]>([
     name: 'createdAt',
     label: '提交时间',
     field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+    sortable: true,
   },
 ])
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION()
+const pagination = TABLE_PAGINATION('createdAt', true)
 
 onBeforeMount(() => {
   cols.forEach(v => v.align = 'center')
@@ -87,7 +88,7 @@ function getDataByLevel(data: IDataDirectory, level: number) {
  * 查询申请采购记录列表
  */
 const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
-  const { page, rowsPerPage } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
   loading.value = true
 
   try {
@@ -98,8 +99,8 @@ const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
       },
       sort: [
         {
-          field: 'createdAt',
-          order: 'DESC',
+          field: sortBy as keyof IDataSuggestion,
+          order: descending ? 'DESC' : 'ASC',
         },
       ],
       relations: {
@@ -126,6 +127,8 @@ const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
   finally {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
+    pagination.value.sortBy = sortBy
+    pagination.value.descending = descending
     loading.value = false
   }
 }
@@ -155,6 +158,7 @@ const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
       :loading="loading"
       :params="{
         noDataLabel: '暂无申请采购记录',
+        binaryStateSort: true,
       }"
       flex-1 h0
       @request="queryPurchaseRecords"
