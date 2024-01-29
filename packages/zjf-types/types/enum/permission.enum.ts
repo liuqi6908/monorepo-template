@@ -16,6 +16,8 @@ export enum PermissionType {
   ACCOUNT_DELETE = 'account:delete',
   /** 更新账户的信息 */
   ACCOUNT_UPDATE = 'account:update',
+  /** 删除账户密码 */
+  ACCOUNT_DELETE_PASSWORD = 'account:delete-password',
   /** 查询账户（条件查找用户列表，获取用户信息） */
   ACCOUNT_QUERY = 'account:query',
   /** 更新指定用户的角色 */
@@ -203,6 +205,7 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.ACCOUNT_CREATE]: '创建账号',
   [PermissionType.ACCOUNT_DELETE]: '删除账号',
   [PermissionType.ACCOUNT_UPDATE]: '更新账号信息',
+  [PermissionType.ACCOUNT_DELETE_PASSWORD]: '删除账户密码',
   [PermissionType.ACCOUNT_QUERY]: '查询账户（条件查找用户列表，获取用户信息）',
   [PermissionType.ACCOUNT_UPDATE_ROLE]: '更新指定用户的角色',
   [PermissionType.ACCOUNT_UPDATE_DATA_ROLE]: '更新指定用户的数据角色',

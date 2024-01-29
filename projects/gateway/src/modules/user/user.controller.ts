@@ -60,34 +60,39 @@ export class UserController {
     return await this._userSrv.insertUser(body)
   }
 
-  @ApiOperation({ summary: '删除指定用户' })
+  @ApiOperation({ summary: '批量停用用户' })
   @HasPermission(PermissionType.ACCOUNT_DELETE)
-  @Delete(':userId')
-  public async deleteUser(@Param() param: UserIdDto) {
-    const desktop = await this._deskSrv.repo().findOne({
+  @Delete()
+  public async deleteUser(@Body() body: UserIdDto[]) {
+    const desktop = await this._deskSrv.repo().find({
       where: {
-        userId: param.userId,
+        userId: In(body),
         disabled: false,
       },
     })
-    if (desktop)
+    if (UserIdDto.length === 1 && desktop.length)
       responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
-    const updateRes = await this._userSrv.repo().update(
-      { id: param.userId },
-      { isDeleted: true },
-    )
+
+    const updateRes = await this._userSrv.qb()
+      .update({ isDeleted: true })
+      .where({
+        id: In(body.filter(v => !desktop.map(d => d.userId).includes(v.userId))),
+      })
+      .execute()
     return updateRes.affected > 0
   }
 
   @ApiOperation({ summary: '恢复指定用户' })
   @HasPermission(PermissionType.ACCOUNT_UPDATE)
-  @Patch(':userId')
-  public async recoverUser(@Param() param: UserIdDto) {
-    const updateRes = this._userSrv.repo().update(
-      { id: param.userId },
-      { isDeleted: false },
-    )
-    return (await updateRes).affected > 0
+  @Patch()
+  public async recoverUser(@Body() body: UserIdDto[]) {
+    const updateRes = await this._userSrv.qb()
+      .update(
+        { isDeleted: false },
+      )
+      .where({ id: In(body) })
+      .execute()
+    return updateRes.affected > 0
   }
 
   @ApiOperation({ summary: '获取当前登录用户的信息' })
@@ -318,7 +323,7 @@ export class UserController {
   }
 
   @ApiOperation({ summary: '批量清空用户密码' })
-  @HasPermission(PermissionType.ACCOUNT_UPDATE)
+  @HasPermission(PermissionType.ACCOUNT_DELETE_PASSWORD)
   @Delete('delete/password')
   public async batchDeleteUserPassword(@Body() body: UserIdDto[]) {
     const updateRes = await this._userSrv.qb()
