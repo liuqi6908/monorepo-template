@@ -30,6 +30,8 @@ export class VerificationService {
   public async createVerification(
     founder: User | User['id'],
     verificationBasicInfo: CreateVerificationBodyDto,
+    status?: VerificationStatus,
+    rejectReason?: string
   ) {
     const qr = await this._vhRepo.manager.connection.createQueryRunner()
     await qr.connect()
@@ -41,6 +43,8 @@ export class VerificationService {
       const vh = this._vhRepo.create({
         ...info,
         founderId: typeof founder === 'string' ? founder : founder.id,
+        status,
+        rejectReason,
       })
       await qr.manager.save(vh)
 

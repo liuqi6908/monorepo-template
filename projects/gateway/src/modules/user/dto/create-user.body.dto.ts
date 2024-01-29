@@ -1,6 +1,6 @@
 import { Mixin } from 'ts-mixer'
 import { ApiPropertyOptional } from '@nestjs/swagger'
-import { ArrayNotEmpty, IsBoolean, IsString, MaxLength, MinLength } from 'class-validator'
+import { ArrayNotEmpty, IsOptional, IsBoolean, IsString, MaxLength, MinLength } from 'class-validator'
 import type { ICreateUserBodyDto } from 'zjf-types'
 import {
   VERIFICATION_COLLEGE_MAX,
@@ -8,6 +8,8 @@ import {
   VERIFICATION_ID_CARD_MIN,
   VERIFICATION_NUMBER_MAX,
   VERIFICATION_SCHOOL_MAX,
+  VERIFICATION_REJECT_REASON_MAX,
+  VERIFICATION_REJECT_REASON_MIN,
 } from 'zjf-types'
 import { AccountDto } from 'src/dto/account.dto'
 import { EmailDto } from 'src/dto/email.dto'
@@ -29,6 +31,7 @@ export class CreateUserBodyDto
   implements ICreateUserBodyDto {
   @ApiPropertyOptional({ description: '账号是否被删除' })
   @IsBoolean()
+  @IsOptional()
   isDeleted?: boolean
 
   @ApiPropertyOptional({
@@ -36,6 +39,7 @@ export class CreateUserBodyDto
     maxLength: VERIFICATION_SCHOOL_MAX,
   })
   @IsString()
+  @IsOptional()
   @MaxLength(VERIFICATION_SCHOOL_MAX)
   school?: string
 
@@ -44,6 +48,7 @@ export class CreateUserBodyDto
     maxLength: VERIFICATION_COLLEGE_MAX,
   })
   @IsString()
+  @IsOptional()
   @MaxLength(VERIFICATION_COLLEGE_MAX)
   college?: string
 
@@ -53,6 +58,7 @@ export class CreateUserBodyDto
     minLength: VERIFICATION_ID_CARD_MIN,
   })
   @IsString()
+  @IsOptional()
   @MaxLength(VERIFICATION_ID_CARD_MAX)
   @MinLength(VERIFICATION_ID_CARD_MIN)
   idCard?: string
@@ -62,15 +68,18 @@ export class CreateUserBodyDto
     maxLength: VERIFICATION_NUMBER_MAX,
   })
   @IsString()
+  @IsOptional()
   @MaxLength(VERIFICATION_NUMBER_MAX)
   number?: string
 
   @ApiPropertyOptional({ description: '真实姓名' })
   @IsString()
+  @IsOptional()
   name?: string
 
   @ApiPropertyOptional({ description: '身份类型' })
   @IsString()
+  @IsOptional()
   dataRole?: string
 
   @ApiPropertyOptional({
@@ -78,6 +87,18 @@ export class CreateUserBodyDto
     type: [String],
   })
   @IsString({ each: true })
+  @IsOptional()
   @ArrayNotEmpty()
   attachments?: string[]
+
+  @ApiPropertyOptional({
+    description: '驳回的原因',
+    minLength: VERIFICATION_REJECT_REASON_MIN,
+    maxLength: VERIFICATION_REJECT_REASON_MAX,
+  })
+  @IsOptional()
+  @IsString()
+  @MinLength(VERIFICATION_REJECT_REASON_MIN)
+  @MaxLength(VERIFICATION_REJECT_REASON_MAX)
+  rejectReason: string
 }

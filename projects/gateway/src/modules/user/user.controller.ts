@@ -69,7 +69,30 @@ export class UserController {
       status,
       ...verification
     } = body
-    return await this._userSrv.insertUser({
+    if (status) {
+      const params: (keyof typeof verification)[] = ['school', 'college', 'idCard', 'number', 'name']
+      for (const key of params) {
+        if (!verification[key]) {
+          responseParamsError([{
+            property: key,
+            constraints: {
+              [key]: `缺少 ${key} 参数`,
+            },
+          }])
+        }
+      }
+      if (status === VerificationStatus.REJECTED && !verification.rejectReason) {
+        responseParamsError([{
+          property: 'rejectReason',
+          constraints: {
+            rejectReason: '缺少 rejectReason 参数',
+          },
+        }])
+      }
+      if (!verification.attachments)
+        verification.attachments = []
+    }
+    const user = await this._userSrv.insertUser({
       account,
       email,
       phone,
@@ -77,6 +100,23 @@ export class UserController {
       nickname,
       isDeleted,
     })
+    if (status) {
+      const verify = await this._verSrv.createVerification(
+        user,
+        verification as Required<typeof verification>,
+        status,
+        verification.rejectReason,
+      )
+      if (status === VerificationStatus.APPROVED) {
+        await this._userSrv.qb()
+          .update({ verificationId: verify.id })
+          .where({
+            id: user.id,
+          })
+          .execute()
+      }
+    }
+    return user
   }
 
   @ApiOperation({ summary: '批量停用用户' })
@@ -295,33 +335,35 @@ export class UserController {
       },
     )
 
-    const verifications = await this._verSrv.qb()
-      .where(
-        'vh.status != :status',
-        {
-          status: VerificationStatus.APPROVED,
-        },
-      )
-      .andWhere((qb) => {
-        const subQuery = qb.subQuery()
-          .select('MAX(createdAt)')
-          .from(VerificationHistory, 'sub')
-          .where('sub.founderId = vh.founderId')
-          .getQuery()
+    if (body.relations.verification) {
+      const verifications = await this._verSrv.qb()
+        .where(
+          'vh.status != :status',
+          {
+            status: VerificationStatus.APPROVED,
+          },
+        )
+        .andWhere((qb) => {
+          const subQuery = qb.subQuery()
+            .select('MAX(createdAt)')
+            .from(VerificationHistory, 'sub')
+            .where('sub.founderId = vh.founderId')
+            .getQuery()
 
-        return `vh.createdAt = (${subQuery})`
-      })
-      .getMany()
+          return `vh.createdAt = (${subQuery})`
+        })
+        .getMany()
 
-    if (verifications.length) {
-      queryRes.data.forEach((user) => {
-        const { id, verification } = user
-        if (!verification) {
-          const verify = verifications.find(v => v.founderId === id)
-          if (verify)
-            user.verification = verify
-        }
-      })
+      if (verifications.length) {
+        queryRes.data.forEach((user) => {
+          const { id, verification } = user
+          if (!verification) {
+            const verify = verifications.find(v => v.founderId === id)
+            if (verify)
+              user.verification = verify
+          }
+        })
+      }
     }
 
     return queryRes
