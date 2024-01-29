@@ -268,7 +268,13 @@ export class UserController {
   ])
   @Post('query')
   public async queryUserList(@Body() body: QueryDto<User>) {
-    return await getQuery(this._userSrv.repo(), body || {})
+    return await getQuery(
+      this._userSrv.repo(),
+      body || {},
+      (qb) => {
+        qb.addSelect('entity.isDeleted')
+      },
+    )
   }
 
   @ApiOperation({ summary: '更新指定用户的角色' })
