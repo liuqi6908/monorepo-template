@@ -8,7 +8,7 @@ import { In } from 'typeorm'
 
 import type { SysAdmin } from 'src/config/_sa.config'
 import type { User } from 'src/entities/user'
-import { UserIdDto } from 'src/dto/id/user.dto'
+import type { UserIdDto } from 'src/dto/id/user.dto'
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
 import { IsLogin } from 'src/guards/login.guard'
@@ -63,30 +63,29 @@ export class UserController {
   @ApiOperation({ summary: '批量停用用户' })
   @HasPermission(PermissionType.ACCOUNT_DELETE)
   @Delete()
-  public async deleteUser(@Body() body: UserIdDto[]) {
+  public async deleteUser(@Body() body: UserIdDto['userId'][]) {
     const desktop = await this._deskSrv.repo().find({
       where: {
         userId: In(body),
         disabled: false,
       },
     })
-    console.log(desktop)
-    if (UserIdDto.length === 1 && desktop.length)
+    if (body.length === 1 && desktop.length)
       responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
 
     const updateRes = await this._userSrv.qb()
       .update({ isDeleted: true })
       .where({
-        id: In(body.filter(v => !desktop.map(d => d.userId).includes(v.userId))),
+        id: In(body.filter(v => !desktop.map(d => d.userId).includes(v))),
       })
       .execute()
     return updateRes.affected
   }
 
-  @ApiOperation({ summary: '恢复指定用户' })
+  @ApiOperation({ summary: '批量恢复用户' })
   @HasPermission(PermissionType.ACCOUNT_UPDATE)
   @Patch()
-  public async recoverUser(@Body() body: UserIdDto[]) {
+  public async recoverUser(@Body() body: UserIdDto['userId'][]) {
     const updateRes = await this._userSrv.qb()
       .update(
         { isDeleted: false },
@@ -326,7 +325,7 @@ export class UserController {
   @ApiOperation({ summary: '批量清空用户密码' })
   @HasPermission(PermissionType.ACCOUNT_DELETE_PASSWORD)
   @Delete('delete/password')
-  public async batchDeleteUserPassword(@Body() body: UserIdDto[]) {
+  public async batchDeleteUserPassword(@Body() body: UserIdDto['userId'][]) {
     const updateRes = await this._userSrv.qb()
       .update({ password: null })
       .where({ id: In(body) })

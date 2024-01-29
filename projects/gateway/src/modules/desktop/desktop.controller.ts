@@ -136,7 +136,7 @@ export class DesktopController {
   @ApiOperation({ summary: '批量删除云桌面（无法删除未禁用的）' })
   @HasPermission(PermissionType.DESKTOP_DELETE)
   @Delete('delete/batch')
-  public async batchDeleteDesktop(@Body() body: DesktopIdDto[]) {
+  public async batchDeleteDesktop(@Body() body: DesktopIdDto['desktopId'][]) {
     const deleteRes = await this._desktopSrv.qb()
       .delete()
       .where({ disabled: true })
