@@ -45,6 +45,7 @@ export class EsAnalyzerService {
       sort?: any
       fields?: string[]
     },
+    sort: 'DESC' | 'ASC' = 'DESC',
   ) {
     const paginationOpt = {
       page: pagination.page || 1,
@@ -61,7 +62,7 @@ export class EsAnalyzerService {
       sort: [
         {
           time: {
-            order: 'desc',
+            order: sort,
           },
         },
       ],

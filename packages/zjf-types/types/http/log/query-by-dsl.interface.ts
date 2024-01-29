@@ -13,6 +13,8 @@ export interface IQueryByDslBodyDto {
   pageSize?: number
   /** 过滤返回数据的字段，如果不指定，则返回全部的字段 */
   fields?: string[]
+  /** 根据日志记录时间排序，默认降序排序 */
+  sort?: 'DESC' | 'ASC'
 }
 
 /**

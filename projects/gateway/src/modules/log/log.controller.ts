@@ -59,7 +59,7 @@ export class LogController {
   @ApiOperation({ summary: '日志原始数据查询' })
   @Post('data/query/dsl')
   public async queryByDsl(@Body() body: QueryByDslBodyDto) {
-    const { dsl, fields, page, pageSize } = body
+    const { dsl, fields, page, pageSize, sort } = body
     const res = await this._esAnalyzerSrv.queryByDsl(
       dsl,
       { page, pageSize },
@@ -68,6 +68,7 @@ export class LogController {
         index: this._cfgSrv.get<ESConfig>('es').index.log,
         mapping: logDataMapping,
       },
+      sort,
     )
     return res
   }

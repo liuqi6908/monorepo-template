@@ -20,4 +20,10 @@ export class QueryByDslBodyDto
     ],
   })
   fields: string[]
+
+  @ApiPropertyOptional({
+    description: '根据日志记录时间排序，默认降序排序',
+    example: 'DESC',
+  })
+  sort: 'DESC' | 'ASC'
 }
