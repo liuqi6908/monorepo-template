@@ -70,6 +70,7 @@ export class UserController {
         disabled: false,
       },
     })
+    console.log(desktop)
     if (UserIdDto.length === 1 && desktop.length)
       responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
 
@@ -79,7 +80,7 @@ export class UserController {
         id: In(body.filter(v => !desktop.map(d => d.userId).includes(v.userId))),
       })
       .execute()
-    return updateRes.affected > 0
+    return updateRes.affected
   }
 
   @ApiOperation({ summary: '恢复指定用户' })
@@ -92,7 +93,7 @@ export class UserController {
       )
       .where({ id: In(body) })
       .execute()
-    return updateRes.affected > 0
+    return updateRes.affected
   }
 
   @ApiOperation({ summary: '获取当前登录用户的信息' })
