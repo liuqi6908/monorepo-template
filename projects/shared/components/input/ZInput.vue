@@ -13,6 +13,8 @@ export interface ZInputProps extends ZLabelProps {
   password?: boolean
   size?: 'small' | 'medium' | 'big'
   type?: QInputProps['type']
+  labelPosition?: 'left' | 'top' | 'right'
+  labelWidth?: number
   params?: Omit<QInputProps, 'modelValue' | 'label' | 'placeholder' | 'dark' | 'type'>
 }
 
@@ -20,6 +22,8 @@ const props = withDefaults(defineProps<ZInputProps>(), {
   dark: false,
   password: false,
   size: 'big',
+  labelPosition: 'top',
+  labelWidth: 136,
 })
 defineEmits(['update:modelValue'])
 
@@ -44,8 +48,24 @@ function valuePlusMinus(type: 'plus' |'minus') {
 </script>
 
 <template>
-  <div class="z-input" flex="~ col gap2">
-    <ZLabel v-bind="props" />
+  <div
+    class="z-input"
+    flex="~ gap2"
+    :items="labelPosition === 'top' ? 'stretch' : 'center'"
+    :style="{
+      flexDirection: labelPosition === 'top'
+        ? 'column'
+        : labelPosition === 'left'
+          ? 'row'
+          : 'row-reverse',
+    }"
+  >
+    <ZLabel
+      v-bind="props"
+      :style="{
+        width: labelPosition !== 'top' ? `${labelWidth}px` : '100%'
+      }"
+    />
     <q-input
       v-model="value"
       :class="size + (isAdmin ? ' is-admin' : '')"
@@ -54,6 +74,10 @@ function valuePlusMinus(type: 'plus' |'minus') {
       :color="dark ? 'grey-1' : 'primary-1'"
       :placeholder="placeholder"
       :type="type ?? (password && isPwd ? 'password' : 'text')"
+      :style="{
+        width: labelPosition === 'top' ? '100%' : '0',
+        flex: '1',
+      }"
       v-bind="params"
     >
       <template

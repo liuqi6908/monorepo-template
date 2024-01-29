@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import UserInfo from '~/views/user/UserInfo.vue'
-import Verification from '~/views/user/Verification.vue'
-import UserRole from '~/views/user/UserRole.vue'
+import UserInfo from '~/views/user/userInfo/index.vue'
+import Verification from '~/views/user/verification/index.vue'
+import UserRole from '~/views/user/userRole/index.vue'
 
 const { active, menu } = useMenu()
 </script>

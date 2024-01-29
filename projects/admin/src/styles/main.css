@@ -4,4 +4,5 @@
 @import "shared/style/common.scss";
 @import "shared/style/quasar/index.scss";
 @import "./common.scss";
+@import "./imgPreview.scss";
 @import "./quasar/index.scss";

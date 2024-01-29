@@ -153,15 +153,15 @@ watch(
           debounce: 500,
         }"
         size="medium"
-        w70
+        w80
       >
         <template #prepend>
-          <div w5 h5 i-carbon:search />
+          <div w5 h5 i-mingcute:search-line />
         </template>
       </ZInput>
       <ZDate
         v-model="date"
-        range w70 mr-auto
+        range w80 mr-auto
         :input-params="{
           size: 'medium'
         }"

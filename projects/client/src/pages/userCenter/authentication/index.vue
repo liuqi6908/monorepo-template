@@ -67,6 +67,10 @@ const authInfo = computed(() => {
       label: '学院',
       val: obj?.college,
     },
+    idCard: {
+      label: '身份证',
+      val: hideSensitiveInfo(obj?.idCard),
+    },
     number: {
       label: '学号/工号',
       val: obj?.number,
@@ -74,10 +78,6 @@ const authInfo = computed(() => {
     name: {
       label: '真实姓名',
       val: hideSensitiveInfo(obj?.name),
-    },
-    idCard: {
-      label: '身份证',
-      val: hideSensitiveInfo(obj?.idCard),
     },
     dataRole: {
       label: '用户类型',

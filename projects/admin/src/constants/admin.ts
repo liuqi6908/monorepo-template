@@ -100,6 +100,13 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             ],
           },
           {
+            name: '清空用户密码',
+            value: [
+              PermissionType.ACCOUNT_QUERY,
+              PermissionType.ACCOUNT_DELETE_PASSWORD,
+            ],
+          },
+          {
             name: '停用和启用用户信息',
             value: [
               PermissionType.ACCOUNT_QUERY,

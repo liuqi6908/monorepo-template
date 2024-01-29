@@ -38,6 +38,7 @@
     "vue-demi": "^0.14.5",
     "vue-router": "^4.2.4",
     "vue3-colorpicker": "^2.2.3",
+    "vue3-image-preview": "^0.2.7",
     "zjf-types": "workspace:^",
     "zjf-utils": "workspace:^"
   },
