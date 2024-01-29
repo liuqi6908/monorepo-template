@@ -67,6 +67,7 @@ const cols = reactive<QTableColumn<ILog>[]>([
     name: 'time',
     label: '操作时间',
     field: row => moment(row.time).format('YYYY-MM-DD HH:mm:ss'),
+    sortable: true,
   },
   {
     name: 'action',
@@ -75,7 +76,7 @@ const cols = reactive<QTableColumn<ILog>[]>([
   },
 ])
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION()
+const pagination = TABLE_PAGINATION('time', true)
 /** 表格筛选字段 */
 const text = ref('')
 /** 日期筛选 */
@@ -93,7 +94,7 @@ onBeforeMount(() => {
  */
 const queryLogRecords: QTableProps['onRequest'] = async (props) => {
   const { filter } = props
-  const { page, rowsPerPage } = props.pagination
+  const { page, rowsPerPage, sortBy, descending } = props.pagination
   loading.value = true
 
   try {
@@ -109,6 +110,7 @@ const queryLogRecords: QTableProps['onRequest'] = async (props) => {
       page,
       pageSize: rowsPerPage,
       dsl,
+      sort: descending ? 'DESC' : 'ASC',
     })
     pagination.value.rowsNumber = total.value
     rows.value = records
@@ -119,6 +121,8 @@ const queryLogRecords: QTableProps['onRequest'] = async (props) => {
   finally {
     pagination.value.page = page
     pagination.value.rowsPerPage = rowsPerPage
+    pagination.value.sortBy = sortBy
+    pagination.value.descending = descending
     loading.value = false
   }
 }
@@ -189,6 +193,7 @@ watch(
       :params="{
         noDataLabel: '暂无日志记录',
         filter: text,
+        binaryStateSort: true,
       }"
       flex-1 h0
       @request="queryLogRecords"
