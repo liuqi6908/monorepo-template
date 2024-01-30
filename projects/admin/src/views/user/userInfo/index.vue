@@ -8,6 +8,7 @@ import type { IUser } from 'zjf-types'
 import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '../UserDetails.vue'
 import AddUser from './AddUser.vue'
+import BatchAddUser from './BatchAddUser.vue'
 
 const { adminRole } = useUser()
 
@@ -139,13 +140,7 @@ function callback() {
       <div flex="~ gap4 wrap" mr-auto>
         <template v-if="adminRole?.includes(PermissionType.ACCOUNT_CREATE)">
           <AddUser @callback="callback" />
-          <ZBtn
-            label="批量添加用户"
-          >
-            <template #left>
-              <div w5 h5 i-mingcute:add-line />
-            </template>
-          </ZBtn>
+          <BatchAddUser @callback="callback" />
         </template>
         <ZBtn
           v-if="hasIntersection(

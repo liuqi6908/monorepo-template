@@ -59,7 +59,7 @@ watch(
       :model-value="modelValue"
       :label="label"
       :caption="caption"
-      flex-1
+      flex-1 w0
     />
     <div
       v-else

@@ -1,3 +1,4 @@
+import type { AxiosRequestConfig } from 'axios'
 import type {
   ICreateUserBodyDto,
   IGetProfileOwnQueryDto,
@@ -21,8 +22,8 @@ const { $get, $delete, $patch, $post, $put } = useRequest()
 /**
  * 创建一个新用户
  */
-export function createUserApi(body: ICreateUserBodyDto) {
-  return $put<IUser>('/user', body)
+export function createUserApi(body: ICreateUserBodyDto, config?: AxiosRequestConfig<any>) {
+  return $put<IUser>('/user', body, undefined, config)
 }
 
 /**
