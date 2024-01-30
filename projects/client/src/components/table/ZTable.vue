@@ -77,6 +77,12 @@ const value = useVModel(props, 'selected')
         th {
           text-align: center;
         }
+
+        &.selected {
+          td::after {
+            display: none;
+          }
+        }
       }
 
       .q-checkbox .q-checkbox__inner {

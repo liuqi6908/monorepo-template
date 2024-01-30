@@ -138,6 +138,12 @@ defineExpose({
         th {
           font-weight: 500;
         }
+
+        &.selected {
+          td::after {
+            display: none;
+          }
+        }
       }
 
       .q-checkbox .q-checkbox__inner {
