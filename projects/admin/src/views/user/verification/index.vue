@@ -4,12 +4,23 @@ import { PermissionType, VerificationStatus } from 'zjf-types'
 import type { QTableColumn, QTableProps } from 'quasar'
 import type { IVerificationHistory, IQueryDto } from 'zjf-types'
 
+import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '../UserDetails.vue'
 
 const { adminRole } = useUser()
 
+const zTable = ref<InstanceType<typeof ZTable>>()
+
 /** 加载中 */
 const loading = ref(false)
+/** 认证通过对话框 */
+const approveDialog = ref(false)
+/** 认证驳回对话框 */
+const rejectDialog = ref(false)
+/** 驳回理由 */
+const rejectReason = ref('')
+/** 重置认证对话框 */
+const resetDialog = ref(false)
 
 /** 表格行 */
 const rows = ref<QTableProps['rows']>([])
@@ -61,6 +72,8 @@ const cols = reactive<QTableColumn<IVerificationHistory>[]>([
 const pagination = TABLE_PAGINATION('createdAt', true)
 /** 表格筛选字段 */
 const text = ref('')
+/** 多选 */
+const selected = ref<IVerificationHistory[]>()
 
 onBeforeMount(() => {
   cols.forEach(v => v.align = 'center')
@@ -125,6 +138,37 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
     loading.value = false
   }
 }
+
+/**
+ * 回调函数，重新获取认证列表
+ */
+function callback() {
+  zTable.value?.tableRef?.requestServerInteraction()
+}
+
+/**
+ * 认证通过
+ */
+function approve() {
+  if (!selected.value?.filter(v => v.status === VerificationStatus.PENDING).length)
+    return
+}
+
+/**
+ * 认证驳回
+ */
+function reject() {
+  if (!selected.value?.filter(v => v.status === VerificationStatus.PENDING).length)
+    return
+}
+
+/**
+ * 充值认证
+ */
+function reset() {
+  if (!selected.value?.filter(v => v.status === VerificationStatus.APPROVED).length)
+    return
+}
 </script>
 
 <template>
@@ -134,6 +178,8 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
         <ZBtn
           v-if="adminRole?.includes(PermissionType.VERIFICATION_APPROVE)"
           label="认证通过"
+          :disable="!selected?.filter(v => v.status === VerificationStatus.PENDING).length"
+          @click="approveDialog = true"
         >
           <template #left>
             <div w5 h5 i-mingcute:check-line />
@@ -142,6 +188,11 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
         <ZBtn
           v-if="adminRole?.includes(PermissionType.VERIFICATION_REJECT)"
           label="认证驳回"
+          :disable="!selected?.filter(v => v.status === VerificationStatus.PENDING).length"
+          @click="() => {
+            rejectDialog = true
+            rejectReason = ''
+          }"
         >
           <template #left>
             <div w5 h5 i-mingcute:close-line />
@@ -150,6 +201,8 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
         <ZBtn
           v-if="adminRole?.includes(PermissionType.VERIFICATION_CANCEL)"
           label="重置认证"
+          :disable="!selected?.filter(v => v.status === VerificationStatus.APPROVED).length"
+          @click="resetDialog = true"
         >
           <template #left>
             <div w5 h5 i-mingcute:refresh-3-line />
@@ -173,7 +226,9 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
     </div>
 
     <ZTable
+      ref="zTable"
       v-model:pagination="pagination"
+      v-model:selected="selected"
       :rows="rows"
       :cols="cols"
       :loading="loading"
@@ -181,6 +236,7 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
         noDataLabel: '暂无用户认证记录',
         filter: text,
         binaryStateSort: true,
+        selection: 'multiple',
       }"
       flex-1 h0
       fixed-last-column
@@ -197,5 +253,47 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
         </q-td>
       </template>
     </ZTable>
+
+    <!-- 认证通过 -->
+    <ZDialog
+      v-model="approveDialog"
+      title="认证通过"
+      footer
+      @ok="approve"
+    >
+      该操作将通过已选用户的认证申请，是否继续？
+    </ZDialog>
+
+    <!-- 认证驳回 -->
+    <ZDialog
+      v-model="rejectDialog"
+      title="认证驳回"
+      footer
+      :disable-confirm="!!validateRejectReason(rejectReason)"
+      @ok="reject"
+    >
+      <ZInput
+        v-model="rejectReason"
+        label="驳回理由"
+        placeholder="请输入驳回理由"
+        required
+        type="textarea"
+        :params="{
+          rules: [
+            (val: string) => validateRejectReason(val) || true
+          ],
+        }"
+      />
+    </ZDialog>
+
+    <!-- 重置认证 -->
+    <ZDialog
+      v-model="resetDialog"
+      title="重置认证"
+      footer
+      @ok="reset"
+    >
+      该操作将重置已选用户的认证申请，是否继续？
+    </ZDialog>
   </div>
 </template>
