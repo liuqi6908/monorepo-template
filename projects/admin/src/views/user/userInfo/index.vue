@@ -174,9 +174,22 @@ async function updateAccountStatus() {
 /**
  * 清空用户密码
  */
-function deleteUserPassword() {
+async function deleteUserPassword() {
   if (!selected.value?.length)
     return
+
+  loading.value = true
+  try {
+    await batchDeleteUserPasswordApi(selected.value.map(v => v.id))
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
+  finally {
+    selected.value = undefined
+    loading.value = false
+  }
 }
 </script>
 
