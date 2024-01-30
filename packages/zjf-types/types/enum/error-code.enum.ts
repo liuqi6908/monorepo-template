@@ -38,7 +38,7 @@ export enum ErrorCode {
   AUTH_NOT_VERIFIED = 200011,
   /** 账号的密码不存在 */
   AUTH_PASSWORD_IS_NULL = 200012,
-  /** 账号已被删除 */
+  /** 账号已被禁用 */
   AUTH_ACCOUNT_IS_DELETED = 200013,
 
   // ---- 权限相关错误码 ----

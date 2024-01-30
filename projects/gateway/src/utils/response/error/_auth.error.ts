@@ -52,7 +52,7 @@ const _authErrors: ErrorMessageCollection = {
   },
   [ErrorCode.AUTH_ACCOUNT_IS_DELETED]: {
     httpStatus: HttpStatus.FORBIDDEN,
-    message: '账号已被删除',
+    message: '账号已被禁用',
   },
 }
 
