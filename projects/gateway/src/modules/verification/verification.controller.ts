@@ -1,5 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Req, Inject, forwardRef } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Inject, Param, Patch, Post, Put, Req, forwardRef } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { In } from 'typeorm'
 import { ErrorCode, PermissionType, VerificationStatus } from 'zjf-types'
 
 import type { VerificationHistory } from 'src/entities/verification'
@@ -69,7 +70,7 @@ export class VerificationController {
       (qb) => {
         if (body.relations?.founder)
           qb.addSelect('entity_founder.isDeleted')
-      }
+      },
     )
   }
 
@@ -100,6 +101,16 @@ export class VerificationController {
       user,
       VerificationStatus.CANCELLED,
     )
+  }
+
+  @ApiOperation({ summary: '批量取消用户认证申请（只能取消状态为已通过的）' })
+  @HasPermission(PermissionType.VERIFICATION_CANCEL)
+  @Delete('cancel/batch')
+  public async batchCancelVerification(@Body() body: VerificationIdDto['verificationId'][]) {
+    const updateRes = this._verificationSrv.qb()
+      .where({ status: VerificationStatus.APPROVED })
+      .andWhere({ id: In(body) })
+      .update()
   }
 
   @ApiOperation({ summary: '通过一个认证申请' })

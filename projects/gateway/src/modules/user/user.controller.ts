@@ -49,7 +49,7 @@ export class UserController {
     @Inject(forwardRef(() => AuthService))
     private readonly _authSrv: AuthService,
     @Inject(forwardRef(() => VerificationService))
-    private readonly _verSrv: VerificationService,
+    private readonly _verificationSrv: VerificationService,
     private readonly _cfgSrv: ConfigService,
     private readonly _deskSrv: DesktopService,
   ) {}
@@ -101,7 +101,7 @@ export class UserController {
       isDeleted,
     })
     if (status) {
-      const verify = await this._verSrv.createVerification(
+      const verify = await this._verificationSrv.createVerification(
         user,
         verification as Required<typeof verification>,
         status,
@@ -336,7 +336,7 @@ export class UserController {
     )
 
     if (body.relations.verification) {
-      const verifications = await this._verSrv.qb()
+      const verifications = await this._verificationSrv.qb()
         .where(
           'vh.status != :status',
           {

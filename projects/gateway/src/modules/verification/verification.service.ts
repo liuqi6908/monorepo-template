@@ -1,5 +1,5 @@
 import { objectPick } from '@catsjuice/utils'
-import { Injectable, Inject, forwardRef } from '@nestjs/common'
+import { Inject, Injectable, forwardRef } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { ErrorCode, VerificationStatus } from 'zjf-types'
@@ -31,7 +31,7 @@ export class VerificationService {
     founder: User | User['id'],
     verificationBasicInfo: CreateVerificationBodyDto,
     status?: VerificationStatus,
-    rejectReason?: string
+    rejectReason?: string,
   ) {
     const qr = await this._vhRepo.manager.connection.createQueryRunner()
     await qr.connect()
