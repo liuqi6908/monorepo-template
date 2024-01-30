@@ -5,10 +5,13 @@ import { hasIntersection } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
 import type { IUser } from 'zjf-types'
 
+import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '../UserDetails.vue'
 import AddUser from './AddUser.vue'
 
 const { adminRole } = useUser()
+
+const zTable = ref<InstanceType<typeof ZTable>>()
 
 /** 加载中 */
 const loading = ref(false)
@@ -121,6 +124,13 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
     loading.value = false
   }
 }
+
+/**
+ * 回调函数，重新获取用户列表
+ */
+function callback() {
+  zTable.value?.tableRef?.requestServerInteraction()
+}
 </script>
 
 <template>
@@ -128,7 +138,7 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
     <div flex="~ gap4 wrap">
       <div flex="~ gap4 wrap" mr-auto>
         <template v-if="adminRole?.includes(PermissionType.ACCOUNT_CREATE)">
-          <AddUser />
+          <AddUser @callback="callback" />
           <ZBtn
             label="批量添加用户"
           >
@@ -185,6 +195,7 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
     </div>
 
     <ZTable
+      ref="zTable"
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"

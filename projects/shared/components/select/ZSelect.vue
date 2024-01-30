@@ -11,12 +11,16 @@ export interface ZSelectProps extends ZLabelProps {
   options?: any[]
   placeholder?: string
   size?: 'small' | 'medium' | 'big'
+  labelPosition?: 'left' | 'top' | 'right'
+  labelWidth?: number
   params?: Omit<QSelectProps, 'modelValue' | 'options' | 'label' | 'placeholder' | 'dark'>
 }
 
 const props = withDefaults(defineProps<ZSelectProps>(), {
   password: false,
   size: 'big',
+  labelPosition: 'top',
+  labelWidth: 136,
 })
 defineEmits(['update:modelValue'])
 
@@ -25,8 +29,25 @@ const { isAdmin } = useSysConfig()
 </script>
 
 <template>
-  <div class="z-select" flex="~ col gap2">
-    <ZLabel v-bind="props" />
+  <div
+    class="z-select"
+    flex="~ gap2"
+    :items="labelPosition === 'top' ? 'stretch' : 'center'"
+    :style="{
+      flexDirection: labelPosition === 'top'
+        ? 'column'
+        : labelPosition === 'left'
+          ? 'row'
+          : 'row-reverse',
+    }"
+  >
+    <ZLabel
+      v-bind="props"
+      :style="{
+        width: labelPosition !== 'top' ? `${labelWidth}px` : '100%',
+        marginBottom: labelPosition !== 'top' && params?.rules ? '20px' : '0',
+      }"
+    />
     <q-select
       v-model="value"
       :class="size + (isAdmin ? ' is-admin' : '')"
@@ -37,6 +58,10 @@ const { isAdmin } = useSysConfig()
       dropdown-icon="fa fa-chevron-down"
       :popup-content-class="`z-select-dropdown-menu${isAdmin ? ' is-admin' : ''}`"
       :menu-offset="[0, 8]"
+      :style="{
+        width: labelPosition === 'top' ? '100%' : '0',
+        flex: '1',
+      }"
       v-bind="params"
     >
       <template v-if="placeholder && !value" #prepend>
@@ -63,6 +88,10 @@ const { isAdmin } = useSysConfig()
           width: 24px;
           font-size: 14px;
           color: var(--grey-4);
+
+          &.fa-circle-xmark.q-field__focusable-action {
+            font-size: 18px;
+          }
         }
       }
 
@@ -76,6 +105,22 @@ const { isAdmin } = useSysConfig()
       .q-field__append {
         .q-icon {
           color: var(--white-7) !important;
+        }
+      }
+    }
+
+    &.medium {
+      .q-field__append {
+        .q-icon.fa-circle-xmark.q-field__focusable-action {
+          font-size: 16px;
+        }
+      }
+    }
+
+    &.small {
+      .q-field__append {
+        .q-icon.fa-circle-xmark.q-field__focusable-action {
+          font-size: 15px;
         }
       }
     }

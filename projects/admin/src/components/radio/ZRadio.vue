@@ -29,8 +29,6 @@ const value = useVModel(props, 'modelValue')
 .z-radio {
   &[aria-checked="true"] {
     :deep(.q-radio__inner) {
-      font-size: 36px;
-
       .q-radio__icon {
         background-color: currentColor;
         border-radius: 10px;
@@ -42,6 +40,10 @@ const value = useVModel(props, 'modelValue')
         }
       }
     }
+  }
+
+  :deep(.q-radio__inner) {
+    font-size: 36px;
   }
 
   :deep(.q-radio__label) {

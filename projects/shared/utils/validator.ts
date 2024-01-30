@@ -5,6 +5,8 @@ import {
   VERIFICATION_NAME_MAX,
   VERIFICATION_NAME_MIN,
   VERIFICATION_NUMBER_MAX,
+  VERIFICATION_REJECT_REASON_MAX,
+  VERIFICATION_REJECT_REASON_MIN,
   VERIFICATION_SCHOOL_MAX,
 } from 'zjf-types'
 
@@ -64,5 +66,18 @@ export function validateName(val?: string) {
     return `姓名长度不得小于 ${VERIFICATION_NAME_MIN}`
   if (val.length > VERIFICATION_NAME_MAX)
     return `姓名长度不得大于 ${VERIFICATION_NAME_MAX}`
+  return ''
+}
+
+/**
+ * 校验驳回理由
+ */
+export function validateRejectReason(val?: string) {
+  if (!val)
+    return '请输入驳回理由'
+  if (val.length < VERIFICATION_REJECT_REASON_MIN)
+    return `驳回理由长度不得小于 ${VERIFICATION_REJECT_REASON_MIN}`
+  if (val.length > VERIFICATION_REJECT_REASON_MAX)
+    return `驳回理由长度不得大于 ${VERIFICATION_REJECT_REASON_MAX}`
   return ''
 }

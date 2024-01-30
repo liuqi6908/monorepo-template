@@ -34,6 +34,7 @@ const userInfo = computed<UserInfo[]>(() => {
   const base = props.user ?? props.verify?.founder
   const verify = props.user?.verification ?? props.verify
   const required = !!verify?.status
+  const adminAdd = verify?.status && !verify.attachments.length
 
   return [
     {
@@ -117,13 +118,12 @@ const userInfo = computed<UserInfo[]>(() => {
         {
           label: '身份（用户角色）',
           value: verify?.dataRole,
-          required,
         },
         {
           label: '认证材料',
-          value: verify?.attachments,
-          type: 'image',
-          flag: adminRole.value?.includes(PermissionType.VERIFICATION_CAT_ATTACHMENT) && !!verify?.attachments.length,
+          value: adminAdd ? '管理员手动添加' : verify?.attachments,
+          type: adminAdd ? undefined : 'image',
+          flag: adminAdd || (adminRole.value?.includes(PermissionType.VERIFICATION_CAT_ATTACHMENT) && !!verify?.attachments.length),
         },
         {
           label: '驳回理由',
@@ -161,10 +161,7 @@ const userInfo = computed<UserInfo[]>(() => {
           :key="info.label"
           flex="~ col gap6"
         >
-          <div flex="~ items-center gap2" font-600>
-            <div w1 h4 rounded-1 bg-primary-1 />
-            {{ info.label }}
-          </div>
+          <SubLabel :label="info.label" />
           <div flex="~ col gap6">
             <template
               v-for="item in info.list.filter(v => v.flag !== false)"
