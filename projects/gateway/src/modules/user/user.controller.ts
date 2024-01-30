@@ -129,7 +129,7 @@ export class UserController {
         disabled: false,
       },
     })
-    if (body.length === 1 && desktop.length)
+    if (desktop.length && desktop.length === body.length)
       responseError(ErrorCode.DESKTOP_REQUEST_IN_USE_EXISTS)
 
     const updateRes = await this._userSrv.qb()

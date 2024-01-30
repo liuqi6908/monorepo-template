@@ -90,7 +90,10 @@ export function useRequest() {
       return cache.get(cacheKey)
 
     const { abortController } = newController()
-    const response = await $http.delete(url, data)
+    const response = await $http.delete(url, {
+      data,
+      ...config,
+    })
     requestControllers.delete(abortController)
     useCache && cache.set(cacheKey, response.data)
     return response.data

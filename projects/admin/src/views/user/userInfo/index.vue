@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import moment from 'moment'
+import { Notify } from 'quasar'
 import { PermissionType } from 'zjf-types'
 import { hasIntersection } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
@@ -16,6 +17,13 @@ const zTable = ref<InstanceType<typeof ZTable>>()
 
 /** 加载中 */
 const loading = ref(false)
+/** 修改账号状态对话框 */
+const updateAccountStatusDialog = ref(false)
+/** 账号状态 */
+const accountStatus = ref(false)
+/** 清空用户密码对话框 */
+const deleteUserPasswordDialog = ref(false)
+
 
 /** 表格行 */
 const rows = ref<QTableProps['rows']>([])
@@ -134,6 +142,42 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
 function callback() {
   zTable.value?.tableRef?.requestServerInteraction()
 }
+
+/**
+ * 修改账号状态
+ */
+async function updateAccountStatus() {
+  if (!selected.value?.length)
+    return
+
+  loading.value = true
+  let res
+  try {
+    if (accountStatus.value)
+      res = await deleteUserApi(selected.value.map(v => v.id))
+    else
+      res = await recoverUserApi(selected.value.map(v => v.id))
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
+  finally {
+    selected.value = undefined
+    if (res)
+      callback()
+    else
+      loading.value = false
+  }
+}
+
+/**
+ * 清空用户密码
+ */
+function deleteUserPassword() {
+  if (!selected.value?.length)
+    return
+}
 </script>
 
 <template>
@@ -154,8 +198,13 @@ function callback() {
           )"
           label="修改账号状态"
           text-color="primary-1"
+          :disable="!selected?.length"
           :params="{
             outline: true,
+          }"
+          @click="() => {
+            updateAccountStatusDialog = true
+            accountStatus = false
           }"
         >
           <template #left>
@@ -169,6 +218,8 @@ function callback() {
           :params="{
             outline: true,
           }"
+          :disable="!selected?.length"
+          @click="deleteUserPasswordDialog = true"
         >
           <template #left>
             <div w5 h5 i-mingcute:delete-2-line />
@@ -225,5 +276,38 @@ function callback() {
         </q-td>
       </template>
     </ZTable>
+
+    <!-- 修改账号状态 -->
+    <ZDialog
+      v-model="updateAccountStatusDialog"
+      title="修改账号状态"
+      footer
+      @ok="updateAccountStatus"
+    >
+      <div flex="~ gap10">
+        <ZRadio
+          :model-value="accountStatus.toString()"
+          val="false"
+          label="正常"
+          @update:model-value="accountStatus = false"
+        />
+        <ZRadio
+          :model-value="accountStatus.toString()"
+          val="true"
+          label="禁用"
+          @update:model-value="accountStatus = true"
+        />
+      </div>
+    </ZDialog>
+
+    <!-- 清空用户密码 -->
+    <ZDialog
+      v-model="deleteUserPasswordDialog"
+      title="清空用户密码"
+      footer
+      @ok="deleteUserPassword"
+    >
+      该操作将清空已选用户账号的密码，是否继续？
+    </ZDialog>
   </div>
 </template>

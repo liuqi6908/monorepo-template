@@ -4,7 +4,8 @@ import type { QRadioProps } from 'quasar'
 interface ZRadioProps {
   modelValue?: QRadioProps['modelValue']
   val?: QRadioProps['val']
-  params?: Omit<QRadioProps, 'modelValue' | 'val'>
+  label?: string
+  params?: Omit<QRadioProps, 'modelValue' | 'val' | 'label'>
 }
 
 const props = defineProps<ZRadioProps>()
@@ -18,6 +19,7 @@ const value = useVModel(props, 'modelValue')
     v-model="value"
     class="z-radio"
     :val="val"
+    :label="label"
     checked-icon="fas fa-check"
     v-bind="params"
   >
