@@ -18,7 +18,7 @@ import { DataPermissionService } from '../data/data-permission/data-permission.s
 import { VerificationService } from './verification.service'
 import { VerificationResDto } from './dto/verification.res.dto'
 import { CreateVerificationBodyDto } from './dto/create-verification.body.dto'
-import { RejectVerificationBodyDto } from './dto/reject-verification.body.dto'
+import { BatchRejectVerificationBodyDto, RejectVerificationBodyDto } from './dto/reject-verification.body.dto'
 
 @ApiTags('Verification | 身份审核')
 @Controller('verification')
@@ -106,11 +106,33 @@ export class VerificationController {
   @ApiOperation({ summary: '批量取消用户认证申请（只能取消状态为已通过的）' })
   @HasPermission(PermissionType.VERIFICATION_CANCEL)
   @Delete('cancel/batch')
-  public async batchCancelVerification(@Body() body: VerificationIdDto['verificationId'][]) {
-    const updateRes = this._verificationSrv.qb()
+  public async batchCancelVerification(
+    @Req() req: FastifyRequest,
+    @Body() body: VerificationIdDto['verificationId'][],
+  ) {
+    const user = req.raw.user!
+    
+    const updateRes = await this._verificationSrv.qb()
+      .update(
+        {
+          status: VerificationStatus.CANCELLED,
+          handlerId: user.id,
+          handledAt: new Date(),
+        }
+      )
       .where({ status: VerificationStatus.APPROVED })
       .andWhere({ id: In(body) })
-      .update()
+      .execute()
+
+    if (updateRes.affected) {
+      await this._userSrv.qb()
+        .update(
+          { verificationId: null }
+        )
+        .where({ verificationId: In(body) })
+        .execute()
+    }
+    return updateRes.affected
   }
 
   @ApiOperation({ summary: '通过一个认证申请' })
@@ -134,10 +156,61 @@ export class VerificationController {
     // 自动为用户分配数据角色
     try {
       const dataRole = await this._dataPerSrc.repo().findOne({ where: { name: verification.dataRole } })
-      this._userSrv.repo().update({ id: verification.founderId }, { dataRoleId: dataRole?.id ?? null })
+      this._userSrv.repo().update({ id: verification.founderId }, { dataRoleId: dataRole?.id })
     }
     catch (_) {}
     return res
+  }
+
+  @ApiOperation({ summary: '批量通过用户认证申请（只能通过状态为待审核的）' })
+  @HasPermission(PermissionType.VERIFICATION_APPROVE)
+  @Patch('approve/batch')
+  public async batchApproveVerification(
+    @Req() req: FastifyRequest,
+    @Body() body: VerificationIdDto['verificationId'][],
+  ) {
+    const user = req.raw.user!
+    const date = new Date().toString()
+    const updateRes = await this._verificationSrv.qb()
+      .update(
+        {
+          status: VerificationStatus.APPROVED,
+          handlerId: user.id,
+          handledAt: new Date(date),
+        }
+      )
+      .where({ status: VerificationStatus.PENDING })
+      .andWhere({ id: In(body) })
+      .execute()
+
+    if (updateRes.affected) {
+      const verifications = await this._verificationSrv.repo()
+        .find({
+          where: {
+            status: VerificationStatus.APPROVED,
+            handlerId: user.id,
+            handledAt: new Date(date),
+          },
+        })
+      if (verifications.length) {
+        const dataRoles = await this._dataPerSrc.repo().find()
+        verifications.forEach(async (verification) => {
+          const { id, founderId, dataRole } = verification
+          await this._userSrv.repo()
+            .update(
+              {
+                id: founderId,
+              },
+              {
+                verificationId: id,
+                dataRoleId: dataRoles.find(v => v.name === dataRole)?.id,
+              }
+            )
+          this._notifySrv.notifyVerificationStatusChanged(verification)
+        })
+      }
+    }
+    return updateRes.affected
   }
 
   @ApiOperation({ summary: '驳回一个认证申请' })
@@ -160,5 +233,45 @@ export class VerificationController {
       VerificationStatus.REJECTED,
       body.reason,
     )
+  }
+
+  @ApiOperation({ summary: '批量驳回用户认证申请（只能驳回状态为待审核的）' })
+  @HasPermission(PermissionType.VERIFICATION_REJECT)
+  @Patch('reject/batch')
+  public async batchRejectVerification(
+    @Req() req: FastifyRequest,
+    @Body() body: BatchRejectVerificationBodyDto,
+  ) {
+    const user = req.raw.user!
+    const date = new Date().toString()
+    const updateRes = await this._verificationSrv.qb()
+      .update(
+        {
+          status: VerificationStatus.REJECTED,
+          rejectReason: body.reason,
+          handlerId: user.id,
+          handledAt: new Date(date),
+        }
+      )
+      .where({ status: VerificationStatus.PENDING })
+      .andWhere({ id: In(body.id) })
+      .execute()
+
+    if (updateRes.affected) {
+      const verifications = await this._verificationSrv.repo()
+        .find({
+          where: {
+            status: VerificationStatus.REJECTED,
+            handlerId: user.id,
+            handledAt: new Date(date),
+          },
+        })
+      if (verifications.length) {
+        verifications.forEach((verification) => {
+          this._notifySrv.notifyVerificationStatusChanged(verification)
+        })
+      }
+    }
+    return updateRes.affected
   }
 }
