@@ -138,6 +138,10 @@ function valuePlusMinus(type: 'plus' |'minus') {
           min-height: 48px;
           max-height: 300px;
         }
+
+        .q-field__append {
+          display: none;
+        }
       }
     }
 
