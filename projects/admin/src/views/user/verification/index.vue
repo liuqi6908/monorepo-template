@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import moment from 'moment'
+import { Notify } from 'quasar'
 import { PermissionType, VerificationStatus } from 'zjf-types'
 import type { QTableColumn, QTableProps } from 'quasar'
 import type { IVerificationHistory, IQueryDto } from 'zjf-types'
@@ -149,25 +150,82 @@ function callback() {
 /**
  * 认证通过
  */
-function approve() {
-  if (!selected.value?.filter(v => v.status === VerificationStatus.PENDING).length)
+async function approve() {
+  const id = selected.value?.filter(v => v.status === VerificationStatus.PENDING).map(v => v.id)
+  if (!id?.length)
     return
+
+  loading.value = true
+  let res
+  try {
+    res = await batchApproveVerificationApi(id)
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
+  finally {
+    selected.value = undefined
+    if (res)
+      callback()
+    else
+      loading.value = false
+  }
 }
 
 /**
  * 认证驳回
  */
-function reject() {
-  if (!selected.value?.filter(v => v.status === VerificationStatus.PENDING).length)
+async function reject() {
+  const id = selected.value?.filter(v => v.status === VerificationStatus.PENDING).map(v => v.id)
+  if (!id?.length || !!validateRejectReason(rejectReason.value))
     return
+
+  loading.value = true
+  let res
+  try {
+    res = await batchRejectVerificationApi({
+      id,
+      reason: rejectReason.value,
+    })
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
+  finally {
+    selected.value = undefined
+    if (res)
+      callback()
+    else
+      loading.value = false
+  }
 }
 
 /**
- * 充值认证
+ * 重置认证
  */
-function reset() {
-  if (!selected.value?.filter(v => v.status === VerificationStatus.APPROVED).length)
+async function reset() {
+  const id = selected.value?.filter(v => v.status === VerificationStatus.APPROVED).map(v => v.id)
+  if (!id?.length)
     return
+
+  loading.value = true
+  let res
+  try {
+    res = await batchCancelVerificationApi(id)
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
+  finally {
+    selected.value = undefined
+    if (res)
+      callback()
+    else
+      loading.value = false
+  }
 }
 </script>
 

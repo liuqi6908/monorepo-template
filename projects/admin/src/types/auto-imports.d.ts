@@ -31,8 +31,11 @@ declare global {
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const authToken: typeof import('../../../shared/composables/user')['authToken']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
+  const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
+  const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
   const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
   const checkDesktopExpireManuallyApi: typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']
   const computed: typeof import('vue')['computed']
@@ -482,8 +485,11 @@ declare module 'vue' {
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
+    readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -926,8 +932,11 @@ declare module '@vue/runtime-core' {
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
+    readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>

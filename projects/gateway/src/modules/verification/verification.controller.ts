@@ -111,14 +111,14 @@ export class VerificationController {
     @Body() body: VerificationIdDto['verificationId'][],
   ) {
     const user = req.raw.user!
-    
+
     const updateRes = await this._verificationSrv.qb()
       .update(
         {
           status: VerificationStatus.CANCELLED,
           handlerId: user.id,
           handledAt: new Date(),
-        }
+        },
       )
       .where({ status: VerificationStatus.APPROVED })
       .andWhere({ id: In(body) })
@@ -127,7 +127,7 @@ export class VerificationController {
     if (updateRes.affected) {
       await this._userSrv.qb()
         .update(
-          { verificationId: null }
+          { verificationId: null },
         )
         .where({ verificationId: In(body) })
         .execute()
@@ -177,7 +177,7 @@ export class VerificationController {
           status: VerificationStatus.APPROVED,
           handlerId: user.id,
           handledAt: new Date(date),
-        }
+        },
       )
       .where({ status: VerificationStatus.PENDING })
       .andWhere({ id: In(body) })
@@ -204,7 +204,7 @@ export class VerificationController {
               {
                 verificationId: id,
                 dataRoleId: dataRoles.find(v => v.name === dataRole)?.id,
-              }
+              },
             )
           this._notifySrv.notifyVerificationStatusChanged(verification)
         })
@@ -251,7 +251,7 @@ export class VerificationController {
           rejectReason: body.reason,
           handlerId: user.id,
           handledAt: new Date(date),
-        }
+        },
       )
       .where({ status: VerificationStatus.PENDING })
       .andWhere({ id: In(body.id) })

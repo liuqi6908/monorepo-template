@@ -1,9 +1,11 @@
 import type { AxiosRequestConfig } from 'axios'
 import type {
   ICreateUserBodyDto,
+  IDataRoleIdDto,
   IGetProfileOwnQueryDto,
   IPaginatedResData,
   IQueryDto,
+  IRoleIdDto,
   IUnbindEmailOwnBodyDto,
   IUnbindPhoneOwnBodyDto,
   IUpdateEmailOwnBodyDto,
@@ -113,20 +115,20 @@ export function queryUserListApi(body: IQueryDto<IUser>) {
 /**
  * 更新指定用户的角色
  */
-export function updateUserRoleApi(userId: string, roleId: string) {
+export function updateUserRoleApi(userId: IUserIdDto['userId'], roleId: IRoleIdDto['roleId']) {
   return $patch<number>(`/user/${userId}/role/${roleId}`)
 }
 
 /**
  * 更新指定用户的数据角色
  */
-export function updateUserDataRoleApi(userId: string, dataRoleId: string) {
+export function updateUserDataRoleApi(userId: IUserIdDto['userId'], dataRoleId: IDataRoleIdDto['dataRoleId']) {
   return $patch<number>(`/user/${userId}/role/${dataRoleId}`)
 }
 
 /**
  * 批量清空用户密码
  */
-export function batchDeleteUserPasswordApi(body: string[]) {
+export function batchDeleteUserPasswordApi(body: IUserIdDto['userId'][]) {
   return $delete<number>('/user/delete/password', body)
 }
