@@ -77,7 +77,7 @@ function valuePlusMinus(type: 'plus' |'minus') {
       :type="type ?? (password && isPwd ? 'password' : 'text')"
       :style="{
         width: labelPosition === 'top' ? '100%' : '0',
-        flex: '1',
+        flex: labelPosition === 'top' ? 'auto' : '1'
       }"
       v-bind="params"
     >

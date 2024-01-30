@@ -11,11 +11,17 @@ declare global {
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
   const CMS_COMPONENTS: typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']
   const CMS_CONFIG: typeof import('../../../shared/constants/cms')['CMS_CONFIG']
+  const COLLEGE_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['COLLEGE_REQUIREMENTS_DESC']
   const EXPORT_MENU: typeof import('../constants/export')['EXPORT_MENU']
   const EffectScope: typeof import('vue')['EffectScope']
+  const ID_CARD_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['ID_CARD_REQUIREMENTS_DESC']
   const LEADING_PAGE_KEY: typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']
+  const NAME_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['NAME_REQUIREMENTS_DESC']
+  const NUMBER_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['NUMBER_REQUIREMENTS_DESC']
+  const REJECT_REASON_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['REJECT_REASON_REQUIREMENTS_DESC']
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
   const RichTextProcessor: typeof import('../../../shared/utils/richText')['RichTextProcessor']
+  const SCHOOL_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['SCHOOL_REQUIREMENTS_DESC']
   const USER_MENU_LIST: typeof import('../constants/client')['USER_MENU_LIST']
   const approveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']
   const approveExportLgApi: typeof import('../../../shared/api/exportLg')['approveExportLgApi']
@@ -453,11 +459,17 @@ declare module 'vue' {
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
+    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['COLLEGE_REQUIREMENTS_DESC']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('../constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['ID_CARD_REQUIREMENTS_DESC']>
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
+    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NAME_REQUIREMENTS_DESC']>
+    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NUMBER_REQUIREMENTS_DESC']>
+    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['REJECT_REASON_REQUIREMENTS_DESC']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
+    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['SCHOOL_REQUIREMENTS_DESC']>
     readonly USER_MENU_LIST: UnwrapRef<typeof import('../constants/client')['USER_MENU_LIST']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
@@ -888,11 +900,17 @@ declare module '@vue/runtime-core' {
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
+    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['COLLEGE_REQUIREMENTS_DESC']>
     readonly EXPORT_MENU: UnwrapRef<typeof import('../constants/export')['EXPORT_MENU']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
+    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['ID_CARD_REQUIREMENTS_DESC']>
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
+    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NAME_REQUIREMENTS_DESC']>
+    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NUMBER_REQUIREMENTS_DESC']>
+    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['REJECT_REASON_REQUIREMENTS_DESC']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
+    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['SCHOOL_REQUIREMENTS_DESC']>
     readonly USER_MENU_LIST: UnwrapRef<typeof import('../constants/client')['USER_MENU_LIST']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>

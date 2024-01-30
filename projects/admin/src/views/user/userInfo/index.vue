@@ -73,6 +73,8 @@ const cols = reactive<QTableColumn<IUser>[]>([
 const pagination = TABLE_PAGINATION('createdAt', true)
 /** 表格筛选字段 */
 const text = ref('')
+/** 多选 */
+const selected = ref<IUser[]>()
 
 onBeforeMount(() => {
   cols.forEach(v => v.align = 'center')
@@ -192,6 +194,7 @@ function callback() {
     <ZTable
       ref="zTable"
       v-model:pagination="pagination"
+      v-model:selected="selected"
       :rows="rows"
       :cols="cols"
       :loading="loading"
@@ -199,6 +202,7 @@ function callback() {
         noDataLabel: '暂无用户信息记录',
         filter: text,
         binaryStateSort: true,
+        selection: 'multiple',
       }"
       flex-1 h0
       fixed-last-column

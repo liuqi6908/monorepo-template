@@ -19,7 +19,7 @@ const dialog: boolean[] = reactive([])
 </script>
 
 <template>
-  <div flex="~ items-start gap1">
+  <div flex="~ items-start gap1" pl1>
     <q-checkbox
       v-model="value"
       dense
