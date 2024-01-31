@@ -76,6 +76,25 @@ export class DataController {
     }
   }
 
+  @ApiOperation({ summary: '批量删除根节点（数据大类）' })
+  @HasPermission(PermissionType.DATA_ROOT_DELETE)
+  @Delete('root/batch')
+  public async batchDeleteRoot(@Body() body: DataRootIdDto['dataRootId'][]) {
+    if (body.length === 1)
+      return await this.deleteRoot({ dataRootId: body[0] })
+
+    let success = 0
+    for (let i = 0; i < body.length; i++) {
+      try {
+        const deleteRes = await this._dataSrv.dirRepo().delete({ id: body[i] })
+        success += deleteRes.affected
+      }
+      catch (_) {}
+    }
+    this._dataSrv.cacheDir()
+    return success
+  }
+
   @ApiOperation({ summary: '更新一个根节点（数据大类）的信息' })
   @HasPermission(PermissionType.DATA_ROOT_UPDATE)
   @Patch('root/:dataRootId')
@@ -113,6 +132,26 @@ export class DataController {
         .viewDirectories
         .map(d => d.rootId)
     return createDataDirectoryTree(roots, allowedScopes, ['children', 'path', 'rootId', 'level', 'parentId'])
+  }
+
+  @ApiOperation({ summary: '获取所有的根节点（数据大类）及数据库资源' })
+  @ApiSuccessResponse(GetDataListResDto)
+  @HasPermission([
+    PermissionType.DATA_ROOT_QUERY,
+    PermissionType.DATA_QUERY,
+    PermissionType.DATA_UPLOAD_QUERY,
+    PermissionType.DATA_INTRO_QUERY,
+  ])
+  @Get('root/data')
+  public async getRootData() {
+    const nodes = await this._dataSrv.dirRepo().find({
+      where: { level: In([0, 1]) },
+    })
+    return createDataDirectoryTree(
+      nodes,
+      nodes.map(v => v.id),
+      ['children', 'path', 'rootId', 'parentId']
+    )
   }
 
   @ApiOperation({ summary: '上传中间表' })
