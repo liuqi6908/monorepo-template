@@ -137,6 +137,7 @@ const queryVerifyList: QTableProps['onRequest'] = async (props) => {
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
     loading.value = false
+    selected.value = undefined
   }
 }
 
@@ -306,7 +307,7 @@ async function reset() {
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td>
+        <q-td auto-width>
           <UserDetails :verify="row" />
         </q-td>
       </template>

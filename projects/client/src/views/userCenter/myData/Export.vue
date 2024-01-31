@@ -133,8 +133,8 @@ async function exportFile() {
           v-model="exportForm[value].note"
           label="备注信息"
           placeholder="请输入备注信息"
+          type="textarea"
           :params="{
-            type: 'textarea',
             maxlength: 255
           }"
         />

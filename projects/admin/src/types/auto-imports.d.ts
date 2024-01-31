@@ -12,17 +12,17 @@ declare global {
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
   const CMS_COMPONENTS: typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']
   const CMS_CONFIG: typeof import('../../../shared/constants/cms')['CMS_CONFIG']
-  const COLLEGE_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['COLLEGE_REQUIREMENTS_DESC']
+  const COLLEGE_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']
   const EXPORT_TABLE_COLUMNS: typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']
   const EffectScope: typeof import('vue')['EffectScope']
-  const ID_CARD_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['ID_CARD_REQUIREMENTS_DESC']
+  const ID_CARD_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']
   const LEADING_PAGE_KEY: typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']
-  const NAME_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['NAME_REQUIREMENTS_DESC']
-  const NUMBER_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['NUMBER_REQUIREMENTS_DESC']
-  const REJECT_REASON_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['REJECT_REASON_REQUIREMENTS_DESC']
+  const NAME_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['NAME_REQUIREMENTS_DESC']
+  const NUMBER_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['NUMBER_REQUIREMENTS_DESC']
+  const REJECT_REASON_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/audit')['REJECT_REASON_REQUIREMENTS_DESC']
   const REMEMBER_LOGIN_INFO_KEY: typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
   const RichTextProcessor: typeof import('../../../shared/utils/richText')['RichTextProcessor']
-  const SCHOOL_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator')['SCHOOL_REQUIREMENTS_DESC']
+  const SCHOOL_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']
   const TABLE_PAGINATION: typeof import('../constants/table')['TABLE_PAGINATION']
   const approveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']
   const approveExportLgApi: typeof import('../../../shared/api/exportLg')['approveExportLgApi']
@@ -429,12 +429,12 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
-  const validateCollege: typeof import('../../../shared/utils/validator')['validateCollege']
-  const validateIdCard: typeof import('../../../shared/utils/validator')['validateIdCard']
-  const validateName: typeof import('../../../shared/utils/validator')['validateName']
-  const validateNumber: typeof import('../../../shared/utils/validator')['validateNumber']
-  const validateRejectReason: typeof import('../../../shared/utils/validator')['validateRejectReason']
-  const validateSchool: typeof import('../../../shared/utils/validator')['validateSchool']
+  const validateCollege: typeof import('../../../shared/utils/validator/verification')['validateCollege']
+  const validateIdCard: typeof import('../../../shared/utils/validator/verification')['validateIdCard']
+  const validateName: typeof import('../../../shared/utils/validator/verification')['validateName']
+  const validateNumber: typeof import('../../../shared/utils/validator/verification')['validateNumber']
+  const validateRejectReason: typeof import('../../../shared/utils/validator/audit')['validateRejectReason']
+  const validateSchool: typeof import('../../../shared/utils/validator/verification')['validateSchool']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -469,17 +469,17 @@ declare module 'vue' {
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
-    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['COLLEGE_REQUIREMENTS_DESC']>
+    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']>
     readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['ID_CARD_REQUIREMENTS_DESC']>
+    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']>
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
-    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NAME_REQUIREMENTS_DESC']>
-    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NUMBER_REQUIREMENTS_DESC']>
-    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['REJECT_REASON_REQUIREMENTS_DESC']>
+    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NAME_REQUIREMENTS_DESC']>
+    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NUMBER_REQUIREMENTS_DESC']>
+    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['REJECT_REASON_REQUIREMENTS_DESC']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
-    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['SCHOOL_REQUIREMENTS_DESC']>
+    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']>
     readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
@@ -886,12 +886,12 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator')['validateCollege']>
-    readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator')['validateIdCard']>
-    readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator')['validateName']>
-    readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator')['validateNumber']>
-    readonly validateRejectReason: UnwrapRef<typeof import('../../../shared/utils/validator')['validateRejectReason']>
-    readonly validateSchool: UnwrapRef<typeof import('../../../shared/utils/validator')['validateSchool']>
+    readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
+    readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
+    readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
+    readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
+    readonly validateRejectReason: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['validateRejectReason']>
+    readonly validateSchool: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateSchool']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
@@ -919,17 +919,17 @@ declare module '@vue/runtime-core' {
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
     readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
-    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['COLLEGE_REQUIREMENTS_DESC']>
+    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']>
     readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['ID_CARD_REQUIREMENTS_DESC']>
+    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']>
     readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
-    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NAME_REQUIREMENTS_DESC']>
-    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['NUMBER_REQUIREMENTS_DESC']>
-    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['REJECT_REASON_REQUIREMENTS_DESC']>
+    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NAME_REQUIREMENTS_DESC']>
+    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NUMBER_REQUIREMENTS_DESC']>
+    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['REJECT_REASON_REQUIREMENTS_DESC']>
     readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
-    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator')['SCHOOL_REQUIREMENTS_DESC']>
+    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']>
     readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
@@ -1336,12 +1336,12 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator')['validateCollege']>
-    readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator')['validateIdCard']>
-    readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator')['validateName']>
-    readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator')['validateNumber']>
-    readonly validateRejectReason: UnwrapRef<typeof import('../../../shared/utils/validator')['validateRejectReason']>
-    readonly validateSchool: UnwrapRef<typeof import('../../../shared/utils/validator')['validateSchool']>
+    readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
+    readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
+    readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
+    readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
+    readonly validateRejectReason: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['validateRejectReason']>
+    readonly validateSchool: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateSchool']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>

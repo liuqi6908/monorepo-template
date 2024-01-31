@@ -77,7 +77,7 @@ export default ({ mode }: any) => {
           '../shared/api',
           '../shared/composables',
           '../shared/constants',
-          '../shared/utils',
+          '../shared/utils/**',
         ],
         vueTemplate: true,
       }),

@@ -44,9 +44,7 @@ async function applyPurchase() {
     <ZInput
       v-model="text"
       placeholder="请输入采购理由"
-      :params="{
-        type: 'textarea'
-      }"
+      type="textarea"
     />
   </ZDialog>
 </template>

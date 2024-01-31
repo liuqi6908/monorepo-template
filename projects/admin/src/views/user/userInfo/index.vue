@@ -132,6 +132,7 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
     loading.value = false
+    selected.value = undefined
   }
 }
 
@@ -283,7 +284,7 @@ async function deleteUserPassword() {
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td>
+        <q-td auto-width>
           <UserDetails :user="row" />
         </q-td>
       </template>
