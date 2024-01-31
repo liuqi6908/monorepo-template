@@ -134,24 +134,16 @@ export class DataController {
     return createDataDirectoryTree(roots, allowedScopes, ['children', 'path', 'rootId', 'level', 'parentId'])
   }
 
-  @ApiOperation({ summary: '获取所有的根节点（数据大类）及数据库资源' })
-  @ApiSuccessResponse(GetDataListResDto)
-  @HasPermission([
-    PermissionType.DATA_ROOT_QUERY,
-    PermissionType.DATA_QUERY,
-    PermissionType.DATA_UPLOAD_QUERY,
-    PermissionType.DATA_INTRO_QUERY,
-  ])
-  @Get('root/data')
-  public async getRootData() {
-    const nodes = await this._dataSrv.dirRepo().find({
-      where: { level: In([0, 1]) },
+  @ApiOperation({ summary: '清空指定根节点（数据大类）数据' })
+  @HasPermission(PermissionType.DATA_UPLOAD)
+  @Delete('upload/:dataRootId')
+  public async deleteDirectory(@Param() param: DataRootIdDto) {
+    const deleteRes = await this._dataSrv.dirRepo().delete({
+      rootId: param.dataRootId,
+      parentId: Not(IsNull()),
     })
-    return createDataDirectoryTree(
-      nodes,
-      nodes.map(v => v.id),
-      ['children', 'path', 'rootId', 'parentId'],
-    )
+    this._dataSrv.cacheDir()
+    return deleteRes.affected
   }
 
   @ApiOperation({ summary: '上传中间表' })
@@ -230,16 +222,20 @@ export class DataController {
     return createDataDirectoryTree(nodes, allowedScopes)
   }
 
-  @ApiOperation({ summary: '获取所有的数据资源（限管理用户权限使用）' })
+  @ApiOperation({ summary: '获取所有的数据资源（限用户权限管理、数据管理使用）' })
   @ApiSuccessResponse(GetDataListResDto)
   @HasPermission([
     PermissionType.DATA_PERMISSION_QUERY,
     PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
+    PermissionType.DATA_ROOT_QUERY,
+    PermissionType.DATA_QUERY,
+    PermissionType.DATA_UPLOAD_QUERY,
+    PermissionType.DATA_INTRO_QUERY,
   ])
   @Get('list/all')
   public async getAllDataList() {
     const nodes = await this._dataSrv.dirRepo().find()
-    return createDataDirectoryTree(nodes, nodes.map(v => v.id))
+    return createDataDirectoryTree(nodes, nodes.map(v => v.id), ['children', 'path', 'rootId', 'parentId'])
   }
 
   @ApiOperation({ summary: '更新引用规范' })
