@@ -58,6 +58,7 @@ export class UserController {
   ) {}
 
   @ApiOperation({ summary: '创建一个新用户' })
+  @Throttle(10000, 60)
   @ApiSuccessResponse(CreateUserResDto)
   @HasPermission(PermissionType.ACCOUNT_CREATE)
   @Put()

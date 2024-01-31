@@ -4,7 +4,7 @@ import type { DataDirectory } from 'src/entities/data-directory'
 export function createDataDirectoryTree(
   nodes: DataDirectory[],
   scope: DataDirectory['id'][],
-  omits: (keyof DataDirectory)[] = ['children', 'path', 'rootId', 'order', 'level', 'parentId'],
+  omits: (keyof DataDirectory)[] = ['children', 'path', 'rootId', 'order', 'parentId'],
 ) {
   // 将 nodes 转换为树结构，并且只保留 scope 中的节点
   const nodesIdMap = new Map(nodes.map(node => [node.id, node]))

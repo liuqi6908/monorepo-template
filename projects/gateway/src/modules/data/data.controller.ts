@@ -191,6 +191,18 @@ export class DataController {
     return createDataDirectoryTree(nodes, allowedScopes)
   }
 
+  @ApiOperation({ summary: '获取所有的数据资源（限管理用户权限使用）' })
+  @ApiSuccessResponse(GetDataListResDto)
+  @HasPermission([
+    PermissionType.DATA_PERMISSION_QUERY,
+    PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
+  ])
+  @Get('list/all')
+  public async getAllDataList() {
+    const nodes = await this._dataSrv.dirRepo().find()
+    return createDataDirectoryTree(nodes, nodes.map(v => v.id))
+  }
+
   @ApiOperation({ summary: '更新引用规范' })
   @HasPermission(PermissionType.DATA_EDIT_REFERENCE)
   @Patch('reference/:dataDirectoryId')

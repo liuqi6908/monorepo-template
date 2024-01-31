@@ -3,6 +3,7 @@ import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { ErrorCode, PermissionType } from 'zjf-types'
 import { DataRoleIdDto } from 'src/dto/id/data-role.dto'
 
+import { IsLogin } from 'src/guards/login.guard'
 import { HasPermission } from 'src/guards/permission.guard'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
@@ -70,7 +71,10 @@ export class DataPermissionController {
   }
 
   @ApiOperation({ summary: '列出所有数据下载角色' })
-  @HasPermission(PermissionType.DATA_PERMISSION_QUERY)
+  @HasPermission([
+    PermissionType.DATA_PERMISSION_QUERY,
+    PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
+  ])
   @ApiQuery({ name: 'permission', description: '是否关联查询所有的权限列表，传入任意值即可' })
   @Get('data-role/list')
   public async listDataRole(
@@ -84,6 +88,7 @@ export class DataPermissionController {
   }
 
   @ApiOperation({ summary: '查询所有数据下载角色名称' })
+  @IsLogin()
   @Get('data-role/names')
   public async dataRoleNames() {
     return (await this._dataPSrv.repo().find({
@@ -95,7 +100,10 @@ export class DataPermissionController {
 
   @ApiOperation({ summary: '查询指定的数据下载角色详情' })
   @ApiSuccessResponse(DataRoleDetailResDto)
-  @HasPermission(PermissionType.DATA_PERMISSION_QUERY)
+  @HasPermission([
+    PermissionType.DATA_PERMISSION_QUERY,
+    PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
+  ])
   @Get('data-role/:dataRoleId')
   public async getDataRole(@Param() param: DataRoleIdDto) {
     return await this._dataPSrv.repo().findOne({
