@@ -7,7 +7,7 @@ import { HasPermission } from 'src/guards/permission.guard'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 
-import { DataPermissionService } from './data-permission.service'
+import { DataPermissionService, visitorRole } from './data-permission.service'
 import { DataRoleDetailResDto } from './dto/data-role-detail.res.dto'
 import { UpsertDataRoleBodyDto } from './dto/upsert-data-role.body.dto'
 
@@ -44,6 +44,29 @@ export class DataPermissionController {
         responseError(ErrorCode.DATA_ROLE_IN_USAGE)
       throw e
     }
+  }
+
+  @ApiOperation({
+    summary: '批量删除数据下载角色（同时删除绑定的 directory）',
+    description: '删除数据下载角色，如果角色已关联用户，则会删除失败',
+  })
+  @HasPermission(PermissionType.DATA_PERMISSION_DELETE)
+  @Delete('data-role/batch')
+  public async batchDeleteRole(
+    @Body() body: DataRoleIdDto['dataRoleId'][]
+  ) {
+    if (body.length === 1)
+      return await this.deleteRole({ dataRoleId: body[0] })
+
+    let success = 0
+    for (let i = 0; i < body.length; i++) {
+      try {
+        const deleteRes = await this._dataPSrv.deleteRole({ dataRoleId: body[i] })
+        success += deleteRes
+      }
+      catch (_) {}
+    }
+    return success
   }
 
   @ApiOperation({ summary: '列出所有数据下载角色' })
