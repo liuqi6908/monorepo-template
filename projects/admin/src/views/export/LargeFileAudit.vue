@@ -236,7 +236,7 @@ async function handleReject() {
       :model-value="!!rejectDialog"
       title="驳回确认"
       footer
-      :disable-confirm="!rejectReason"
+      :disable-confirm="!!validateRejectReason(rejectReason)"
       @ok="handleReject"
       @update:model-value="rejectDialog = undefined"
     >
@@ -244,6 +244,13 @@ async function handleReject() {
         v-model="rejectReason"
         label="驳回理由"
         placeholder="请输入驳回理由"
+        required
+        type="textarea"
+        :params="{
+          rules: [
+            (val: string) => validateRejectReason(val) || true
+          ],
+        }"
       />
     </ZDialog>
   </div>
