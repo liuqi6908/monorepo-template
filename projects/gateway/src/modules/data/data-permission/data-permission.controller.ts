@@ -53,7 +53,7 @@ export class DataPermissionController {
   @HasPermission(PermissionType.DATA_PERMISSION_DELETE)
   @Delete('data-role/batch')
   public async batchDeleteRole(
-    @Body() body: DataRoleIdDto['dataRoleId'][]
+    @Body() body: DataRoleIdDto['dataRoleId'][],
   ) {
     if (body.length === 1)
       return await this.deleteRole({ dataRoleId: body[0] })

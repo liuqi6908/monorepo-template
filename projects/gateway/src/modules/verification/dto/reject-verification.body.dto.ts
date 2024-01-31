@@ -1,8 +1,8 @@
 import { ApiProperty } from '@nestjs/swagger'
-import type { IRejectVerificationBodyDto, IBatchRejectVerificationBodyDto } from 'zjf-types'
+import type { IBatchRejectVerificationBodyDto, IRejectVerificationBodyDto } from 'zjf-types'
 import { IsString, MaxLength, MinLength } from 'class-validator'
 import { VERIFICATION_REJECT_REASON_MAX, VERIFICATION_REJECT_REASON_MIN } from 'zjf-types'
-import { VerificationIdDto } from 'src/dto/id/verification.dto'
+import type { VerificationIdDto } from 'src/dto/id/verification.dto'
 
 class Reason {
   @ApiProperty({
@@ -21,7 +21,7 @@ export class RejectVerificationBodyDto extends Reason implements IRejectVerifica
 export class BatchRejectVerificationBodyDto extends Reason implements IBatchRejectVerificationBodyDto {
   @ApiProperty({
     description: 'id',
-    type: [String]
+    type: [String],
   })
   @IsString({ each: true })
   id: VerificationIdDto['verificationId'][]
