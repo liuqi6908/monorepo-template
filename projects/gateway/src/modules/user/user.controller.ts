@@ -25,6 +25,7 @@ import { responseParamsError } from 'src/utils/response/validate-exception-facto
 import { AuthService } from '../auth/auth.service'
 import { DesktopService } from '../desktop/desktop.service'
 import { VerificationService } from '../verification/verification.service'
+import { visitorRole } from '../data/data-permission/data-permission.service'
 import { UserService } from './user.service'
 import { UserProfileResponseDto } from './dto/user.res.dto'
 import { CreateUserResDto } from './dto/create-user.res.dto'
@@ -37,9 +38,11 @@ import { UpdatePhoneOwnBodyDto } from './dto/update-phone-own.body.dto'
 import { UpdateProfileOwnBodyDto } from './dto/update-profile-own.body.dto'
 import { UpdatePasswordByOldBodyDto } from './dto/update-pswd-by-old.body.dto'
 import { UpdateUserRoleParamDto } from './dto/role/update-user-role.param.dto'
+import { BatchUpdateUserRoleBodyDto } from './dto/role/batch-update-user-role.body.dto'
 import { UpdatePasswordByEmailCodeBodyDto } from './dto/update-pswd-by-email-code.body.dto'
 import { UpdatePasswordByPhoneCodeBodyDto } from './dto/update-pswd-by-phone-code.body.dto'
 import { UpdateUserDataRoleParamDto } from './dto/role/update-user-data-role.param.dto'
+import { BatchUpdateUserDataRoleBodyDto } from './dto/role/batch-update-user-data-role.body.dto'
 
 @ApiTags('User | 用户')
 @Controller('user')
@@ -397,6 +400,38 @@ export class UserController {
     }
   }
 
+  @ApiOperation({ summary: '批量更新用户角色' })
+  @HasPermission(PermissionType.ACCOUNT_UPDATE_ROLE)
+  @Patch('/role/batch')
+  public async batchUpdateUserRole(@Body() body: BatchUpdateUserRoleBodyDto) {
+    const { id } = body
+    if (id.length === 1)
+      return await this.updateUserRole({ userId: id[0], roleId: body.roleId })
+
+    const roleId = body.roleId || null
+    const { list } = this._cfgSrv.get<{ list: SysAdmin[] }>('sa')
+    const root = await this._userSrv.repo().find({ where: { account: In(list.map(v => v.account)) } })
+
+    try {
+      const updateRes = await this._userSrv.repo()
+        .update(
+          { id: In(id.filter(v => !root.map(v => v.id).includes(v))) },
+          { roleId },
+        )
+      return updateRes.affected
+    }
+    catch (e) {
+      if (e.message.match(/FOREIGN KEY/)) {
+        responseParamsError([{
+          property: 'roleId',
+          constraints: {
+            roleName: '角色名不存在',
+          },
+        }])
+      }
+    }
+  }
+
   @ApiOperation({ summary: '更新指定用户的数据角色' })
   @HasPermission(PermissionType.ACCOUNT_UPDATE_DATA_ROLE)
   @Patch(':userId/data-role/:dataRoleId')
@@ -404,9 +439,31 @@ export class UserController {
     @Param() param: UpdateUserDataRoleParamDto,
   ) {
     const { userId } = param
-    const dataRoleId = param.dataRoleId || null
+    const dataRoleId = param.dataRoleId === undefined ? visitorRole.id : param.dataRoleId
     try {
       return (await this._userSrv.repo().update({ id: userId }, { dataRoleId })).affected
+    }
+    catch (e) {
+      if (e.message.match(/FOREIGN KEY/)) {
+        responseParamsError([{
+          property: 'dataRoleId',
+          constraints: {
+            dataRoleName: '数据角色不存在',
+          },
+        }])
+      }
+    }
+  }
+
+  @ApiOperation({ summary: '批量更新用户数据角色' })
+  @HasPermission(PermissionType.ACCOUNT_UPDATE_DATA_ROLE)
+  @Patch('/data-role/batch')
+  public async batchUpdateDataUserRole(@Body() body: BatchUpdateUserDataRoleBodyDto) {
+    const { id } = body
+    const dataRoleId = body.dataRoleId === undefined ? visitorRole.id : body.dataRoleId
+
+    try {
+      return (await this._userSrv.repo().update({ id: In(id) }, { dataRoleId })).affected
     }
     catch (e) {
       if (e.message.match(/FOREIGN KEY/)) {

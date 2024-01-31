@@ -7,7 +7,11 @@ import { GenerateParamsDecorator } from 'src/utils/params-decorator-gen'
 
 function Decorator(optional = false) {
   return GenerateParamsDecorator([
-    ApiProperty({ description: '角色的唯一标识' }),
+    ApiProperty({
+      description: '角色的唯一标识',
+      type: () => String,
+      example: 'root',
+    }),
     IsString(),
   ], optional)
 }

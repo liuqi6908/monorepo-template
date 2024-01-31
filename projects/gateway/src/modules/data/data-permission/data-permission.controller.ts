@@ -7,7 +7,7 @@ import { HasPermission } from 'src/guards/permission.guard'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
 
-import { DataPermissionService, visitorRole } from './data-permission.service'
+import { DataPermissionService } from './data-permission.service'
 import { DataRoleDetailResDto } from './dto/data-role-detail.res.dto'
 import { UpsertDataRoleBodyDto } from './dto/upsert-data-role.body.dto'
 
