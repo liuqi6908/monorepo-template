@@ -136,8 +136,8 @@ export class DataController {
 
   @ApiOperation({ summary: '清空指定根节点（数据大类）数据' })
   @HasPermission(PermissionType.DATA_UPLOAD)
-  @Delete('upload/:dataRootId')
-  public async deleteDirectory(@Param() param: DataRootIdDto) {
+  @Delete('clear/:dataRootId')
+  public async clearDataByRootId(@Param() param: DataRootIdDto) {
     const deleteRes = await this._dataSrv.dirRepo().delete({
       rootId: param.dataRootId,
       parentId: Not(IsNull()),
