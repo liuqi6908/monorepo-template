@@ -144,12 +144,13 @@ async function handleDownload() {
 </script>
 
 <template>
-  <div full>
+  <div full relative>
+    <ZLoading :value="loading" />
+
     <ZTable
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无作品记录',
         binaryStateSort: true,

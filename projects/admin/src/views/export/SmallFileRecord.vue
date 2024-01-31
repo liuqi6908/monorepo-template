@@ -102,13 +102,14 @@ async function handleDownload() {
 </script>
 
 <template>
-  <div full>
+  <div full relative>
+    <ZLoading :value="loading" />
+
     <ZTable
       ref="zTable"
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无小文件自动外发记录',
         binaryStateSort: true,

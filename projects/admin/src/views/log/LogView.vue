@@ -143,7 +143,9 @@ watch(
 </script>
 
 <template>
-  <div full flex="~ col gap4">
+  <div full flex="~ col gap4" relative>
+    <ZLoading :value="loading" />
+
     <div flex="~ gap4 wrap">
       <ZInput
         v-model="text"
@@ -189,7 +191,6 @@ watch(
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无日志记录',
         filter: text,

@@ -135,7 +135,9 @@ const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
 </script>
 
 <template>
-  <div full flex="~ col gap4">
+  <div full flex="~ col gap4" relative>
+    <ZLoading :value="loading" />
+
     <div v-if="isEdit" flex="~ justify-end">
       <ZBtn
         label="导出为CSV"
@@ -155,7 +157,6 @@ const queryPurchaseRecords: QTableProps['onRequest'] = async (props) => {
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无申请采购记录',
         binaryStateSort: true,

@@ -39,6 +39,6 @@ watch(
   <div full flex="~ col gap6">
     <SubMenu v-model="active" :list="menu" />
     <Verification v-if="active === 'verify'" flex-1 h0 />
-    <VerifyConfig v-if="active === 'config'" flex-1 h0 />
+    <VerifyConfig v-else-if="active === 'config'" flex-1 h0 />
   </div>
 </template>

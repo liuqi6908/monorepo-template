@@ -123,7 +123,9 @@ async function deleteRole() {
 </script>
 
 <template>
-  <div flex="~ col gap4">
+  <div flex="~ col gap4" relative>
+    <ZLoading :value="loading" />
+
     <div
       v-if="isEdit"
       flex="~ gap4"
@@ -175,7 +177,6 @@ async function deleteRole() {
       v-model:selected="selected"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无用户角色记录',
         selection: 'multiple',

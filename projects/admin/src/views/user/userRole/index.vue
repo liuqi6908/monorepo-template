@@ -42,6 +42,6 @@ onBeforeMount(getAllDataList)
   <div full flex="~ col gap6">
     <SubMenu v-model="active" :list="menu" />
     <DataRole v-if="active === 'role'" flex-1 h0 />
-    <RoleAssign v-if="active === 'assign'" flex-1 h0 />
+    <RoleAssign v-else-if="active === 'assign'" flex-1 h0 />
   </div>
 </template>

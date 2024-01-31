@@ -162,7 +162,9 @@ function changeTagStatus(item: typeof statusTag.value[number]) {
 </script>
 
 <template>
-  <div full flex="~ col gap4">
+  <div full flex="~ col gap4" relative>
+    <ZLoading :value="loading" />
+
     <div flex="~ items-center justify-end gap2">
       <div text="sm grey-5" font-500>
         筛选标签：
@@ -183,7 +185,6 @@ function changeTagStatus(item: typeof statusTag.value[number]) {
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无大文件外发审核记录',
         binaryStateSort: true,

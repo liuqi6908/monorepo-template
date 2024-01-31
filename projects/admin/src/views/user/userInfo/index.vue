@@ -194,7 +194,9 @@ async function deleteUserPassword() {
 </script>
 
 <template>
-  <div full flex="~ col gap4">
+  <div full flex="~ col gap4" relative>
+    <ZLoading :value="loading" />
+
     <div flex="~ gap4 wrap">
       <div flex="~ gap4 wrap" mr-auto>
         <template v-if="adminRole?.includes(PermissionType.ACCOUNT_CREATE)">
@@ -261,7 +263,6 @@ async function deleteUserPassword() {
       v-model:selected="selected"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无用户信息记录',
         filter: text,

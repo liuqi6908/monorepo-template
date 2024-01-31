@@ -231,7 +231,9 @@ async function reset() {
 </script>
 
 <template>
-  <div full flex="~ col gap4">
+  <div full flex="~ col gap4" relative>
+    <ZLoading :value="loading" />
+
     <div flex="~ gap4 wrap">
       <div flex="~ gap4 wrap" mr-auto>
         <ZBtn
@@ -290,7 +292,6 @@ async function reset() {
       v-model:selected="selected"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无用户认证记录',
         filter: text,

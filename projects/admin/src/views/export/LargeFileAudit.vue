@@ -164,13 +164,14 @@ async function handleReject() {
 </script>
 
 <template>
-  <div full>
+  <div full relative>
+    <ZLoading :value="loading" />
+
     <ZTable
       ref="zTable"
       v-model:pagination="pagination"
       :rows="rows"
       :cols="cols"
-      :loading="loading"
       :params="{
         noDataLabel: '暂无大文件外发待审核记录',
         binaryStateSort: true,
