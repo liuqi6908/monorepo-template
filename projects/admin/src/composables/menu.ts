@@ -40,7 +40,13 @@ export function useMenu() {
         {
           id: 'userVerification',
           label: '用户认证管理',
-          flag: role?.includes(PermissionType.VERIFICATION_LIST_ALL),
+          flag: hasIntersection(
+            role ?? [],
+            [
+              PermissionType.VERIFICATION_LIST_ALL,
+              PermissionType.CONFIG_QUERY_VERIFICATION,
+            ],
+          ),
         },
         {
           id: 'userRole',

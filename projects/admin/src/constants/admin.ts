@@ -147,7 +147,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
           {
             name: '只读访问申请认证上传配置',
             value: [
-              PermissionType.VERIFICATION_LIST_ALL,
               PermissionType.CONFIG_QUERY_VERIFICATION,
             ],
           },
@@ -155,7 +154,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             name: '管理申请认证上传配置',
             desc: '管理用户认证时需要上传哪些材料',
             value: [
-              PermissionType.VERIFICATION_LIST_ALL,
               PermissionType.CONFIG_QUERY_VERIFICATION,
               PermissionType.CONFIG_UPSERT_VERIFICATION,
             ],
