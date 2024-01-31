@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { PAGINATION_SIZE_DFT } from 'zjf-types'
 import { formatFileSize } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
-import type { IFileExportBasic, IUser } from 'zjf-types'
+import type { IDataDirectory, IFileExportBasic, IUser } from 'zjf-types'
 
 /**
  * 返回表格分页配置
@@ -41,6 +41,27 @@ export const USER_TABLE_COLUMNS: QTableColumn<IUser>[] = [
     name: 'dataRole',
     label: '用户角色',
     field: row => row.dataRole?.name,
+  },
+]
+
+/**
+ * 数据资源表格基础字段
+ */
+export const DATA_TABLE_COLUMNS: QTableColumn<IDataDirectory>[] = [
+  {
+    name: 'id',
+    label: '资源ID',
+    field: 'id',
+  },
+  {
+    name: 'nameZH',
+    label: '中文名',
+    field: 'nameZH',
+  },
+  {
+    name: 'nameEN',
+    label: '英文名',
+    field: 'nameEN',
   },
 ]
 

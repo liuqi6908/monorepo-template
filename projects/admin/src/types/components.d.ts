@@ -33,6 +33,7 @@ declare module 'vue' {
     SMSInput: typeof import('./../../../shared/components/input/SMSInput.vue')['default']
     SubLabel: typeof import('./../components/label/SubLabel.vue')['default']
     SubMenu: typeof import('./../components/menu/SubMenu.vue')['default']
+    TextBtn: typeof import('./../../../shared/components/btn/TextBtn.vue')['default']
     VerifyStatus: typeof import('./../components/status/VerifyStatus.vue')['default']
     ZBtn: typeof import('./../../../shared/components/btn/ZBtn.vue')['default']
     ZBtnToggle: typeof import('./../../../shared/components/btn/ZBtnToggle.vue')['default']

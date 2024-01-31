@@ -5,13 +5,10 @@ import { hasIntersection } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
 import type { IDataRole } from 'zjf-types'
 
-import ZTable from '~/components/table/ZTable.vue'
 import UserRoleDialog from './dialog/UserRole.vue'
 import type { Type } from './dialog/UserRole.vue'
 
 const { adminRole } = useUser()
-
-const zTable = ref<InstanceType<typeof ZTable>>()
 
 /** 是否可以编辑（添加、编辑、删除） */
 const isEdit = computed(() => hasIntersection(
@@ -173,7 +170,6 @@ async function deleteRole() {
     </div>
 
     <ZTable
-      ref="zTable"
       v-model:selected="selected"
       :rows="rows"
       :cols="cols"

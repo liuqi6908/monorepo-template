@@ -5,4 +5,4 @@ import type { IDataDirectory } from '../../../entities/data-directory.interface'
  * 请求参数
  */
 export interface IUpdateRootBodyDto extends
-  Pick<IDataDirectory, | 'nameZH' | 'nameEN' | 'order'> {}
+  Pick<IDataDirectory, 'id' | 'nameZH' | 'nameEN' | 'order'> {}
