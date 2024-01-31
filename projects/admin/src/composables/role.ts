@@ -1,4 +1,8 @@
 import { hasIntersection, omit } from 'zjf-utils'
+import type { IDataDirectory } from 'zjf-types'
+
+/** 数据资源列表（用户权限管理） */
+const dataList = ref<IDataDirectory[]>()
 
 export function useRole() {
   /**
@@ -14,7 +18,15 @@ export function useRole() {
     )).map(v => omit(v, 'permission'))
   })
 
+  /** 获取所有数据资源列表 */
+  async function getAllDataList() {
+    dataList.value = await getAllDataListApi()
+    return dataList.value
+  }
+
   return {
+    dataList,
     adminMenu,
+    getAllDataList,
   }
 }

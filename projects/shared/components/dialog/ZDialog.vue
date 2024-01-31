@@ -57,7 +57,7 @@ const value = useVModel(props, 'modelValue')
       </header>
 
       <div v-if="scroll" flex="~ col 1" h0 b-y-1>
-        <q-scroll-area full px6>
+        <q-scroll-area class="z-dialog__scrollarea" full px6>
           <div py6>
             <slot />
           </div>

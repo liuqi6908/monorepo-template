@@ -1,10 +1,13 @@
 <script lang="ts" setup>
+import { Notify } from 'quasar'
 import { PermissionType } from 'zjf-types'
 import { hasIntersection } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
 import type { IDataRole } from 'zjf-types'
 
 import ZTable from '~/components/table/ZTable.vue'
+import UserRoleDialog from './dialog/UserRole.vue'
+import type { Type } from './dialog/UserRole.vue'
 
 const { adminRole } = useUser()
 
@@ -22,10 +25,10 @@ const isEdit = computed(() => hasIntersection(
 
 /** 加载中 */
 const loading = ref(false)
-/** 添加角色对话框 */
-const addDialog = ref(false)
-/** 编辑角色对话框 */
-const updateDialog = ref(false)
+/** 用户角色弹窗类型 */
+const dialogType = ref<Type>()
+/** 用户角色弹窗id */
+const dialogId = ref<string>()
 /** 删除角色对话框 */
 const deleteDialog = ref(false)
 
@@ -62,6 +65,14 @@ const cols = reactive<QTableColumn<IDataRole>[]>([
 /** 多选 */
 const selected = ref<IDataRole[]>()
 
+watch(
+  dialogType,
+  (newVal) => {
+    if (!newVal || newVal === 'add')
+      dialogId.value = undefined
+  },
+)
+
 onBeforeMount(() => {
   cols.forEach(v => v.align = 'center')
   queryRoleList()
@@ -80,6 +91,7 @@ async function queryRoleList() {
     rows.value = []
   }
   finally {
+    selected.value = undefined
     loading.value = false
   }
 }
@@ -92,10 +104,20 @@ async function deleteRole() {
     return
 
   loading.value = true
-  try {}
+  let res
+  try {
+    res = await batchDeleteDataRoleApi(selected.value.map(v => v.id))
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
   finally {
     selected.value = undefined
-    loading.value = false
+    if (res)
+      queryRoleList()
+    else
+      loading.value = false
   }
 }
 </script>
@@ -109,7 +131,7 @@ async function deleteRole() {
       <ZBtn
         v-if="adminRole?.includes(PermissionType.DATA_PERMISSION_CREATE)"
         label="添加角色"
-        @click="addDialog = true"
+        @click="dialogType = 'add'"
       >
         <template #left>
           <div w5 h5 i-mingcute:add-line />
@@ -122,7 +144,11 @@ async function deleteRole() {
         :params="{
           outline: true,
         }"
-        @click="updateDialog = true"
+        :disable="selected?.length !== 1"
+        @click="() => {
+          dialogType = 'edit'
+          dialogId = selected?.[0].id
+        }"
       >
         <template #left>
           <div w5 h5 i-mingcute:edit-2-line />
@@ -156,7 +182,22 @@ async function deleteRole() {
       }"
       flex-1 h0
       fixed-last-column
-    />
+    >
+      <template #body-cell-action="{ value }">
+        <q-td auto-width>
+          <div
+            text="sm primary-1" font-400
+            cursor-pointer select-none
+            @click="() => {
+              dialogType = 'view'
+              dialogId = value
+            }"
+          >
+            查看完整信息
+          </div>
+        </q-td>
+      </template>
+    </ZTable>
 
     <!-- 删除角色 -->
     <ZDialog
@@ -167,5 +208,12 @@ async function deleteRole() {
     >
       该操作将删除已选的用户角色，是否继续？
     </ZDialog>
+
+    <!-- 添加、编辑、查看角色 -->
+    <UserRoleDialog
+      v-model:type="dialogType"
+      :id="dialogId"
+      @callback="queryRoleList"
+    />
   </div>
 </template>

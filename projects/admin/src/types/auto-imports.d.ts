@@ -89,6 +89,7 @@ declare global {
   const getAccessLast7DaysApi: typeof import('../../../shared/api/log')['getAccessLast7DaysApi']
   const getAccessTodayApi: typeof import('../../../shared/api/log')['getAccessTodayApi']
   const getAccessTotalApi: typeof import('../../../shared/api/log')['getAccessTotalApi']
+  const getAllDataListApi: typeof import('../../../shared/api/data')['getAllDataListApi']
   const getCaptchaImgApi: typeof import('../../../shared/api/auth')['getCaptchaImgApi']
   const getClusterStorageApi: typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']
   const getCmsApi: typeof import('../../../shared/api/cms')['getCmsApi']
@@ -430,6 +431,8 @@ declare global {
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
   const validateCollege: typeof import('../../../shared/utils/validator/verification')['validateCollege']
+  const validateDataRoleDesc: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']
+  const validateDataRoleName: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']
   const validateIdCard: typeof import('../../../shared/utils/validator/verification')['validateIdCard']
   const validateName: typeof import('../../../shared/utils/validator/verification')['validateName']
   const validateNumber: typeof import('../../../shared/utils/validator/verification')['validateNumber']
@@ -546,6 +549,7 @@ declare module 'vue' {
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
     readonly getAccessTodayApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTodayApi']>
     readonly getAccessTotalApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTotalApi']>
+    readonly getAllDataListApi: UnwrapRef<typeof import('../../../shared/api/data')['getAllDataListApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/auth')['getCaptchaImgApi']>
     readonly getClusterStorageApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']>
     readonly getCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['getCmsApi']>
@@ -887,6 +891,8 @@ declare module 'vue' {
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
     readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
+    readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
+    readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
     readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
     readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
@@ -996,6 +1002,7 @@ declare module '@vue/runtime-core' {
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
     readonly getAccessTodayApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTodayApi']>
     readonly getAccessTotalApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTotalApi']>
+    readonly getAllDataListApi: UnwrapRef<typeof import('../../../shared/api/data')['getAllDataListApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/auth')['getCaptchaImgApi']>
     readonly getClusterStorageApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']>
     readonly getCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['getCmsApi']>
@@ -1337,6 +1344,8 @@ declare module '@vue/runtime-core' {
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
     readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
+    readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
+    readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
     readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
     readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>

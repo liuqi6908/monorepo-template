@@ -56,6 +56,13 @@ export function getDataByDataRootIdApi(dataRootId: string) {
 }
 
 /**
+ * 获取所有的数据资源（限管理用户权限使用）
+ */
+export function getAllDataListApi() {
+  return $get<IDataDirectory[]>('/data/list/all')
+}
+
+/**
  * 更新引用规范
  */
 export function updateReferenceApi(dataRootId: string, body: {
