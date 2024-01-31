@@ -212,7 +212,7 @@ async function assignDataRole(id?: string) {
               class="show-details"
               text-grey-5 flex="~ items-center gap2"
               absolute-y-center right-4
-              cursor-pointer hover:text-grey-7
+              cursor-pointer hover:text-primary-1
               invisible select-none
               @click="() => {
                 dialogType = 'view'
