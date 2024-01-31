@@ -1,5 +1,7 @@
 import type { AxiosRequestConfig } from 'axios'
 import type {
+  IBatchUpdateUserDataRoleBodyDto,
+  IBatchUpdateUserRoleBodyDto,
   ICreateUserBodyDto,
   IDataRoleIdDto,
   IGetProfileOwnQueryDto,
@@ -120,10 +122,24 @@ export function updateUserRoleApi(userId: IUserIdDto['userId'], roleId: IRoleIdD
 }
 
 /**
+ * 批量更新用户角色
+ */
+export function batchUpdateUserRoleApi(body: IBatchUpdateUserRoleBodyDto) {
+  return $patch<number>('/user/role/batch', body)
+}
+
+/**
  * 更新指定用户的数据角色
  */
 export function updateUserDataRoleApi(userId: IUserIdDto['userId'], dataRoleId: IDataRoleIdDto['dataRoleId']) {
   return $patch<number>(`/user/${userId}/role/${dataRoleId}`)
+}
+
+/**
+ * 批量更新用户数据角色
+ */
+export function batchUpdateUserDataRoleApi(body: IBatchUpdateUserDataRoleBodyDto) {
+  return $patch<number>('/user/data-role/batch', body)
 }
 
 /**

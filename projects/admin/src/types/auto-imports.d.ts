@@ -33,9 +33,12 @@ declare global {
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
+  const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
   const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
+  const batchUpdateUserDataRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']
+  const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
   const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
   const checkDesktopExpireManuallyApi: typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']
   const computed: typeof import('vue')['computed']
@@ -487,9 +490,12 @@ declare module 'vue' {
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
+    readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
+    readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
@@ -934,9 +940,12 @@ declare module '@vue/runtime-core' {
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
+    readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
+    readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>

@@ -1,4 +1,4 @@
-import type { IDataRole, IUpsertDataRoleBodyDto } from 'zjf-types'
+import type { IDataRole, IDataRoleIdDto, IUpsertDataRoleBodyDto } from 'zjf-types'
 import { useRequest } from '../composables/request'
 
 const { $delete, $get, $post } = useRequest()
@@ -13,15 +13,22 @@ export function upsertDataRoleApi(body: IUpsertDataRoleBodyDto) {
 /**
  * 删除数据下载角色
  */
-export function deleteDataRoleApi(dataRoleId: string) {
+export function deleteDataRoleApi(dataRoleId: IDataRoleIdDto['dataRoleId']) {
   return $delete<number>(`/data-permission/data-role/${dataRoleId}`)
 }
 
 /**
  * 查询指定的数据下载角色详情
  */
-export function queryDataRoleDetailsApi(dataRoleId: string) {
+export function queryDataRoleDetailsApi(dataRoleId: IDataRoleIdDto['dataRoleId']) {
   return $get<IDataRole>(`/data-permission/data-role/${dataRoleId}`)
+}
+
+/**
+ * 批量删除数据下载角色
+ */
+export function batchDeleteDataRoleApi(body: IDataRoleIdDto['dataRoleId'][]) {
+  return $delete<number>('/data-permission/data-role/batch', body)
 }
 
 /**
