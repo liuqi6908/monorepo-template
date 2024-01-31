@@ -46,6 +46,29 @@ export class DataPermissionController {
     }
   }
 
+  @ApiOperation({
+    summary: '批量删除数据下载角色（同时删除绑定的 directory）',
+    description: '删除数据下载角色，如果角色已关联用户，则会删除失败',
+  })
+  @HasPermission(PermissionType.DATA_PERMISSION_DELETE)
+  @Delete('data-role/batch')
+  public async batchDeleteRole(
+    @Body() body: DataRoleIdDto['dataRoleId'][]
+  ) {
+    if (body.length === 1)
+      return await this.deleteRole({ dataRoleId: body[0] })
+
+    let success = 0
+    for (let i = 0; i < body.length; i++) {
+      try {
+        const deleteRes = await this._dataPSrv.deleteRole({ dataRoleId: body[i] })
+        success += deleteRes
+      }
+      catch (_) {}
+    }
+    return success
+  }
+
   @ApiOperation({ summary: '列出所有数据下载角色' })
   @HasPermission(PermissionType.DATA_PERMISSION_QUERY)
   @ApiQuery({ name: 'permission', description: '是否关联查询所有的权限列表，传入任意值即可' })
