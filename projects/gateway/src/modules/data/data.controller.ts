@@ -150,7 +150,7 @@ export class DataController {
     return createDataDirectoryTree(
       nodes,
       nodes.map(v => v.id),
-      ['children', 'path', 'rootId', 'parentId']
+      ['children', 'path', 'rootId', 'parentId'],
     )
   }
 

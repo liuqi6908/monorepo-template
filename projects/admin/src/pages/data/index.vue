@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import DataType from '~/views/data/DataType.vue'
-import DataStructure from '~/views/data/DataStructure.vue'
-import DataUpload from '~/views/data/DataUpload.vue'
-import DataIntroduce from '~/views/data/DataIntroduce.vue'
+import DataType from '~/views/data/dataType/index.vue'
+import DataStructure from '~/views/data/dataStructure/index.vue'
+import DataUpload from '~/views/data/dataUpload/index.vue'
+import DataIntroduce from '~/views/data/dataIntroduce/index.vue'
 
 const { active, menu } = useMenu()
 </script>
