@@ -32,7 +32,6 @@ const { isAdmin } = useSysConfig()
   <div
     class="z-select"
     flex="~ gap2"
-    :items="labelPosition === 'top' ? 'stretch' : 'center'"
     :style="{
       flexDirection: labelPosition === 'top'
         ? 'column'
@@ -45,7 +44,9 @@ const { isAdmin } = useSysConfig()
       v-bind="props"
       :style="{
         width: labelPosition !== 'top' ? `${labelWidth}px` : '100%',
-        marginBottom: labelPosition !== 'top' && params?.rules ? '20px' : '0',
+        marginTop: labelPosition !== 'top' ? (
+          size === 'big' ? '14px' : (size === 'medium' ? '10px' : '6px')
+        ) : '0',
       }"
     />
     <q-select

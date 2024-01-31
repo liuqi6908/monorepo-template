@@ -51,7 +51,6 @@ function valuePlusMinus(type: 'plus' |'minus') {
   <div
     class="z-input"
     flex="~ gap2"
-    :items="labelPosition === 'top' ? 'stretch' : 'center'"
     :style="{
       flexDirection: labelPosition === 'top'
         ? 'column'
@@ -64,7 +63,9 @@ function valuePlusMinus(type: 'plus' |'minus') {
       v-bind="props"
       :style="{
         width: labelPosition !== 'top' ? `${labelWidth}px` : '100%',
-        marginBottom: labelPosition !== 'top' && params?.rules ? '20px' : '0',
+        marginTop: labelPosition !== 'top' ? (
+          size === 'big' ? '14px' : (size === 'medium' ? '10px' : '6px')
+        ) : '0',
       }"
     />
     <q-input
@@ -156,7 +157,7 @@ function valuePlusMinus(type: 'plus' |'minus') {
         margin: 0;
       }
     }
-    &:hover {
+    &:not(.q-field--readonly):hover {
       .number-input-controller {
         display: flex;
       }

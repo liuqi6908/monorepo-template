@@ -23,7 +23,7 @@ export class DataRole implements IDataRole {
   select?: boolean
 
   @ApiProperty({ description: '排序', required: false })
-  @Column({ default: 0 })
+  @Column({ default: 1 })
   sort?: number
 
   @ApiProperty({ description: '数据下载角色的用户', required: false, type: () => [User] })
