@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import moment from 'moment'
+import { cloneDeep } from 'lodash'
 import { Notify } from 'quasar'
 import { PermissionType } from 'zjf-types'
 import { hasIntersection } from 'zjf-utils'
@@ -28,26 +29,7 @@ const deleteUserPasswordDialog = ref(false)
 const rows = ref<QTableProps['rows']>([])
 /** 表格列 */
 const cols = reactive<QTableColumn<IUser>[]>([
-  {
-    name: 'account',
-    label: '用户',
-    field: 'account',
-  },
-  {
-    name: 'email',
-    label: '邮箱',
-    field: 'email',
-  },
-  {
-    name: 'name',
-    label: '姓名',
-    field: row => row.verification?.name,
-  },
-  {
-    name: 'dataRole',
-    label: '用户角色',
-    field: row => row.dataRole?.name,
-  },
+  ...cloneDeep(USER_TABLE_COLUMNS),
   {
     name: 'role',
     label: '管理员角色',
@@ -197,8 +179,8 @@ async function deleteUserPassword() {
   <div full flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
-    <div flex="~ gap4 wrap">
-      <div flex="~ gap4 wrap" mr-auto>
+    <div flex="~ wrap" gap="x4 y2">
+      <div flex="~ wrap" gap="x4 y2" mr-auto>
         <template v-if="adminRole?.includes(PermissionType.ACCOUNT_CREATE)">
           <AddUser @callback="callback" />
           <BatchAddUser @callback="callback" />

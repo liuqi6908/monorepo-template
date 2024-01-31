@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { PAGINATION_SIZE_DFT } from 'zjf-types'
 import { formatFileSize } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
-import type { IFileExportBasic } from 'zjf-types'
+import type { IFileExportBasic, IUser } from 'zjf-types'
 
 /**
  * 返回表格分页配置
@@ -17,6 +17,32 @@ export function TABLE_PAGINATION(sortBy?: string, descending?: boolean) {
     descending,
   })
 }
+
+/**
+ * 用户表格基础字段
+ */
+export const USER_TABLE_COLUMNS: QTableColumn<IUser>[] = [
+  {
+    name: 'account',
+    label: '用户',
+    field: 'account',
+  },
+  {
+    name: 'email',
+    label: '邮箱',
+    field: 'email',
+  },
+  {
+    name: 'name',
+    label: '姓名',
+    field: row => row.verification?.name,
+  },
+  {
+    name: 'dataRole',
+    label: '用户角色',
+    field: row => row.dataRole?.name,
+  },
+]
 
 /**
  * 文件外发表格基础字段

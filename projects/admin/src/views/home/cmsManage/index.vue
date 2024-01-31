@@ -55,7 +55,7 @@ async function saveCms() {
     <ZLoading :value="loading" />
 
     <!-- 操作栏 -->
-    <div flex="~ justify-between gap4 wrap">
+    <div flex="~ justify-between wrap" gap="x4 y2">
       <div flex="~ gap4">
         <template v-if="isEdit">
           <ZBtn

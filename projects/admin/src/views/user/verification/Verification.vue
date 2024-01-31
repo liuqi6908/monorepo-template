@@ -234,8 +234,8 @@ async function reset() {
   <div full flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
-    <div flex="~ gap4 wrap">
-      <div flex="~ gap4 wrap" mr-auto>
+    <div flex="~ wrap" gap="x4 y2">
+      <div flex="~ wrap" gap="x4 y2" mr-auto>
         <ZBtn
           v-if="adminRole?.includes(PermissionType.VERIFICATION_APPROVE)"
           label="认证通过"

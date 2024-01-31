@@ -24,6 +24,7 @@ declare global {
   const RichTextProcessor: typeof import('../../../shared/utils/richText')['RichTextProcessor']
   const SCHOOL_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']
   const TABLE_PAGINATION: typeof import('../constants/table')['TABLE_PAGINATION']
+  const USER_TABLE_COLUMNS: typeof import('../constants/table')['USER_TABLE_COLUMNS']
   const approveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']
   const approveExportLgApi: typeof import('../../../shared/api/exportLg')['approveExportLgApi']
   const approveVerificationApi: typeof import('../../../shared/api/verification')['approveVerificationApi']
@@ -484,6 +485,7 @@ declare module 'vue' {
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
     readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']>
     readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
+    readonly USER_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['USER_TABLE_COLUMNS']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['approveVerificationApi']>
@@ -937,6 +939,7 @@ declare module '@vue/runtime-core' {
     readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
     readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']>
     readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
+    readonly USER_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['USER_TABLE_COLUMNS']>
     readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
     readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
     readonly approveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['approveVerificationApi']>

@@ -146,7 +146,7 @@ watch(
   <div full flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
-    <div flex="~ gap4 wrap">
+    <div flex="~ wrap" gap="x4 y2">
       <ZInput
         v-model="text"
         class="rounded"
