@@ -44,6 +44,7 @@ declare global {
   const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
   const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
   const checkDesktopExpireManuallyApi: typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']
+  const clearDataByRootIdApi: typeof import('../../../shared/api/data')['clearDataByRootIdApi']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -120,7 +121,6 @@ declare global {
   const getOwnProfileApi: typeof import('../../../shared/api/user')['getOwnProfileApi']
   const getPublicFileApi: typeof import('../../../shared/api/file')['getPublicFileApi']
   const getRolesApi: typeof import('../../../shared/api/role')['getRolesApi']
-  const getRootDataApi: typeof import('../../../shared/api/data')['getRootDataApi']
   const getRootListApi: typeof import('../../../shared/api/data')['getRootListApi']
   const getTableDownloadLinkApi: typeof import('../../../shared/api/data')['getTableDownloadLinkApi']
   const getUsername: typeof import('../../../shared/utils/username')['getUsername']
@@ -512,6 +512,7 @@ declare module 'vue' {
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
+    readonly clearDataByRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['clearDataByRootIdApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -588,7 +589,6 @@ declare module 'vue' {
     readonly getOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['getOwnProfileApi']>
     readonly getPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['getPublicFileApi']>
     readonly getRolesApi: UnwrapRef<typeof import('../../../shared/api/role')['getRolesApi']>
-    readonly getRootDataApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootDataApi']>
     readonly getRootListApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootListApi']>
     readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../../shared/api/data')['getTableDownloadLinkApi']>
     readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
@@ -973,6 +973,7 @@ declare module '@vue/runtime-core' {
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
+    readonly clearDataByRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['clearDataByRootIdApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -1049,7 +1050,6 @@ declare module '@vue/runtime-core' {
     readonly getOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['getOwnProfileApi']>
     readonly getPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['getPublicFileApi']>
     readonly getRolesApi: UnwrapRef<typeof import('../../../shared/api/role')['getRolesApi']>
-    readonly getRootDataApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootDataApi']>
     readonly getRootListApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootListApi']>
     readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../../shared/api/data')['getTableDownloadLinkApi']>
     readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>

@@ -47,10 +47,10 @@ export function getRootListApi() {
 }
 
 /**
- * 获取所有根节点（数据大类）及数据库数据
+ * 清空指定根节点（数据大类）数据
  */
-export function getRootDataApi() {
-  return $get<IDataDirectory[]>('/data/root/data')
+export function clearDataByRootIdApi(dataRootId: IDataRootIdDto['dataRootId']) {
+  return $delete<number>(`/data/clear/${dataRootId}`)
 }
 
 /**
@@ -71,7 +71,7 @@ export function getDataByDataRootIdApi(dataRootId: IDataRootIdDto['dataRootId'])
 }
 
 /**
- * 获取所有的数据资源（限管理用户权限使用）
+ * 获取所有的数据资源（限用户权限管理、数据管理使用）
  */
 export function getAllDataListApi() {
   return $get<IDataDirectory[]>('/data/list/all')

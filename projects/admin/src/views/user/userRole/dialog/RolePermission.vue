@@ -10,7 +10,7 @@ interface Props {
 const props = defineProps<Props>()
 defineEmits(['update:modelValue'])
 
-const { dataList } = useRole()
+const { dataList } = useDataRoot()
 
 /** 角色权限 */
 const value = useVModel(props, 'modelValue')

@@ -16,7 +16,7 @@ export function useDataRoot() {
     loading.value = true
 
     try {
-      dataList.value = await getRootDataApi()
+      dataList.value = await getAllDataListApi()
     }
     catch (_) {
       dataList.value = []

@@ -5,7 +5,7 @@ import DataRole from './DataRole.vue'
 import RoleAssign from './RoleAssign.vue'
 
 const { adminRole } = useUser()
-const { getAllDataList } = useRole()
+const { queryDataList } = useDataRoot()
 
 /** 菜单 */
 const menu = computed(() => {
@@ -35,7 +35,7 @@ watch(
   },
 )
 
-onBeforeMount(getAllDataList)
+onBeforeMount(queryDataList)
 </script>
 
 <template>
