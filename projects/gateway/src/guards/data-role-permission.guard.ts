@@ -36,11 +36,12 @@ export class DataRolePermission extends PermissionGuard implements CanActivate {
 
     // 检查用户是否拥有数据管理相关权限，有权限直接返回
     const isAdmin = hasIntersection(
-      user?.role?.permissions ?? [],
+      user?.role?.permissions?.map(v => v.name) ?? [],
       [
         PermissionType.DATA_QUERY,
       ],
     )
+
     if (isAdmin) {
       req.dataRole = '*'
       return true
