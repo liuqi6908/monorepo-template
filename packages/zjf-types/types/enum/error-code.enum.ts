@@ -106,6 +106,8 @@ export enum ErrorCode {
   DATA_ROLE_IN_USAGE = 700005,
   /** 角色名已存在 */
   DATA_ROLE_NAME_IS_EXIST = 700006,
+  /** 资源ID已存在 */
+  DATA_ID_IS_EXIST = 700007,
 
   // ---- 云桌面相关错误码 ----
   /** 存在待审核状态的云桌面申请 */
