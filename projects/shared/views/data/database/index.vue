@@ -88,7 +88,7 @@ const children = computed(() => {
       <!-- Header -->
       <div
         flex="~ row gap4" p="t10 b6" bg-grey-1 sticky z-1
-        :style="{ top: `${height - 17}px` }"
+        :style="{ top: `${height}px` }"
       >
         <div flex-1 w0>
           <ZSubMenu v-model="databaseId" :list="menu" />
@@ -118,7 +118,12 @@ const children = computed(() => {
           "
           icon="database"
         />
-        <Database v-else :data="children" top />
+        <Database
+          v-else
+          :data="children" top
+          :height="height"
+          :scroll-to="scrollTo"
+        />
       </div>
     </div>
   </div>

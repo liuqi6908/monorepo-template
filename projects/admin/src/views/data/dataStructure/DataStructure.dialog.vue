@@ -107,7 +107,7 @@ watch(rootId, () => scrollTo(0))
         <Root
           :el="zDialog?.scrollRef"
           :scroll-to="scrollTo"
-          :height="17"
+          :height="0"
           :distance="0"
           :key="rootId" flex-1 w0
         />

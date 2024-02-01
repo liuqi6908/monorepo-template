@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import bg from '~/assets/bg/database.webp'
 import type { ZMenuProps } from 'shared/components/menu/ZMenu.vue'
-import Root from '~/views/database/Root.vue'
+import Root from 'shared/views/data/database/index.vue'
 
 const { rootList, rootId, getRootList } = useDatabase()
-const { scrollTo } = useScrollApp()
+const { el, scrollTo } = useScrollApp()
 const { query } = useRoute()
 const { nav } = useSysConfig()
 const $router = useRouter()
@@ -36,7 +36,6 @@ const menu = computed<ZMenuProps['list']>(() => {
       id,
       label: nameZH,
       to: {
-        path: '/database',
         query: {
           rootId: id,
         },
@@ -60,7 +59,14 @@ watch(rootId, () => scrollTo(0))
             :style="{ top: `${height + 23}px` }"
           />
         </div>
-        <Root :key="rootId" flex-1 w0 />
+        <Root
+          :el="el"
+          :scroll-to="scrollTo"
+          :height="height - 17"
+          :distance="274"
+          :key="rootId"
+          flex-1 w0
+        />
       </div>
     </div>
   </div>

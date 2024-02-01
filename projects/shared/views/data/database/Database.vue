@@ -1,5 +1,8 @@
 <script lang="ts" setup>
-import { computed } from 'vue'
+import { computed, onMounted, nextTick } from 'vue'
+import { isClient, useElementBounding } from '@vueuse/core'
+import { useRoute, useRouter } from 'vue-router'
+import { omit } from 'zjf-utils'
 import type { IDataDirectory } from 'zjf-types'
 import ZExpansion from '../../../components/expansion/ZExpansion.vue'
 import { useSysConfig } from '../../../composables/app'
@@ -9,18 +12,63 @@ defineOptions({
   name: 'Database',
 })
 
-const props = defineProps<{
+interface Props {
   data?: IDataDirectory[]
   top?: boolean
-}>()
+  height?: number
+  scrollTo?: (offset: number, axis?: "vertical" | "horizontal", duration?: number | undefined) => void
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  height: 0
+})
 
 const { isAdmin } = useSysConfig()
 const { rootId, databaseId } = useDatabase()
+const $route = useRoute()
+const $router = useRouter()
+
+/** 表格id */
+const tableId = computed(() => $route.query.tableId as string | undefined)
 
 /** 拓展列表 */
 const expandList = computed(() => props.data?.filter(v => v.level !== 4))
 /** 表格列表 */
 const tableList = computed(() => props.data?.filter(v => v.level === 4))
+
+onMounted(() => {
+  const { height, scrollTo } = props
+  if (
+    isClient && tableId.value && scrollTo && !isAdmin.value
+    && tableList.value?.map(v => v.id).includes(tableId.value)
+  ) {
+    nextTick(() => {
+      const dom = document.querySelector(`#table_${tableId.value}`) as HTMLElement
+      if (dom) {
+        const { top } = useElementBounding(dom)
+        scrollTo(top.value - height - 120, undefined, 300)
+        $router.replace({
+          query: omit($route.query, 'tableId')
+        })
+      }
+    })
+  }
+})
+
+/**
+ * 该数据资源是否包含表格
+ */
+function hasTable(item?: IDataDirectory): boolean {
+  if (!tableId.value || !item?.children?.length)
+    return false
+
+  return item.children.some((v) => {
+    if (v.id === tableId.value)
+      return true
+    else
+      return hasTable(v)
+  })
+}
 </script>
 
 <template>
@@ -32,8 +80,13 @@ const tableList = computed(() => props.data?.filter(v => v.level === 4))
       <ZExpansion
         :label="item.nameZH"
         :top="top"
+        :initial-value="hasTable(item)"
       >
-        <Database :data="item.children" />
+        <Database
+          :data="item.children"
+          :height="height"
+          :scroll-to="scrollTo"
+        />
       </ZExpansion>
       <div
         v-if="!top && expandList && index < expandList.length - 1"
@@ -56,6 +109,7 @@ const tableList = computed(() => props.data?.filter(v => v.level === 4))
       <q-item
         v-for="table in tableList"
         :key="table.id"
+        :id="`table_${table.id}`"
         :to="isAdmin ? undefined : {
           path: '/database/table',
           query: {

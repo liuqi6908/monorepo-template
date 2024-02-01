@@ -433,8 +433,6 @@ declare global {
   const validateDataRoleDesc: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']
   const validateDataRoleName: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']
   const validateDataRootId: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']
-  const validateDataRootNameEn: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameEn']
-  const validateDataRootNameZh: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']
   const validateIdCard: typeof import('../../../shared/utils/validator/verification')['validateIdCard']
   const validateName: typeof import('../../../shared/utils/validator/verification')['validateName']
   const validateNumber: typeof import('../../../shared/utils/validator/verification')['validateNumber']
