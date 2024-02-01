@@ -13,8 +13,10 @@ import WebfontDownload from 'vite-plugin-webfont-dl'
 import Components from 'unplugin-vue-components/vite'
 
 export default ({ mode }: any) => {
+  const minio = loadEnv(mode, path.relative(__dirname, '../gateway'), 'MINIO')
   process.env = {
     ...process.env,
+    VITE_MINIO_BUCKET_DATA: minio.MINIO_BUCKET_DATA,
     ...loadEnv(mode, path.relative(__dirname, '../shared')),
     VITE_MODE: mode,
   }
