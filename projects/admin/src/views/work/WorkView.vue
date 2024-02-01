@@ -155,6 +155,7 @@ async function handleDownload() {
         noDataLabel: '暂无作品记录',
         binaryStateSort: true,
       }"
+      :fixed-last-column="isEdit"
       @request="queryWorksRecords"
     >
       <template #body-cell-action="{ row }">

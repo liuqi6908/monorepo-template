@@ -178,6 +178,7 @@ async function deleteRole() {
         selection: 'multiple',
       }"
       flex-1 h0
+      fixed-first-column
       fixed-last-column
     >
       <template #body-cell-action="{ value }">

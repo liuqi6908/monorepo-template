@@ -47,10 +47,10 @@ export function getRootListApi() {
 }
 
 /**
- * 清空指定根节点（数据大类）数据
+ * 批量清空根节点（数据大类）数据
  */
-export function clearDataByRootIdApi(dataRootId: IDataRootIdDto['dataRootId']) {
-  return $delete<number>(`/data/clear/${dataRootId}`)
+export function clearDataByRootIdApi(body: IDataRootIdDto['dataRootId'][]) {
+  return $delete<number>('/data/clear/batch', body)
 }
 
 /**

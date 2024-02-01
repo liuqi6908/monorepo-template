@@ -150,10 +150,10 @@ async function deleteRoot() {
         selection: 'multiple',
       }"
       flex-1 h0
-      fixed-last-column
+      fixed-first-column
     >
       <template #body-cell-structure="{ row }">
-        <q-td>
+        <q-td text-center>
           <TextBtn
             label="查看结构"
             :disable="!adminRole?.includes(PermissionType.DATA_QUERY)"
@@ -165,7 +165,7 @@ async function deleteRoot() {
         </q-td>
       </template>
       <template #body-cell-upload="{ row }">
-        <q-td>
+        <q-td text-center>
           <TextBtn
             label="查看上传情况"
             :disable="!adminRole?.includes(PermissionType.DATA_UPLOAD_QUERY)"
@@ -177,7 +177,7 @@ async function deleteRoot() {
         </q-td>
       </template>
       <template #body-cell-introduce="{ row }">
-        <q-td>
+        <q-td text-center>
           <TextBtn
             label="查看数据介绍"
             :disable="!adminRole?.includes(PermissionType.DATA_INTRO_QUERY)"

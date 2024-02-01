@@ -252,6 +252,7 @@ async function deleteUserPassword() {
         selection: 'multiple',
       }"
       flex-1 h0
+      fixed-first-column
       fixed-last-column
       @request="queryUserList"
     >

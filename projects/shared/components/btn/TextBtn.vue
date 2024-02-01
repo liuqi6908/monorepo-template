@@ -19,7 +19,7 @@ defineEmits(['click'])
     text="sm center" font-400
     :cursor="disable ? 'not-allowed' : 'pointer'"
     :opacity="disable ? 70 : 100"
-    select-none
+    select-none inline
     @click="() => {
       if (!disable)
         $emit('click')

@@ -197,6 +197,7 @@ watch(
         binaryStateSort: true,
       }"
       flex-1 h0
+      fixed-last-column
       @request="queryLogRecords"
     />
   </div>
