@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 import { PermissionType } from 'zjf-types'
-import { browser, NAME_EN_REQUIREMENTS_DESC } from 'zjf-utils'
+import { browser, NAME_EN_REQUIREMENTS_DESC, NAME_ZH_REQUIREMENTS_DESC } from 'zjf-utils'
 import type { IDataRootIdDto } from 'zjf-types'
 
 interface Props {
@@ -46,7 +46,12 @@ const fieldDesc = computed(() => {
 function downloadTemplate () {
   browser.downloadCsv(
     fieldDesc.value.map((v) => {
-      return v + (v.includes('英文名') ? `（${NAME_EN_REQUIREMENTS_DESC}）` : '')
+      let text = v
+      if (v.includes('英文名'))
+        text += `（${NAME_EN_REQUIREMENTS_DESC}）`
+      else if (v.includes('level') || v.includes('（variable）'))
+        text += `（${NAME_ZH_REQUIREMENTS_DESC}）`
+      return text
     }).join(','),
     '数据资源结构设置样例'
   )

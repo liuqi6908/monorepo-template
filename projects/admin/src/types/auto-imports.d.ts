@@ -439,7 +439,6 @@ declare global {
   const validateDataRoleDesc: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']
   const validateDataRoleName: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']
   const validateDataRootId: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']
-  const validateDataRootNameZh: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']
   const validateIdCard: typeof import('../../../shared/utils/validator/verification')['validateIdCard']
   const validateName: typeof import('../../../shared/utils/validator/verification')['validateName']
   const validateNumber: typeof import('../../../shared/utils/validator/verification')['validateNumber']
@@ -906,7 +905,6 @@ declare module 'vue' {
     readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
     readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
     readonly validateDataRootId: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']>
-    readonly validateDataRootNameZh: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']>
     readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
     readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
@@ -1366,7 +1364,6 @@ declare module '@vue/runtime-core' {
     readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
     readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
     readonly validateDataRootId: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']>
-    readonly validateDataRootNameZh: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']>
     readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
     readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>

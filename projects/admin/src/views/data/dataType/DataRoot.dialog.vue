@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
 import { Notify } from 'quasar'
-import { pick, validateNameEn } from 'zjf-utils'
+import { pick, validateNameEn, validateNameZh } from 'zjf-utils'
 import type { IDataDirectory, ICreateRootBodyDto } from 'zjf-types'
 
 export type Type = 'add' | 'edit'
@@ -46,7 +46,7 @@ watch(
 const disable = computed(() => {
   const { id, nameZH, nameEN, order } = form.value
   return !!validateDataRootId(id)
-    || !!validateDataRootNameZh(nameZH)
+    || !!validateNameZh(nameZH)
     || !!validateNameEn(nameEN)
     || typeof order === 'number' &&  (order < 1 || order > 9999)
 })
@@ -111,7 +111,7 @@ async function confirm() {
         required
         :params="{
           rules: [
-            (val: string) => validateDataRootNameZh(val) || true,
+            (val: string) => validateNameZh(val) || true,
           ],
         }"
       />

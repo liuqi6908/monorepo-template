@@ -16,14 +16,3 @@ export function validateDataRootId(val?: string) {
     return `特殊字符 “${notAllowedChar}” 不被允许`
   return ''
 }
-
-/**
- * 校验数据资源中文名
- */
-export function validateDataRootNameZh(val?: string) {
-  if (!val)
-    return '请输入资源中文名'
-  if (val.length > 20)
-    return '资源中文名长度不得大于 20 位'
-  return ''
-}
