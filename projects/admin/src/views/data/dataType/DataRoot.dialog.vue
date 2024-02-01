@@ -14,8 +14,6 @@ interface Props {
 const props = defineProps<Props>()
 const emits = defineEmits(['update:type', 'callback'])
 
-const { dataList } = useDataRoot()
-
 /** 对话框 */
 const dialog = computed({
   get() {
@@ -72,19 +70,10 @@ async function confirm() {
     return
 
   const { type } = props
-  if (type === 'add') {
-    if (dataList.value?.find(v => v.id === form.value.id)) {
-      Notify.create({
-        type: 'danger',
-        message: '资源ID已存在',
-      })
-      return
-    }
+  if (type === 'add')
     await createRootApi(form.value)
-  }
-  else {
+  else
     await updateRootApi(form.value.id, form.value)
-  }
   Notify.create({
     type: 'success',
     message: `${type === 'add' ? '添加' : '编辑'}成功`,

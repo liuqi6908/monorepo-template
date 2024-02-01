@@ -6,6 +6,8 @@ export function validateDataRootId(val?: string) {
     return '请输入资源ID'
   if (val.length > 20)
     return '资源ID长度不得大于 20 位'
+  if (/^[^A-Za-z]/.test(val))
+    return '资源ID必须以字母开头'
 
   // 检测特殊字符
   const specialChars = val.split('').filter(char => !/[a-zA-Z0-9]/.test(char))
@@ -34,6 +36,8 @@ export function validateDataRootNameEn(val?: string) {
     return '请输入资源英文名'
   if (val.length > 20)
     return '资源英文名长度不得大于 20 位'
+  if (/^[^A-Za-z]/.test(val))
+    return '资源英文名必须以字母开头'
 
   // 检测特殊字符
   const specialChars = val.split('').filter(char => !/[a-zA-Z0-9]/.test(char))
