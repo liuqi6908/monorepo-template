@@ -1,5 +1,6 @@
 export * from './account.validator'
 export * from './email.validator'
+export * from './name-en.validator'
 export * from './password.validator'
 export * from './path.validator'
 export * from './phone.validator'

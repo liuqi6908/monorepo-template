@@ -5,6 +5,8 @@ import { PermissionType } from 'zjf-types'
 import type { QTableColumn } from 'quasar'
 import type { IDataDirectory } from 'zjf-types'
 
+import UploadDataDialog from './UploadData.dialog.vue'
+
 const { adminRole } = useUser()
 const { loading, dataList, selectedId, queryDataList } = useDataRoot()
 
@@ -138,5 +140,7 @@ async function clearData() {
     >
       该操作将清空已选数据资源类型中的数据结构，是否继续？
     </ZDialog>
+
+    <UploadDataDialog v-model="uploadDialog" :id="uploadId" />
   </div>
 </template>

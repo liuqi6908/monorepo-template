@@ -24,8 +24,6 @@ const { byAbsolute } = usePosition()
 
 /** 展开菜单 */
 const menu = ref(false)
-/** 上传文件 */
-const file = ref<File>()
 /** 认证状态 */
 const verifyStatus = (Object.keys(verificationStatusDescriptions) as VerificationStatus[]).map(v => ({
   key: v,
@@ -35,13 +33,13 @@ const verifyStatus = (Object.keys(verificationStatusDescriptions) as Verificatio
 /**
  * 下载模板
  */
-async function downloadTemplate() {
+function downloadTemplate() {
   const arr = [
-    `账号（必填。${ACCOUNT_REQUIREMENTS_DESC}）`,
-    '账号状态（选填。可选值：正常、禁用，默认值：正常）',
-    `邮箱（必填。${EMAIL_REQUIREMENTS_DESC}）`,
-    `密码（选填。${PASSWORD_REQUIREMENTS_DESC}）`,
-    `认证状态（选填。可选值：${Object.values(verificationStatusDescriptions).join('、')}）`,
+    `账号（必填，${ACCOUNT_REQUIREMENTS_DESC}）`,
+    '账号状态（选填，可选值：正常、禁用，默认值：正常）',
+    `邮箱（必填，${EMAIL_REQUIREMENTS_DESC}）`,
+    `密码（选填，${PASSWORD_REQUIREMENTS_DESC}）`,
+    `认证状态（选填，可选值：${Object.values(verificationStatusDescriptions).join('、')}）`,
     `学校名称（选填，当 认证状态 存在时，该项必填。${SCHOOL_REQUIREMENTS_DESC}）`,
     `所在学院（选填，当 认证状态 存在时，该项必填。${COLLEGE_REQUIREMENTS_DESC}）`,
     `身份证号码（选填，当 认证状态 存在时，该项必填。${ID_CARD_REQUIREMENTS_DESC}）`,
@@ -280,7 +278,6 @@ function showUploadResult(
           </q-item-section>
         </q-item>
         <ZUpload
-          :model-value="file"
           accept="text/csv,application/vnd.ms-excel"
           :hint-message="{
             accept: '只能上传 CSV 文件'
