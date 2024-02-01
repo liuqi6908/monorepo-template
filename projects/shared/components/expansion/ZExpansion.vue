@@ -4,6 +4,7 @@ import { onBeforeMount, ref } from 'vue'
 interface ZExpansionProps {
   label?: string
   initialValue?: boolean
+  top?: boolean
 }
 const { initialValue } = defineProps<ZExpansionProps>()
 
@@ -16,7 +17,10 @@ onBeforeMount(() => {
 </script>
 
 <template>
-  <div bg-grey-2 p2 flex="~ col">
+  <div
+    bg-grey-2 flex="~ col" pr2
+    :py="top ? 2 : 1" :pl="top ? 2 : 7"
+  >
     <!-- Label -->
     <q-item
       clickable flex="~ items-center gap1"
@@ -34,7 +38,11 @@ onBeforeMount(() => {
         </slot>
       </div>
       <slot name="label">
-        <h4 truncate v-text="label" />
+        <h4
+          :class="top ? '' : 'text-lg'"
+          truncate
+          v-text="label"
+        />
       </slot>
     </q-item>
 

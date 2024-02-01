@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
+import { ref, computed, onMounted, nextTick, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
 import { useElementSize, isClient } from '@vueuse/core'
 import { useRouteQuery } from '@vueuse/router'
 import ZMenu from '../menu/ZMenu.vue'
@@ -17,6 +18,8 @@ const toc = ref<HTMLElement>()
 const { width, height } = useElementSize(toc)
 const value = useRouteQuery<number | undefined>('index', undefined, { transform: Number })
 const { isAdmin } = useSysConfig()
+const $router = useRouter()
+
 let type = false
 
 /** 粘性定位 */
@@ -42,7 +45,7 @@ onMounted(() => {
       top.value = appHeader.clientHeight
     else if (isAdmin.value)
       top.value = 0
-    if (typeof value.value === 'number')
+    if (typeof value.value === 'number' && !Number.isNaN(value.value))
       scroll(value.value)
   })
 })
@@ -64,6 +67,10 @@ function scroll(id?: number) {
     type = false
   }, 110)
 }
+
+onBeforeUnmount(() => {
+  $router.replace({ query: undefined })
+})
 </script>
 
 <template>

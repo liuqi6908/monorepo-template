@@ -6,6 +6,7 @@ import type { QTableColumn } from 'quasar'
 import type { IDataDirectory } from 'zjf-types'
 
 import UploadDataDialog from './UploadData.dialog.vue'
+import DataStructureDialog from './DataStructure.dialog.vue'
 
 const { adminRole } = useUser()
 const { loading, dataList, selectedId, queryDataList } = useDataRoot()
@@ -19,6 +20,8 @@ const uploadDialog = ref(false)
 const uploadId = ref<IDataDirectory['id']>()
 /** 清空对话框 */
 const clearDialog = ref(false)
+/** 数据结构对话框 */
+const structureDialog = ref(false)
 
 /** 表格列 */
 const cols = reactive<QTableColumn[]>([
@@ -75,6 +78,7 @@ async function clearData() {
         :params="{
           outline: true,
         }"
+        @click="structureDialog = true"
       >
         <template #left>
           <div w5 h5 i-mingcute:document-line />
@@ -142,5 +146,10 @@ async function clearData() {
     </ZDialog>
 
     <UploadDataDialog v-model="uploadDialog" :id="uploadId" />
+
+    <DataStructureDialog
+      :model-value="structureDialog || !!selectedId"
+      @update:model-value="structureDialog = false"
+    />
   </div>
 </template>
