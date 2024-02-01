@@ -47,7 +47,20 @@ watch(
 .q-tabs {
   :deep() {
     .q-tabs__content {
-      gap: 40px;
+      gap: 10px;
+      justify-content: stretch;
+
+      @media (min-width: 760px) {
+        gap: 20px;
+      }
+
+      @media (min-width: 900px) {
+        gap: 30px;
+      }
+
+      @media (min-width: 1360px) {
+        gap: 40px;
+      }
 
       .q-tab {
         &.q-tab--inactive {
