@@ -34,12 +34,14 @@ declare global {
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
+  const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
   const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
   const batchUpdateUserDataRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']
   const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
   const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
   const checkDesktopExpireManuallyApi: typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']
+  const clearDataByRootIdApi: typeof import('../../../shared/api/data')['clearDataByRootIdApi']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -87,6 +89,7 @@ declare global {
   const getAccessLast7DaysApi: typeof import('../../../shared/api/log')['getAccessLast7DaysApi']
   const getAccessTodayApi: typeof import('../../../shared/api/log')['getAccessTodayApi']
   const getAccessTotalApi: typeof import('../../../shared/api/log')['getAccessTotalApi']
+  const getAllDataListApi: typeof import('../../../shared/api/data')['getAllDataListApi']
   const getCaptchaImgApi: typeof import('../../../shared/api/auth')['getCaptchaImgApi']
   const getClusterStorageApi: typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']
   const getCmsApi: typeof import('../../../shared/api/cms')['getCmsApi']
@@ -427,6 +430,11 @@ declare global {
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
   const validateCollege: typeof import('../../../shared/utils/validator/verification')['validateCollege']
+  const validateDataRoleDesc: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']
+  const validateDataRoleName: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']
+  const validateDataRootId: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']
+  const validateDataRootNameEn: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameEn']
+  const validateDataRootNameZh: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']
   const validateIdCard: typeof import('../../../shared/utils/validator/verification')['validateIdCard']
   const validateName: typeof import('../../../shared/utils/validator/verification')['validateName']
   const validateNumber: typeof import('../../../shared/utils/validator/verification')['validateNumber']
@@ -488,12 +496,14 @@ declare module 'vue' {
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
+    readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
+    readonly clearDataByRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['clearDataByRootIdApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -541,6 +551,7 @@ declare module 'vue' {
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
     readonly getAccessTodayApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTodayApi']>
     readonly getAccessTotalApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTotalApi']>
+    readonly getAllDataListApi: UnwrapRef<typeof import('../../../shared/api/data')['getAllDataListApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/auth')['getCaptchaImgApi']>
     readonly getClusterStorageApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']>
     readonly getCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['getCmsApi']>
@@ -881,6 +892,11 @@ declare module 'vue' {
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
     readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
+    readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
+    readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
+    readonly validateDataRootId: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']>
+    readonly validateDataRootNameEn: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameEn']>
+    readonly validateDataRootNameZh: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']>
     readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
     readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
@@ -935,12 +951,14 @@ declare module '@vue/runtime-core' {
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
+    readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
     readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
+    readonly clearDataByRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['clearDataByRootIdApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -988,6 +1006,7 @@ declare module '@vue/runtime-core' {
     readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
     readonly getAccessTodayApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTodayApi']>
     readonly getAccessTotalApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTotalApi']>
+    readonly getAllDataListApi: UnwrapRef<typeof import('../../../shared/api/data')['getAllDataListApi']>
     readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/auth')['getCaptchaImgApi']>
     readonly getClusterStorageApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']>
     readonly getCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['getCmsApi']>
@@ -1328,6 +1347,11 @@ declare module '@vue/runtime-core' {
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
     readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
+    readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
+    readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
+    readonly validateDataRootId: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']>
+    readonly validateDataRootNameEn: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameEn']>
+    readonly validateDataRootNameZh: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootNameZh']>
     readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
     readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
     readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>

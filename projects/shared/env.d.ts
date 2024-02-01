@@ -46,14 +46,16 @@ interface ImportMetaEnv {
   VITE_WORKS_MANAGE?: boolean
   /** 用户手机号 */
   VITE_USER_PHONE?: boolean
+  /** 云桌面开关机调用 */
+  VITE_DESKTOP_ON_OFF?: boolean
 
   /** ---------------- 客户端 ---------------- */
   /** 实验室物理主机负载 */
   VITE_HOST_LOAD?: boolean
-  /** 云桌面开关机调用 */
-  VITE_DESKTOP_ON_OFF?: boolean
   /** 云桌面文件传输 */
   VITE_DESKTOP_FTP?: boolean
+  /** 云桌面域控前缀 */
+  VITE_DC_PREFIX?: string
 
   /** ---------------- 管理后台 ---------------- */
   /** 截图水印 */

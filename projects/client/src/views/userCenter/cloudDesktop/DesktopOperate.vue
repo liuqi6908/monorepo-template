@@ -19,6 +19,8 @@ const { pause, resume } = useIntervalFn(async () => {
   }
 }, 5000, { immediate: false })
 
+/** 是否可以使用云桌面开关机功能 */
+const desktopOnOff = computed(() => getEnvVariable('VITE_DESKTOP_ON_OFF'))
 /** 倒计时 */
 const countDown = computed(() => {
   const endTime = desktopInfo.value?.expiredAt
@@ -30,7 +32,7 @@ const countDown = computed(() => {
 /** 云桌面信息 */
 const desktopTable = computed(() => [
   { label: '云桌面访问地址', href: desktopInfo.value?.accessUrl },
-  { label: '云桌面账号', value: desktopInfo.value?.account },
+  { label: '云桌面账号', value: `${import.meta.env.VITE_DC_PREFIX}${desktopInfo.value?.account}` },
   { label: '云桌面密码', value: desktopInfo.value?.password, hide: true },
 ])
 /** 隐藏密码 */
@@ -96,7 +98,7 @@ function copyText(text: string) {
           使用中（倒计时{{ countDown }}天）
         </div>
       </div>
-      <div flex="~ gap4">
+      <div v-if="desktopOnOff" flex="~ gap4">
         <ZBtn
           label="开机"
           size="big"
