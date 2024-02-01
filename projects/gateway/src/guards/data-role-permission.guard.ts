@@ -1,5 +1,6 @@
 import { Reflector } from '@nestjs/core'
 import { PermissionType } from 'zjf-types'
+import { hasIntersection } from 'zjf-utils'
 import { Injectable, SetMetadata, UseGuards, applyDecorators } from '@nestjs/common'
 import type { CanActivate, ExecutionContext } from '@nestjs/common'
 
@@ -34,12 +35,12 @@ export class DataRolePermission extends PermissionGuard implements CanActivate {
     const user = req.raw.user
 
     // 检查用户是否拥有数据管理相关权限，有权限直接返回
-    const isAdmin = user?.role?.permissions?.some(p => ([
-      PermissionType.DATA_ROOT_QUERY,
-      PermissionType.DATA_QUERY,
-      PermissionType.DATA_UPLOAD_QUERY,
-      PermissionType.DATA_INTRO_QUERY,
-    ].includes(p.name)))
+    const isAdmin = hasIntersection(
+      user?.role?.permissions ?? [],
+      [
+        PermissionType.DATA_QUERY,
+      ],
+    )
     if (isAdmin) {
       req.dataRole = '*'
       return true
