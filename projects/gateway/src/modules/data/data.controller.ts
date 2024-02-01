@@ -170,9 +170,9 @@ export class DataController {
     if (!isUTF8(buffer))
       str = iconv.decode(buffer, 'gbk')
 
-    const csv = Papa.parse(str, { header: true }).data
-
-    const { nodes, fields } = dataCsvParser(csv, param.dataRootId)
+    const csv = Papa.parse(str).data as string[][]
+    csv.shift()
+    const { nodes, fields } = dataCsvParser(csv, param.dataRootId, query.dynamic)
 
     const _ = console
     const logger = {

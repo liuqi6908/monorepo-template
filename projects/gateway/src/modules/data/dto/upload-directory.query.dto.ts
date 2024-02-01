@@ -6,6 +6,15 @@ import type { IUploadDirectoryQueryDto } from 'zjf-types'
 
 export class UploadDirectoryQueryDto implements IUploadDirectoryQueryDto {
   @ApiProperty({
+    description: '是否为动态层级',
+    required: false,
+  })
+  @IsOptional()
+  @Transform(({ value }) => parseBoolRaw(value))
+  @IsBoolean()
+  dynamic?: boolean
+
+  @ApiProperty({
     description: '是否清空原有数据',
     required: false,
   })

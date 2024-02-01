@@ -1,4 +1,4 @@
-export const NAME_ZH_MAX_LENGTH = 20
+export const NAME_ZH_MAX_LENGTH = 50
 export const NAME_ZH_REQUIREMENTS_DESC = `中文名长度不得大于 ${NAME_ZH_MAX_LENGTH} 位`
 
 /**

@@ -1,4 +1,4 @@
-export const NAME_EN_MAX_LENGTH = 20
+export const NAME_EN_MAX_LENGTH = 50
 export const NAME_EN_ALLOW_CHARS = '_-'
 export const NAME_EN_REQUIREMENTS_DESC = `英文名长度不得大于 ${NAME_EN_MAX_LENGTH} 位，由大小写字母、数字及特殊字符 ${NAME_EN_ALLOW_CHARS} 组成，且必须以字母开头`
 

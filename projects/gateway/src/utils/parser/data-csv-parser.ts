@@ -1,25 +1,12 @@
+import { validateNameEn, validateNameZh } from 'zjf-utils'
 import type { DataDirectory } from 'src/entities/data-directory'
 import type { DataField } from 'src/entities/data-field'
 import { md5 } from '../encrypt/md5'
 
 /**
  * 解析中间表，生成树结构与字段说明
- * @param arr
  */
-export function dataCsvParser(arr: Array<{
-  DATABASE_ENG: string
-  DATABASE: string
-  B_DATABASE_ENG: string
-  B_DATABASE: string
-  PART_ENG: string
-  PART: string
-  TABLE_ENG: string
-  TABLE: string
-  VARIABLE_ENG: string
-  VARIABLE: string
-  DESCRIPTION: string
-  ORDER_COLUMN: string
-}>, rootId: string) {
+export function dataCsvParser(arr: string[][], rootId: string, dynamic?: boolean) {
   const databases = {}
 
   const idMap = new Map()
@@ -28,25 +15,35 @@ export function dataCsvParser(arr: Array<{
   const fields: DataField[] = []
 
   arr.forEach((el) => {
-    const {
-      DATABASE_ENG,
-      DATABASE,
-      B_DATABASE_ENG,
-      B_DATABASE,
-      PART_ENG,
-      PART,
-      TABLE_ENG,
-      TABLE,
-      VARIABLE_ENG,
-      VARIABLE,
-      DESCRIPTION,
-      ORDER_COLUMN,
-    } = el
-
+    let [
+      DATABASE, DATABASE_ENG,
+      B_DATABASE, B_DATABASE_ENG,
+      PART, PART_ENG,
+      TABLE, TABLE_ENG,
+      VARIABLE, VARIABLE_ENG,
+      DESCRIPTION = '', ORDER_COLUMN,
+    ] = el
     const ORDER = Number(ORDER_COLUMN) || 1
 
-    if (!DATABASE_ENG || !B_DATABASE_ENG || !PART_ENG || !TABLE_ENG || !VARIABLE_ENG)
+    if (
+      validateNameZh(DATABASE) || validateNameEn(DATABASE_ENG)
+      || validateNameZh(TABLE) || validateNameEn(TABLE_ENG)
+      || validateNameZh(VARIABLE) || validateNameEn(VARIABLE_ENG)
+      || (!dynamic && (
+        validateNameZh(B_DATABASE) || validateNameEn(B_DATABASE_ENG)
+        || validateNameZh(PART) || validateNameEn(PART_ENG)
+      ))
+    )
       return
+
+    if ((!B_DATABASE || !B_DATABASE_ENG) && PART && PART_ENG) {
+      B_DATABASE = PART
+      B_DATABASE_ENG = PART_ENG
+      PART = PART_ENG = ''
+    }
+
+    const isBDatabase = !!B_DATABASE && !!B_DATABASE_ENG
+    const isPart = !!PART && !!PART_ENG
 
     if (!databases[DATABASE_ENG]) {
       const id = md5(rootId + DATABASE_ENG)
@@ -67,8 +64,7 @@ export function dataCsvParser(arr: Array<{
     }
 
     const bDatabase = databases[DATABASE_ENG]
-
-    if (!bDatabase[B_DATABASE_ENG]) {
+    if (isBDatabase && !bDatabase[B_DATABASE_ENG]) {
       const id = md5(rootId + DATABASE_ENG + B_DATABASE_ENG)
       if (!idMap.has(id)) {
         idMap.set(id, true)
@@ -86,9 +82,8 @@ export function dataCsvParser(arr: Array<{
       }
     }
 
-    const part = bDatabase[B_DATABASE_ENG]
-
-    if (!part[PART_ENG]) {
+    const part = isBDatabase ? bDatabase[B_DATABASE_ENG] : databases[DATABASE]
+    if (isPart && !part[PART_ENG]) {
       const id = md5(rootId + DATABASE_ENG + B_DATABASE_ENG + PART_ENG)
       if (!idMap.has(id)) {
         idMap.set(id, true)
@@ -106,22 +101,26 @@ export function dataCsvParser(arr: Array<{
       }
     }
 
-    const table = part[PART_ENG]
-
+    const table = isPart ? part[PART_ENG] : isBDatabase ? bDatabase[B_DATABASE_ENG] : databases[DATABASE_ENG]
     if (!table[TABLE_ENG]) {
       const id = md5(rootId + DATABASE_ENG + B_DATABASE_ENG + PART_ENG + TABLE_ENG)
       if (!idMap.has(id)) {
         idMap.set(id, true)
         table[TABLE_ENG] = { id }
+        const path = [rootId, databases[DATABASE_ENG].id, id]
+        if (isPart)
+          path.splice(2, 0, part[PART_ENG].id)
+        if (isBDatabase)
+          path.splice(2, 0, bDatabase[B_DATABASE_ENG].id)
         nodes.push({
           id,
           nameEN: TABLE_ENG,
           nameZH: TABLE,
           level: 4,
           order: ORDER,
-          parentId: part[PART_ENG].id,
+          parentId: isPart ? part[PART_ENG].id : isBDatabase ? part.id : bDatabase.id,
           rootId,
-          path: [rootId, databases[DATABASE_ENG].id, bDatabase[B_DATABASE_ENG].id, part[PART_ENG].id, id],
+          path,
         })
       }
     }
