@@ -68,7 +68,7 @@ onBeforeMount(() => {
 /**
  * 删除数据资源
  */
-async function deleteRole() {
+async function deleteRoot() {
   if (!selected.value?.length)
     return
 
@@ -195,7 +195,7 @@ async function deleteRole() {
       v-model="deleteDialog"
       title="删除"
       footer
-      @ok="deleteRole"
+      @ok="deleteRoot"
     >
       该操作将删除已选的数据资源类型，是否继续？
     </ZDialog>
