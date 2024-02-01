@@ -26,6 +26,10 @@ const _dataErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '角色名称已存在',
   },
+  [ErrorCode.DATA_ID_IS_EXIST]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '资源ID已存在',
+  },
 }
 
 export default _dataErrors

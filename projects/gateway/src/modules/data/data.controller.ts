@@ -54,9 +54,17 @@ export class DataController {
     root.level = 0
     root.order = order ?? 0
     root.rootId = id
-    await this._dataSrv.dirRepo().save(root)
-    this._dataSrv.cacheDir()
-    return root
+    try {
+      await this._dataSrv.dirRepo().insert(root)
+      this._dataSrv.cacheDir()
+      return root
+    }
+    catch (e) {
+      const sqlErr = parseSqlError(e)
+      if (sqlErr === SqlError.DUPLICATE_ENTRY)
+        responseError(ErrorCode.DATA_ID_IS_EXIST)
+      throw e
+    }
   }
 
   @ApiOperation({ summary: '删除指定的根节点（数据大类）' })
