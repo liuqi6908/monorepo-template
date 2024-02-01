@@ -34,6 +34,7 @@ declare module 'vue' {
     SubLabel: typeof import('./../components/label/SubLabel.vue')['default']
     SubMenu: typeof import('./../components/menu/SubMenu.vue')['default']
     TextBtn: typeof import('./../../../shared/components/btn/TextBtn.vue')['default']
+    UploadStatus: typeof import('./../components/status/UploadStatus.vue')['default']
     VerifyStatus: typeof import('./../components/status/VerifyStatus.vue')['default']
     ZBtn: typeof import('./../../../shared/components/btn/ZBtn.vue')['default']
     ZBtnToggle: typeof import('./../../../shared/components/btn/ZBtnToggle.vue')['default']
@@ -48,6 +49,7 @@ declare module 'vue' {
     ZMenu: typeof import('./../../../shared/components/menu/ZMenu.vue')['default']
     ZRadio: typeof import('./../components/radio/ZRadio.vue')['default']
     ZSelect: typeof import('./../../../shared/components/select/ZSelect.vue')['default']
+    ZSubMenu: typeof import('./../../../shared/components/menu/ZSubMenu.vue')['default']
     ZTable: typeof import('./../components/table/ZTable.vue')['default']
     ZUpload: typeof import('./../../../shared/components/upload/ZUpload.vue')['default']
   }

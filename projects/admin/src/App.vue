@@ -3,9 +3,11 @@ import { isClient } from '@vueuse/core'
 
 const { width } = useWindowSize()
 const { isAdmin, zoomRatio ,getAppConfig, updateAppHead } = useSysConfig()
+const $router = useRouter()
 
 onBeforeMount(async () => {
   isAdmin.value = true
+  $router.replace({ query: undefined })
   // 设置网站标题和logo
   await getAppConfig()
   updateAppHead(true)

@@ -1,5 +1,7 @@
 <script lang="ts" setup>
+import { ref } from 'vue'
 import { useVModel } from '@vueuse/core'
+import { QScrollArea } from 'quasar'
 import type { QDialogProps } from 'quasar'
 import ZBtn from '../btn/ZBtn.vue'
 import ZLoading from '../loading/ZLoading.vue'
@@ -26,9 +28,15 @@ const props = withDefaults(defineProps<ZDialogProps>(), {
 })
 defineEmits(['update:modelValue', 'ok'])
 
+const scrollRef = ref<InstanceType<typeof QScrollArea>>()
+
 const { isAdmin } = useSysConfig()
 
 const value = useVModel(props, 'modelValue')
+
+defineExpose({
+  scrollRef,
+})
 </script>
 
 <template>
@@ -57,7 +65,7 @@ const value = useVModel(props, 'modelValue')
       </header>
 
       <div v-if="scroll" flex="~ col 1" h0 b-y-1>
-        <q-scroll-area class="z-dialog__scrollarea" full px6>
+        <q-scroll-area ref="scrollRef" class="z-dialog__scrollarea" full px6>
           <div py6>
             <slot />
           </div>

@@ -34,6 +34,9 @@ const initData: ICreateRootBodyDto = {
 /** 数据资源表单 */
 const form = ref<ICreateRootBodyDto>(cloneDeep(initData))
 
+/** Minio Data 桶名 */
+const dataBucket = computed(() => import.meta.env.VITE_MINIO_BUCKET_DATA)
+
 watch(
   dialog,
   (newVal) => {
@@ -103,7 +106,41 @@ async function confirm() {
           ],
           readonly: type === 'edit',
         }"
-      />
+      >
+        <template #append>
+          <div
+            w6 h6
+            i-mingcute:information-line
+            text-grey-4
+            cursor-pointer
+          >
+            <q-tooltip
+              id="add-data-root-tooltip"
+              anchor="bottom right"
+              self="top right"
+              :offset="[0, 6]"
+            >
+              <div>
+                创建数据资源后，ID不可变
+              </div>
+              <div max-w-80 truncate>
+                样例数据路径：
+                <span
+                  font-500 underline="~ offset-2"
+                  v-text="`${dataBucket}/preview/${form.id || 'ID' }`"
+                />
+              </div>
+              <div max-w-80 truncate>
+                下载数据路径：
+                <span
+                  font-500 underline="~ offset-2"
+                  v-text="`${dataBucket}/download/${form.id || 'ID' }`"
+                />
+              </div>
+            </q-tooltip>
+          </div>
+        </template>
+      </ZInput>
       <ZInput
         v-model="form.nameZH"
         label="中文名"

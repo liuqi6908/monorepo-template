@@ -19,6 +19,8 @@ const isEdit = computed(() => adminRole.value?.includes(PermissionType.DATA_UPLO
 
 /** 对话框 */
 const value = useVModel(props, 'modelValue')
+/** 加载中 */
+const loading = ref(false)
 /** 是否动态数据层级 */
 const isDynamicData = computed(() => getEnvVariable('VITE_DYNAMIC_DATA_LIST'))
 /** 字段说明 */
@@ -35,8 +37,8 @@ const fieldDesc = computed(() => {
     '表英文名，必填项',
     '字段（variable），必填项，每个表格至少有一个字段',
     '字段英文名，必填项',
-    '字段说明（variable-describe），必填项，每个字段都应该附上字段说明',
-    '排序（order），必填项，自定义数据资源排列顺序'
+    '字段说明（variable-describe），选填项',
+    '排序（order），选填项，自定义数据资源排列顺序'
   ]
 })
 
@@ -60,7 +62,7 @@ function downloadTemplate () {
 /**
  * 上传数据结构
  */
-function uploadDataStructure(file: File) {
+async function uploadDataStructure(file: File) {
   if (!file)
     return
 
@@ -71,6 +73,22 @@ function uploadDataStructure(file: File) {
       message: '只能上传 CSV 文件',
     })
     return
+  }
+
+  loading.value = true
+  try {
+    await updateIntermediateTableApi(props.id!, file, {
+      dynamic: isDynamicData.value,
+      clear: true,
+    })
+    Notify.create({
+      type: 'success',
+      message: '上传成功',
+    })
+  }
+  finally {
+    loading.value = false
+    value.value = false
   }
 }
 </script>
@@ -84,6 +102,7 @@ function uploadDataStructure(file: File) {
       maxWidth: '696px',
       width: '696px',
     }"
+    :loading="loading"
   >
     <div flex="~ col gap10">
       <div flex="~ col gap4" text-sm font-400>

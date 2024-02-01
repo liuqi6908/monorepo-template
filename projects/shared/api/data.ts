@@ -5,6 +5,7 @@ import type {
   IDataField,
   IDataRootIdDto,
   IUpdateRootBodyDto,
+  IUploadDirectoryQueryDto,
   IUploadTableDataParamDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
@@ -56,11 +57,11 @@ export function clearDataByRootIdApi(body: IDataRootIdDto['dataRootId'][]) {
 /**
  * 上传中间表
  */
-export function updateIntermediateTableApi(dataRootId: IDataRootIdDto['dataRootId'], file: File, clear = true) {
+export function updateIntermediateTableApi(dataRootId: IDataRootIdDto['dataRootId'], file: File, body: IUploadDirectoryQueryDto) {
   return $put<{
     nodes: number
     fields: number
-  }>(`/data/upload/${dataRootId}`, file2FormData(file), { clear })
+  }>(`/data/upload/${dataRootId}`, file2FormData(file), body)
 }
 
 /**
