@@ -1,7 +1,13 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 import { PermissionType } from 'zjf-types'
-import { browser, NAME_EN_REQUIREMENTS_DESC, NAME_ZH_REQUIREMENTS_DESC } from 'zjf-utils'
+import {
+  browser,
+  CSV_FILE_TYPE,
+  isCsv,
+  NAME_EN_REQUIREMENTS_DESC,
+  NAME_ZH_REQUIREMENTS_DESC,
+} from 'zjf-utils'
 import type { IDataRootIdDto } from 'zjf-types'
 
 interface Props {
@@ -66,8 +72,7 @@ async function uploadDataStructure(file: File) {
   if (!file)
     return
 
-  const suffix = file.name.split('.').pop()
-  if (suffix?.toLowerCase() !== 'csv') {
+  if (!isCsv(file)) {
     Notify.create({
       color: 'danger',
       message: '只能上传 CSV 文件',
@@ -136,7 +141,7 @@ async function uploadDataStructure(file: File) {
           }"
         />
         <ZUpload
-          accept="text/csv,application/vnd.ms-excel"
+          :accept="CSV_FILE_TYPE.join(',')"
           :hint-message="{
             accept: '只能上传 CSV 文件'
           }"

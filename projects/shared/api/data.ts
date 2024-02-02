@@ -1,4 +1,5 @@
 import { file2FormData } from 'zjf-utils'
+import type { AxiosRequestConfig } from 'axios'
 import type {
   ICreateRootBodyDto,
   IDataDirectory,
@@ -113,9 +114,14 @@ export function getDataPreviewByTableApi(dataDirectoryId: IDataDirectory['id']) 
 /**
  * 上传表格 预览/下载 数据
  */
-export function updateTableDataApi(param: IUploadTableDataParamDto, file: File) {
+export function uploadTableDataApi(param: IUploadTableDataParamDto, file: File, config?: AxiosRequestConfig) {
   const { uploadType, dataRootId, filename } = param
-  return $put<string>(`/data/${uploadType}/${dataRootId}/${filename}`, file2FormData(file))
+  return $put<string>(
+    `/data/${uploadType}/${dataRootId}/${filename}`,
+    file2FormData(file),
+    undefined,
+    config,
+  )
 }
 
 /**

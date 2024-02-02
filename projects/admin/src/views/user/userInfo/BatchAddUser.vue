@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 import { VerificationStatus, verificationStatusDescriptions } from 'zjf-types'
-import type { QNotifyUpdateOptions } from 'quasar'
+import { CSV_FILE_TYPE, isCsv } from 'zjf-utils'
 import type { ICreateUserBodyDto } from 'zjf-types'
 import {
   browser,
@@ -59,15 +59,14 @@ async function batchAddUser(file: File) {
   if (!file)
     return
 
-  const suffix = file.name.split('.').pop()
-  if (suffix?.toLowerCase() !== 'csv') {
+  if (!isCsv(file)) {
     Notify.create({
       color: 'danger',
       message: '只能上传 CSV 文件',
     })
     return
   }
-
+  menu.value = false
   try {
     const content = await browser.readFile(file) as string
     const jsonArray = parseFileContent(content)
@@ -95,17 +94,19 @@ async function batchAddUser(file: File) {
         const { message, detail } = e.response?.data ?? {}
         error[i + 1] =  detail?.[0]?.message ?? message ?? e.message ?? 'error'
       }
+      finally {
+        notify({
+          caption: `上传进度：${i + 1} / ${total}`
+        })
+      }
     }
-    showUploadResult(total, success, error, notify)
+    showUploadResult(total, success, error, notify, () => emits('callback'))
   }
   catch (_) {
     Notify.create({
       color: 'danger',
       message: '文件内容读取失败',
     })
-  }
-  finally {
-    menu.value = false
   }
 }
 
@@ -185,56 +186,6 @@ function processingJSONData(json: CreateUserItem): ICreateUserBodyDto {
     rejectReason: status === VerificationStatus.REJECTED && rejectReason || undefined,
   }
 }
-
-/**
- * 展示上传结果
- */
-function showUploadResult(
-  total: number, success: number, error: Record<number, string>,
-  notify: (props?: QNotifyUpdateOptions | undefined) => void,
-) {
-  if (!total) {
-    notify({
-      type: 'warn',
-      message: '暂无数据',
-    })
-  }
-  else if (!success) {
-    notify({
-      type: 'danger',
-      message: `共 ${total} 条数据，全部上传失败`,
-      caption: Object.keys(error).map((v: any) => `第 ${v} 条：${error[v]}`).join('<br/>'),
-      multiLine: true,
-      html: true,
-      timeout: 0,
-      actions: [
-        { label: '确认', color: 'white', handler: () => { } },
-      ],
-    })
-  }
-  else if (success === total) {
-    notify({
-      type: 'success',
-      message: `已成功上传 ${success} 条数据`,
-    })
-  }
-  else {
-    notify({
-      type: 'warn',
-      message: `共 ${total} 条数据，已成功上传 ${success} 条`,
-      caption: Object.keys(error).map((v: any) => `第 ${v} 条：${error[v]}`).join('<br/>'),
-      multiLine: true,
-      html: true,
-      timeout: 0,
-      actions: [
-        { label: '确认', color: 'white', handler: () => {} },
-      ],
-    })
-  }
-
-  if (success)
-    emits('callback')
-}
 </script>
 
 <template>
@@ -278,7 +229,7 @@ function showUploadResult(
           </q-item-section>
         </q-item>
         <ZUpload
-          accept="text/csv,application/vnd.ms-excel"
+          :accept="CSV_FILE_TYPE.join(',')"
           :hint-message="{
             accept: '只能上传 CSV 文件'
           }"
