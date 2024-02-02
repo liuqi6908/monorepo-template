@@ -27,11 +27,19 @@ const cols = reactive<QTableColumn[]>([
   },
 ])
 
-onBeforeMount(() => {
+/** 加载状态 */
+const loadingStatue = ref(true)
+
+onBeforeMount(async () => {
   cols.forEach(v => v.align = 'center')
   queryDataList()
-  getPreviewUploadStatus()
-  getDownloadUploadStatus()
+  try {
+    await getPreviewUploadStatus()
+    await getDownloadUploadStatus()
+  }
+  finally {
+    loadingStatue.value = false
+  }
 })
 
 /**
@@ -106,7 +114,12 @@ const uploadCount = computed(() => {
       </template>
       <template #body-cell-status="{ row }">
         <q-td auto-width max-w="none!">
-          <UploadStatus v-bind="uploadCount[row.id]" />
+          <q-spinner-ios
+            v-if="loadingStatue"
+            color="primary"
+            size="24" mx-20
+          />
+          <UploadStatus v-else v-bind="uploadCount[row.id]" />
         </q-td>
       </template>
     </ZTable>

@@ -61,10 +61,18 @@ const rows = computed<TableRow[]>(() => {
 /** 单选 */
 const selected = ref<TableRow>()
 
-onBeforeMount(() => {
+/** 加载状态 */
+const loadingStatue = ref(true)
+
+onBeforeMount(async () => {
   cols.forEach(v => v.align = 'center')
   queryDataList()
-  getIntroUploadStatus()
+  try {
+    await getIntroUploadStatus()
+  }
+  finally {
+    loadingStatue.value = false
+  }
 })
 
 /**
@@ -227,7 +235,13 @@ async function editReference() {
       </template>
       <template #body-cell-status="{ row }">
         <q-td auto-width max-w="none!">
+          <q-spinner-ios
+            v-if="loadingStatue"
+            color="primary"
+            size="24" mx-20
+          />
           <UploadStatus
+            v-else
             :total="1"
             :preview="introResource[row.id]?.includes(row.databaseEN) ? 1 : 0"
             :download="row.reference ? 1 : 0"

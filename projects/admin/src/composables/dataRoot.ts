@@ -56,24 +56,18 @@ export function useDataRoot() {
    */
   async function getPreviewUploadStatus() {
     previewResource.value = {}
-    loading.value = true
 
-    try {
-      const res = getFileNames(
-        await getFolderFilesApi({
-          bucket: MinioBucket.DATA,
-          path: 'preview',
-        }) ?? [],
-      )
-      res.forEach((v) => {
-        if (!previewResource.value[v.key])
-          previewResource.value[v.key] = []
-        previewResource.value[v.key].push(v.name!)
-      })
-    }
-    finally {
-      loading.value = false
-    }
+    const res = getFileNames(
+      await getFolderFilesApi({
+        bucket: MinioBucket.DATA,
+        path: 'preview',
+      }) ?? [],
+    )
+    res.forEach((v) => {
+      if (!previewResource.value[v.key])
+        previewResource.value[v.key] = []
+      previewResource.value[v.key].push(v.name!)
+    })
   }
 
   /**
@@ -81,24 +75,18 @@ export function useDataRoot() {
    */
   async function getDownloadUploadStatus() {
     downloadResource.value = {}
-    loading.value = true
 
-    try {
-      const res = getFileNames(
-        await getFolderFilesApi({
-          bucket: MinioBucket.DATA,
-          path: 'download',
-        }) ?? [],
-      )
-      res.forEach((v) => {
-        if (!downloadResource.value[v.key])
-          downloadResource.value[v.key] = []
-        downloadResource.value[v.key].push(v.name!)
-      })
-    }
-    finally {
-      loading.value = false
-    }
+    const res = getFileNames(
+      await getFolderFilesApi({
+        bucket: MinioBucket.DATA,
+        path: 'download',
+      }) ?? [],
+    )
+    res.forEach((v) => {
+      if (!downloadResource.value[v.key])
+        downloadResource.value[v.key] = []
+      downloadResource.value[v.key].push(v.name!)
+    })
   }
 
   return {
