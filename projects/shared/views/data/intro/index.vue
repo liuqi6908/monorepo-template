@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import * as mammoth from 'mammoth'
-import { ref, onBeforeMount, onMounted, nextTick, watch } from 'vue'
+import { ref, onBeforeMount, onMounted, nextTick, watch, computed } from 'vue'
 import { isClient, useElementSize, useScroll } from '@vueuse/core'
 import type { QScrollArea } from 'quasar'
 
@@ -8,6 +8,7 @@ import ZLoading from '../../../components/loading/ZLoading.vue'
 import ZMenu from '../../../components/menu/ZMenu.vue'
 import Empty from '../Empty.vue'
 import { getDbIntroApi } from '../../../api/file'
+import { useSysConfig } from '../../../composables/app'
 
 interface Props {
   rootId: string
@@ -26,6 +27,7 @@ const props = withDefaults(defineProps<Props>(), {
 const toc = ref<HTMLElement>()
 
 const { width, height } = useElementSize(toc)
+const { isAdmin } = useSysConfig()
 
 /** 加载中 */
 const loading = ref(false)
@@ -39,6 +41,14 @@ const docHtml = ref<{
 }>()
 /** 当前激活目录 */
 const value = ref<string>()
+
+/** 滚动高度 */
+const scrollTop = computed(() => {
+  if (isAdmin.value)
+    return props.top
+  else
+    return props.top - 41
+})
 
 onBeforeMount(async () => {
   const { rootId, nameEn } = props
@@ -72,8 +82,8 @@ onMounted(() => {
           if (!dom)
             continue
 
-          const top = dom.offsetTop + props.top
-          const nextTop = next ? next.offsetTop + props.top : 0
+          const top = dom.offsetTop + scrollTop.value
+          const nextTop = next ? next.offsetTop + scrollTop.value : 0
           if (
             (i === 0 && newVal < top)
             || (!next && newVal >= top)
@@ -134,7 +144,7 @@ function scroll(id: string) {
 
   const dom = document.querySelector(`#${id}`) as HTMLElement
   if (dom) {
-    const top = dom.offsetTop + props.top
+    const top = dom.offsetTop + scrollTop.value
     scrollTo(top, 'vertical', 300)
   }
 }

@@ -49,13 +49,13 @@ function scrollTo(
     @update:model-value="$emit('update:id', undefined)"
   >
     <Intro
-      v-if="!!params?.rootId && !!params?.nameEn"
+      v-if="params?.rootId && params?.nameEn"
       :root-id="params.rootId"
       :name-en="params.nameEn"
       :el="zDialog?.scrollRef"
       :scroll-to="scrollTo"
       :top="24"
-      maxHeight="calc(100vh - 170px)"
+      max-height="calc(100vh - 170px)"
     />
   </ZDialog>
 </template>

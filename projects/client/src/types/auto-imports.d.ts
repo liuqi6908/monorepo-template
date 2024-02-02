@@ -253,6 +253,7 @@ declare global {
   const uploadDbIntroApi: typeof import('../../../shared/api/file')['uploadDbIntroApi']
   const uploadDesktopRequestAttachmentsApi: typeof import('../../../shared/api/file')['uploadDesktopRequestAttachmentsApi']
   const uploadPublicFileApi: typeof import('../../../shared/api/file')['uploadPublicFileApi']
+  const uploadTableDataApi: typeof import('../../../shared/api/data')['uploadTableDataApi']
   const uploadVerifyAttachmentsApi: typeof import('../../../shared/api/file')['uploadVerifyAttachmentsApi']
   const upsertCmsApi: typeof import('../../../shared/api/cms')['upsertCmsApi']
   const upsertConfigApi: typeof import('../../../shared/api/config')['upsertConfigApi']
@@ -706,13 +707,13 @@ declare module 'vue' {
     readonly updateOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnProfileApi']>
     readonly updateReferenceApi: UnwrapRef<typeof import('../../../shared/api/data')['updateReferenceApi']>
     readonly updateRootApi: UnwrapRef<typeof import('../../../shared/api/data')['updateRootApi']>
-    readonly updateTableDataApi: UnwrapRef<typeof import('../../../shared/api/data')['updateTableDataApi']>
     readonly updateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserDataRoleApi']>
     readonly updateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserRoleApi']>
     readonly updateWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['updateWorkApi']>
     readonly uploadDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDbIntroApi']>
     readonly uploadDesktopRequestAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDesktopRequestAttachmentsApi']>
     readonly uploadPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadPublicFileApi']>
+    readonly uploadTableDataApi: UnwrapRef<typeof import('../../../shared/api/data')['uploadTableDataApi']>
     readonly uploadVerifyAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadVerifyAttachmentsApi']>
     readonly upsertCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['upsertCmsApi']>
     readonly upsertConfigApi: UnwrapRef<typeof import('../../../shared/api/config')['upsertConfigApi']>
@@ -1159,13 +1160,13 @@ declare module '@vue/runtime-core' {
     readonly updateOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnProfileApi']>
     readonly updateReferenceApi: UnwrapRef<typeof import('../../../shared/api/data')['updateReferenceApi']>
     readonly updateRootApi: UnwrapRef<typeof import('../../../shared/api/data')['updateRootApi']>
-    readonly updateTableDataApi: UnwrapRef<typeof import('../../../shared/api/data')['updateTableDataApi']>
     readonly updateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserDataRoleApi']>
     readonly updateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserRoleApi']>
     readonly updateWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['updateWorkApi']>
     readonly uploadDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDbIntroApi']>
     readonly uploadDesktopRequestAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDesktopRequestAttachmentsApi']>
     readonly uploadPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadPublicFileApi']>
+    readonly uploadTableDataApi: UnwrapRef<typeof import('../../../shared/api/data')['uploadTableDataApi']>
     readonly uploadVerifyAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadVerifyAttachmentsApi']>
     readonly upsertCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['upsertCmsApi']>
     readonly upsertConfigApi: UnwrapRef<typeof import('../../../shared/api/config')['upsertConfigApi']>
