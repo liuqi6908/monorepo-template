@@ -35,10 +35,31 @@ const value = useVModel(props, 'modelValue')
         background-color: currentColor;
         border-radius: 10px;
         font-size: 20px;
+        position: relative;
+        overflow: hidden;
 
         &::before {
           color: var(--grey-1);
           font-size: 12px;
+        }
+
+        &::after {
+          content: '';
+          position: absolute;
+          inset: 0;
+          left: 20px;
+          width: auto;
+          background-color: currentColor;
+          animation: radio .3s;
+        }
+
+        @keyframes radio {
+          from {
+            left: 0;
+          }
+          to {
+            left: 20px;
+          }
         }
       }
     }

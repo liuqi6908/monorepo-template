@@ -39,6 +39,7 @@ export class DataRolePermission extends PermissionGuard implements CanActivate {
       user?.role?.permissions?.map(v => v.name) ?? [],
       [
         PermissionType.DATA_QUERY,
+        PermissionType.DATA_INTRO_QUERY,
       ],
     )
 

@@ -82,10 +82,10 @@ export function getAllDataListApi() {
 /**
  * 更新引用规范
  */
-export function updateReferenceApi(dataRootId: IDataRootIdDto['dataRootId'], body: {
+export function updateReferenceApi(dataDirectoryId: IDataDirectory['id'], body: {
   reference: string
 }) {
-  return $patch<boolean>(`/data/reference/${dataRootId}`, body)
+  return $patch<boolean>(`/data/reference/${dataDirectoryId}`, body)
 }
 
 /**

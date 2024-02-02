@@ -3,12 +3,16 @@ interface Props {
   total?: number
   preview?: number
   download?: number
+  previewText?: string
+  downloadText?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   total: 0,
   preview: 0,
   download: 0,
+  previewText: '样例数据',
+  downloadText: '下载数据'
 })
 
 const disablePreview = computed(() => props.preview < props.total)
@@ -33,7 +37,7 @@ const disableDownload = computed(() => props.download < props.total)
         </template>
         <template v-else>
           <div i-mingcute:check-circle-fill />
-          样例数据
+          {{ previewText }}
         </template>
       </div>
       <div
@@ -47,7 +51,7 @@ const disableDownload = computed(() => props.download < props.total)
         </template>
         <template v-else>
           <div i-mingcute:check-circle-fill />
-          下载数据
+          {{ downloadText }}
         </template>
       </div>
     </template>
