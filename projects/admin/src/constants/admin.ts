@@ -3,14 +3,15 @@ import { PermissionType } from 'zjf-types'
 export interface PermissionItem {
   name: string
   desc?: string
+  flag?: boolean
   value?: PermissionType[]
-  base?: PermissionType | PermissionType[]
   children?: PermissionItem[]
 }
 
 interface AdminMenu {
   name: string
   to: string
+  flag?: boolean
   /** 可访问菜单权限 */
   menu: PermissionType[]
   /** 粒子化权限分割 */
@@ -79,6 +80,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
     menu: [
       PermissionType.ACCOUNT_QUERY,
       PermissionType.VERIFICATION_LIST_ALL,
+      PermissionType.CONFIG_QUERY_VERIFICATION,
       PermissionType.DATA_PERMISSION_QUERY,
       PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
     ],
@@ -162,10 +164,6 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
       },
       {
         name: '用户权限管理',
-        base: [
-          PermissionType.DATA_PERMISSION_QUERY,
-          PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
-        ],
         children: [
           {
             name: '只读访问用户角色列表',
@@ -292,6 +290,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
     to: '/desktop',
     menu: [
       PermissionType.DESKTOP_REQUEST_QUERY,
+      PermissionType.CONFIG_QUERY_DESKTOP_REQUEST,
       PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
       PermissionType.DESKTOP_QUERY,
       PermissionType.DESKTOP_DISABLE_QUERY,
@@ -321,14 +320,12 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
           {
             name: '只读访问云桌面申请配置',
             value: [
-              PermissionType.DESKTOP_REQUEST_QUERY,
               PermissionType.CONFIG_QUERY_DESKTOP_REQUEST,
             ],
           },
           {
             name: '管理云桌面申请配置',
             value: [
-              PermissionType.DESKTOP_REQUEST_QUERY,
               PermissionType.CONFIG_QUERY_DESKTOP_REQUEST,
               PermissionType.CONFIG_UPSERT_DESKTOP_REQUEST,
             ],
@@ -355,6 +352,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
           {
             name: '自动分配云桌面',
             desc: '从模板创建新的云桌面给用户使用',
+            flag: getEnvVariable('VITE_DESKTOP_AUTO_ALLOT', false),
             value: [
               PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
               PermissionType.DESKTOP_CREATE_ASSIGN,
@@ -365,7 +363,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             desc: '手动从云桌面资源池中分配云桌面给用户',
             value: [
               PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
-              PermissionType.DESKTOP_QUERY,
+              PermissionType.DESKTOP_QUERY_ASSIGN,
               PermissionType.DESKTOP_ASSIGN,
             ],
           },
@@ -378,6 +376,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             name: '只读访问云桌面资源池',
             value: [
               PermissionType.DESKTOP_QUERY,
+              PermissionType.CONFIG_QUERY_DESKTOP,
             ],
           },
           {
@@ -387,6 +386,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
               PermissionType.DESKTOP_CREATE,
               PermissionType.DESKTOP_UPDATE,
               PermissionType.DESKTOP_DISABLE,
+              PermissionType.DESKTOP_ON_OFF,
               PermissionType.CONFIG_QUERY_DESKTOP,
               PermissionType.CONFIG_UPSERT_DESKTOP,
             ],
@@ -413,6 +413,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
       },
       {
         name: '用户数据上传',
+        flag: getEnvVariable('VITE_DESKTOP_FTP', false),
         children: [
           {
             name: '只读访问用户数据上传列表',
@@ -460,6 +461,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '作品管理',
     to: '/work',
+    flag: getEnvVariable('VITE_WORKS_MANAGE', false),
     menu: [
       PermissionType.WORK_QUERY_ALL,
       PermissionType.CONFIG_QUERY_WORK,
@@ -496,6 +498,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
   {
     name: '采购管理',
     to: '/purchase',
+    flag: getEnvVariable('VITE_DATA_PRE_PURCHASE', false),
     menu: [
       PermissionType.DATA_SUGGEST_QUERY_ALL,
     ],

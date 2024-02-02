@@ -164,6 +164,7 @@ export class DesktopController {
   @ApiOperation({ summary: '查询云桌面列表' })
   @HasPermission([
     PermissionType.DESKTOP_QUERY,
+    PermissionType.DESKTOP_QUERY_ASSIGN,
     PermissionType.DESKTOP_DISABLE_QUERY,
     PermissionType.DESKTOP_FTP_QUERY,
   ])

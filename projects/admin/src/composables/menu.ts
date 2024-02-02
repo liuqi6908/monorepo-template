@@ -86,7 +86,13 @@ export function useMenu() {
         {
           id: 'desktopRequest',
           label: '云桌面申请',
-          flag: role?.includes(PermissionType.DESKTOP_REQUEST_QUERY),
+          flag: hasIntersection(
+            role ?? [],
+            [
+              PermissionType.DESKTOP_REQUEST_QUERY,
+              PermissionType.CONFIG_QUERY_DESKTOP_REQUEST,
+            ],
+          ),
         },
         {
           id: 'desktopQueueing',
@@ -106,7 +112,7 @@ export function useMenu() {
         {
           id: 'desktopData',
           label: '用户数据上传',
-          flag: role?.includes(PermissionType.DESKTOP_FTP_QUERY),
+          flag: role?.includes(PermissionType.DESKTOP_FTP_QUERY) && getEnvVariable('VITE_DESKTOP_FTP'),
         },
       ],
       log: [

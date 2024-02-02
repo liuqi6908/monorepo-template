@@ -64,6 +64,4 @@ interface ImportMetaEnv {
   VITE_WATERMARK?: boolean
   /** 自动分配云桌面 */
   VITE_DESKTOP_AUTO_ALLOT?: boolean
-  /** 手动分配云桌面 */
-  VITE_DESKTOP_MANUAL_ALLOT?: boolean
 }

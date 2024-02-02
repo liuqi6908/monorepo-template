@@ -328,6 +328,7 @@ export class UserController {
     PermissionType.ACCOUNT_QUERY,
     PermissionType.DATA_PERMISSION_ASSIGN_QUERY,
     PermissionType.ROLE_ASSIGN_QUERY,
+    PermissionType.DESKTOP_REQUEST_CREATE,
   ])
   @Post('query')
   public async queryUserList(@Body() body: QueryDto<User>) {

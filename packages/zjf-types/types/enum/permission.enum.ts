@@ -118,6 +118,10 @@ export enum PermissionType {
   DESKTOP_ASSIGN = 'desktop:assign',
   /** 查询云桌面 */
   DESKTOP_QUERY = 'desktop:query',
+  /** 云桌面开关机 */
+  DESKTOP_ON_OFF = 'desktop:on-off',
+  /** 查询待分配云桌面 */
+  DESKTOP_QUERY_ASSIGN = 'desktop:query-assign',
   /** 查询已停用云桌面 */
   DESKTOP_DISABLE_QUERY = 'desktop:disable-query',
   /** 查询数据上传云桌面 */
@@ -247,6 +251,7 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.DESKTOP_REQUEST_APPROVE]: '通过云桌面申请',
   [PermissionType.DESKTOP_REQUEST_REJECT]: '驳回云桌面申请',
   [PermissionType.DESKTOP_REQUEST_QUERY]: '查询云桌面申请',
+  [PermissionType.DESKTOP_QUERY_ASSIGN]: '查询待分配云桌面',
   [PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY]: '查询排队中云桌面申请',
 
   [PermissionType.DESKTOP_CREATE]: '创建云桌面',
@@ -256,6 +261,7 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.DESKTOP_CREATE_ASSIGN]: '自动创建云桌面并分配给指定用户',
   [PermissionType.DESKTOP_ASSIGN]: '分配云桌面给指定用户',
   [PermissionType.DESKTOP_QUERY]: '查询云桌面',
+  [PermissionType.DESKTOP_ON_OFF]: '云桌面开关机',
   [PermissionType.DESKTOP_DISABLE_QUERY]: '查询已停用云桌面',
   [PermissionType.DESKTOP_FTP_QUERY]: '查询数据上传云桌面',
   [PermissionType.DESKTOP_FTP_DELETE]: '删除云桌面数据',
