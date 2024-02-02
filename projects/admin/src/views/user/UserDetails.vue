@@ -1,8 +1,8 @@
 <script lang="ts" setup>
 import moment from 'moment'
 import { PermissionType, VerificationStatus, verificationStatusDescriptions } from 'zjf-types'
-import { vPreview } from 'vue3-image-preview'
 import type { IUser, IVerificationHistory } from 'zjf-types'
+import { isClient } from '@vueuse/core';
 
 interface Props {
   user?: IUser
@@ -21,6 +21,13 @@ interface UserInfo {
 }
 
 const props = defineProps<Props>()
+
+const vPreview = shallowRef()
+if (isClient) {
+  import('vue3-image-preview').then((module) => {
+    vPreview.value = module.vPreview
+  })
+}
 
 const { adminRole, isPhone } = useUser()
 

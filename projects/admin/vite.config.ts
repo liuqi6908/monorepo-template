@@ -122,7 +122,7 @@ export default ({ mode }: any) => {
 
     ssr: {
       // TODO: workaround until they support native ESM
-      noExternal: ['workbox-window', '@wangeditor/editor', '@wangeditor/editor-for-vue'],
+      noExternal: ['workbox-window', 'lodash'],
     },
   })
 }

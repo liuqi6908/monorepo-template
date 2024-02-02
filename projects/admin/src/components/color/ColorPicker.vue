@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ColorPicker } from 'vue3-colorpicker'
+import { isClient } from '@vueuse/core'
+import type { ColorPicker } from 'vue3-colorpicker'
 import 'vue3-colorpicker/style.css'
 
 interface Props {
@@ -9,6 +10,13 @@ interface Props {
 
 const props = defineProps<Props>()
 defineEmits(['update:modelValue'])
+
+const ColorPickerComponent = shallowRef()
+if (isClient) {
+  import('vue3-colorpicker').then((module) => {
+    ColorPickerComponent.value = module.ColorPicker
+  })
+}
 
 const value = useVModel(props, 'modelValue')
 const { byTranslate } = usePosition()
@@ -46,14 +54,15 @@ function calibrationPickerPosition() {
     :class="{ disable }"
     @click="calibrationPickerPosition"
   >
-    <ColorPicker
+    <component
       ref="colorPicker"
+      :is="ColorPickerComponent"
       v-model:pure-color="value"
       :gradient-color="value?.startsWith('rgb') ? '' : value"
       shape="circle"
       round-history
       use-type="both"
-      @update:gradient-color="val => value = val"
+      @update:gradient-color="(val: any) => value = val"
     />
 
     <Teleport v-if="model && zoomRatio < 1" to="body">

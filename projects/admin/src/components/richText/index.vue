@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 import { isClient } from '@vueuse/core'
 import '@wangeditor/editor/dist/css/style.css'
-import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
 import { getRandomID } from 'zjf-utils'
 import type { IDomEditor, IEditorConfig, IToolbarConfig } from '@wangeditor/editor'
 
@@ -16,6 +15,15 @@ interface Props {
 
 const props = defineProps<Props>()
 defineEmits(['update:modelValue'])
+
+const Editor = shallowRef()
+const Toolbar = shallowRef()
+if (isClient) {
+  import('@wangeditor/editor-for-vue').then((module) => {
+    Editor.value = module.Editor
+    Toolbar.value = module.Toolbar
+  })
+}
 
 const value = useVModel(props, 'modelValue')
 
@@ -97,12 +105,14 @@ onBeforeUnmount(() => {
       />
     </div>
     <div rounded-2 b="1px grey-3" flex="~ col" bg-grey-1>
-      <Toolbar
+      <component
+        :is="Toolbar"
         :default-config="toolbarConfig"
         :editor="editorRef"
         b-b="1px grey-3"
       />
-      <Editor
+      <component
+        :is="Editor"
         v-model="value"
         :default-config="editorConfig"
         h="120!"
