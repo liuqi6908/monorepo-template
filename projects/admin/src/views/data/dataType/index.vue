@@ -180,10 +180,13 @@ async function deleteRoot() {
         <q-td text-center>
           <TextBtn
             label="查看数据介绍"
-            :disable="!adminRole?.includes(PermissionType.DATA_INTRO_QUERY)"
+            :disable="
+              !adminRole?.includes(PermissionType.DATA_INTRO_QUERY)
+              || !row.children?.[0]
+            "
             @click="() => {
               active = menu?.[3]?.id
-              selectedId = row.id
+              selectedId = row.children?.[0].id
             }"
           />
         </q-td>

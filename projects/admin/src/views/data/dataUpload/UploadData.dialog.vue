@@ -245,7 +245,6 @@ function handlerUpload(type: UploadType, name: string) {
     :model-value="!!id"
     class="upload-table-data-dialog"
     title="数据资源上传"
-    footer
     :loading="loading"
     :params="{
       fullWidth: true,

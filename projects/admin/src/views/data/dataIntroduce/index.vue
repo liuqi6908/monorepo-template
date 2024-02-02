@@ -6,6 +6,8 @@ import { MinioBucket, PermissionType } from 'zjf-types'
 import type { QTableColumn } from 'quasar'
 import type { Resource } from '~/composables/dataRoot'
 
+import ViewIntroduceDialog from './ViewIntroduce.dialog.vue'
+
 interface TableRow {
   id: string
   nameZH: string
@@ -16,7 +18,7 @@ interface TableRow {
   reference?: string
 }
 
-const { loading, dataList, queryDataList } = useDataRoot()
+const { loading, dataList, selectedId, queryDataList } = useDataRoot()
 const { adminRole } = useUser()
 
 /** 数据库介绍上传情况 */
@@ -195,6 +197,7 @@ async function editReference() {
           outline: true,
         }"
         :disable="!selected"
+        @click="selectedId = selected?.databaseId"
       >
         <template #left>
           <div w5 h5 i-mingcute:document-line />
@@ -252,5 +255,7 @@ async function editReference() {
         type="textarea"
       />
     </ZDialog>
+
+    <ViewIntroduceDialog v-model:id="selectedId" />
   </div>
 </template>
