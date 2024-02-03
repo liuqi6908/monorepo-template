@@ -1,4 +1,5 @@
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
+import { Throttle } from '@nestjs/throttler'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req } from '@nestjs/common'
 import { In } from 'typeorm'
 import {
@@ -55,6 +56,7 @@ export class DesktopController {
   }
 
   @ApiOperation({ summary: '创建一个云桌面' })
+  @Throttle(10000, 60)
   @HasPermission(PermissionType.DESKTOP_CREATE)
   @Put()
   public async createDesktop(@Body() body: CreateDesktopBodyDto) {
