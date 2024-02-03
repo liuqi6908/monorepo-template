@@ -14,12 +14,14 @@ import { omit } from 'zjf-utils'
 import { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { DesktopIdDto } from 'src/dto/id/desktop.dto'
+import { PasswordDto } from 'src/dto/password.dto'
 import type { PaginatedResData } from 'src/dto/pagination.dto'
 import { IsLogin } from 'src/guards/login.guard'
 import { HasPermission } from 'src/guards/permission.guard'
 import { getQuery } from 'src/utils/query'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { ApiSuccessResponse, responseError } from 'src/utils/response'
+import { comparePassword } from 'src/utils/encrypt/encrypt-password'
 
 import { NotifyService } from '../notify/notify.service'
 import { SysConfigService } from '../config/config.service'
@@ -192,6 +194,28 @@ export class DesktopController {
       ...queryRes,
       data: queryRes.data.map(v => omit(v, 'password')),
     } as PaginatedResData<Desktop>
+  }
+
+  @ApiOperation({ summary: '查询指定云桌面的密码' })
+  @HasPermission([
+    PermissionType.DESKTOP_QUERY,
+    PermissionType.DESKTOP_DISABLE_QUERY,
+  ])
+  @Post('password/:desktopId')
+  public async queryDesktopPassword(
+    @Req() req: FastifyRequest,
+    @Param() param: DesktopIdDto,
+    @Body() body: PasswordDto,
+  ) {
+    const user = req.raw.user
+    // 校验密码
+    const correct = await comparePassword(body.password, user.password)
+    if (!correct)
+      responseError(ErrorCode.AUTH_PASSWORD_NOT_MATCHED)
+    const desktop = await this._desktopSrv.repo().findOne({ where: { id: param.desktopId } })
+    if (!desktop)
+      responseError(ErrorCode.DESKTOP_NOT_FOUND)
+    return desktop.password
   }
 
   @ApiOperation({ summary: '手动检查云桌面的过期' })
