@@ -1,19 +1,21 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
 import { FILE_SIZE_UNITS } from 'zjf-utils'
+import type { DESKTOP_REQUEST_DURATION_OPTION } from 'zjf-types'
 
 import type { ZLabelProps } from 'shared/components/label/ZLabel.vue'
 
 export interface InfoItemProps extends ZLabelProps {
   modelValue?: string
-  type?: 'text' | 'image' | 'number' | 'fileSize' | 'fileSuffix'
+  type?: 'text' | 'image' | 'number' | 'fileSize' | 'fileSuffix' | 'option'
   text?: string | number
   unit?: string
   arr?: string[]
+  option?: typeof DESKTOP_REQUEST_DURATION_OPTION
   isEdit?: boolean
   resetText?: string
 }
-export type UpdateParam = Pick<InfoItemProps, 'type' | 'text' | 'unit' | 'arr'> & {
+export type UpdateParam = Pick<InfoItemProps, 'type' | 'text' | 'unit' | 'arr' | 'option'> & {
   file?: File
 }
 
@@ -35,6 +37,8 @@ const text = ref<string | number>()
 const unit = ref<string>()
 /** 文件后缀列表 */
 const arr = ref<string[]>([])
+/** 可选项配置列表 */
+const option = ref<typeof DESKTOP_REQUEST_DURATION_OPTION>([])
 
 watch(
   updateDialog,
@@ -43,6 +47,7 @@ watch(
       text.value = props.text || props.modelValue
       unit.value = props.unit
       arr.value = cloneDeep(props.arr) || []
+      option.value = cloneDeep(props.option) || []
     }
   },
   {
@@ -135,6 +140,7 @@ watch(
         || (typeof text === 'number' && text < 0)
         || (type === 'fileSize' && (typeof text !== 'number' || text >= 1024))
         || (type === 'fileSuffix' && !arr.filter(Boolean).length)
+        || (type === 'option' && !option.filter(v => v.label && v.value).length)
       "
       confirm-text="保存"
       footer
@@ -143,14 +149,18 @@ watch(
         text,
         unit,
         arr,
+        option,
       })"
     >
+      <!-- 文本 -->
       <ZInput
         v-if="type === 'text'"
         v-model="text"
         :label="label"
         required
       />
+
+      <!-- 数字 / 文件尺寸 -->
       <div
         v-else-if="type === 'number' || type === 'fileSize'"
         flex="~ gap10"
@@ -169,9 +179,11 @@ watch(
           w26
         />
       </div>
+
+      <!-- 文件名后缀 -->
       <div v-else-if="type === 'fileSuffix'" flex="~ col gap2">
         <ZLabel v-bind="props" required />
-        <div flex="~ gap6 wrap">
+        <div flex="~ wrap" gap="x6 y3">
           <ZInput
             v-for="(_, i) in arr"
             :key="i"
@@ -180,7 +192,7 @@ watch(
             :params="{
               maxlength: 10,
             }"
-            w25
+            w38
             @update:model-value="val => arr[i] = val"
           >
             <template #append>
@@ -198,8 +210,68 @@ watch(
               outline: true
             }"
             :disable="arr.length > 20"
-            size="big"
+            size="big" w38
             @click="arr.push('')"
+          >
+            <div text-lg i-mingcute:add-line />
+          </ZBtn>
+        </div>
+      </div>
+
+      <!-- 可选项配置 -->
+      <div v-else-if="type === 'option'" flex="~ col gap2">
+        <ZLabel v-bind="props" required />
+        <div flex="~ col gap3">
+          <div
+            v-for="(_, i) in option"
+            :key="i"
+            flex="~ gap6"
+          >
+            <ZInput
+              class="option"
+              label="标签"
+              :model-value="option[i].label"
+              :params="{
+                maxlength: 10,
+              }"
+              flex-3 w0
+              @update:model-value="val => option[i].label = val"
+            >
+              <template #append>
+                <div
+                  i-mingcute:close-line
+                  text-sm cursor-pointer hidden
+                  @click="option.splice(i, 1)"
+                />
+              </template>
+            </ZInput>
+            <ZInput
+              label="值"
+              :model-value="option[i].value"
+              type="number"
+              flex-2 w0
+              @update:model-value="(val) => {
+                const num = Math.floor(Number.parseFloat(val))
+                if (Number.isNaN(num) || num <= 0)
+                  option[i].value = 1
+                else if (num > 99999)
+                  option[i].value = 99999
+                else
+                  option[i].value = num
+              }"
+            />
+          </div>
+          <ZBtn
+            text-color="primary-1"
+            :params="{
+              outline: true
+            }"
+            :disable="option.length > 10"
+            size="big"
+            @click="option.push({
+              label: '',
+              value: 1,
+            })"
           >
             <div text-lg i-mingcute:add-line />
           </ZBtn>
@@ -228,11 +300,13 @@ watch(
   }
 }
 
-.z-input.file-suffix {
-  &:hover {
-    :deep(.q-field__append) {
-      > div {
-        display: block;
+.z-input {
+  &.file-suffix, &.option {
+    &:hover {
+      :deep(.q-field__append) {
+        > div {
+          display: block;
+        }
       }
     }
   }

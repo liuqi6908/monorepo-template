@@ -26,7 +26,7 @@ export const DESKTOP_REQUEST_UPLOAD_HINT = '请上传 PDF、WORD、PNG、JPG 格
 /** ---------------------- 云桌面 ---------------------- */
 /** 云桌面资源最大数量 */
 export const DESKTOP_MAX_COUNT = 50
-/** 云桌面FTP文件传输配额 */
 
 /** ---------------------- 云桌面文件传输 ---------------------- */
+/** 云桌面FTP文件传输配额 */
 export const DESKTOP_FTP_QUOTA = 1024 * 1024 * 1024 * 10
