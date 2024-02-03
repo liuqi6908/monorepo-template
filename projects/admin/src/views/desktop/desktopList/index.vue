@@ -10,6 +10,7 @@ import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '~/views/user/UserDetails.vue'
 import DesktopDialog from './Desktop.dialog.vue'
 import BatchAddDesktop from './BatchAddDesktop.vue'
+import DesktopQuota from './DesktopQuota.vue'
 import type { Type } from './Desktop.dialog.vue'
 
 const { adminRole } = useUser()
@@ -246,12 +247,7 @@ async function stopDesktop() {
             </template>
           </ZBtn>
         </template>
-        <div
-          h10 flex="~ items-center" px4
-          rounded-2 bg-grey-2 text-sm
-        >
-          云桌面限额：50 台
-        </div>
+        <DesktopQuota @loading="(val: boolean) => loading = val" />
       </div>
     </div>
 
