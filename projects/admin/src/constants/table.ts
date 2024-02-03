@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { PAGINATION_SIZE_DFT } from 'zjf-types'
 import { formatFileSize } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
-import type { IDataDirectory, IDesktopQueue, IFileExportBasic, IUser } from 'zjf-types'
+import type { IDataDirectory, IDesktop, IDesktopQueue, IFileExportBasic, IUser } from 'zjf-types'
 
 /**
  * 返回表格分页配置
@@ -70,8 +70,8 @@ export const DATA_TABLE_COLUMNS: QTableColumn<IDataDirectory>[] = [
  */
 export const DESKTOP_REQUEST_TABLE_COLUMNS: QTableColumn<IDesktopQueue>[] = [
   {
-    name: 'account',
-    label: '用户',
+    name: 'id',
+    label: 'ID',
     field: row => row.user?.account,
   },
   {
@@ -109,6 +109,59 @@ export const DESKTOP_REQUEST_TABLE_COLUMNS: QTableColumn<IDesktopQueue>[] = [
     name: 'status',
     label: '申请状态',
     field: 'status',
+  },
+]
+
+/**
+ * 云桌面表格基础字段
+ */
+export const DESKTOP_TABLE_COLUMNS: QTableColumn<IDesktop>[] = [
+  {
+    name: 'id',
+    label: 'ID',
+    field: 'id',
+  },
+  {
+    name: 'name',
+    label: '云桌面名称',
+    field: 'name',
+  },
+  {
+    name: 'internalIp',
+    label: 'IP地址',
+    field: 'internalIp',
+  },
+  {
+    name: 'accessUrl',
+    label: '访问地址',
+    field: 'accessUrl',
+  },
+  {
+    name: 'account',
+    label: '账号',
+    field: 'account',
+  },
+  {
+    name: 'password',
+    label: '密码',
+    field: 'password',
+  },
+  {
+    name: 'createdAt',
+    label: '创建时间',
+    field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
+    sortable: true,
+  },
+  {
+    name: 'expiredAt',
+    label: '到期时间',
+    field: row => moment(row.expiredAt).format('YYYY-MM-DD HH:mm:ss'),
+    sortable: true,
+  },
+  {
+    name: 'userId',
+    label: '用户',
+    field: 'userId',
   },
 ]
 
