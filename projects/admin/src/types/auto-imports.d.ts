@@ -220,7 +220,6 @@ declare global {
   const shallowRef: typeof import('vue')['shallowRef']
   const showUploadResult: typeof import('../utils/notify')['showUploadResult']
   const startVMApi: typeof import('../../../shared/api/desktopVm')['startVMApi']
-  const stopDesktopApi: typeof import('../../../shared/api/desktop')['stopDesktopApi']
   const stopVMApi: typeof import('../../../shared/api/desktopVm')['stopVMApi']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']

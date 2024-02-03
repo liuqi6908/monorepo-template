@@ -19,15 +19,15 @@ withDefaults(
 const verifyStyle: VerifyStyle = {
   [VerificationStatus.APPROVED]: {
     color: 'alerts-success',
-    icon: 'i-material-symbols:check-circle',
+    icon: 'i-mingcute:check-circle-fill',
   },
   [VerificationStatus.REJECTED]: {
     color: 'alerts-error',
-    icon: 'i-material-symbols:cancel',
+    icon: 'i-mingcute:close-circle-fill',
   },
   [VerificationStatus.PENDING]: {
     color: 'alerts-warning',
-    icon: 'i-mdi:minus-circle',
+    icon: 'i-mingcute:minus-circle-fill',
   },
   [VerificationStatus.CANCELLED]: {
     color: 'primary-1',

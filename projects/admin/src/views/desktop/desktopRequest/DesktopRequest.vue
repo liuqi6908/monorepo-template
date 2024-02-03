@@ -8,6 +8,7 @@ import type { IDesktopQueue, IQueryDto } from 'zjf-types'
 
 import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '../../user/UserDetails.vue'
+import AttachmentsDialog from '../Attachments.dialog.vue'
 
 const { adminRole } = useUser()
 
@@ -30,6 +31,10 @@ const approveDialog = ref(false)
 const rejectDialog = ref(false)
 /** 驳回理由 */
 const rejectReason = ref('')
+/** 查看申请材料的用户id */
+const userId = ref<IDesktopQueue['userId']>()
+/** 申请材料 */
+const attachments = ref<IDesktopQueue['attachments']>()
 
 /** 表格行 */
 const rows = ref<QTableProps['rows']>([])
@@ -49,11 +54,6 @@ const cols = reactive<QTableColumn<IDesktopQueue>[]>([
     name: 'name',
     label: '姓名',
     field: row => row.user?.verification?.name,
-  },
-  {
-    name: 'dataRole',
-    label: '用户角色',
-    field: row => row.user?.dataRole?.name,
   },
   {
     name: 'requestAt',
@@ -162,7 +162,7 @@ async function approve() {
   loading.value = true
   let res
   try {
-    // res = await batchApproveVerificationApi(id)
+    res = await batchApproveDesktopRequestApi(selected.value.map(v => v.userId))
     Notify.create({
       type: 'success',
       message: '操作成功'
@@ -187,10 +187,10 @@ async function reject() {
   loading.value = true
   let res
   try {
-    /* res = await batchRejectVerificationApi({
-      id,
+    res = await batchRejectDesktopRequestApi({
+      id: selected.value.map(v => v.userId),
       reason: rejectReason.value,
-    }) */
+    })
     Notify.create({
       type: 'success',
       message: '操作成功'
@@ -246,18 +246,35 @@ async function reject() {
         noDataLabel: '暂无待审核云桌面申请记录',
         binaryStateSort: true,
         selection: 'multiple',
+        rowKey: 'userId',
       }"
       flex-1 h0
       fixed-first-column
       @request="queryDesktopRequestList"
     >
+      <template #body-cell-attachments="{ row, value }">
+        <q-td auto-width>
+          <TextBtn
+            label="查看申请材料"
+            :disable="!value?.length"
+            @click="() => {
+              userId = row.userId
+              attachments = value
+            }"
+          />
+        </q-td>
+      </template>
       <template #body-cell-userId="{ row }">
-        <q-td text-center>
+        <q-td auto-width>
           <UserDetails
             :user="row.user"
             label="查看用户信息"
-            inline-flex
           />
+        </q-td>
+      </template>
+      <template #body-cell-status="{ value }">
+        <q-td auto-width>
+          <DesktopRequestStatus :status="value" />
         </q-td>
       </template>
     </ZTable>
@@ -269,7 +286,7 @@ async function reject() {
       footer
       @ok="approve"
     >
-      该操作将通过已选用户的认证申请，是否继续？
+      该操作将通过已选的云桌面申请，是否继续？
     </ZDialog>
 
     <!-- 驳回 -->
@@ -293,5 +310,14 @@ async function reject() {
         }"
       />
     </ZDialog>
+
+    <AttachmentsDialog
+      :user-id="userId"
+      :attachments="attachments"
+      @close-dialog="() => {
+        userId = undefined
+        attachments = undefined
+      }"
+    />
   </div>
 </template>

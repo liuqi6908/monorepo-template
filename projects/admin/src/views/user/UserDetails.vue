@@ -2,7 +2,7 @@
 import moment from 'moment'
 import { PermissionType, VerificationStatus, verificationStatusDescriptions } from 'zjf-types'
 import type { IUser, IVerificationHistory } from 'zjf-types'
-import { isClient } from '@vueuse/core';
+import { isClient } from '@vueuse/core'
 
 interface Props {
   user?: IUser
@@ -217,7 +217,7 @@ const userInfo = computed<UserInfo[]>(() => {
                 />
                 <div
                   v-if="userId && Array.isArray(item.value)"
-                  flex="~ 1 gap2" w0
+                  flex="~ 1 gap2 wrap" w0
                 >
                   <img
                     v-for="(img, index) in item.value"
