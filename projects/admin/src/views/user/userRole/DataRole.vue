@@ -16,7 +16,6 @@ const isEdit = computed(() => hasIntersection(
   [
     PermissionType.DATA_PERMISSION_CREATE,
     PermissionType.DATA_PERMISSION_DELETE,
-    PermissionType.DATA_PERMISSION_UPDATE,
   ],
 ))
 
@@ -54,7 +53,7 @@ const cols = reactive<QTableColumn<IDataRole>[]>([
     field: row => row.select ? '是' : '否',
   },
   {
-    name: 'action',
+    name: 'info',
     label: '完整信息',
     field: 'id',
   },
@@ -71,6 +70,13 @@ watch(
 )
 
 onBeforeMount(() => {
+  if (adminRole.value?.includes(PermissionType.DATA_PERMISSION_UPDATE)) {
+    cols.push({
+      name: 'action',
+      label: '操作',
+      field: 'id',
+    })
+  }
   cols.forEach(v => v.align = 'center')
   queryRoleList()
 })
@@ -137,23 +143,6 @@ async function deleteRole() {
         </template>
       </ZBtn>
       <ZBtn
-        v-if="adminRole?.includes(PermissionType.DATA_PERMISSION_UPDATE)"
-        label="编辑角色"
-        text-color="primary-1"
-        :params="{
-          outline: true,
-        }"
-        :disable="selected?.length !== 1"
-        @click="() => {
-          dialogType = 'edit'
-          dialogId = selected?.[0].id
-        }"
-      >
-        <template #left>
-          <div w5 h5 i-mingcute:edit-2-line />
-        </template>
-      </ZBtn>
-      <ZBtn
         v-if="adminRole?.includes(PermissionType.DATA_PERMISSION_DELETE)"
         label="删除角色"
         text-color="primary-1"
@@ -181,7 +170,7 @@ async function deleteRole() {
       fixed-first-column
       fixed-last-column
     >
-      <template #body-cell-action="{ value }">
+      <template #body-cell-info="{ value }">
         <q-td auto-width>
           <div
             text="sm primary-1" font-400
@@ -193,6 +182,18 @@ async function deleteRole() {
           >
             查看完整信息
           </div>
+        </q-td>
+      </template>
+      <template #body-cell-action="{ value }">
+        <q-td auto-width>
+          <ZBtn
+            label="编辑"
+            size="small"
+            @click="() => {
+              dialogType = 'edit'
+              dialogId = value
+            }"
+          />
         </q-td>
       </template>
     </ZTable>
