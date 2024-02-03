@@ -33,13 +33,16 @@ declare global {
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const authToken: typeof import('../../../shared/composables/user')['authToken']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const batchApproveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
+  const batchRejectDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']
   const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
+  const batchStopDesktopApi: typeof import('../../../shared/api/desktop')['batchStopDesktopApi']
   const batchUpdateUserDataRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']
   const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
   const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
@@ -500,13 +503,16 @@ declare module 'vue' {
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
@@ -684,7 +690,6 @@ declare module 'vue' {
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly showUploadResult: UnwrapRef<typeof import('../utils/notify')['showUploadResult']>
     readonly startVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['startVMApi']>
-    readonly stopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['stopDesktopApi']>
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
@@ -960,13 +965,16 @@ declare module '@vue/runtime-core' {
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
@@ -1144,7 +1152,6 @@ declare module '@vue/runtime-core' {
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly showUploadResult: UnwrapRef<typeof import('../utils/notify')['showUploadResult']>
     readonly startVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['startVMApi']>
-    readonly stopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['stopDesktopApi']>
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>

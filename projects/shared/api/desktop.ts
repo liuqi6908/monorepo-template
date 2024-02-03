@@ -5,6 +5,7 @@ import type {
   IQueryDto,
   IUpdateDesktopBodyDto,
   IUpdateDesktopFtpQuotaBodyDto,
+  IUser,
 } from 'zjf-types'
 import type { DesktopVM } from '../types/desktop.interface'
 import { useRequest } from '../composables/request'
@@ -26,30 +27,30 @@ export function createDesktopApi(body: ICreateDesktopBodyDto) {
 }
 
 /**
- * 停用一个云桌面
- */
-export function stopDesktopApi(desktopId: string) {
-  return $delete<boolean>(`/desktop/${desktopId}`)
-}
-
-/**
  * 更新一个云桌面
  */
-export function updateDesktopApi(desktopId: string, body: IUpdateDesktopBodyDto) {
+export function updateDesktopApi(desktopId: IDesktop['id'], body: IUpdateDesktopBodyDto) {
   return $patch<boolean>(`/desktop/${desktopId}`, body)
 }
 
 /**
  * 批量删除云桌面（无法删除未禁用的）
  */
-export function batchDeleteDesktopApi(body: string[]) {
+export function batchDeleteDesktopApi(body: IDesktop['id'][]) {
   return $delete<number>('/desktop/delete/batch', body)
+}
+
+/**
+ * 批量停用云桌面
+ */
+export function batchStopDesktopApi(body: IDesktop['id'][]) {
+  return $delete<number>('/desktop/stop/batch', body)
 }
 
 /**
  * 分配云桌面给指定的用户
  */
-export function assignDesktopApi(desktopId: string, userId: string) {
+export function assignDesktopApi(desktopId: IDesktop['id'], userId: IUser['id']) {
   return $patch<boolean>(`/desktop/${desktopId}/assign/${userId}`)
 }
 
@@ -70,7 +71,7 @@ export function checkDesktopExpireManuallyApi(accessKey: string) {
 /**
  * 修改指定云桌面的文件传输配额
  */
-export function updateDesktopFtpQuotaApi(desktopId: string, body: IUpdateDesktopFtpQuotaBodyDto) {
+export function updateDesktopFtpQuotaApi(desktopId: IDesktop['id'], body: IUpdateDesktopFtpQuotaBodyDto) {
   return $patch<boolean>(`/desktop/ftp/${desktopId}`, body)
 }
 

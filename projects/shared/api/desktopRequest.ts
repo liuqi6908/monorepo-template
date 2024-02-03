@@ -1,4 +1,5 @@
 import type {
+  IBatchRejectDesktopReqBodyDto,
   ICreateDesktopRequestBodyDto,
   ICreateUserDesktopRequestBodyDto,
   IDesktopQueue,
@@ -6,6 +7,7 @@ import type {
   IPaginatedResData,
   IQueryDto,
   IRejectDesktopReqBodyDto,
+  IUser,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
 
@@ -28,15 +30,29 @@ export function createUserDesktopRequestApi(body: ICreateUserDesktopRequestBodyD
 /**
  * 通过一个云桌面申请
  */
-export function approveDesktopRequestApi(userId: string) {
+export function approveDesktopRequestApi(userId: IUser['id']) {
   return $post<boolean>(`/desktop-request/approve/${userId}`)
+}
+
+/**
+ * 批量通过云桌面申请
+ */
+export function batchApproveDesktopRequestApi(body: IUser['id'][]) {
+  return $post<number>('/desktop-request/approve/batch', body)
 }
 
 /**
  * 驳回一个云桌面申请
  */
-export function rejectDesktopRequestApi(userId: string, body: IRejectDesktopReqBodyDto) {
+export function rejectDesktopRequestApi(userId: IUser['id'], body: IRejectDesktopReqBodyDto) {
   return $post<boolean>(`/desktop-request/reject/${userId}`, body)
+}
+
+/**
+ * 批量驳回云桌面申请
+ */
+export function batchRejectDesktopRequestApi(body: IBatchRejectDesktopReqBodyDto) {
+  return $post<number>('/desktop-request/reject/batch', body)
 }
 
 /**
