@@ -5,7 +5,8 @@ interface ZRadioProps {
   modelValue?: QRadioProps['modelValue']
   val?: QRadioProps['val']
   label?: string
-  params?: Omit<QRadioProps, 'modelValue' | 'val' | 'label'>
+  disable?: boolean
+  params?: Omit<QRadioProps, 'modelValue' | 'val' | 'label' | 'disable'>
 }
 
 const props = defineProps<ZRadioProps>()
@@ -20,6 +21,7 @@ const value = useVModel(props, 'modelValue')
     class="z-radio"
     :val="val"
     :label="label"
+    :disable="disable"
     checked-icon="fas fa-check"
     v-bind="params"
   >

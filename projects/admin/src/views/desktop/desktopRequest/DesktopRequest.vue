@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import moment from 'moment'
 import { Notify } from 'quasar'
+import { cloneDeep } from 'lodash'
 import { PermissionType, DesktopQueueStatus } from 'zjf-types'
 import { hasIntersection } from 'zjf-utils'
-import type { QTableColumn, QTableProps } from 'quasar'
+import type { QTableProps } from 'quasar'
 import type { IDesktopQueue, IQueryDto } from 'zjf-types'
 
 import ZTable from '~/components/table/ZTable.vue'
@@ -39,58 +39,16 @@ const attachments = ref<IDesktopQueue['attachments']>()
 /** 表格行 */
 const rows = ref<QTableProps['rows']>([])
 /** 表格列 */
-const cols = reactive<QTableColumn<IDesktopQueue>[]>([
-  {
-    name: 'account',
-    label: '用户',
-    field: row => row.user?.account,
-  },
-  {
-    name: 'email',
-    label: '邮箱',
-    field: row => row.user?.email,
-  },
-  {
-    name: 'name',
-    label: '姓名',
-    field: row => row.user?.verification?.name,
-  },
-  {
-    name: 'requestAt',
-    label: '申请时间',
-    field: row => moment(row.requestAt).format('YYYY-MM-DD HH:mm:ss'),
-    sortable: true,
-  },
-  {
-    name: 'duration',
-    label: '申请时长',
-    field: 'duration',
-  },
-  {
-    name: 'attachments',
-    label: '申请材料',
-    field: 'attachments',
-  },
-  {
-    name: 'userId',
-    label: '用户信息详情',
-    field: 'userId',
-  },
-  {
-    name: 'status',
-    label: '申请状态',
-    field: 'status',
-  },
-])
+const cols = reactive(cloneDeep(DESKTOP_REQUEST_TABLE_COLUMNS))
 /** 表格分页信息 */
 const pagination = TABLE_PAGINATION('requestAt', true)
 /** 多选 */
 const selected = ref<IDesktopQueue[]>()
 
 onBeforeMount(() => {
-  cols.forEach(v => v.align = 'center')
   if (!adminRole.value?.includes(PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT))
-    cols.splice(6, 1)
+    cols.splice(5, 1)
+  cols.forEach(v => v.align = 'center')
 })
 
 /**

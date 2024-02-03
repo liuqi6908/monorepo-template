@@ -346,6 +346,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             name: '手动创建待分配申请',
             value: [
               PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
+              PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT,
               PermissionType.DESKTOP_REQUEST_CREATE,
             ],
           },
@@ -355,6 +356,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             flag: getEnvVariable('VITE_DESKTOP_AUTO_ALLOT', false),
             value: [
               PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
+              PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT,
               PermissionType.DESKTOP_CREATE_ASSIGN,
             ],
           },
@@ -363,6 +365,7 @@ export const ADMIN_MENU_LIST: AdminMenu[] = [
             desc: '手动从云桌面资源池中分配云桌面给用户',
             value: [
               PermissionType.DESKTOP_REQUEST_QUEUEING_QUERY,
+              PermissionType.DESKTOP_REQUEST_CAT_ATTACHMENT,
               PermissionType.DESKTOP_QUERY_ASSIGN,
               PermissionType.DESKTOP_ASSIGN,
             ],

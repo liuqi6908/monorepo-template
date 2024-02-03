@@ -14,6 +14,7 @@ declare global {
   const CMS_CONFIG: typeof import('../../../shared/constants/cms')['CMS_CONFIG']
   const COLLEGE_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']
   const DATA_TABLE_COLUMNS: typeof import('../constants/table')['DATA_TABLE_COLUMNS']
+  const DESKTOP_REQUEST_TABLE_COLUMNS: typeof import('../constants/table')['DESKTOP_REQUEST_TABLE_COLUMNS']
   const EXPORT_TABLE_COLUMNS: typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']
   const EffectScope: typeof import('vue')['EffectScope']
   const ID_CARD_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']
@@ -483,6 +484,7 @@ declare module 'vue' {
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
     readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']>
     readonly DATA_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DATA_TABLE_COLUMNS']>
+    readonly DESKTOP_REQUEST_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DESKTOP_REQUEST_TABLE_COLUMNS']>
     readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']>
@@ -945,6 +947,7 @@ declare module '@vue/runtime-core' {
     readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
     readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']>
     readonly DATA_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DATA_TABLE_COLUMNS']>
+    readonly DESKTOP_REQUEST_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DESKTOP_REQUEST_TABLE_COLUMNS']>
     readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
     readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']>

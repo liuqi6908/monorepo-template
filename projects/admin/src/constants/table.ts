@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { PAGINATION_SIZE_DFT } from 'zjf-types'
 import { formatFileSize } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
-import type { IDataDirectory, IFileExportBasic, IUser } from 'zjf-types'
+import type { IDataDirectory, IDesktopQueue, IFileExportBasic, IUser } from 'zjf-types'
 
 /**
  * 返回表格分页配置
@@ -62,6 +62,53 @@ export const DATA_TABLE_COLUMNS: QTableColumn<IDataDirectory>[] = [
     name: 'nameEN',
     label: '英文名',
     field: 'nameEN',
+  },
+]
+
+/**
+ * 云桌面申请表格基础字段
+ */
+export const DESKTOP_REQUEST_TABLE_COLUMNS: QTableColumn<IDesktopQueue>[] = [
+  {
+    name: 'account',
+    label: '用户',
+    field: row => row.user?.account,
+  },
+  {
+    name: 'email',
+    label: '邮箱',
+    field: row => row.user?.email,
+  },
+  {
+    name: 'name',
+    label: '姓名',
+    field: row => row.user?.verification?.name,
+  },
+  {
+    name: 'requestAt',
+    label: '申请时间',
+    field: row => moment(row.requestAt).format('YYYY-MM-DD HH:mm:ss'),
+    sortable: true,
+  },
+  {
+    name: 'duration',
+    label: '申请时长',
+    field: 'duration',
+  },
+  {
+    name: 'attachments',
+    label: '申请材料',
+    field: 'attachments',
+  },
+  {
+    name: 'userId',
+    label: '用户信息详情',
+    field: 'userId',
+  },
+  {
+    name: 'status',
+    label: '申请状态',
+    field: 'status',
   },
 ]
 

@@ -99,6 +99,13 @@ const { isAdmin } = useSysConfig()
       .q-field__native {
         min-height: auto;
         padding: 0;
+
+        > span:first-child {
+          white-space: nowrap;
+          max-width: 100%;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
       }
     }
 
