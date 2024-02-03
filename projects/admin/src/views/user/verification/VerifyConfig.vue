@@ -132,7 +132,7 @@ async function update(item: typeof info.value[number], val: UpdateParam) {
 </script>
 
 <template>
-  <div flex="~ col gap4" full relative>
+  <div flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
     <!-- 操作栏 -->

@@ -231,7 +231,7 @@ async function reset() {
 </script>
 
 <template>
-  <div full flex="~ col gap4" relative>
+  <div flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
     <div flex="~ wrap" gap="x4 y2">

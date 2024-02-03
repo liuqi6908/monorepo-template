@@ -7,6 +7,7 @@ import { isClient } from '@vueuse/core';
 interface Props {
   user?: IUser
   verify?: IVerificationHistory
+  label?: string
 }
 
 interface UserInfo {
@@ -20,7 +21,9 @@ interface UserInfo {
   }[]
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  label: '查看完整信息'
+})
 
 const vPreview = shallowRef()
 if (isClient) {
@@ -149,9 +152,8 @@ const userInfo = computed<UserInfo[]>(() => {
       text="sm primary-1" font-400
       cursor-pointer select-none
       @click="dialog = true"
-    >
-      查看完整信息
-    </div>
+      v-text="label"
+    />
 
     <ZDialog
       v-model="dialog"

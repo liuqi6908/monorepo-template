@@ -222,6 +222,7 @@ async function editReference() {
         selection: 'multiple',
       }"
       flex-1 h0
+      fixed-first-column
     >
       <template #header-selection>
         选择
