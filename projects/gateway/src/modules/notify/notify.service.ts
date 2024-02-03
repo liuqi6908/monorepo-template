@@ -121,6 +121,8 @@ export class NotifyService {
    * @param desktop
    */
   public async notifyUserDesktopInfoChanged(desktop: Desktop) {
+    if (!desktop.user?.email)
+      return
     this._emailSrv.send({
       to: desktop.user.email,
       ...getDesktopInfoChangedHTML(desktop),
