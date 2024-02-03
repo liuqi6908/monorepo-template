@@ -11,6 +11,7 @@ import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '../../user/UserDetails.vue'
 import AttachmentsDialog from '../Attachments.dialog.vue'
 import AddRequest from './AddRequest.vue'
+import ManualAssignDialog from './ManualAssign.dialog.vue'
 
 const { adminRole } = useUser()
 
@@ -243,6 +244,12 @@ async function autoAssign() {
         userId = undefined
         attachments = undefined
       }"
+    />
+
+    <ManualAssignDialog
+      v-model="manualDialog"
+      :id="selected?.userId"
+      @callback="callback"
     />
   </div>
 </template>
