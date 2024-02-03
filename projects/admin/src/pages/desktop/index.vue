@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import DesktopRequest from '~/views/desktop/DesktopRequest.vue'
-import QueueingList from '~/views/desktop/QueueingList.vue'
-import DesktopList from '~/views/desktop/DesktopList.vue'
-import DesktopRecycled from '~/views/desktop/DesktopRecycled.vue'
-import UserDataUpload from '~/views/desktop/UserDataUpload.vue'
+import DesktopRequest from '~/views/desktop/desktopRequest/index.vue'
+import QueueingList from '~/views/desktop/queueingList/index.vue'
+import DesktopList from '~/views/desktop/desktopList/index.vue'
+import DesktopRecycled from '~/views/desktop/desktopRecycled/index.vue'
+import UserDataUpload from '~/views/desktop/userDataUpload/index.vue'
 
 const { active, menu } = useMenu()
 </script>
