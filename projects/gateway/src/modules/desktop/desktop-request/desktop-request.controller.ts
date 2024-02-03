@@ -8,7 +8,7 @@ import {
   PermissionType,
   SysConfig,
 } from 'zjf-types'
-import { IsNull, Not } from 'typeorm'
+import { In, IsNull, Not } from 'typeorm'
 import type { IGetOwnDesktopReqResData } from 'zjf-types'
 
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
@@ -25,7 +25,7 @@ import { DesktopQueueHistoryService } from '../desktop-queue-history/desktop-que
 import { SysConfigService } from '../../config/config.service'
 import { DesktopRequestService } from './desktop-request.service'
 import { GetOwnDesktopReqResDto } from './dto/get-own-desktop-req.res.dto'
-import { RejectDesktopReqBodyDto } from './dto/reject-desktop-req.body.dto'
+import { BatchRejectDesktopReqBodyDto, RejectDesktopReqBodyDto } from './dto/reject-desktop-req.body.dto'
 import { CreateDesktopRequestBodyDto, CreateUserDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
 
 @ApiTags('DesktopRequest | 云桌面申请')
@@ -63,7 +63,14 @@ export class DesktopRequestController {
   @HasPermission(PermissionType.DESKTOP_REQUEST_APPROVE)
   @Post('approve/:userId')
   async approveRequest(@Param() param: UserIdDto) {
-    return await this._desktopReqSrv.approveRequest(param)
+    return (await this._desktopReqSrv.approveRequest([param.userId])) > 0
+  }
+
+  @ApiOperation({ summary: '批量通过云桌面申请' })
+  @HasPermission(PermissionType.DESKTOP_REQUEST_APPROVE)
+  @Post('approve/batch')
+  async batchApproveRequest(@Body() body: UserIdDto['userId'][]) {
+    return await this._desktopReqSrv.approveRequest(body)
   }
 
   @ApiOperation({ summary: '驳回一个云桌面申请' })
@@ -82,11 +89,29 @@ export class DesktopRequestController {
     if (queue.status !== DesktopQueueStatus.PENDING)
       responseError(ErrorCode.DESKTOP_REQUEST_PENDING_ONLY)
 
-    return await this._desktopReqHistorySrv.mv2history(
-      queue,
+    return (await this._desktopReqHistorySrv.mv2history(
+      [queue],
       DesktopQueueHistoryStatus.REJECTED,
       { rejectReason: body.reason },
-    )
+    )) > 0
+  }
+
+  @ApiOperation({ summary: '批量驳回云桌面申请' })
+  @HasPermission(PermissionType.DESKTOP_REQUEST_REJECT)
+  @Post('reject/batch')
+  async batchRejectRequest(@Body() body: BatchRejectDesktopReqBodyDto) {
+    const queues = await this._desktopReqSrv.repo().find({
+      where: {
+        userId: In(body.id),
+        status: DesktopQueueStatus.PENDING,
+      },
+    })
+
+    return (await this._desktopReqHistorySrv.mv2history(
+      queues,
+      DesktopQueueHistoryStatus.REJECTED,
+      { rejectReason: body.reason },
+    ))
   }
 
   @ApiOperation({ summary: '获取当前用户的云桌面使用申请情况' })

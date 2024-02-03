@@ -1,4 +1,4 @@
-import { LessThan, Repository } from 'typeorm'
+import { In, LessThan, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
@@ -102,16 +102,22 @@ export class DesktopRequestService {
   }
 
   /**
-   * 通过一个云桌面申请
+   * 通过云桌面申请
    * @param param
    * @returns
    */
-  public async approveRequest(param: UserIdDto) {
+  public async approveRequest(body: UserIdDto['userId'][]) {
     const updateRes = await this._desktopQueueRepo.update(
-      { userId: param.userId, status: DesktopQueueStatus.PENDING },
-      { status: DesktopQueueStatus.QUEUEING, queueAt: new Date() },
+      {
+        userId: In(body),
+        status: DesktopQueueStatus.PENDING,
+      },
+      {
+        status: DesktopQueueStatus.QUEUEING,
+        queueAt: new Date(),
+      },
     )
-    return updateRes.affected > 0
+    return updateRes.affected
   }
 
   /**

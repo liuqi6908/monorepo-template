@@ -10,7 +10,7 @@ import {
   SysConfig,
 } from 'zjf-types'
 
-import type { Desktop } from 'src/entities/desktop'
+import { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { DesktopIdDto } from 'src/dto/id/desktop.dto'
 import { IsLogin } from 'src/guards/login.guard'
@@ -74,32 +74,6 @@ export class DesktopController {
     }
   }
 
-  @ApiOperation({ summary: '停用一个云桌面' })
-  @HasPermission(PermissionType.DESKTOP_DISABLE)
-  @Delete(':desktopId')
-  public async deleteDesktop(@Param() param: DesktopIdDto) {
-    const desktop = await this._desktopSrv.repo().findOne({ where: { id: param.desktopId } })
-    if (desktop.disabled)
-      return true
-    if (desktop.userId) {
-      // 将用户的状态更新
-      const queue = await this._desktopReqSrv.repo().findOne({ where: { userId: desktop.userId } })
-      if (!queue)
-        return
-      await this._desktopHisSrv.mv2history(
-        queue,
-        DesktopQueueHistoryStatus.EXPIRED,
-        {},
-      )
-    }
-
-    const updateRes = await this._desktopSrv.repo().update(
-      { id: param.desktopId },
-      { disabled: true, userId: null, lastUserId: desktop.userId, expiredAt: new Date() },
-    )
-    return updateRes.affected > 0
-  }
-
   @ApiOperation({ summary: '更新一个云桌面（无法更新一个已禁用的）' })
   @HasPermission(PermissionType.DESKTOP_UPDATE)
   @Patch(':desktopId')
@@ -144,6 +118,46 @@ export class DesktopController {
       .execute()
 
     return deleteRes.affected
+  }
+
+  @ApiOperation({ summary: '批量停用云桌面' })
+  @HasPermission(PermissionType.DESKTOP_DISABLE)
+  @Delete('stop/batch')
+  public async batchStopDesktop(@Body() body: DesktopIdDto['desktopId'][]) {
+    const desktops = await this._desktopSrv.repo().find({
+      where: {
+        id: In(body),
+        disabled: false,
+      },
+    })
+    if (!desktops.length)
+      return 0
+    const userId = desktops.map(v => v.userId).filter(Boolean)
+    if (userId.length) {
+      // 将用户的状态更新
+      const queues = await this._desktopReqSrv.repo().find({
+        where: { userId: In(userId) },
+      })
+      this._desktopHisSrv.mv2history(
+        queues,
+        DesktopQueueHistoryStatus.EXPIRED,
+        {},
+      )
+    }
+
+    const updateRes = await this._desktopSrv.qb()
+      .update(Desktop)
+      .set({
+        disabled: true,
+        lastUserId: () => 'userId',
+        userId: null,
+        expiredAt: new Date(),
+      })
+      .where({ disabled: false })
+      .andWhere({ id: In(body) })
+      .execute()
+
+    return updateRes.affected
   }
 
   @ApiOperation({ summary: '分配云桌面给指定的用户' })

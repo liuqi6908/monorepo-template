@@ -16,26 +16,32 @@ export class DesktopQueueHistoryService {
   ) {}
 
   /**
-   * 将一个云桌面申请移动到历史记录中
+   * 将云桌面申请移动到历史记录中
    */
   public async mv2history(
-    queue: DesktopQueue,
+    queues: DesktopQueue[],
     status: DesktopQueueHistory['status'],
     options?: {
       rejectReason?: string
     },
   ) {
-    // 插入历史记录
-    await this._desktopQueHisRepo.insert({
-      ...objectOmit(queue, ['createdAt', 'status', 'updatedAt', 'user']),
-      status,
-      rejectReason: options?.rejectReason,
-    })
+    let success = 0
+    for (const queue of queues) {
+      try {
+        // 插入历史记录
+        await this._desktopQueHisRepo.insert({
+          ...objectOmit(queue, ['createdAt', 'status', 'updatedAt', 'user']),
+          status,
+          rejectReason: options?.rejectReason,
+        })
+        // 删除进行中的申请
+        const deleteRes = await this._desktopReqSrv.repo().delete({ userId: queue.userId })
+        success += deleteRes.affected
+      }
+      catch (_) {}
+    }
 
-    // 删除进行中的申请
-    await this._desktopReqSrv.repo().delete({ userId: queue.userId })
-
-    return true
+    return success
   }
 
   repo() {
