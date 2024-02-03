@@ -159,9 +159,9 @@ export const DESKTOP_TABLE_COLUMNS: QTableColumn<IDesktop>[] = [
     sortable: true,
   },
   {
-    name: 'userId',
+    name: 'user',
     label: '用户',
-    field: 'userId',
+    field: 'user',
   },
 ]
 

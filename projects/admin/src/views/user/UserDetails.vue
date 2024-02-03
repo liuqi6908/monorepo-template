@@ -151,7 +151,7 @@ const userInfo = computed<UserInfo[]>(() => {
     <div
       text="sm primary-1" font-400
       cursor-pointer select-none
-      @click="dialog = true"
+      @click="dialog = true" inline
       v-text="label"
     />
 

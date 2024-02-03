@@ -6,7 +6,7 @@ import type { QTableProps } from 'quasar'
 import type { IDesktop } from 'zjf-types'
 
 import ZTable from '~/components/table/ZTable.vue'
-import UserDetails from '~/views/UserDetails.vue'
+import UserDetails from '~/views/user/UserDetails.vue'
 import DesktopDialog from './Desktop.dialog.vue'
 import BatchAddDesktop from './BatchAddDesktop.vue'
 import type { Type } from './Desktop.dialog.vue'
@@ -171,6 +171,16 @@ function callback() {
       :fixed-last-column="adminRole?.includes(PermissionType.DESKTOP_UPDATE)"
       @request="queryDesktopList"
     >
+      <template #body-cell-user="{ row }">
+        <q-td auto-width text-center>
+          <div v-if="!row.user">—</div>
+          <UserDetails
+            v-else
+            :user="row.user"
+            :label="row.user.account"
+          />
+        </q-td>
+      </template>
       <template #body-cell-action="{ row }">
         <q-td auto-width>
           <ZBtn
