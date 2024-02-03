@@ -335,9 +335,6 @@ export class UserController {
     const queryRes = await getQuery(
       this._userSrv.repo(),
       body || {},
-      (qb) => {
-        qb.addSelect('entity.isDeleted')
-      },
     )
 
     if (body.relations.verification) {

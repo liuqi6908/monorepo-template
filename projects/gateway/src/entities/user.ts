@@ -59,7 +59,7 @@ export class User extends BaseTimeStamp implements IUser {
   @Column({ nullable: true })
   avatar?: string
 
-  @Column({ select: false, default: false })
+  @Column({ default: false })
   isDeleted?: boolean
 
   @Column({ select: false, default: false })

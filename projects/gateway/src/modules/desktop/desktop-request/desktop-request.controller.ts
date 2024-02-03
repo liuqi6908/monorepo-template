@@ -173,10 +173,6 @@ export class DesktopRequestController {
     return await getQuery(
       this._desktopReqSrv.repo(),
       body || {},
-      (qb) => {
-        if (body.relations?.user)
-          qb.addSelect('entity_user.isDeleted')
-      },
     )
   }
 }

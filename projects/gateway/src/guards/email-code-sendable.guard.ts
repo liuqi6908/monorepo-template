@@ -65,10 +65,7 @@ export class EmailCodeSendableGuard implements CanActivate {
       }])
     }
 
-    const user = await this.userSrv.qb()
-      .addSelect('u.isDeleted')
-      .where('email = :email', { email })
-      .getOne()
+    const user = await this.userSrv.repo().findOne({ where: { email } })
 
     if (registerRequiredActions.includes(action) && !user)
       responseError(ErrorCode.USER_EMAIL_NOT_REGISTERED)

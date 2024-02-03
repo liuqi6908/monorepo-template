@@ -67,10 +67,6 @@ export class VerificationController {
     return await getQuery(
       this._verificationSrv.repo(),
       body,
-      (qb) => {
-        if (body.relations?.founder)
-          qb.addSelect('entity_founder.isDeleted')
-      },
     )
   }
 

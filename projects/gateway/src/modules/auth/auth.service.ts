@@ -54,7 +54,7 @@ export class AuthService {
       throw new Error('账号、邮箱或手机号码至少需要填写一个')
     if (!(await this._codeSrv.verifyCaptcha(bizId, [ip, code])))
       responseError(ErrorCode.AUTH_CODE_NOT_MATCHED)
-    const qb = this._userSrv.qb().addSelect('u.password').addSelect('u.isDeleted')
+    const qb = this._userSrv.qb().addSelect('u.password')
     if (account)
       qb.where('account = :account', { account })
     else if (email)
@@ -95,10 +95,7 @@ export class AuthService {
     const { email, bizId, code } = body
     await this._codeSrv.verifyWithError(bizId, [email, CodeAction.LOGIN, code])
 
-    const user = await this._userSrv.qb()
-      .addSelect('u.isDeleted')
-      .where('email = :email', { email })
-      .getOne()
+    const user = await this._userSrv.repo().findOne({ where: { email } })
     if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
     if (user.isDeleted)
@@ -116,10 +113,7 @@ export class AuthService {
     const { phone, bizId, code } = body
     await this._codeSrv.verifyWithError(bizId, [phone, PhoneCodeAction.LOGIN, code])
 
-    const user = await this._userSrv.qb()
-      .addSelect('u.isDeleted')
-      .where('phone = :phone', { phone })
-      .getOne()
+    const user = await this._userSrv.repo().findOne({ where: { phone } })
     if (!user)
       responseError(ErrorCode.AUTH_PHONE_NUMBER_NOT_REGISTERED)
     if (user.isDeleted)
@@ -134,10 +128,7 @@ export class AuthService {
    */
   public async loginByEmailLink(body: LoginByEmailLinkDto) {
     const { email } = body
-    const user = await this._userSrv.qb()
-      .addSelect('u.isDeleted')
-      .where('email = :email', { email })
-      .getOne()
+    const user = await this._userSrv.repo().findOne({ where: { email } })
     if (!user)
       responseError(ErrorCode.AUTH_EMAIL_NOT_REGISTERED)
     if (user.isDeleted)

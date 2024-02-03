@@ -64,10 +64,7 @@ export class PhoneCodeSendableGuard implements CanActivate {
       }])
     }
 
-    const user = await this.userSrv.qb()
-      .addSelect('u.isDeleted')
-      .where('phone = :phone', { phone })
-      .getOne()
+    const user = await this.userSrv.repo().findOne({ where: { phone } })
 
     if (registerRequiredActions.includes(action) && !user)
       responseError(ErrorCode.USER_PHONE_NUMBER_NOT_REGISTERED)
