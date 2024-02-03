@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import moment from 'moment'
+import { Notify } from 'quasar'
 import { cloneDeep } from 'lodash'
 import { PermissionType, DesktopQueueStatus } from 'zjf-types'
 import { hasIntersection } from 'zjf-utils'
@@ -119,6 +120,26 @@ const queryDesktopRequestList: QTableProps['onRequest'] = async (props) => {
 function callback() {
   zTable.value?.tableRef?.requestServerInteraction()
 }
+
+/**
+ * 自动分配
+ */
+async function autoAssign() {
+  if (!selected.value)
+    return
+
+  loading.value = true
+  try {
+    // const res = await autoAssignApi(selected.value.id)
+    Notify.create({
+      type: 'success',
+      message: '操作成功',
+    })
+  }
+  finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -210,6 +231,7 @@ function callback() {
       v-model="autoDialog"
       title="自动分配"
       footer
+      @ok="autoAssign"
     >
       该操作将为已选的用户申请自动创建云桌面并分配，是否继续？
     </ZDialog>
