@@ -189,7 +189,7 @@ function processingJSONData(json: CreateDesktopItem): ICreateDesktopBodyDto {
         <q-item
           clickable
           v-close-popup
-          w="162px!"
+          w="176px!"
           @click="downloadTemplate"
         >
           <q-item-section>
@@ -206,7 +206,7 @@ function processingJSONData(json: CreateDesktopItem): ICreateDesktopBodyDto {
         >
           <q-item
             clickable
-            w="162px!"
+            w="176px!"
           >
             <q-item-section>
               <div i-mingcute:upload-3-line />

@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { Notify } from 'quasar'
 import { cloneDeep } from 'lodash'
 import { PermissionType } from 'zjf-types'
 import { hasIntersection, validatePassword } from 'zjf-utils'
@@ -36,6 +37,8 @@ const loading = ref(false)
 const dialogType = ref<Type>()
 /** 弹窗云桌面 */
 const dialogData = ref<IDesktop>()
+/** 停用对话框 */
+const stopDialog = ref(false)
 
 /** 输入用户密码对话框 */
 const passwordDialog = ref<string>()
@@ -145,6 +148,31 @@ async function viewDesktopPassword(id?: string) {
     loading.value = false
   }
 }
+
+/**
+ * 停用云桌面
+ */
+async function stopDesktop() {
+  if (!selected.value?.length)
+    return
+
+  loading.value = true
+  let res
+  try {
+    res = await batchStopDesktopApi(selected.value.map(v => v.id))
+    Notify.create({
+      type: 'success',
+      message: '操作成功'
+    })
+  }
+  finally {
+    selected.value = undefined
+    if (res)
+      callback()
+    else
+      loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -172,18 +200,58 @@ async function viewDesktopPassword(id?: string) {
           :params="{
             outline: true,
           }"
-          @click=""
+          @click="stopDialog = true"
         >
           <template #left>
             <div w5 h5 i-mingcute:delete-2-line />
           </template>
         </ZBtn>
       </div>
-      <div
-        h10 flex="~ items-center" px4
-        rounded-2 bg-grey-2 text-sm
-      >
-        云桌面限额：50 台
+      <div flex="~ wrap" gap="x4 y2">
+        <template v-if="getEnvVariable('VITE_DESKTOP_ON_OFF') && adminRole?.includes(PermissionType.DESKTOP_ON_OFF)">
+          <ZBtn
+            label="开机"
+            text-color="primary-1"
+            :disable="!selected?.length"
+            :params="{
+              outline: true,
+            }"
+          >
+            <template #left>
+              <div w5 h5 i-mingcute:power-line />
+            </template>
+          </ZBtn>
+          <ZBtn
+            label="重启"
+            text-color="primary-1"
+            :disable="!selected?.length"
+            :params="{
+              outline: true,
+            }"
+          >
+            <template #left>
+              <div w5 h5 i-material-symbols:sync />
+            </template>
+          </ZBtn>
+          <ZBtn
+            label="关机"
+            text-color="primary-1"
+            :disable="!selected?.length"
+            :params="{
+              outline: true,
+            }"
+          >
+            <template #left>
+              <div w5 h5 i-mingcute:power-line />
+            </template>
+          </ZBtn>
+        </template>
+        <div
+          h10 flex="~ items-center" px4
+          rounded-2 bg-grey-2 text-sm
+        >
+          云桌面限额：50 台
+        </div>
       </div>
     </div>
 
@@ -237,6 +305,16 @@ async function viewDesktopPassword(id?: string) {
         </q-td>
       </template>
     </ZTable>
+
+    <!-- 停用 -->
+    <ZDialog
+      v-model="stopDialog"
+      title="停用"
+      footer
+      @ok="stopDesktop"
+    >
+      该操作将停用已选的云桌面资源，是否继续？
+    </ZDialog>
 
     <!-- 输入用户登录密码 -->
     <ZDialog
