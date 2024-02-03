@@ -42,7 +42,6 @@ watch(
 
 <template>
   <ZInput
-    class="rounded"
     :model-value="
       range && typeof modelValue !== 'string' && modelValue
         ? `${modelValue.from} 至 ${modelValue.to}`

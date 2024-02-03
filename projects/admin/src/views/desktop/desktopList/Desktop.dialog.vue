@@ -48,9 +48,11 @@ watch(
 
 /** 禁用提交 */
 const disable = computed(() => {
+  const { type } = props
   const { id, name, internalIp, accessUrl, account, password, expiredAt } = form.value
-  return !id || !name || !internalIp || !accessUrl
-  || !account || !password || !expiredAt
+  return !id || !name || !internalIp || !accessUrl || !account || !expiredAt
+    || (type === 'add' && !password)
+    || (type === 'edit' && typeof password !== 'undefined' && !password)
 })
 
 /**
@@ -151,6 +153,7 @@ async function confirm() {
         }"
       />
       <ZInput
+        v-if="(typeof form.password !== 'undefined')"
         v-model="form.password"
         label="密码"
         placeholder="请输入密码"

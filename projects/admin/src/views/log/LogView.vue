@@ -163,6 +163,7 @@ watch(
       </ZInput>
       <ZDate
         v-model="date"
+        class="rounded"
         range w80 mr-auto
         :input-params="{
           size: 'medium'

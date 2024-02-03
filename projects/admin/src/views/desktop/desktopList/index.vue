@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
 import { PermissionType } from 'zjf-types'
-import { hasIntersection } from 'zjf-utils'
+import { hasIntersection, validatePassword } from 'zjf-utils'
 import type { QTableProps } from 'quasar'
 import type { IDesktop } from 'zjf-types'
 
@@ -36,6 +36,11 @@ const loading = ref(false)
 const dialogType = ref<Type>()
 /** 弹窗云桌面 */
 const dialogData = ref<IDesktop>()
+
+/** 输入用户密码对话框 */
+const passwordDialog = ref<string>()
+/** 用户登录密码 */
+const password = ref('')
 
 /** 表格行 */
 const rows = ref<QTableProps['rows']>([])
@@ -113,6 +118,33 @@ const queryDesktopList: QTableProps['onRequest'] = async (props) => {
 function callback() {
   zTable.value?.tableRef?.requestServerInteraction()
 }
+
+/**
+ * 查看云桌面密码
+ */
+async function viewDesktopPassword(id?: string) {
+  if (!password.value || !id)
+    return passwordDialog.value = id
+
+  loading.value = true
+  try {
+    const res = await queryDesktopPasswordApi(
+      id,
+      {
+        password: rsaEncrypt(import.meta.env.VITE_PUBLIC_KEY ?? '', password.value),
+      }
+    )
+    const row = rows.value?.find(v => v.id === id)
+    if (row)
+      row.password = res
+  }
+  catch (_) {
+    password.value = ''
+  }
+  finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -171,6 +203,17 @@ function callback() {
       :fixed-last-column="adminRole?.includes(PermissionType.DESKTOP_UPDATE)"
       @request="queryDesktopList"
     >
+      <template #body-cell-password="{ row, value }">
+        <q-td text-center>
+          <TextBtn
+            v-if="typeof value === 'undefined'"
+            label="查看密码"
+            @click="viewDesktopPassword(row.id)"
+          />
+          <div v-else-if="!value">—</div>
+          <div v-else v-text="value" />
+        </q-td>
+      </template>
       <template #body-cell-user="{ row }">
         <q-td auto-width text-center>
           <div v-if="!row.user">—</div>
@@ -194,6 +237,28 @@ function callback() {
         </q-td>
       </template>
     </ZTable>
+
+    <!-- 输入用户登录密码 -->
+    <ZDialog
+      :model-value="!!passwordDialog"
+      title="管理员密码"
+      footer
+      :disable-confirm="!!validatePassword(password)"
+      @ok="viewDesktopPassword(passwordDialog)"
+      @update:model-value="passwordDialog = undefined"
+    >
+      <ZInput
+        v-model="password"
+        label="密码"
+        placeholder="请输入管理员密码"
+        password required
+        :params="{
+          rules: [
+            (val: string) => validatePassword(val) || true,
+          ]
+        }"
+      />
+    </ZDialog>
 
     <!-- 添加、编辑 -->
     <DesktopDialog
