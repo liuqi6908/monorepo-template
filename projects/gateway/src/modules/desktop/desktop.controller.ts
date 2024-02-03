@@ -255,7 +255,8 @@ export class DesktopController {
   @Get('own')
   public async getOwnDesktop(@Req() req: FastifyRequest) {
     const user = req.raw.user
-    return await this._desktopSrv.repo().findOne({ where: { userId: user.id } })
+    const desktop = await this._desktopSrv.repo().findOne({ where: { userId: user.id } })
+    return omit(desktop, 'password')
   }
 
   @ApiOperation({
