@@ -9,7 +9,7 @@ import {
   PermissionType,
   SysConfig,
 } from 'zjf-types'
-import { omit } from 'zjf-utils'
+import { hasIntersection, omit } from 'zjf-utils'
 
 import { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
@@ -197,10 +197,7 @@ export class DesktopController {
   }
 
   @ApiOperation({ summary: '查询指定云桌面的密码' })
-  @HasPermission([
-    PermissionType.DESKTOP_QUERY,
-    PermissionType.DESKTOP_DISABLE_QUERY,
-  ])
+  @HasPermission()
   @Post('password/:desktopId')
   public async queryDesktopPassword(
     @Req() req: FastifyRequest,
@@ -208,11 +205,23 @@ export class DesktopController {
     @Body() body: PasswordDto,
   ) {
     const user = req.raw.user
+    const desktop = await this._desktopSrv.repo().findOne({ where: { id: param.desktopId } })
+    if (
+      !hasIntersection(
+        user.role?.permissions.map(v => v.name) ?? [],
+        [
+          PermissionType.DESKTOP_QUERY,
+          PermissionType.DESKTOP_DISABLE_QUERY,
+        ],
+      )
+      && user.id !== desktop?.userId
+    )
+      responseError(ErrorCode.PERMISSION_DENIED)
+
     // 校验密码
     const correct = await comparePassword(body.password, user.password)
     if (!correct)
       responseError(ErrorCode.AUTH_PASSWORD_NOT_MATCHED)
-    const desktop = await this._desktopSrv.repo().findOne({ where: { id: param.desktopId } })
     if (!desktop)
       responseError(ErrorCode.DESKTOP_NOT_FOUND)
     return desktop.password
