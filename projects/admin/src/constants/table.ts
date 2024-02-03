@@ -71,7 +71,7 @@ export const DATA_TABLE_COLUMNS: QTableColumn<IDataDirectory>[] = [
 export const DESKTOP_REQUEST_TABLE_COLUMNS: QTableColumn<IDesktopQueue>[] = [
   {
     name: 'id',
-    label: 'ID',
+    label: '用户',
     field: row => row.user?.account,
   },
   {
@@ -118,7 +118,7 @@ export const DESKTOP_REQUEST_TABLE_COLUMNS: QTableColumn<IDesktopQueue>[] = [
 export const DESKTOP_TABLE_COLUMNS: QTableColumn<IDesktop>[] = [
   {
     name: 'id',
-    label: 'ID',
+    label: '云桌面ID',
     field: 'id',
   },
   {
@@ -155,7 +155,7 @@ export const DESKTOP_TABLE_COLUMNS: QTableColumn<IDesktop>[] = [
   {
     name: 'expiredAt',
     label: '到期时间',
-    field: row => moment(row.expiredAt).format('YYYY-MM-DD HH:mm:ss'),
+    field: row => moment(row.expiredAt).format('YYYY-MM-DD'),
     sortable: true,
   },
   {

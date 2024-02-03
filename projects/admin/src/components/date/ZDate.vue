@@ -6,10 +6,16 @@ interface ZDateProp {
   modelValue?: any
   range?: boolean
   inputParams?: Omit<ZInputProps, 'modelValue'>
+  resetBtn?: boolean
   dateParams?: Omit<QDateProps, 'modelValue' | 'range'>
 }
 
-const props = defineProps<ZDateProp>()
+const props = withDefaults(
+  defineProps<ZDateProp>(),
+  {
+    resetBtn: true,
+  }
+)
 defineEmits(['update:modelValue'])
 
 /** 日期 */
@@ -68,6 +74,7 @@ watch(
           >
             <div flex="~ justify-end gap3">
               <ZBtn
+                v-if="resetBtn"
                 label="重置"
                 size="small"
                 text-color="primary-1"
