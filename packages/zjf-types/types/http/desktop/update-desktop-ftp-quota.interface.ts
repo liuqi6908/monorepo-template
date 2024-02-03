@@ -1,7 +1,10 @@
+import type { IDesktop } from '../../entities/desktop.interface'
+
 /**
- * 更新指定云桌面文件传输配额
+ * 批量更新云桌面文件传输配额
  * 请求参数
  */
-export interface IUpdateDesktopFtpQuotaBodyDto {
+export interface IBatchUpdateDesktopFtpQuotaBodyDto {
+  id: IDesktop['id'][]
   ftpQuota: number
 }

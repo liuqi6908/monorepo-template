@@ -30,7 +30,7 @@ import { DesktopResDto } from './dto/desktop.res.dto'
 import { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
 import { UpdateDesktopBodyDto } from './dto/update-desktop.body.dto'
 import { AssignDesktopParamDto } from './dto/assign-desktop.param.dto'
-import { UpdateDesktopFtpQuotaBodyDto } from './dto/update-desktop-ftp-quota.body.dto'
+import { BatchUpdateDesktopFtpQuotaBodyDto } from './dto/update-desktop-ftp-quota.body.dto'
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
 import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queue-history.service'
 import { ZstackService } from './zstack/zstack.service'
@@ -238,18 +238,15 @@ export class DesktopController {
     return true
   }
 
-  @ApiOperation({ summary: '修改指定云桌面的文件传输配额' })
+  @ApiOperation({ summary: '批量修改云桌面的文件传输配额' })
   @HasPermission(PermissionType.CONFIG_UPSERT_DESKTOP_FTP)
-  @Patch('ftp/:desktopId')
-  public async updateDesktopFtpQuota(
-    @Param() param: DesktopIdDto,
-    @Body() body: UpdateDesktopFtpQuotaBodyDto,
-  ) {
+  @Patch('ftp/batch')
+  public async batchUpdateDesktopFtpQuota(@Body() body: BatchUpdateDesktopFtpQuotaBodyDto) {
     const updateRes = await this._desktopSrv.repo().update(
-      { id: param.desktopId },
-      body,
+      { id: In(body.id) },
+      { ftpQuota: body.ftpQuota },
     )
-    return updateRes.affected > 0
+    return updateRes.affected
   }
 
   @ApiOperation({ summary: '查询当前用户分配的云桌面的信息' })
