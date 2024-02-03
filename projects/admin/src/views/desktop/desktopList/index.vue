@@ -162,7 +162,7 @@ async function viewDesktopPassword(id?: string) {
               <div w5 h5 i-mingcute:add-line />
             </template>
           </ZBtn>
-          <BatchAddDesktop @callback="callback" />
+          <BatchAddDesktop @callback="callback" @loading="(val: boolean) => loading = val" />
         </template>
         <ZBtn
           v-if="adminRole?.includes(PermissionType.DESKTOP_DISABLE)"

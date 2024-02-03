@@ -1,3 +1,4 @@
+import type { AxiosRequestConfig } from 'axios'
 import type {
   IBatchUpdateDesktopFtpQuotaBodyDto,
   ICreateDesktopBodyDto,
@@ -23,8 +24,8 @@ export function isDesktopApi() {
 /**
  * 创建一个云桌面
  */
-export function createDesktopApi(body: ICreateDesktopBodyDto) {
-  return $put<string>('/desktop', body)
+export function createDesktopApi(body: ICreateDesktopBodyDto, config?: AxiosRequestConfig) {
+  return $put<string>('/desktop', body, undefined, config)
 }
 
 /**

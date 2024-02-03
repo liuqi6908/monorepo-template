@@ -1,3 +1,4 @@
+import { PASSWORD_ALLOW_CHARS, PASSWORD_MAX_LENGTH } from '../validator/password.validator'
 import { randomInt } from './random-int'
 
 /**
@@ -11,7 +12,7 @@ import { randomInt } from './random-int'
  *  special !@#$%^&*()-_=+,.:;?/~
  * @return 生成的随机密码
  */
-export function getRandomPassword(min = 8, max = 16, special = '!@#$%^&*()-_=+,.:;?/~') {
+export function getRandomPassword(min = PASSWORD_MAX_LENGTH, max = PASSWORD_MAX_LENGTH, special = PASSWORD_ALLOW_CHARS) {
   const length = randomInt(min, max)
   const num = '0123456789'
   const chars = 'abcdefghijklmnopqrstuvwxyz'

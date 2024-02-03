@@ -9,13 +9,13 @@ import {
   EMAIL_REQUIREMENTS_DESC,
   PHONE_NUMBER_REQUIREMENTS_DESC,
   PASSWORD_REQUIREMENTS_DESC,
-validateAccount,
-validateEmail,
-validatePhone,
-validatePassword,
+  validateAccount,
+  validateEmail,
+  validatePhone,
+  validatePassword,
 } from 'zjf-utils'
 
-type CreateUserItem = Partial<Record<keyof ICreateUserBodyDto, string>> | ICreateUserBodyDto
+type CreateUserItem = Partial<Record<keyof ICreateUserBodyDto, string>>
 
 const emits = defineEmits(['callback'])
 
