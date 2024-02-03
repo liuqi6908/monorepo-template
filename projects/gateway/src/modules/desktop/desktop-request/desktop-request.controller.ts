@@ -145,6 +145,13 @@ export class DesktopRequestController {
   @ApiSuccessResponse(QueryResDto<DesktopQueue>)
   @Post('query')
   async queryRequests(@Body() body: QueryDto<DesktopQueue>) {
-    return await getQuery(this._desktopReqSrv.repo(), body || {})
+    return await getQuery(
+      this._desktopReqSrv.repo(),
+      body || {},
+      (qb) => {
+        if (body.relations?.user)
+          qb.addSelect('entity_user.isDeleted')
+      },
+    )
   }
 }
