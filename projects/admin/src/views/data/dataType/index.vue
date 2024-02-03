@@ -13,12 +13,11 @@ const { adminRole } = useUser()
 const { loading, dataList, selectedId, queryDataList } = useDataRoot()
 const { active, menu } = useMenu()
 
-/** 是否可以编辑（添加、编辑、删除） */
+/** 是否可以编辑（添加、删除） */
 const isEdit = computed(() => hasIntersection(
   adminRole.value ?? [],
   [
     PermissionType.DATA_ROOT_CREATE,
-    PermissionType.DATA_ROOT_UPDATE,
     PermissionType.DATA_ROOT_DELETE,
   ],
 ))
@@ -61,6 +60,13 @@ watch(
 )
 
 onBeforeMount(() => {
+  if (adminRole.value?.includes(PermissionType.DATA_ROOT_UPDATE)) {
+    cols.push({
+      name: 'action',
+      label: '操作',
+      field: 'id',
+    })
+  }
   cols.forEach(v => v.align = 'center')
   queryDataList()
 })
@@ -109,23 +115,6 @@ async function deleteRoot() {
         </template>
       </ZBtn>
       <ZBtn
-        v-if="adminRole?.includes(PermissionType.DATA_ROOT_UPDATE)"
-        label="编辑"
-        text-color="primary-1"
-        :params="{
-          outline: true,
-        }"
-        :disable="selected?.length !== 1"
-        @click="() => {
-          dialogType = 'edit'
-          dialogData = selected?.[0]
-        }"
-      >
-        <template #left>
-          <div w5 h5 i-mingcute:edit-2-line />
-        </template>
-      </ZBtn>
-      <ZBtn
         v-if="adminRole?.includes(PermissionType.DATA_ROOT_DELETE)"
         label="删除"
         text-color="primary-1"
@@ -151,6 +140,7 @@ async function deleteRoot() {
       }"
       flex-1 h0
       fixed-first-column
+      :fixed-last-column="adminRole?.includes(PermissionType.DATA_ROOT_UPDATE)"
     >
       <template #body-cell-structure="{ row }">
         <q-td text-center>
@@ -187,6 +177,18 @@ async function deleteRoot() {
             @click="() => {
               active = menu?.[3]?.id
               selectedId = row.children?.[0].id
+            }"
+          />
+        </q-td>
+      </template>
+      <template #body-cell-action="{ row }">
+        <q-td auto-width>
+          <ZBtn
+            label="编辑"
+            size="small"
+            @click="() => {
+              dialogType = 'edit'
+              dialogData = row
             }"
           />
         </q-td>
