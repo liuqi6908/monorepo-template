@@ -9,10 +9,12 @@ import {
   PermissionType,
   SysConfig,
 } from 'zjf-types'
+import { omit } from 'zjf-utils'
 
 import { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { DesktopIdDto } from 'src/dto/id/desktop.dto'
+import type { PaginatedResData } from 'src/dto/pagination.dto'
 import { IsLogin } from 'src/guards/login.guard'
 import { HasPermission } from 'src/guards/permission.guard'
 import { getQuery } from 'src/utils/query'
@@ -185,7 +187,11 @@ export class DesktopController {
   @ApiSuccessResponse(QueryResDto<Desktop>)
   @Post('query')
   public async queryDesktop(@Body() body: QueryDto<Desktop>) {
-    return await getQuery(this._desktopSrv.repo(), body || {})
+    const queryRes = await getQuery(this._desktopSrv.repo(), body || {})
+    return {
+      ...queryRes,
+      data: queryRes.data.map(v => omit(v, 'password')),
+    } as PaginatedResData<Desktop>
   }
 
   @ApiOperation({ summary: '手动检查云桌面的过期' })
