@@ -1,10 +1,11 @@
 import type {
+  IBatchUpdateDesktopFtpQuotaBodyDto,
   ICreateDesktopBodyDto,
   IDesktop,
   IPaginatedResData,
+  IPasswordDto,
   IQueryDto,
   IUpdateDesktopBodyDto,
-  IUpdateDesktopFtpQuotaBodyDto,
   IUser,
 } from 'zjf-types'
 import type { DesktopVM } from '../types/desktop.interface'
@@ -62,6 +63,13 @@ export function queryDesktopApi(body: IQueryDto<IDesktop>) {
 }
 
 /**
+ * 查询指定云桌面的密码
+ */
+export function queryDesktopPasswordApi(desktopId: IDesktop['id'], body: IPasswordDto) {
+  return $post<string>(`/desktop/password/${desktopId}`, body)
+}
+
+/**
  * 手动检查云桌面的过期
  */
 export function checkDesktopExpireManuallyApi(accessKey: string) {
@@ -69,10 +77,10 @@ export function checkDesktopExpireManuallyApi(accessKey: string) {
 }
 
 /**
- * 修改指定云桌面的文件传输配额
+ * 批量修改云桌面的文件传输配额
  */
-export function updateDesktopFtpQuotaApi(desktopId: IDesktop['id'], body: IUpdateDesktopFtpQuotaBodyDto) {
-  return $patch<boolean>(`/desktop/ftp/${desktopId}`, body)
+export function batchUpdateDesktopFtpQuotaApi(body: IBatchUpdateDesktopFtpQuotaBodyDto) {
+  return $patch<boolean>('/desktop/ftp/batch', body)
 }
 
 /**
