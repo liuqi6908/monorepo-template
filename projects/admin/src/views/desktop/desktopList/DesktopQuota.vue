@@ -77,7 +77,7 @@ async function update() {
       <ZInput
         label="云桌面配额"
         :model-value="quota"
-        type="number"
+        type="number" required
         @update:model-value="(val) => {
           const num = Math.floor(Number.parseFloat(val))
           if (Number.isNaN(num) || num <= 0)
