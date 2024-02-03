@@ -10,7 +10,7 @@ import type { Type } from './dialog/UserRole.vue'
 
 const { adminRole } = useUser()
 
-/** 是否可以编辑（添加、编辑、删除） */
+/** 是否可以编辑（添加、删除） */
 const isEdit = computed(() => hasIntersection(
   adminRole.value ?? [],
   [
