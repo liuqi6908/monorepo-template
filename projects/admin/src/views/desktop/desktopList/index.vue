@@ -63,6 +63,9 @@ onBeforeMount(() => {
       field: 'id',
     })
   }
+  const userCol = cols.findIndex(v => v.name === 'user')
+  if (userCol >= 0)
+    cols[userCol].label = '分配的用户'
   cols.forEach(v => v.align = 'center')
 })
 
