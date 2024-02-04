@@ -153,10 +153,14 @@ async function autoAssign() {
         v-if="getEnvVariable('VITE_DESKTOP_AUTO_ALLOT') && adminRole?.includes(PermissionType.DESKTOP_CREATE_ASSIGN)"
         label="自动分配"
         :disable="!selected"
+        text-color="primary-1"
+        :params="{
+          outline: true,
+        }"
         @click="autoDialog = true"
       >
         <template #left>
-          <div w5 h5 i-mingcute:check-line />
+          <div w5 h5 i-mingcute:flash-line />
         </template>
       </ZBtn>
       <ZBtn
@@ -170,7 +174,7 @@ async function autoAssign() {
         @click="manualDialog = true"
       >
         <template #left>
-          <div w5 h5 i-mingcute:close-line />
+          <div w5 h5 i-mingcute:hand-finger-line />
         </template>
       </ZBtn>
     </div>

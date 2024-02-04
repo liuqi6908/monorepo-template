@@ -207,7 +207,7 @@ async function stopDesktop() {
           @click="stopDialog = true"
         >
           <template #left>
-            <div w5 h5 i-mingcute:delete-2-line />
+            <div w5 h5 i-mingcute:minus-circle-line />
           </template>
         </ZBtn>
       </div>
@@ -235,7 +235,7 @@ async function stopDesktop() {
             }"
           >
             <template #left>
-              <div w5 h5 i-material-symbols:sync />
+              <div w5 h5 i-mingcute:refresh-2-line />
             </template>
           </ZBtn>
           <ZBtn
