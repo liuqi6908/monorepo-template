@@ -17,11 +17,12 @@ const bucket = import.meta.env.VITE_MINIO_BUCKET_FTP ?? ''
 
 export function useMinio() {
   const { userInfo } = useUser()
+  const { desktopInfo } = useDesktop()
 
   /**
    * 基础路径
    */
-  const basePath = computed(() => `${userInfo.value?.account}/`)
+  const basePath = computed(() => `${desktopInfo.value?.id}/${userInfo.value?.account}/`)
 
   /**
    * 上传文件
@@ -76,6 +77,7 @@ export function useMinio() {
 
   return {
     client,
+    basePath,
     uploadFile,
     deleteFile,
     downloadFile,

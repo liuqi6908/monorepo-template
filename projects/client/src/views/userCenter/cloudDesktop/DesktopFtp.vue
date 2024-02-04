@@ -6,10 +6,10 @@ import { Notify } from 'quasar'
 import type { QTableColumn } from 'quasar'
 import type { FileItem } from 'shared/types/file.interface'
 
-const { isDesktop, userInfo } = useUser()
+const { isDesktop } = useUser()
 const { desktopFtp, getDesktopFtpConfig } = useSysConfig()
 const { desktopInfo } = useDesktop()
-const { uploadFile, deleteFile, downloadFile } = useMinio()
+const { basePath, uploadFile, deleteFile, downloadFile } = useMinio()
 
 /** 加载中 */
 const loading = ref(false)
@@ -129,7 +129,7 @@ async function getFileList() {
   try {
     fileList.value = await getFolderFilesApi({
       bucket: MinioBucket.FTP,
-      path: `${userInfo.value?.account}`
+      path: basePath.value,
     })
     selected.value = undefined
   }
