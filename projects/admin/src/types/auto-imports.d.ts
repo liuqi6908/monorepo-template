@@ -82,6 +82,7 @@ declare global {
   const defineComponent: typeof import('vue')['defineComponent']
   const deleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['deleteDataRoleApi']
   const deleteDataSuggestApi: typeof import('../../../shared/api/dataSuggest')['deleteDataSuggestApi']
+  const deleteDesktopApi: typeof import('../../../shared/api/desktop')['deleteDesktopApi']
   const deleteRoleApi: typeof import('../../../shared/api/role')['deleteRoleApi']
   const deleteRootApi: typeof import('../../../shared/api/data')['deleteRootApi']
   const deleteUserApi: typeof import('../../../shared/api/user')['deleteUserApi']
@@ -555,6 +556,7 @@ declare module 'vue' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly deleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['deleteDataRoleApi']>
     readonly deleteDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['deleteDataSuggestApi']>
+    readonly deleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['deleteDesktopApi']>
     readonly deleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['deleteRoleApi']>
     readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
     readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
@@ -1020,6 +1022,7 @@ declare module '@vue/runtime-core' {
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
     readonly deleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['deleteDataRoleApi']>
     readonly deleteDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['deleteDataSuggestApi']>
+    readonly deleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['deleteDesktopApi']>
     readonly deleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['deleteRoleApi']>
     readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
     readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>

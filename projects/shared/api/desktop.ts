@@ -36,6 +36,13 @@ export function updateDesktopApi(desktopId: IDesktop['id'], body: IUpdateDesktop
 }
 
 /**
+ * 删除指定的云桌面
+ */
+export function deleteDesktopApi(desktopId: IDesktop['id']) {
+  return $delete<boolean>(`/desktop/${desktopId}`)
+}
+
+/**
  * 批量删除云桌面（无法删除未禁用的）
  */
 export function batchDeleteDesktopApi(body: IDesktop['id'][]) {
