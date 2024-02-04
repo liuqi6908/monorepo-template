@@ -148,11 +148,9 @@ const userInfo = computed<UserInfo[]>(() => {
 
 <template>
   <div>
-    <div
-      text="sm primary-1" font-400
-      cursor-pointer select-none
-      @click="dialog = true" inline
-      v-text="label"
+    <TextBtn
+      :label="label"
+      @click="dialog = true"
     />
 
     <ZDialog

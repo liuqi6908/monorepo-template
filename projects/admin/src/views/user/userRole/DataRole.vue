@@ -172,16 +172,13 @@ async function deleteRole() {
     >
       <template #body-cell-info="{ value }">
         <q-td auto-width>
-          <div
-            text="sm primary-1" font-400
-            cursor-pointer select-none
+          <TextBtn
+            label="查看完整信息"
             @click="() => {
               dialogType = 'view'
               dialogId = value
             }"
-          >
-            查看完整信息
-          </div>
+          />
         </q-td>
       </template>
       <template #body-cell-action="{ value }">

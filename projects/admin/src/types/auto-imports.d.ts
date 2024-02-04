@@ -443,6 +443,8 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
+  const validateAdminRoleDesc: typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleDesc']
+  const validateAdminRoleName: typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleName']
   const validateCollege: typeof import('../../../shared/utils/validator/verification')['validateCollege']
   const validateDataRoleDesc: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']
   const validateDataRoleName: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']
@@ -917,6 +919,8 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly validateAdminRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleDesc']>
+    readonly validateAdminRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleName']>
     readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
     readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
     readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
@@ -1384,6 +1388,8 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
+    readonly validateAdminRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleDesc']>
+    readonly validateAdminRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleName']>
     readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
     readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
     readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>

@@ -166,12 +166,12 @@ export function useMenu() {
       admin: [
         {
           id: 'adminRole',
-          label: '设置管理角色',
+          label: '设置管理权限',
           flag: role?.includes(PermissionType.ROLE_QUERY),
         },
         {
           id: 'adminAssign',
-          label: '分配管理角色',
+          label: '分配管理权限',
           flag: role?.includes(PermissionType.ROLE_ASSIGN_QUERY),
         },
       ],
