@@ -293,6 +293,25 @@ export class DesktopController {
     return updateRes.affected
   }
 
+  @ApiOperation({ summary: '批量清空云桌面数据' })
+  @HasPermission(PermissionType.DESKTOP_FTP_DELETE)
+  @Delete('ftp/clear')
+  public async batchClearDesktopData(@Body() body: DesktopIdDto['desktopId'][]) {
+    const fileList = await this._fileSrv.getFolderFiles(MinioBucket.FTP, '') as any[]
+    const ids = []
+    const objects = []
+    fileList.forEach(({ name }) => {
+      const id = name.split('/').shift()
+      if (body.includes(id)) {
+        objects.push(name)
+        if (!ids.includes(id))
+          ids.push(id)
+      }
+    })
+    await this._fileSrv.batchDelete(MinioBucket.FTP, objects)
+    return ids.length
+  }
+
   @ApiOperation({ summary: '查询当前用户分配的云桌面的信息' })
   @IsLogin()
   @ApiSuccessResponse(DesktopResDto)

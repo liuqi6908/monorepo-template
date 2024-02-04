@@ -172,4 +172,12 @@ export class FileService {
     const client = this.getClient()
     await client.removeObject(this._cfg.bucket[bucket], path)
   }
+
+  /**
+   * 批量删除文件
+   */
+  public async batchDelete(bucket: keyof MinioConfig['bucket'], path: string[]) {
+    const client = this.getClient()
+    await client.removeObjects(this._cfg.bucket[bucket], path)
+  }
 }

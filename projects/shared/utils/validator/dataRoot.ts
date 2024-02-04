@@ -11,7 +11,7 @@ export function validateDataRootId(val?: string) {
 
   // 检测特殊字符
   const specialChars = val.split('').filter(char => !/[a-zA-Z0-9]/.test(char))
-  const notAllowedChar = specialChars.find(char => !'_'.includes(char))
+  const notAllowedChar = specialChars.find(char => !'_-'.includes(char))
   if (notAllowedChar)
     return `特殊字符 “${notAllowedChar}” 不被允许`
   return ''
