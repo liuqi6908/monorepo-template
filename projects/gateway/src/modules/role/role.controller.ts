@@ -17,7 +17,10 @@ export class RoleController {
   ) {}
 
   @ApiOperation({ summary: '获取全部角色列表' })
-  @HasPermission(PermissionType.ROLE_QUERY)
+  @HasPermission([
+    PermissionType.ROLE_QUERY,
+    PermissionType.ROLE_ASSIGN_QUERY,
+  ])
   @Get('list')
   public async getRoles() {
     return this._roleSrv.repo().find({
@@ -54,5 +57,28 @@ export class RoleController {
         responseError(ErrorCode.ROLE_IN_USAGE)
       throw e
     }
+  }
+
+  @ApiOperation({
+    summary: '批量删除角色',
+    description: '删除角色时，如果角色已关联用户，则会删除失败',
+  })
+  @HasPermission(PermissionType.ROLE_DELETE)
+  @Delete('batch')
+  public async batchDeleteRole(
+    @Body() body: RoleIdDto['roleId'][],
+  ) {
+    if (body.length === 1)
+      return await this.deleteRole({ roleId: body[0] })
+
+    let success = 0
+    for (const id of body) {
+      try {
+        const deleteRes = await this._roleSrv.deleteRole({ roleId: id })
+        success += deleteRes
+      }
+      catch (_) {}
+    }
+    return success
   }
 }
