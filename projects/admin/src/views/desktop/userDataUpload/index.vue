@@ -135,7 +135,15 @@ async function getUsedQuota() {
       bucket: MinioBucket.FTP,
       path: ''
     })
-    console.log(res)
+    res.forEach(({ name, size }) => {
+      const id = name.split('/').shift()
+      if (id) {
+        if (typeof usedQuota.value[id] !== 'number')
+          usedQuota.value[id] = size
+        else
+          usedQuota.value[id] += size
+      }
+    })
   }
   finally {
     loading.value = false
