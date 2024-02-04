@@ -1,6 +1,6 @@
 import { decorate } from 'ts-mixer'
 import { ApiProperty } from '@nestjs/swagger'
-import { IsString, MinLength } from 'class-validator'
+import { IsString } from 'class-validator'
 import type { IFilePathDto } from 'zjf-types'
 
 export class FilePathDto implements IFilePathDto {
@@ -10,6 +10,5 @@ export class FilePathDto implements IFilePathDto {
     type: () => 'string',
   }))
   @decorate(IsString())
-  @decorate(MinLength(1))
   path: string
 }
