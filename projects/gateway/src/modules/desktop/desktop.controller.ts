@@ -258,6 +258,8 @@ export class DesktopController {
   public async getOwnDesktop(@Req() req: FastifyRequest) {
     const user = req.raw.user
     const desktop = await this._desktopSrv.repo().findOne({ where: { userId: user.id } })
+    if (desktop?.password.includes('登录密码'))
+      return desktop
     return omit(desktop, 'password')
   }
 
