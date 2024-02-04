@@ -92,6 +92,13 @@ export function batchUpdateDesktopFtpQuotaApi(body: IBatchUpdateDesktopFtpQuotaB
 }
 
 /**
+ * 批量清空云桌面数据
+ */
+export function batchClearDesktopDataApi(body: IDesktop['id'][]) {
+  return $delete<number>('/desktop/ftp/clear', body)
+}
+
+/**
  * 查询当前用户分配的云桌面信息
  */
 export function getOwnDesktopApi() {

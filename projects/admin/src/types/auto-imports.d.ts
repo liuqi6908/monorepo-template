@@ -38,6 +38,7 @@ declare global {
   const batchApproveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
+  const batchClearDesktopDataApi: typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
@@ -511,6 +512,7 @@ declare module 'vue' {
     readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
+    readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
@@ -977,6 +979,7 @@ declare module '@vue/runtime-core' {
     readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
+    readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>

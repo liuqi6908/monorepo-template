@@ -33,6 +33,7 @@ declare global {
   const batchApproveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
+  const batchClearDesktopDataApi: typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
@@ -218,7 +219,6 @@ declare global {
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
   const startVMApi: typeof import('../../../shared/api/desktopVm')['startVMApi']
-  const stopDesktopApi: typeof import('../../../shared/api/desktop')['stopDesktopApi']
   const stopVMApi: typeof import('../../../shared/api/desktopVm')['stopVMApi']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
@@ -242,7 +242,6 @@ declare global {
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
   const updateDesktopApi: typeof import('../../../shared/api/desktop')['updateDesktopApi']
-  const updateDesktopFtpQuotaApi: typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']
   const updateIntermediateTableApi: typeof import('../../../shared/api/data')['updateIntermediateTableApi']
   const updateOwnEmailApi: typeof import('../../../shared/api/user')['updateOwnEmailApi']
   const updateOwnPasswordByEmailCodeApi: typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']
@@ -252,7 +251,6 @@ declare global {
   const updateOwnProfileApi: typeof import('../../../shared/api/user')['updateOwnProfileApi']
   const updateReferenceApi: typeof import('../../../shared/api/data')['updateReferenceApi']
   const updateRootApi: typeof import('../../../shared/api/data')['updateRootApi']
-  const updateTableDataApi: typeof import('../../../shared/api/data')['updateTableDataApi']
   const updateUserDataRoleApi: typeof import('../../../shared/api/user')['updateUserDataRoleApi']
   const updateUserRoleApi: typeof import('../../../shared/api/user')['updateUserRoleApi']
   const updateWorkApi: typeof import('../../../shared/api/work')['updateWorkApi']
@@ -500,6 +498,7 @@ declare module 'vue' {
     readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
+    readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
@@ -957,6 +956,7 @@ declare module '@vue/runtime-core' {
     readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
+    readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>

@@ -197,15 +197,18 @@ async function clearDesktopData() {
   loading.value = true
   let res
   try {
-    /* res = await batchStopDesktopApi(selected.value.map(v => v.id))
+    res = await batchClearDesktopDataApi(selected.value.map(v => v.id))
     Notify.create({
       type: 'success',
       message: '操作成功'
-    }) */
+    })
   }
   finally {
     selected.value = undefined
-    loading.value = false
+    if (res)
+      getUsedQuota()
+    else
+      loading.value = false
   }
 }
 </script>
