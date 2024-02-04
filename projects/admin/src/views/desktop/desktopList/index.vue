@@ -212,7 +212,10 @@ async function stopDesktop() {
         </ZBtn>
       </div>
       <div flex="~ wrap" gap="x4 y2">
-        <DesktopQuota @loading="(val: boolean) => loading = val" />
+        <DesktopQuota
+          v-if="adminRole?.includes(PermissionType.CONFIG_QUERY_DESKTOP)"
+          @loading="(val: boolean) => loading = val"
+        />
         <template v-if="getEnvVariable('VITE_DESKTOP_ON_OFF') && adminRole?.includes(PermissionType.DESKTOP_ON_OFF)">
           <ZBtn
             label="开机"

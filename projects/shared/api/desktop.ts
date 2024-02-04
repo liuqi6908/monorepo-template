@@ -88,7 +88,7 @@ export function checkDesktopExpireManuallyApi(accessKey: string) {
  * 批量修改云桌面的文件传输配额
  */
 export function batchUpdateDesktopFtpQuotaApi(body: IBatchUpdateDesktopFtpQuotaBodyDto) {
-  return $patch<boolean>('/desktop/ftp/batch', body)
+  return $patch<number>('/desktop/ftp/batch', body)
 }
 
 /**

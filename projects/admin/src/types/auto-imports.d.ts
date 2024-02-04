@@ -248,7 +248,6 @@ declare global {
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
   const updateDesktopApi: typeof import('../../../shared/api/desktop')['updateDesktopApi']
-  const updateDesktopFtpQuotaApi: typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']
   const updateIntermediateTableApi: typeof import('../../../shared/api/data')['updateIntermediateTableApi']
   const updateOwnEmailApi: typeof import('../../../shared/api/user')['updateOwnEmailApi']
   const updateOwnPasswordByEmailCodeApi: typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']

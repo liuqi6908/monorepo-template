@@ -18,7 +18,7 @@ const quota = ref<number>()
 /** 禁用提交 */
 const disable = computed(() => !quota.value || quota.value <= 0)
 
-onBeforeMount(getDesktopConfig)
+onBeforeMount(() => getDesktopConfig(false))
 
 /**
  * 更新
