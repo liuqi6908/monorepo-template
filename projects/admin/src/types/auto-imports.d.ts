@@ -41,6 +41,7 @@ declare global {
   const batchClearDesktopDataApi: typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
+  const batchDeleteRoleApi: typeof import('../../../shared/api/role')['batchDeleteRoleApi']
   const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
   const batchRejectDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']
@@ -517,6 +518,7 @@ declare module 'vue' {
     readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
+    readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
     readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
@@ -986,6 +988,7 @@ declare module '@vue/runtime-core' {
     readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
+    readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
     readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>

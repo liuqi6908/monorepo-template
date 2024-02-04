@@ -1,5 +1,6 @@
 import type {
   IRole,
+  IRoleIdDto,
   IUpsertRoleBodyDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
@@ -23,6 +24,13 @@ export function upsertRoleApi(body: IUpsertRoleBodyDto) {
 /**
  * 删除角色
  */
-export function deleteRoleApi(roleId: string) {
+export function deleteRoleApi(roleId: IRoleIdDto['roleId']) {
   return $delete<number>(`/role/${roleId}`)
+}
+
+/**
+ * 批量删除角色
+ */
+export function batchDeleteRoleApi(body: IRoleIdDto['roleId'][]) {
+  return $delete<number>('/role/batch', body)
 }

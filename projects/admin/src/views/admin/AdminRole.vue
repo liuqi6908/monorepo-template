@@ -105,7 +105,7 @@ async function deleteRole() {
   loading.value = true
   let res
   try {
-    res = await batchDeleteDataRoleApi(selected.value.map(v => v.id))
+    res = await batchDeleteRoleApi(selected.value.map(v => v.id))
     Notify.create({
       type: 'success',
       message: '操作成功'
