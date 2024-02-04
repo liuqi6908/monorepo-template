@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { Notify, copyToClipboard } from 'quasar'
 import { DesktopStatus } from 'zjf-types'
+import { validatePassword } from 'zjf-utils'
 
 const emits = defineEmits(['loading'])
 
@@ -31,12 +32,17 @@ const countDown = computed(() => {
 })
 /** 云桌面信息 */
 const desktopTable = computed(() => [
-  { label: '云桌面访问地址', href: desktopInfo.value?.accessUrl },
+  { label: '云桌面访问地址', value: desktopInfo.value?.accessUrl },
   { label: '云桌面账号', value: `${import.meta.env.VITE_DC_PREFIX}${desktopInfo.value?.account}` },
-  { label: '云桌面密码', value: desktopInfo.value?.password, hide: true },
+  { label: '云桌面密码', value: desktopInfo.value?.password },
 ])
 /** 隐藏密码 */
-const hidePassword = ref(true)
+const hidePassword = ref(false)
+
+/** 输入用户密码对话框 */
+const passwordDialog = ref(false)
+/** 用户登录密码 */
+const password = ref('')
 
 /** 虚拟机状态 */
 const vmStatus = computed(() => vmInfo.value?.state)
@@ -85,6 +91,32 @@ function copyText(text: string) {
         type: 'danger',
       })
     })
+}
+
+/**
+ * 查看云桌面密码
+ */
+async function viewDesktopPassword() {
+  if (!desktopInfo.value)
+    return
+  if (!password.value)
+    return passwordDialog.value = true
+
+  emits('loading', true)
+  try {
+    desktopInfo.value.password = await queryDesktopPasswordApi(
+      desktopInfo.value.id,
+      {
+        password: rsaEncrypt(import.meta.env.VITE_PUBLIC_KEY ?? '', password.value),
+      }
+    )
+  }
+  catch (_) {
+    password.value = ''
+  }
+  finally {
+    emits('loading', false)
+  }
 }
 </script>
 
@@ -145,25 +177,41 @@ function copyText(text: string) {
         <div bg-grey-2 p="y3 x6" v-text="item.label" />
         <div flex="~ justify-between items-center" p="y3 x6">
           <a
-            v-if="item.href"
+            v-if="item.label === '云桌面访问地址'"
             text-grey-8
             target="_blank"
-            :href="item.href"
+            :href="item.value"
             truncate
-            v-text="item.href"
+            v-text="item.value"
           />
           <div
-            v-else
+            v-else-if="item.label === '云桌面账号'"
             truncate flex-1 w0
-            v-text="
-              item.value !== '您的登录密码' && item.hide && hidePassword
-                ? '********'
-                : item.value
-            "
+            v-text="item.value"
           />
-          <div v-if="item.value !== '您的登录密码'" text-grey-4 flex="~ gap4">
+          <div
+            v-else-if="item.label === '云桌面密码'"
+            flex-1 w0
+          >
             <div
-              v-if="item.hide"
+              v-if="(typeof item.value !== 'undefined')"
+              truncate
+              v-text="hidePassword ? '********' : item.value"
+            />
+            <TextBtn
+              v-else
+              label="查看密码"
+              text="base!"
+              :disable="!desktopInfo"
+              @click="viewDesktopPassword"
+            />
+          </div>
+          <div
+            v-if="item.label !== '云桌面密码' || (typeof item.value !== 'undefined' && item.value !== '您的登录密码')"
+            text-grey-4 flex="~ gap4"
+          >
+            <div
+              v-if="item.label === '云桌面密码'"
               :class="hidePassword ? 'i-material-symbols:visibility-off-outline' : 'i-material-symbols:visibility-outline' "
               cursor-pointer text-xl
               @click="hidePassword = !hidePassword"
@@ -171,12 +219,33 @@ function copyText(text: string) {
             <div
               i-material-symbols:content-copy-outline-sharp
               cursor-pointer text-xl
-              @click="copyText(item.value || item.href || '')"
+              @click="copyText(item.value || '')"
             />
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 输入用户登录密码 -->
+    <ZDialog
+      v-model="passwordDialog"
+      title="用户密码"
+      footer
+      :disable-confirm="!!validatePassword(password)"
+      @ok="viewDesktopPassword"
+    >
+      <ZInput
+        v-model="password"
+        label="密码"
+        placeholder="请输入用户密码"
+        password required
+        :params="{
+          rules: [
+            (val: string) => validatePassword(val) || true,
+          ]
+        }"
+      />
+    </ZDialog>
   </div>
 </template>
 

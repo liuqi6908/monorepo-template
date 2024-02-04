@@ -30,13 +30,17 @@ declare global {
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const authToken: typeof import('../../../shared/composables/user')['authToken']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
+  const batchApproveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
+  const batchRejectDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']
   const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
+  const batchStopDesktopApi: typeof import('../../../shared/api/desktop')['batchStopDesktopApi']
+  const batchUpdateDesktopFtpQuotaApi: typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']
   const batchUpdateUserDataRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']
   const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
   const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
@@ -176,6 +180,7 @@ declare global {
   const queryDataSuggestApi: typeof import('../../../shared/api/dataSuggest')['queryDataSuggestApi']
   const queryDataSuggestByIdApi: typeof import('../../../shared/api/dataSuggest')['queryDataSuggestByIdApi']
   const queryDesktopApi: typeof import('../../../shared/api/desktop')['queryDesktopApi']
+  const queryDesktopPasswordApi: typeof import('../../../shared/api/desktop')['queryDesktopPasswordApi']
   const queryDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['queryDesktopRequestApi']
   const queryLogByDslApi: typeof import('../../../shared/api/log')['queryLogByDslApi']
   const queryOwnExportLgApi: typeof import('../../../shared/api/exportLg')['queryOwnExportLgApi']
@@ -491,13 +496,17 @@ declare module 'vue' {
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
+    readonly batchUpdateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
@@ -637,6 +646,7 @@ declare module 'vue' {
     readonly queryDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestApi']>
     readonly queryDataSuggestByIdApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestByIdApi']>
     readonly queryDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopApi']>
+    readonly queryDesktopPasswordApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopPasswordApi']>
     readonly queryDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['queryDesktopRequestApi']>
     readonly queryLogByDslApi: UnwrapRef<typeof import('../../../shared/api/log')['queryLogByDslApi']>
     readonly queryOwnExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryOwnExportLgApi']>
@@ -673,7 +683,6 @@ declare module 'vue' {
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly startVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['startVMApi']>
-    readonly stopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['stopDesktopApi']>
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
@@ -697,7 +706,6 @@ declare module 'vue' {
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly updateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopApi']>
-    readonly updateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']>
     readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../../shared/api/data')['updateIntermediateTableApi']>
     readonly updateOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnEmailApi']>
     readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
@@ -944,13 +952,17 @@ declare module '@vue/runtime-core' {
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
+    readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
+    readonly batchUpdateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
     readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
@@ -1090,6 +1102,7 @@ declare module '@vue/runtime-core' {
     readonly queryDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestApi']>
     readonly queryDataSuggestByIdApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestByIdApi']>
     readonly queryDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopApi']>
+    readonly queryDesktopPasswordApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopPasswordApi']>
     readonly queryDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['queryDesktopRequestApi']>
     readonly queryLogByDslApi: UnwrapRef<typeof import('../../../shared/api/log')['queryLogByDslApi']>
     readonly queryOwnExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryOwnExportLgApi']>
@@ -1126,7 +1139,6 @@ declare module '@vue/runtime-core' {
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
     readonly startVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['startVMApi']>
-    readonly stopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['stopDesktopApi']>
     readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
@@ -1150,7 +1162,6 @@ declare module '@vue/runtime-core' {
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
     readonly updateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopApi']>
-    readonly updateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopFtpQuotaApi']>
     readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../../shared/api/data')['updateIntermediateTableApi']>
     readonly updateOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnEmailApi']>
     readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
