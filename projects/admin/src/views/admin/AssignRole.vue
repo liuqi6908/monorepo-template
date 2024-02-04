@@ -4,12 +4,12 @@ import { Notify } from 'quasar'
 import { cloneDeep } from 'lodash'
 import { PermissionType } from 'zjf-types'
 import type { QTableColumn, QTableProps } from 'quasar'
-import type { IUser, IDataRole } from 'zjf-types'
+import type { IUser, IRole } from 'zjf-types'
 
 import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '~/views/user/UserDetails.vue'
-import UserRoleDialog from '~/views/user/userRole/dialog/UserRole.vue'
-import type { Type } from '~/views/user/userRole/dialog/UserRole.vue'
+import AdminRoleDialog from './dialog/AdminRole.vue'
+import type { Type } from './dialog/AdminRole.vue'
 
 const { adminRole } = useUser()
 
@@ -17,21 +17,19 @@ const zTable = ref<InstanceType<typeof ZTable>>()
 
 /** 加载中 */
 const loading = ref(false)
-/** 用户角色弹窗类型 */
+/** 管理权限弹窗类型 */
 const dialogType = ref<Type>()
-/** 用户角色弹窗id */
-const dialogId = ref<string>()
-/** 分配角色对话框 */
+/** 管理权限 */
+const role = ref<IRole>()
+/** 分配权限对话框 */
 const assignDialog = ref(false)
-/** 设置默认角色对话框 */
-const defaultDialog = ref(false)
+/** 重置对话框 */
+const resetDialog = ref(false)
 
-/** 用户角色列表 */
-const roleList = ref<IDataRole[]>()
-/** 默认角色 */
-const defaultRole = computed(() => roleList.value?.find(v => v.id === 'visitor'))
-/** 当前选中的角色 */
-const selectRole = ref<IDataRole>()
+/** 管理权限列表 */
+const roleList = ref<IRole[]>()
+/** 当前选中的权限 */
+const selectRole = ref<IRole>()
 
 /** 表格行 */
 const rows = ref<QTableProps['rows']>([])
@@ -58,8 +56,9 @@ const text = ref('')
 const selected = ref<IUser[]>()
 
 onBeforeMount(async () => {
+  cols.splice(3, 1)
   cols.forEach(v => v.align = 'center')
-  roleList.value = await getDataRoleListApi()
+  roleList.value = await getRolesApi()
 })
 
 /**
@@ -112,17 +111,17 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
 }
 
 /**
- * 分配用户数据角色
+ * 分配管理权限
  */
-async function assignDataRole(id?: string) {
+async function assignRole(id?: string) {
   if (!selected.value?.length)
     return
 
   loading.value = true
   let res
   try {
-    res = await batchUpdateUserDataRoleApi({
-      dataRoleId: id,
+    res = await batchUpdateUserRoleApi({
+      roleId: id,
       id: selected.value.map(v => v.id),
     })
     Notify.create({
@@ -141,14 +140,14 @@ async function assignDataRole(id?: string) {
 </script>
 
 <template>
-  <div flex="~ col gap4" relative>
+  <div full flex="~ col gap4" relative>
     <ZLoading :value="loading" />
 
     <div flex="~ wrap" gap="x4 y2">
       <div flex="~ wrap" gap="x4 y2" mr-auto>
-        <template v-if="adminRole?.includes(PermissionType.ACCOUNT_UPDATE_DATA_ROLE)">
+        <template v-if="adminRole?.includes(PermissionType.ACCOUNT_UPDATE_ROLE)">
           <ZBtn
-            label="分配角色"
+            label="分配权限"
             :disable="!selected?.length"
             @click="assignDialog = true"
           >
@@ -157,13 +156,13 @@ async function assignDataRole(id?: string) {
             </template>
           </ZBtn>
           <ZBtn
-            :label="'设为默认' + (defaultRole ? `（${defaultRole.name}）` : '')"
+            label="重置"
             text-color="primary-1"
             :params="{
               outline: true,
             }"
             :disable="!selected?.length"
-            @click="defaultDialog = true"
+            @click="resetDialog = true"
           >
             <template #left>
               <div w5 h5 i-mingcute:refresh-3-line />
@@ -204,8 +203,8 @@ async function assignDataRole(id?: string) {
       fixed-last-column
       @request="queryUserList"
     >
-      <template #body-cell-dataRole="{ value }">
-        <q-td auto-width max-w="none!" class="data-role-cell">
+      <template #body-cell-role="{ row, value }">
+        <q-td auto-width max-w="none!" class="role-cell">
           <div v-if="!value" text-center v-text="'—'" />
           <div v-else px20 text-center>
             {{ value }}
@@ -217,7 +216,7 @@ async function assignDataRole(id?: string) {
               invisible select-none
               @click="() => {
                 dialogType = 'view'
-                dialogId = roleList?.find(v => v.name === value)?.id
+                role = row.role
               }"
             >
               <div w4 h4 i-mingcute:fullscreen-2-line />
@@ -233,21 +232,21 @@ async function assignDataRole(id?: string) {
       </template>
     </ZTable>
 
-    <UserRoleDialog v-model:type="dialogType" :id="dialogId" />
+    <AdminRoleDialog v-model:type="dialogType" :role="role" />
 
-    <!-- 分配角色 -->
+    <!-- 分配权限 -->
     <ZDialog
       v-model="assignDialog"
-      title="分配角色"
+      title="分配权限"
       footer
       :disable-confirm="!selectRole"
-      @ok="assignDataRole(selectRole?.id)"
+      @ok="assignRole(selectRole?.id)"
     >
       <ZSelect
         v-model="selectRole"
         :options="roleList"
-        label="角色"
-        placeholder="请选择角色"
+        label="权限"
+        placeholder="请选择权限"
         required
         :params="{
           optionLabel: 'name',
@@ -255,20 +254,20 @@ async function assignDataRole(id?: string) {
       />
     </ZDialog>
 
-    <!-- 设为默认角色 -->
+    <!-- 重置 -->
     <ZDialog
-      v-model="defaultDialog"
-      :title="'设为默认' + (defaultRole ? `（${defaultRole.name}）` : '')"
+      v-model="resetDialog"
+      title="重置"
       footer
-      @ok="assignDataRole()"
+      @ok="assignRole"
     >
-      该操作将为已选用户设置默认{{ defaultRole ? `（${defaultRole.name}）` : '' }}角色，是否继续？
+      该操作将重置已选用户的管理员权限，是否继续？
     </ZDialog>
   </div>
 </template>
 
 <style lang="scss" scoped>
-.data-role-cell:hover {
+.role-cell:hover {
   .show-details {
     visibility: visible;
   }

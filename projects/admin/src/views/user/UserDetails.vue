@@ -84,7 +84,7 @@ const userInfo = computed<UserInfo[]>(() => {
           value: base?.dataRole?.name,
         },
         {
-          label: '管理员角色',
+          label: '管理员权限',
           value: base?.role?.name,
         },
       ]

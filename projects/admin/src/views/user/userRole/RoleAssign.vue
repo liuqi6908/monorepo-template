@@ -58,6 +58,7 @@ const text = ref('')
 const selected = ref<IUser[]>()
 
 onBeforeMount(async () => {
+  cols.splice(4, 1)
   cols.forEach(v => v.align = 'center')
   roleList.value = await getDataRoleListApi()
 })
@@ -204,7 +205,7 @@ async function assignDataRole(id?: string) {
       fixed-last-column
       @request="queryUserList"
     >
-      <template #body-cell-dataRole="{ value }">
+      <template #body-cell-dataRole="{ row, value }">
         <q-td auto-width max-w="none!" class="data-role-cell">
           <div v-if="!value" text-center v-text="'—'" />
           <div v-else px20 text-center>
@@ -217,7 +218,7 @@ async function assignDataRole(id?: string) {
               invisible select-none
               @click="() => {
                 dialogType = 'view'
-                dialogId = roleList?.find(v => v.name === value)?.id
+                dialogId = row.dataRole?.id
               }"
             >
               <div w4 h4 i-mingcute:fullscreen-2-line />

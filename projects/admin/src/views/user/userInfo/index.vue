@@ -31,11 +31,6 @@ const rows = ref<QTableProps['rows']>([])
 const cols = reactive<QTableColumn<IUser>[]>([
   ...cloneDeep(USER_TABLE_COLUMNS),
   {
-    name: 'role',
-    label: '管理员角色',
-    field: row => row.role?.name,
-  },
-  {
     name: 'createdAt',
     label: '注册时间',
     field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),

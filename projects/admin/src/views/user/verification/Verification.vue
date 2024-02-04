@@ -49,7 +49,7 @@ const cols = reactive<QTableColumn<IVerificationHistory>[]>([
   },
   {
     name: 'role',
-    label: '管理员角色',
+    label: '管理员权限',
     field: row => row.founder?.role?.name,
   },
   {

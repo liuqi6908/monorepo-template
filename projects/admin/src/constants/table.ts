@@ -42,6 +42,11 @@ export const USER_TABLE_COLUMNS: QTableColumn<IUser>[] = [
     label: '用户角色',
     field: row => row.dataRole?.name,
   },
+  {
+    name: 'role',
+    label: '管理员权限',
+    field: row => row.role?.name,
+  },
 ]
 
 /**
