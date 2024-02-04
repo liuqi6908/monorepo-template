@@ -46,6 +46,14 @@ const _desktopErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '云桌面资源已被分配完毕',
   },
+  [ErrorCode.DESKTOP_IS_NOT_DISABLED]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '禁止删除未禁用的云桌面',
+  },
+  [ErrorCode.DESKTOP_EXISTS_USER_DATA]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '云桌面存在用户上传的数据',
+  },
 }
 
 export default _desktopErrors

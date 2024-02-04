@@ -132,6 +132,10 @@ export enum ErrorCode {
   DESKTOP_USER_ASSIGNED_OTHERS = 800010,
   /** 云桌面资源已被分配完毕 */
   DESKTOP_RESOURCE_ALLOCATED = 800011,
+  /** 云桌面未被禁用 */
+  DESKTOP_IS_NOT_DISABLED = 800012,
+  /** 云桌面存在用户上传的数据 */
+  DESKTOP_EXISTS_USER_DATA = 800013,
 
   // ---- 外发相关错误码 ----
   /** 当日的外发次数已达上限 */

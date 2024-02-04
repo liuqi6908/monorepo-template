@@ -7,10 +7,11 @@ import {
   DesktopQueueHistoryStatus,
   DesktopQueueStatus,
   ErrorCode,
+  MinioBucket,
   PermissionType,
   SysConfig,
 } from 'zjf-types'
-import { hasIntersection, omit } from 'zjf-utils'
+import { hasIntersection, numberArrSum, omit } from 'zjf-utils'
 
 import { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
@@ -26,6 +27,7 @@ import { comparePassword } from 'src/utils/encrypt/encrypt-password'
 
 import { NotifyService } from '../notify/notify.service'
 import { SysConfigService } from '../config/config.service'
+import { FileService } from '../file/file.service'
 import { DesktopService } from './desktop.service'
 import { DesktopResDto } from './dto/desktop.res.dto'
 import { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
@@ -46,6 +48,7 @@ export class DesktopController {
     private readonly _desktopHisSrv: DesktopQueueHistoryService,
     private readonly _zstackSrv: ZstackService,
     private readonly _sysCfgSrv: SysConfigService,
+    private readonly _fileSrv: FileService,
   ) {}
 
   @ApiOperation({ summary: '判断当前客户端是否在云桌面内使用' })
@@ -113,17 +116,56 @@ export class DesktopController {
     return updateRes.affected > 0
   }
 
+  @ApiOperation({ summary: '删除指定的云桌面（无法删除未禁用的）' })
+  @HasPermission(PermissionType.DESKTOP_DELETE)
+  @Delete(':desktopId')
+  public async deleteDesktop(@Param() param: DesktopIdDto) {
+    const desktop = await this._desktopSrv.repo().findOne({
+      where: { id: param.desktopId },
+      relations: { lastUser: true },
+    })
+    if (!desktop)
+      responseError(ErrorCode.DESKTOP_NOT_FOUND)
+    if (!desktop.disabled)
+      responseError(ErrorCode.DESKTOP_IS_NOT_DISABLED)
+
+    if (desktop.lastUser) {
+      const basePath = `${desktop.id}/${desktop.lastUser.account}`
+      const fileList = await this._fileSrv.getFolderFiles(MinioBucket.FTP, basePath) as any[]
+      if (numberArrSum(fileList.map(v => v.size)) > 0)
+        responseError(ErrorCode.DESKTOP_EXISTS_USER_DATA)
+    }
+
+    return (await this._desktopSrv.repo().delete({ id: param.desktopId })).affected > 0
+  }
+
   @ApiOperation({ summary: '批量删除云桌面（无法删除未禁用的）' })
   @HasPermission(PermissionType.DESKTOP_DELETE)
   @Delete('delete/batch')
   public async batchDeleteDesktop(@Body() body: DesktopIdDto['desktopId'][]) {
-    const deleteRes = await this._desktopSrv.qb()
-      .delete()
-      .where({ disabled: true })
-      .andWhere({ id: In(body) })
-      .execute()
+    if (body.length === 1)
+      return await this.deleteDesktop({ desktopId: body[0] })
 
-    return deleteRes.affected
+    const desktops = await this._desktopSrv.repo().find({
+      where: {
+        id: In(body),
+        disabled: true,
+      },
+      relations: {
+        lastUser: true,
+      },
+    })
+    for (let i = desktops.length - 1; i >= 0; i--) {
+      const { id, lastUser } = desktops[i]
+      if (lastUser) {
+        const basePath = `${id}/${lastUser.account}`
+        const fileList = await this._fileSrv.getFolderFiles(MinioBucket.FTP, basePath) as any[]
+        if (numberArrSum(fileList.map(v => v.size)) > 0)
+          desktops.splice(i, 1)
+      }
+    }
+
+    return (await this._desktopSrv.repo().delete({ id: In(desktops.map(v => v.id)) })).affected
   }
 
   @ApiOperation({ summary: '批量停用云桌面' })
