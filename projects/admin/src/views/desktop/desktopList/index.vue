@@ -207,12 +207,15 @@ async function stopDesktop() {
           @click="stopDialog = true"
         >
           <template #left>
-            <div w5 h5 i-mingcute:delete-2-line />
+            <div w5 h5 i-mingcute:minus-circle-line />
           </template>
         </ZBtn>
       </div>
       <div flex="~ wrap" gap="x4 y2">
-        <DesktopQuota @loading="(val: boolean) => loading = val" />
+        <DesktopQuota
+          v-if="adminRole?.includes(PermissionType.CONFIG_QUERY_DESKTOP)"
+          @loading="(val: boolean) => loading = val"
+        />
         <template v-if="getEnvVariable('VITE_DESKTOP_ON_OFF') && adminRole?.includes(PermissionType.DESKTOP_ON_OFF)">
           <ZBtn
             label="开机"
@@ -235,7 +238,7 @@ async function stopDesktop() {
             }"
           >
             <template #left>
-              <div w5 h5 i-material-symbols:sync />
+              <div w5 h5 i-mingcute:refresh-2-line />
             </template>
           </ZBtn>
           <ZBtn
