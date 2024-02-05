@@ -146,4 +146,24 @@ export class HyperVService extends EventEmitter {
     }
     catch (_) {}
   }
+
+  /**
+   * 将云桌面与域用户进行绑定
+   */
+  public async bindDesktopAndUser(vmUUID: string, user: string) {
+    try {
+      return await this.requestWithSession((cfg) => {
+        return this._httpSrv.axiosRef({
+          ...cfg,
+          method: 'PUT',
+          url: '/v1/user/bind',
+          data: {
+            desktopID: vmUUID,
+            username: user,
+          },
+        })
+      })
+    }
+    catch (_) {}
+  }
 }

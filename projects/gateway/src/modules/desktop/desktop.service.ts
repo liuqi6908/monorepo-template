@@ -1,6 +1,7 @@
 import { Inject, Injectable, Logger, forwardRef } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Cron } from '@nestjs/schedule'
+import { ConfigService } from '@nestjs/config'
 import { objectPick } from '@catsjuice/utils'
 import { In, IsNull, Not, Repository } from 'typeorm'
 import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
@@ -8,16 +9,20 @@ import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
 import { Desktop } from 'src/entities/desktop'
 import { responseError } from 'src/utils/response'
 
+import type { DesktopConfig } from '../../config/_desktop.config'
 import { RedisService } from '../redis/redis.service'
 import { NotifyService } from '../notify/notify.service'
 import type { AssignDesktopParamDto } from './dto/assign-desktop.param.dto'
 import type { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
+import { HyperVService } from './hyper-v/hyper-v.service'
 
 @Injectable()
 export class DesktopService {
   private readonly _logger = new Logger(DesktopService.name)
   private _checking = false
+
+  private _desktop: DesktopConfig
 
   constructor(
     @InjectRepository(Desktop)
@@ -27,7 +32,11 @@ export class DesktopService {
     private readonly _notifySrv: NotifyService,
     @Inject(forwardRef(() => DesktopRequestService))
     private readonly _desktopReqSrv: DesktopRequestService,
-  ) {}
+    private readonly _cfgSrv: ConfigService,
+    private readonly _hyperVSrv: HyperVService,
+  ) {
+    this._desktop = this._cfgSrv.get<DesktopConfig>('desktop')
+  }
 
   // 每小时检查一次即将过期的云桌面
   @Cron('0 0 * * * *')
@@ -141,6 +150,15 @@ export class DesktopService {
         relations: { user: { verification: true } },
       })
       this._notifySrv.notifyUserDesktopAssigned(desktop)
+
+      // 绑定域用户
+      if (
+        this._desktop.domainUser && this._desktop.type === 1
+        && desktop.account
+        && desktop.account === desktop.user?.account
+        && desktop.password?.includes('登录密码')
+      )
+        this._hyperVSrv.bindDesktopAndUser(desktop.id, desktop.user.account)
     })
   }
 
