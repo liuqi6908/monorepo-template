@@ -90,6 +90,15 @@ export class DesktopService {
         this._logger.log(`☁️ 云桌面 [${desktop.id}] 将在 ${ahead} 天后过期`)
         await this._notifySrv.notifyDesktopExpired(desktop)
       }
+
+      // 云桌面过期自动停用
+      if (this._desktop.expireStopped) {
+        const desktops = await this._desktopRepo.createQueryBuilder('d')
+          .where('d.disabled = :disabled', { disabled: false })
+          .andWhere('expiredAt <= :now', { now: new Date() })
+          .getMany()
+        this.batchStopDesktop(desktops.map(v => v.id))
+      }
     }
     catch (e) {
       this._logger.error(e)
