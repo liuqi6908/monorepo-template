@@ -167,7 +167,7 @@ async function deleteRole() {
       :fixed-last-column="adminRole?.includes(PermissionType.ROLE_DELETE)"
     >
       <template #body-cell-info="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <TextBtn
             label="查看完整信息"
             @click="() => {
