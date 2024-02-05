@@ -40,7 +40,8 @@ const tableName = computed(() => {
 
 /** 字段说明的列 */
 const fieldsCols: QTableColumn<IDataField>[] = [
-  { label: '字段', name: 'nameZH', field: 'nameZH', align: 'left' },
+  { label: '字段（中文）', name: 'nameZH', field: 'nameZH', align: 'left' },
+  { label: '字段（英文）', name: 'nameEN', field: 'nameEN', align: 'left' },
   { label: '含义', name: 'description', field: 'description', align: 'left' },
 ]
 /** 字段说明的行 */
