@@ -148,15 +148,15 @@ export class HyperVService extends EventEmitter {
   }
 
   /**
-   * 将云桌面与域用户进行绑定
+   * 将云桌面与域用户进行绑定/解绑
    */
-  public async bindDesktopAndUser(vmUUID: string, user: string) {
+  public async bindDesktopAndUser(vmUUID: string, user: string, action: 'bind' | 'unbind' = 'bind') {
     try {
       return await this.requestWithSession((cfg) => {
         return this._httpSrv.axiosRef({
           ...cfg,
           method: 'PUT',
-          url: '/v1/user/bind',
+          url: `/v1/user/${action}`,
           data: {
             desktopID: vmUUID,
             username: user,

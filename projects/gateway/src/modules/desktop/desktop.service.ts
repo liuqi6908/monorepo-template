@@ -4,10 +4,11 @@ import { Cron } from '@nestjs/schedule'
 import { ConfigService } from '@nestjs/config'
 import { objectPick } from '@catsjuice/utils'
 import { In, IsNull, Not, Repository } from 'typeorm'
-import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
+import { DesktopQueueHistoryStatus, DesktopQueueStatus, ErrorCode } from 'zjf-types'
 
 import { Desktop } from 'src/entities/desktop'
 import { responseError } from 'src/utils/response'
+import type { DesktopIdDto } from 'src/dto/id/desktop.dto'
 
 import type { DesktopConfig } from '../../config/_desktop.config'
 import { RedisService } from '../redis/redis.service'
@@ -15,6 +16,7 @@ import { NotifyService } from '../notify/notify.service'
 import type { AssignDesktopParamDto } from './dto/assign-desktop.param.dto'
 import type { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
+import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queue-history.service'
 import { HyperVService } from './hyper-v/hyper-v.service'
 
 @Injectable()
@@ -32,6 +34,7 @@ export class DesktopService {
     private readonly _notifySrv: NotifyService,
     @Inject(forwardRef(() => DesktopRequestService))
     private readonly _desktopReqSrv: DesktopRequestService,
+    private readonly _desktopHisSrv: DesktopQueueHistoryService,
     private readonly _cfgSrv: ConfigService,
     private readonly _hyperVSrv: HyperVService,
   ) {
@@ -193,6 +196,62 @@ export class DesktopService {
     desktops.forEach(desktop => desktopIpMap.set(desktop.internalIp, desktop))
     list.forEach(item => item[desktopKey] = desktopIpMap.get(item[ipKey] as string))
     return list
+  }
+
+  /**
+   * 批量停用云桌面
+   */
+  public async batchStopDesktop(desktopId: DesktopIdDto['desktopId'][]) {
+    const desktops = await this.repo().find({
+      where: {
+        id: In(desktopId),
+        disabled: false,
+      },
+      relations: {
+        user: true,
+      },
+    })
+    if (!desktops.length)
+      return 0
+    const userId = desktops.map(v => v.userId).filter(Boolean)
+    if (userId.length) {
+      // 将用户的状态更新
+      const queues = await this._desktopReqSrv.repo().find({
+        where: { userId: In(userId) },
+      })
+      this._desktopHisSrv.mv2history(
+        queues,
+        DesktopQueueHistoryStatus.EXPIRED,
+        {},
+      )
+    }
+
+    const updateRes = await this.qb()
+      .update(Desktop)
+      .set({
+        disabled: true,
+        lastUserId: () => 'userId',
+        userId: null,
+        expiredAt: new Date(),
+      })
+      .where({ disabled: false })
+      .andWhere({ id: In(desktopId) })
+      .execute()
+
+    // 关机云桌面 并 解绑域用户
+    if (this._desktop.domainUser && this._desktop.type === 1) {
+      desktops.forEach(async (desktop) => {
+        const { id, user } = desktop
+        if (user?.account)
+          this._hyperVSrv.bindDesktopAndUser(id, user.account, 'unbind')
+        try {
+          await this._hyperVSrv.operateVM(desktop.id, 'stop')
+        }
+        catch (_) {}
+      })
+    }
+
+    return updateRes.affected
   }
 
   repo() {

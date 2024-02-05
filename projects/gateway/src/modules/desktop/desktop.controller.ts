@@ -5,7 +5,6 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req } fr
 import { In } from 'typeorm'
 import {
   DESKTOP_MAX_COUNT,
-  DesktopQueueHistoryStatus,
   DesktopQueueStatus,
   ErrorCode,
   MinioBucket,
@@ -14,7 +13,7 @@ import {
 } from 'zjf-types'
 import { hasIntersection, numberArrSum, omit } from 'zjf-utils'
 
-import { Desktop } from 'src/entities/desktop'
+import type { Desktop } from 'src/entities/desktop'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { DesktopIdDto } from 'src/dto/id/desktop.dto'
 import { PasswordDto } from 'src/dto/password.dto'
@@ -37,7 +36,6 @@ import { UpdateDesktopBodyDto } from './dto/update-desktop.body.dto'
 import { AssignDesktopParamDto } from './dto/assign-desktop.param.dto'
 import { BatchUpdateDesktopFtpQuotaBodyDto } from './dto/update-desktop-ftp-quota.body.dto'
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
-import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queue-history.service'
 import { ZstackService } from './zstack/zstack.service'
 import { HyperVService } from './hyper-v/hyper-v.service'
 
@@ -48,7 +46,6 @@ export class DesktopController {
     private readonly _notifySrv: NotifyService,
     private readonly _desktopSrv: DesktopService,
     private readonly _desktopReqSrv: DesktopRequestService,
-    private readonly _desktopHisSrv: DesktopQueueHistoryService,
     private readonly _cfgSrv: ConfigService,
     private readonly _zstackSrv: ZstackService,
     private readonly _hyperVSrv: HyperVService,
@@ -177,40 +174,7 @@ export class DesktopController {
   @HasPermission(PermissionType.DESKTOP_DISABLE)
   @Delete('stop/batch')
   public async batchStopDesktop(@Body() body: DesktopIdDto['desktopId'][]) {
-    const desktops = await this._desktopSrv.repo().find({
-      where: {
-        id: In(body),
-        disabled: false,
-      },
-    })
-    if (!desktops.length)
-      return 0
-    const userId = desktops.map(v => v.userId).filter(Boolean)
-    if (userId.length) {
-      // 将用户的状态更新
-      const queues = await this._desktopReqSrv.repo().find({
-        where: { userId: In(userId) },
-      })
-      this._desktopHisSrv.mv2history(
-        queues,
-        DesktopQueueHistoryStatus.EXPIRED,
-        {},
-      )
-    }
-
-    const updateRes = await this._desktopSrv.qb()
-      .update(Desktop)
-      .set({
-        disabled: true,
-        lastUserId: () => 'userId',
-        userId: null,
-        expiredAt: new Date(),
-      })
-      .where({ disabled: false })
-      .andWhere({ id: In(body) })
-      .execute()
-
-    return updateRes.affected
+    return await this._desktopSrv.batchStopDesktop(body)
   }
 
   @ApiOperation({ summary: '分配云桌面给指定的用户' })
