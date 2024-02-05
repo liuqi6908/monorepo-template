@@ -304,12 +304,12 @@ async function reset() {
       @request="queryVerifyList"
     >
       <template #body-cell-status="{ value }">
-        <q-td auto-width text-center>
+        <q-td text-center>
           <VerifyStatus :status="value" />
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <UserDetails :verify="row" />
         </q-td>
       </template>
