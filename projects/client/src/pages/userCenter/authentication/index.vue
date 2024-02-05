@@ -8,7 +8,7 @@ import ChangePasswordDialog from '~/views/userCenter/authentication/ChangePasswo
 import SetPasswordDialog from '~/views/userCenter/authentication/SetPassword.dialog.vue'
 import VerificationDialog from '~/views/userCenter/authentication/Verification.dialog.vue'
 
-const { query } = useRoute()
+const $route = useRoute()
 const $router = useRouter()
 const { userInfo, latestVerify, verifyStatus, isPhone, getOwnProfile, getVerify } = useUser()
 
@@ -96,7 +96,7 @@ onBeforeMount(async () => {
     await getVerify()
   }
   finally {
-    if (Object.keys(query).find(v => v === 'verify') && isClient) {
+    if (Object.keys($route.query).find(v => v === 'verify') && isClient) {
       nextTick(() => {
         const el = document.querySelector('.verify-status')
         if (el) {
@@ -106,7 +106,10 @@ onBeforeMount(async () => {
           })
         }
         verifyDialog.value = true
-        $router.replace({ query: {} })
+        $router.replace({
+          path: $route.path,
+          query: {}
+        })
       })
     }
     loading.value = false
