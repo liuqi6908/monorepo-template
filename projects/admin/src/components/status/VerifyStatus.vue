@@ -42,11 +42,11 @@ const verifyStyle: VerifyStyle = {
 
 <template>
   <div
-    flex="~ items-center gap2px" p="y1 x2"
+    flex="items-center gap2px" p="y1 x2"
     text="sm grey-1" font-400
     :style="{
       backgroundColor: `var(--${verifyStyle[status].color})`,
-    }"
+    }" inline-flex
     whitespace-nowrap rounded-6 select-none
   >
     <div w4 h4 :class="verifyStyle[status].icon" />

@@ -252,18 +252,18 @@ async function deleteUserPassword() {
       @request="queryUserList"
     >
       <template #body-cell-status="{ value }">
-        <q-td auto-width text-center>
+        <q-td text-center>
           <VerifyStatus v-if="value" :status="value" />
           <div v-else v-text="'—'" />
         </q-td>
       </template>
       <template #body-cell-isDeleted="{ value }">
-        <q-td auto-width text-center>
+        <q-td text-center>
           <AccountStatus :disable="value" />
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <UserDetails :user="row" />
         </q-td>
       </template>
