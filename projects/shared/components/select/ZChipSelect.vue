@@ -82,6 +82,17 @@ const value = useVModel(props, 'modelValue')
         }
       }
     }
+
+    &.is-admin {
+      &.medium {
+        .q-field__control .q-field__native .q-chip {
+          .q-chip__content {
+            font-size: 14px;
+            line-height: 20px;
+          }
+        }
+      }
+    }
   }
 }
 </style>

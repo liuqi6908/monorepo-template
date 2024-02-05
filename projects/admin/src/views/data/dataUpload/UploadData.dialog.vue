@@ -18,6 +18,8 @@ interface TableRow {
   part?: string
   table?: string
   tableEn?: string
+  preview?: number
+  download?: number
 }
 
 const props = defineProps<{
@@ -79,6 +81,7 @@ const cols = reactive<QTableColumn[]>([
 ])
 /** 表格行 */
 const rows = computed<TableRow[]>(() => {
+  const { id } = props
   const data = dataList.value?.find(v => v.id === props.id)?.children
 
   function processingData(
@@ -91,21 +94,24 @@ const rows = computed<TableRow[]>(() => {
   } {
     data?.forEach((v) => {
       let node = cloneDeep(parent)
-      if (v.level === 1) {
+      const { level, nameZH, nameEN } = v
+      if (level === 1) {
         node = pick(node, 'database')
-        node.database = v.nameZH
+        node.database = nameZH
       }
-      else if (v.level === 2) {
+      else if (level === 2) {
         node = pick(node, 'database', 'bDatabase')
-        node.bDatabase = v.nameZH
+        node.bDatabase = nameZH
       }
-      else if (v.level === 3) {
+      else if (level === 3) {
         node = pick(node, 'database', 'bDatabase', 'part')
-        node.part = v.nameZH
+        node.part = nameZH
       }
-      else if (v.level === 4) {
-        node.table = v.nameZH
-        node.tableEn = v.nameEN
+      else if (level === 4) {
+        node.table = nameZH
+        node.tableEn = nameEN
+        node.preview = previewResource.value?.[id!]?.includes(nameEN) ? 1 : 0
+        node.download = downloadResource.value?.[id!]?.includes(nameEN) ? 1 : 0
         nodes.push(node)
       }
 
@@ -115,8 +121,21 @@ const rows = computed<TableRow[]>(() => {
     return { nodes, parent }
   }
 
-  return processingData(data).nodes
+  return processingData(data).nodes.filter((item) => {
+    const { preview, download } = item
+    return !filter.value.length
+      || (filter.value.find(v => v.value === 'preview') && !preview)
+      || (filter.value.find(v => v.value === 'download') && !download)
+  })
 })
+
+/** 筛选可选项 */
+const filterOptions = [
+  { label: '未上传“样例数据”', value: 'preview' },
+  { label: '未上传“下载数据”', value: 'download' }
+]
+/** 筛选 */
+const filter = ref<(typeof filterOptions[number])[]>([])
 
 onBeforeMount(() => {
   cols.forEach(v => v.align = 'center')
@@ -253,44 +272,62 @@ function handlerUpload(type: UploadType, name: string) {
     @update:model-value="$emit('update:id', undefined)"
   >
     <div full flex="~ col gap4">
-      <div v-if="isEdit" flex="~ wrap" gap="x4 y2">
-        <ZUpload
-          :accept="CSV_FILE_TYPE.join(',')"
-          :hint-message="{
-            accept: '只能上传 CSV 文件',
-          }"
-          multiple :max-file="10000"
-          @update:model-value="val => batchUploadTableDataFile(UploadType.PREVIEW, val)"
-        >
-          <ZBtn
-            label="批量上传“样例数据”"
-            :disable="disable"
-          >
-            <template #left>
-              <div w5 h5 i-mingcute:upload-3-line />
-            </template>
-          </ZBtn>
-        </ZUpload>
-        <ZUpload
-          :accept="ZIP_FILE_TYPE.join(',')"
-          :hint-message="{
-            accept: '只能上传 ZIP 文件',
-          }"
-          multiple :max-file="10000"
-          mr-auto
-          @update:model-value="val => batchUploadTableDataFile(UploadType.DOWNLOAD, val)"
-        >
-          <ZBtn
-            label="批量上传“下载数据”"
-            :disable="disable"
-          >
-            <template #left>
-              <div w5 h5 i-mingcute:upload-3-line />
-            </template>
-          </ZBtn>
-        </ZUpload>
-        <div px4 h10 rounded-2 bg-grey-2 text-sm flex="~ items-center">
-          提示：批量上传可以使用 ctrl 或者 shift 进行文件多选
+      <div flex="~ wrap" gap="x4 y2">
+        <div flex="~ gap4" mr-auto>
+          <template v-if="isEdit">
+            <ZUpload
+              :accept="CSV_FILE_TYPE.join(',')"
+              :hint-message="{
+                accept: '只能上传 CSV 文件',
+              }"
+              multiple :max-file="10000"
+              @update:model-value="val => batchUploadTableDataFile(UploadType.PREVIEW, val)"
+            >
+              <ZBtn
+                label="批量上传“样例数据”"
+                :disable="disable"
+              >
+                <template #left>
+                  <div w5 h5 i-mingcute:upload-3-line />
+                </template>
+              </ZBtn>
+            </ZUpload>
+            <ZUpload
+              :accept="ZIP_FILE_TYPE.join(',')"
+              :hint-message="{
+                accept: '只能上传 ZIP 文件',
+              }"
+              multiple :max-file="10000"
+              mr-auto
+              @update:model-value="val => batchUploadTableDataFile(UploadType.DOWNLOAD, val)"
+            >
+              <ZBtn
+                label="批量上传“下载数据”"
+                :disable="disable"
+              >
+                <template #left>
+                  <div w5 h5 i-mingcute:upload-3-line />
+                </template>
+              </ZBtn>
+            </ZUpload>
+          </template>
+        </div>
+        <div flex="~ wrap" gap="x4 y2">
+          <div v-if="isEdit" px4 h10 rounded-2 bg-grey-2 text-sm flex="~ items-center">
+            提示：批量上传可以使用 ctrl 或者 shift 进行文件多选
+          </div>
+          <ZChipSelect
+            v-model="filter"
+            :options="filterOptions"
+            label="筛选"
+            label-position="left"
+            :label-width="28"
+            size="medium"
+            :style="{
+              minWidth: '240px',
+              width: `${160 * filter.length + 110}px`
+            }"
+          />
         </div>
       </div>
 
@@ -306,8 +343,8 @@ function handlerUpload(type: UploadType, name: string) {
           <q-td auto-width max-w="none!">
             <UploadStatus
               :total="1"
-              :preview="previewResource[id!]?.includes(row.tableEn) ? 1 : 0"
-              :download="downloadResource[id!]?.includes(row.tableEn) ? 1 : 0"
+              :preview="row.preview"
+              :download="row.download"
             />
           </q-td>
         </template>
