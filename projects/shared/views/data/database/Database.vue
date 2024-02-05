@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
   height: 0
 })
 
-const { isAdmin } = useSysConfig()
+const { isAdmin, zoomRatio } = useSysConfig()
 const { rootId, databaseId } = useDatabase()
 const $route = useRoute()
 const $router = useRouter()
@@ -126,6 +126,16 @@ function hasTable(item?: IDataDirectory): boolean {
             {{ table.nameZH }}
           </q-item-label>
         </q-item-section>
+
+        <q-tooltip
+          v-if="zoomRatio >= 1"
+          anchor="top middle"
+          self="bottom middle"
+          :offset="[0, 6]"
+          class="rounded-1!"
+        >
+          {{ table.nameZH }}
+        </q-tooltip>
       </q-item>
     </div>
   </div>
