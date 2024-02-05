@@ -117,4 +117,18 @@ export class HyperVService extends EventEmitter {
       })
     })
   }
+
+  /**
+   * 查询虚拟机状态
+   * @param vmUUID
+   */
+  public async getVMState(vmUUID: string) {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: `/v1/vm/${vmUUID}`,
+      })
+    })
+  }
 }

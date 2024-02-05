@@ -39,7 +39,10 @@ export class DesktopVmController {
   @ApiParam({ name: 'desktopId', description: '虚拟机ID' })
   @Get(':desktopId')
   public async getVMState(@Param() param: DesktopIdDto) {
-    return await this._zstackSrv.getVMState(param.desktopId)
+    if (this._type === 0)
+      return await this._zstackSrv.getVMState(param.desktopId)
+    else if (this._type === 1)
+      return await this._hyperVSrv.getVMState(param.desktopId)
   }
 
   @ApiOperation({ summary: '获取指定虚拟机的详情' })
