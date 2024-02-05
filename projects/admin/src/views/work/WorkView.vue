@@ -159,7 +159,7 @@ async function handleDownload() {
       @request="queryWorksRecords"
     >
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <ZBtn
             label="下载"
             size="small"

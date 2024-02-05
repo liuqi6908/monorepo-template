@@ -32,11 +32,11 @@ const exportStyle: ExportStyle = {
 
 <template>
   <div
-    flex="~ items-center gap2px" p="y1 x2"
+    flex="items-center gap2px" p="y1 x2"
     text="base grey-1" font-400
     :style="{
       backgroundColor: disable ? 'var(--grey-4)' : `var(--${exportStyle[status].color})`,
-    }"
+    }" inline-flex
     whitespace-nowrap rounded-6 select-none
   >
     <div w4 h4 :class="exportStyle[status].icon" />

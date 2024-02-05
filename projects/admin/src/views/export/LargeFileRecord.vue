@@ -13,7 +13,7 @@ const { adminRole } = useUser()
 const zTable = ref<InstanceType<typeof ZTable>>()
 
 /** 是否可以编辑（下载） */
-const isEdit = computed(() => adminRole.value?.includes(PermissionType.EXPORT_LG_DOWNLOAD))
+const isEdit = computed(() => adminRole.value?.includes(PermissionType.EXPORT_LG_DOWNLOAD_RECORD))
 /** 加载中 */
 const loading = ref(false)
 
@@ -194,12 +194,12 @@ function changeTagStatus(item: typeof statusTag.value[number]) {
       @request="queryExportLgRecords"
     >
       <template #body-cell-status="{ value }">
-        <q-td auto-width>
+        <q-td text-center>
           <ExportStatus :status="value" text-sm />
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <ZBtn
             label="下载"
             size="small"

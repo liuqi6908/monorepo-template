@@ -180,10 +180,10 @@ async function handleReject() {
       @request="queryPendingRecords"
     >
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
-          <div flex="~ gap2">
+        <q-td text-center>
+          <div inline-flex gap2>
             <ZBtn
-              v-if="adminRole?.includes(PermissionType.EXPORT_LG_DOWNLOAD)"
+              v-if="adminRole?.includes(PermissionType.EXPORT_LG_DOWNLOAD_PENDING)"
               label="下载"
               size="small"
               @click="downloadDialog = row"

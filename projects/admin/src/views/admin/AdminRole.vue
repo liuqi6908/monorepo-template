@@ -178,7 +178,7 @@ async function deleteRole() {
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <ZBtn
             label="编辑"
             size="small"
