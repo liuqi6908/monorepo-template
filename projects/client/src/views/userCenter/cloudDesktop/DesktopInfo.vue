@@ -22,7 +22,7 @@ const vmTable = computed(() => [
   },
   {
     label: 'CPU',
-    value: `${vmInfo.value?.cpuNum} 核`
+    value: vmInfo.value?.cpuNum ? `${vmInfo.value?.cpuNum} 核` : ''
   },
   {
     label: '内存',
@@ -42,7 +42,7 @@ const vmTable = computed(() => [
   },
   {
     label: '最后操作时间',
-    value: moment(vmInfo.value?.lastOpDate, 'MMM D, YYYY h:mm:ss A').format('YYYY-MM-DD HH:mm:ss')
+    value: vmInfo.value?.lastOpDate ? moment(vmInfo.value?.lastOpDate, 'MMM D, YYYY h:mm:ss A').format('YYYY-MM-DD HH:mm:ss') : undefined
   },
 ])
 </script>
@@ -54,7 +54,7 @@ const vmTable = computed(() => [
         基本信息
       </div>
       <div
-        v-for="(item, index) in vmTable"
+        v-for="(item, index) in vmTable.filter((v, i) => i !== vmTable.length - 1 || !!v.value)"
         :key="index"
         p="y6 x4" flex="~ 1 items-center gap2.5"
         :bg="index % 2 === 0 ? 'grey-1' : 'primary-1/6'"
