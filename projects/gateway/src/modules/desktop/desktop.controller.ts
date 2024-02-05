@@ -1,4 +1,5 @@
 import { ApiOperation, ApiQuery, ApiTags } from '@nestjs/swagger'
+import { ConfigService } from '@nestjs/config'
 import { Throttle } from '@nestjs/throttler'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req } from '@nestjs/common'
 import { In } from 'typeorm'
@@ -18,6 +19,7 @@ import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { DesktopIdDto } from 'src/dto/id/desktop.dto'
 import { PasswordDto } from 'src/dto/password.dto'
 import type { PaginatedResData } from 'src/dto/pagination.dto'
+import type { DesktopConfig } from 'src/config/_desktop.config'
 import { IsLogin } from 'src/guards/login.guard'
 import { HasPermission } from 'src/guards/permission.guard'
 import { getQuery } from 'src/utils/query'
@@ -46,6 +48,7 @@ export class DesktopController {
     private readonly _desktopSrv: DesktopService,
     private readonly _desktopReqSrv: DesktopRequestService,
     private readonly _desktopHisSrv: DesktopQueueHistoryService,
+    private readonly _cfgSrv: ConfigService,
     private readonly _zstackSrv: ZstackService,
     private readonly _sysCfgSrv: SysConfigService,
     private readonly _fileSrv: FileService,
@@ -331,6 +334,8 @@ export class DesktopController {
   @HasPermission(PermissionType.DESKTOP_CREATE)
   @Get('vm-list')
   public async getVMList() {
-    return await this._zstackSrv.vmList()
+    const { type } = this._cfgSrv.get<DesktopConfig>('desktop')
+    if (type === 0)
+      return await this._zstackSrv.vmList()
   }
 }
