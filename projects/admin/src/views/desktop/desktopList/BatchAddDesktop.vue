@@ -33,10 +33,15 @@ async function downloadTemplate() {
   ]]
   try {
     const res = await getVMListApi()
+    const { VITE_DESKTOP_REMOTE_POST, VITE_DESKTOP_REMOTE_SAFE } = import.meta.env
     if (Array.isArray(res)) {
       arr.push(...res.map((v) => {
         const { uuid, name, ip } = v
-        const accessUrl = `${ip}:6389`
+        let accessUrl = '待管理员配置'
+        if (VITE_DESKTOP_REMOTE_POST)
+          accessUrl = `${ip}:${VITE_DESKTOP_REMOTE_POST}`
+        else if (VITE_DESKTOP_REMOTE_SAFE)
+          accessUrl = VITE_DESKTOP_REMOTE_SAFE
         return [uuid, name, ip, accessUrl, `user-${name}`, getRandomPassword(), expiredDate]
       }))
       browser.downloadCsv(arr.map(v => v.join(',')).join('\n'), '批量添加云桌面')

@@ -14,9 +14,13 @@ import Components from 'unplugin-vue-components/vite'
 
 export default ({ mode }: any) => {
   const minio = loadEnv(mode, path.relative(__dirname, '../gateway'), 'MINIO')
+  const desktop = loadEnv(mode, path.relative(__dirname, '../gateway'), 'DESKTOP')
+
   process.env = {
     ...process.env,
     VITE_MINIO_BUCKET_DATA: minio.MINIO_BUCKET_DATA,
+    VITE_DESKTOP_REMOTE_POST: desktop.DESKTOP_REMOTE_PORT,
+    VITE_DESKTOP_REMOTE_SAFE: desktop.DESKTOP_REMOTE_SAFE,
     ...loadEnv(mode, path.relative(__dirname, '../shared')),
     VITE_MODE: mode,
   }

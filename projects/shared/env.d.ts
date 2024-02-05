@@ -36,6 +36,18 @@ interface ImportMetaEnv {
   /** FTP桶名 */
   VITE_MINIO_BUCKET_FTP?: string
 
+  /** ---------------- Desktop ---------------- */
+  /** 云桌面开关机调用 */
+  VITE_DESKTOP_ON_OFF?: boolean
+  /** 云桌面文件传输 */
+  VITE_DESKTOP_FTP?: boolean
+  /** 自动分配云桌面 */
+  VITE_DESKTOP_AUTO_ALLOT?: boolean
+  /** 云桌面VPN端口 */
+  VITE_DESKTOP_REMOTE_POST?: number
+  /** 云桌面访问地址 */
+  VITE_DESKTOP_REMOTE_SAFE?: string
+
   /** ---------------- 功能划分 ---------------- */
   /** ---------------- 通用 ---------------- */
   /** 首页拓展 */
@@ -48,20 +60,12 @@ interface ImportMetaEnv {
   VITE_WORKS_MANAGE?: boolean
   /** 用户手机号 */
   VITE_USER_PHONE?: boolean
-  /** 云桌面开关机调用 */
-  VITE_DESKTOP_ON_OFF?: boolean
 
   /** ---------------- 客户端 ---------------- */
   /** 实验室物理主机负载 */
   VITE_HOST_LOAD?: boolean
-  /** 云桌面文件传输 */
-  VITE_DESKTOP_FTP?: boolean
   /** 云桌面域控前缀 */
   VITE_DC_PREFIX?: string
 
   /** ---------------- 管理后台 ---------------- */
-  /** 截图水印 */
-  VITE_WATERMARK?: boolean
-  /** 自动分配云桌面 */
-  VITE_DESKTOP_AUTO_ALLOT?: boolean
 }
