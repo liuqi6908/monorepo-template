@@ -54,8 +54,6 @@ const loading = ref(false)
 
 /** 是否已发送请求 */
 let isFetched = false
-/** 对密码进行rsa加密的公钥 */
-const publicKey = (import.meta as any).env.VITE_PUBLIC_KEY ?? ''
 
 export function useUser($router?: Router) {
   const { isAdmin } = useSysConfig()
@@ -82,7 +80,7 @@ export function useUser($router?: Router) {
     try {
       const res = await loginByPasswordApi({
         ...body,
-        password: rsaEncrypt(publicKey, body.password),
+        password: rsaEncrypt(body.password),
       })
       if (res) {
         if (remember) {
@@ -90,7 +88,7 @@ export function useUser($router?: Router) {
             REMEMBER_LOGIN_INFO_KEY,
             JSON.stringify({
               userCode: body.account || body.email || body.phone,
-              password: rsaEncrypt(publicKey, body.password),
+              password: rsaEncrypt(body.password),
             }),
           )
         }
@@ -183,7 +181,7 @@ export function useUser($router?: Router) {
     try {
       const res = await registerApi({
         ...body,
-        password: rsaEncrypt(publicKey, body.password),
+        password: rsaEncrypt(body.password),
       })
       if (res) {
         Notify.create({

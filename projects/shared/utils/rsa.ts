@@ -5,7 +5,11 @@ const rsa = new JSEncrypt()
 /**
  * 对字符串进行rsa加密
  */
-export function rsaEncrypt(publicKey: string, password: string, key = 'zjfUsO') {
+export function rsaEncrypt(
+  password: string,
+  publicKey: string = (import.meta as any).env.VITE_PUBLIC_KEY ?? '',
+  key = 'zjfUsO',
+) {
   rsa.setPublicKey(publicKey)
   const encryptData = rsa.encrypt(
     `${key}${password.split('').map(char => String.fromCharCode(char.charCodeAt(0) + 1)).join('')}`,
@@ -19,7 +23,11 @@ export function rsaEncrypt(publicKey: string, password: string, key = 'zjfUsO') 
 /**
  * 对密文进行rsa解密
  */
-export function rsaDecrypt(privateKey: string, hash: string, key = 'zjfUsO') {
+export function rsaDecrypt(
+  hash: string,
+  privateKey: string = (import.meta as any).env.VITE_PRIVATE_KEY ?? '',
+  key = 'zjfUsO',
+) {
   try {
     rsa.setPrivateKey(privateKey)
     const str = rsa.decrypt(hash)

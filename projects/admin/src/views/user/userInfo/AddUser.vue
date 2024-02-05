@@ -61,7 +61,7 @@ async function createUser() {
   const body = cloneDeep(form.value)
   const { phone, password, } = body
   delete body.repeatPassword
-  body.password = password ? rsaEncrypt(import.meta.env.VITE_PUBLIC_KEY ?? '', password) : undefined
+  body.password = password ? rsaEncrypt(password) : undefined
   body.phone = phone ? phone : undefined
   const res = await createUserApi(body)
   if (res) {

@@ -107,7 +107,7 @@ async function viewDesktopPassword() {
     desktopInfo.value.password = await queryDesktopPasswordApi(
       desktopInfo.value.id,
       {
-        password: rsaEncrypt(import.meta.env.VITE_PUBLIC_KEY ?? '', password.value),
+        password: rsaEncrypt(password.value),
       }
     )
   }

@@ -4,7 +4,6 @@ import { validateEmail, validatePhone, validatePassword } from 'zjf-utils'
 import { ErrorCode } from 'zjf-types'
 
 import { rsaDecrypt } from '../../utils/rsa'
-import { getEnvVariable } from '../../utils/env'
 import { useUser } from '../../composables/user'
 import { REMEMBER_LOGIN_INFO_KEY } from '../../constants/storage'
 
@@ -36,7 +35,7 @@ onBeforeMount(async () => {
     const loginInfo = JSON.parse(localStorage.getItem(REMEMBER_LOGIN_INFO_KEY) || '{}')
     if (loginInfo.userCode && loginInfo.password) {
       userCode.value = loginInfo.userCode
-      password.value = rsaDecrypt(getEnvVariable('VITE_PRIVATE_KEY', ''), loginInfo.password)
+      password.value = rsaDecrypt(loginInfo.password)
       remember.value = true
     }
   }

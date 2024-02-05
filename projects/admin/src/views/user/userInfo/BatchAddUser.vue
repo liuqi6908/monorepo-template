@@ -176,7 +176,7 @@ function processingJSONData(json: CreateUserItem): ICreateUserBodyDto {
     isDeleted: isDeleted === '禁用' ? true : false,
     email,
     phone: phone || undefined,
-    password: password ? rsaEncrypt(import.meta.env.VITE_PUBLIC_KEY ?? '', password) : undefined,
+    password: password ? rsaEncrypt(password) : undefined,
     status,
     school: school || undefined,
     college: college || undefined,

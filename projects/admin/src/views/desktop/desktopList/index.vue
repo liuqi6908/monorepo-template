@@ -140,7 +140,7 @@ async function viewDesktopPassword(id?: string) {
     const res = await queryDesktopPasswordApi(
       id,
       {
-        password: rsaEncrypt(import.meta.env.VITE_PUBLIC_KEY ?? '', password.value),
+        password: rsaEncrypt(password.value),
       }
     )
     const row = rows.value?.find(v => v.id === id)
