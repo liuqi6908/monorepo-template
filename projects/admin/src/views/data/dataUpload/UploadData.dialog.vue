@@ -312,12 +312,13 @@ function handlerUpload(type: UploadType, name: string) {
           </q-td>
         </template>
         <template #body-cell-preview="{ row }">
-          <q-td>
+          <q-td text-center>
             <ZUpload
               :accept="CSV_FILE_TYPE.join(',')"
               :hint-message="{
                 accept: '只能上传 CSV 文件',
               }"
+              inline-flex
               @update:model-value="val => uploadTableDataFile(UploadType.PREVIEW, val, row.tableEn)"
             >
               <ZBtn label="上传" size="small" w22 />
@@ -325,12 +326,13 @@ function handlerUpload(type: UploadType, name: string) {
           </q-td>
         </template>
         <template #body-cell-download="{ row }">
-          <q-td>
+          <q-td text-center>
             <ZUpload
               :accept="ZIP_FILE_TYPE.join(',')"
               :hint-message="{
                 accept: '只能上传 ZIP 文件',
               }"
+              inline-flex
               @update:model-value="val => uploadTableDataFile(UploadType.DOWNLOAD, val, row.tableEn)"
             >
               <ZBtn label="上传" size="small" w22 />
