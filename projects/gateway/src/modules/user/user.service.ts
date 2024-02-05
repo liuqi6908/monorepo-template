@@ -13,6 +13,8 @@ import { responseError } from 'src/utils/response'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { encryptPassword } from 'src/utils/encrypt/encrypt-password'
 import type { SysAdmin } from '../../config/_sa.config'
+import type { DesktopConfig } from '../../config/_desktop.config'
+import { HyperVService } from '../desktop/hyper-v/hyper-v.service'
 
 const defaultQueryUserOptions = {
   where: { isDeleted: false, isSysAdmin: false },
@@ -20,11 +22,16 @@ const defaultQueryUserOptions = {
 
 @Injectable()
 export class UserService implements OnModuleInit {
+  private _desktop: DesktopConfig
+
   constructor(
     @InjectRepository(User)
     private readonly _userRepo: Repository<User>,
     private readonly _cfgSrv: ConfigService,
-  ) {}
+    private readonly _hypeVSrv: HyperVService,
+  ) {
+    this._desktop = this._cfgSrv.get<DesktopConfig>('desktop')
+  }
 
   onModuleInit() {
     this.initSysAdmin()
@@ -102,12 +109,18 @@ export class UserService implements OnModuleInit {
    */
   public async insertUser(user: Partial<User>) {
     try {
-      return await this._userRepo.save(
+      const newUser = await this._userRepo.save(
         await this._userRepo.create({
           ...user,
           password: user.password ? await encryptPassword(user.password) : null,
         }),
       )
+      if (this._desktop.domainUser && this._desktop.type === 1) {
+        const { account, password } = user
+        if (account && password)
+          this._hypeVSrv.syncDomainUser(account, password)
+      }
+      return newUser
     }
     catch (e) {
       const error = parseSqlError(e)
@@ -166,12 +179,19 @@ export class UserService implements OnModuleInit {
    * @param newPassword
    */
   public async updateUserPassword(
-    where: FindOptionsWhere<User> | string | number,
+    where: FindOptionsWhere<User>,
     newPassword: string,
   ) {
-    await this._userRepo.update(where, {
+    const updateRes = await this._userRepo.update(where, {
       password: await encryptPassword(newPassword),
     })
+    if (updateRes.affected > 0 && this._desktop.domainUser && this._desktop.type === 1) {
+      const users = await this._userRepo.find({ where })
+      users.forEach((user) => {
+        this._hypeVSrv.syncDomainUser(user.account, newPassword)
+      })
+    }
+    return updateRes.affected
   }
 
   /**

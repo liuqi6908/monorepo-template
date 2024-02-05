@@ -5,6 +5,7 @@ import { ConfigService } from '@nestjs/config'
 import type { AxiosResponse } from 'axios'
 import type { HyperVConfig } from 'src/config/_hyper-v.config'
 import { sha512 } from 'src/utils/encrypt/sha512'
+import { rsaEncrypt } from 'src/utils/rsa'
 
 @Injectable()
 export class HyperVService extends EventEmitter {
@@ -22,7 +23,6 @@ export class HyperVService extends EventEmitter {
 
   /**
    * 登录hyperV
-   * @returns
    */
   private async _login() {
     const { host, user, password } = this._cfgSrv.get<HyperVConfig>('hyperV')
@@ -62,8 +62,6 @@ export class HyperVService extends EventEmitter {
 
   /**
    * 带会话的请求
-   * @param request
-   * @returns
    */
   public requestWithSession<T = any>(
     request: (axiosCfg) => Promise<AxiosResponse<T>>,
@@ -104,8 +102,6 @@ export class HyperVService extends EventEmitter {
 
   /**
    * 操作指定的虚拟机
-   * @param vmUUID
-   * @returns
    */
   public async operateVM(vmUUID: string, action: 'start' | 'stop' | 'reboot') {
     return await this.requestWithSession((cfg) => {
@@ -120,7 +116,6 @@ export class HyperVService extends EventEmitter {
 
   /**
    * 查询虚拟机状态
-   * @param vmUUID
    */
   public async getVMState(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
@@ -130,5 +125,25 @@ export class HyperVService extends EventEmitter {
         url: `/v1/vm/${vmUUID}`,
       })
     })
+  }
+
+  /**
+   * 同步域用户
+   */
+  public async syncDomainUser(user: string, password: string) {
+    try {
+      return await this.requestWithSession((cfg) => {
+        return this._httpSrv.axiosRef({
+          ...cfg,
+          method: 'PUT',
+          url: '/v1/user/set',
+          data: {
+            user,
+            password: rsaEncrypt(password),
+          },
+        })
+      })
+    }
+    catch (_) {}
   }
 }
