@@ -171,7 +171,7 @@ async function deleteRole() {
       fixed-last-column
     >
       <template #body-cell-info="{ value }">
-        <q-td auto-width>
+        <q-td text-center>
           <TextBtn
             label="查看完整信息"
             @click="() => {
@@ -182,7 +182,7 @@ async function deleteRole() {
         </q-td>
       </template>
       <template #body-cell-action="{ value }">
-        <q-td auto-width>
+        <q-td text-center>
           <ZBtn
             label="编辑"
             size="small"
