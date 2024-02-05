@@ -229,7 +229,7 @@ async function createRequest() {
             />
           </template>
           <template #body-cell-action="{ row }">
-            <q-td auto-width>
+            <q-td text-center>
               <UserDetails :user="row" />
             </q-td>
           </template>

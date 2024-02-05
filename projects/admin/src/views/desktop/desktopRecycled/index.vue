@@ -195,7 +195,7 @@ async function deleteDesktop() {
         </q-td>
       </template>
       <template #body-cell-user="{ row }">
-        <q-td auto-width text-center>
+        <q-td text-center>
           <div v-if="!row.lastUser">—</div>
           <UserDetails
             v-else

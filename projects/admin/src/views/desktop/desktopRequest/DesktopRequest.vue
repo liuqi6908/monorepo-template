@@ -211,7 +211,7 @@ async function reject() {
       @request="queryDesktopRequestList"
     >
       <template #body-cell-attachments="{ row, value }">
-        <q-td auto-width>
+        <q-td text-center>
           <TextBtn
             label="查看申请材料"
             :disable="!value?.length"
@@ -223,7 +223,7 @@ async function reject() {
         </q-td>
       </template>
       <template #body-cell-userId="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <UserDetails
             :user="row.user"
             label="查看用户信息"
@@ -231,7 +231,7 @@ async function reject() {
         </q-td>
       </template>
       <template #body-cell-status="{ value }">
-        <q-td auto-width>
+        <q-td text-center>
           <DesktopRequestStatus :status="value" />
         </q-td>
       </template>

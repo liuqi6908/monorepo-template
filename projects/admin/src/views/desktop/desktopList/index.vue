@@ -285,7 +285,7 @@ async function stopDesktop() {
         </q-td>
       </template>
       <template #body-cell-user="{ row }">
-        <q-td auto-width text-center>
+        <q-td text-center>
           <div v-if="!row.user">—</div>
           <UserDetails
             v-else
@@ -295,7 +295,7 @@ async function stopDesktop() {
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <ZBtn
             label="编辑"
             size="small"
