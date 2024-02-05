@@ -44,9 +44,12 @@ declare global {
   const batchDeleteRoleApi: typeof import('../../../shared/api/role')['batchDeleteRoleApi']
   const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
   const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
+  const batchRebootVMApi: typeof import('../../../shared/api/desktopVm')['batchRebootVMApi']
   const batchRejectDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']
   const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
+  const batchStartVMApi: typeof import('../../../shared/api/desktopVm')['batchStartVMApi']
   const batchStopDesktopApi: typeof import('../../../shared/api/desktop')['batchStopDesktopApi']
+  const batchStopVMApi: typeof import('../../../shared/api/desktopVm')['batchStopVMApi']
   const batchUpdateDesktopFtpQuotaApi: typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']
   const batchUpdateUserDataRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']
   const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
@@ -521,9 +524,12 @@ declare module 'vue' {
     readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRebootVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchRebootVMApi']>
     readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchStartVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStartVMApi']>
     readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
+    readonly batchStopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStopVMApi']>
     readonly batchUpdateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
@@ -991,9 +997,12 @@ declare module '@vue/runtime-core' {
     readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
     readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
     readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
+    readonly batchRebootVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchRebootVMApi']>
     readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
     readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
+    readonly batchStartVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStartVMApi']>
     readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
+    readonly batchStopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStopVMApi']>
     readonly batchUpdateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']>
     readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
     readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>

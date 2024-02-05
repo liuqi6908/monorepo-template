@@ -1,3 +1,4 @@
+import type { IDesktop } from 'zjf-types'
 import type {
   VMDetail,
   VMOverview,
@@ -17,34 +18,55 @@ export function getVMOverviewApi() {
 /**
  * 获取指定虚拟机的状态
  */
-export function getVMStateApi(desktopId: string) {
+export function getVMStateApi(desktopId: IDesktop['id']) {
   return $get<VMState>(`/desktop-vm/${desktopId}`)
 }
 
 /**
  * 获取指定虚拟机的详情
  */
-export function getVMDetailApi(desktopId: string) {
+export function getVMDetailApi(desktopId: IDesktop['id']) {
   return $get<VMDetail>(`/desktop-vm/detail/${desktopId}`)
 }
 
 /**
  * 开机指定的虚拟机
  */
-export function startVMApi(desktopId: string) {
+export function startVMApi(desktopId: IDesktop['id']) {
   return $post(`/desktop-vm/boot/${desktopId}`)
+}
+
+/**
+ * 批量开机虚拟机
+ */
+export function batchStartVMApi(body: IDesktop['id'][]) {
+  return $post('/desktop-vm/batch/boot', body)
 }
 
 /**
  * 关机指定的虚拟机
  */
-export function stopVMApi(desktopId: string) {
+export function stopVMApi(desktopId: IDesktop['id']) {
   return $post(`/desktop-vm/shutdown/${desktopId}`)
+}
+
+/**
+ * 批量关机虚拟机
+ */
+export function batchStopVMApi(body: IDesktop['id'][]) {
+  return $post('/desktop-vm/batch/shutdown', body)
 }
 
 /**
  * 重启指定的虚拟机
  */
-export function rebootVMApi(desktopId: string) {
+export function rebootVMApi(desktopId: IDesktop['id']) {
   return $post(`/desktop-vm/reboot/${desktopId}`)
+}
+
+/**
+ * 批量重启虚拟机
+ */
+export function batchRebootVMApi(body: IDesktop['id'][]) {
+  return $post('/desktop-vm/batch/reboot', body)
 }

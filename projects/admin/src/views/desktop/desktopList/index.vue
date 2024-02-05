@@ -40,6 +40,8 @@ const dialogType = ref<Type>()
 const dialogData = ref<IDesktop>()
 /** 停用对话框 */
 const stopDialog = ref(false)
+/** 虚拟机操作类型 */
+const vmType = ref<'开机' | '关机' | '重启'>()
 
 /** 输入用户密码对话框 */
 const passwordDialog = ref<string>()
@@ -177,6 +179,32 @@ async function stopDesktop() {
       loading.value = false
   }
 }
+
+/**
+ * 开机、关机、重启 云桌面
+ */
+async function operateVM() {
+  const type = vmType.value
+  const id = selected.value?.map(v => v.id)
+  if (!type || !id?.length)
+    return
+
+  try {
+    if (type === '开机')
+      await batchStartVMApi(id)
+    else if (type === '关机')
+      await batchStopVMApi(id)
+    else if (type === '重启')
+      await batchRebootVMApi(id)
+    Notify.create({
+      type: 'success',
+      message: '操作成功',
+    })
+  }
+  finally {
+    selected.value = undefined
+  }
+}
 </script>
 
 <template>
@@ -224,6 +252,7 @@ async function stopDesktop() {
             :params="{
               outline: true,
             }"
+            @click="vmType = '开机'"
           >
             <template #left>
               <div w5 h5 i-mingcute:power-line />
@@ -236,6 +265,7 @@ async function stopDesktop() {
             :params="{
               outline: true,
             }"
+            @click="vmType = '重启'"
           >
             <template #left>
               <div w5 h5 i-mingcute:refresh-2-line />
@@ -248,6 +278,7 @@ async function stopDesktop() {
             :params="{
               outline: true,
             }"
+            @click="vmType = '关机'"
           >
             <template #left>
               <div w5 h5 i-mingcute:power-line />
@@ -316,6 +347,17 @@ async function stopDesktop() {
       @ok="stopDesktop"
     >
       该操作将停用已选的云桌面资源，是否继续？
+    </ZDialog>
+
+    <!-- 开机、关机、重启 云桌面 -->
+    <ZDialog
+      :model-value="!!vmType"
+      :title="vmType ?? ''"
+      footer
+      @ok="operateVM"
+      @update:model-value="vmType = undefined"
+    >
+      该操作将{{ vmType }}已选的云桌面资源，是否继续？
     </ZDialog>
 
     <!-- 输入用户登录密码 -->
