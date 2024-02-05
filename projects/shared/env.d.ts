@@ -52,7 +52,7 @@ interface ImportMetaEnv {
   /** ---------------- 通用 ---------------- */
   /** 首页拓展 */
   VITE_HOME_EXPAND?: boolean
-  /** 动态数据列表（2-5级） */
+  /** 动态数据列表（3-5级） */
   VITE_DYNAMIC_DATA_LIST?: boolean
   /** 数据预购 */
   VITE_DATA_PRE_PURCHASE?: boolean
@@ -64,6 +64,8 @@ interface ImportMetaEnv {
   /** ---------------- 客户端 ---------------- */
   /** 实验室物理主机负载 */
   VITE_HOST_LOAD?: boolean
+  /** 实验室虚拟机信息 */
+  VITE_VM_LOAD?: boolean
   /** 云桌面域控前缀 */
   VITE_DC_PREFIX?: string
 

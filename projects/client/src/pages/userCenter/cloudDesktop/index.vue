@@ -107,7 +107,7 @@ const emptyLabel = computed(() => {
     <div v-else flex="~ col gap10">
       <DesktopOperate @loading="val => loading = val" />
       <DesktopFtp v-if="isDesktopFtp" />
-      <DesktopInfo />
+      <DesktopInfo v-if="getEnvVariable('VITE_VM_LOAD')" />
     </div>
   </div>
 </template>

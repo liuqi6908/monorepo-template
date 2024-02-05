@@ -66,7 +66,7 @@ onBeforeMount(async () => {
         <!-- 申请使用云桌面 -->
         <Request @loading="val => loading = val" />
         <!-- 云桌面 -->
-        <Desktop />
+        <Desktop v-if="getEnvVariable('VITE_HOST_LOAD')" />
       </template>
     </div>
   </div>
