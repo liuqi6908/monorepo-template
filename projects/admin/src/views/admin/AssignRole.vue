@@ -91,7 +91,9 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
       relations: {
         verification: true,
         dataRole: true,
-        role: true,
+        role: {
+          permissions: true,
+        },
       },
     })
     pagination.value.rowsNumber = total

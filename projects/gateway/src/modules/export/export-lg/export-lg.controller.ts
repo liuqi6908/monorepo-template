@@ -91,7 +91,10 @@ export class ExportLgController {
   }
 
   @ApiOperation({ summary: '下载大文件外发的附件' })
-  @HasPermission(PermissionType.EXPORT_LG_DOWNLOAD)
+  @HasPermission([
+    PermissionType.EXPORT_LG_DOWNLOAD_PENDING,
+    PermissionType.EXPORT_LG_DOWNLOAD_RECORD,
+  ])
   @ApiParam({ name: 'id', description: '大文件外发记录的唯一标识' })
   @Get('file/:id')
   public async downloadExportLgFile(

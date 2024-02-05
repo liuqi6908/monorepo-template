@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash'
-import { PermissionType } from 'zjf-types'
-import type { IRole } from 'zjf-types'
+import { Notify } from 'quasar'
+import type { IRole, IUpsertRoleBodyDto, PermissionType } from 'zjf-types'
+import RolePermission from './RolePermission.vue'
 
 export type Type = 'add' | 'edit' | 'view'
 interface AdminRole {
@@ -17,6 +18,10 @@ interface Props {
 
 const props = defineProps<Props>()
 const emits = defineEmits(['update:type', 'callback'])
+
+const rolePermission = ref<HTMLElement>()
+
+const { height } = useElementSize(rolePermission)
 
 /** 对话框 */
 const dialog = computed({
@@ -69,7 +74,21 @@ async function init() {
 /**
  * 提交
  */
-async function confirm() {}
+async function confirm() {
+  if (disable.value)
+    return
+
+  const { type } = props
+  const body: IUpsertRoleBodyDto = cloneDeep(form.value)
+  if (type === 'edit')
+    body.id = props.role?.id
+  await upsertRoleApi(body)
+  Notify.create({
+    type: 'success',
+    message: `${type === 'add' ? '添加' : '编辑'}成功`,
+  })
+  emits('callback')
+}
 </script>
 
 <template>
@@ -110,6 +129,19 @@ async function confirm() {}
           readonly,
         }"
       />
+      <div flex="~ col gap4">
+        <ZLabel label="权限" />
+        <q-scroll-area
+          p2 rounded-3 bg-grey-2
+          :style="{ height: `${height + 16}px` }"
+        >
+          <RolePermission
+            ref="rolePermission"
+            v-model="form.permissions"
+            :readonly="readonly"
+          />
+        </q-scroll-area>
+      </div>
     </div>
   </ZDialog>
 </template>

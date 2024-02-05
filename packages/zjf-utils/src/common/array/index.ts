@@ -1,3 +1,5 @@
-export * from './expandArray'
+export * from './distinct'
+export * from './expand'
+export * from './fullIncludes'
 export * from './isIntersect'
 export * from './sum'

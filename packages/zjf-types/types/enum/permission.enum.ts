@@ -156,8 +156,10 @@ export enum PermissionType {
   EXPORT_LG_APPROVE = 'export-lg:approve',
   /** 驳回大文件外发申请 */
   EXPORT_LG_REJECT = 'export-lg:reject',
-  /** 下载大文件外发的文件 */
-  EXPORT_LG_DOWNLOAD = 'export-lg:download',
+  /** 下载大文件外发的文件（待审核） */
+  EXPORT_LG_DOWNLOAD_PENDING = 'export-lg:download-pending',
+  /** 下载大文件外发的文件（审核记录） */
+  EXPORT_LG_DOWNLOAD_RECORD = 'export-lg:download-record',
 
   // ------------------ 全局配置 ---------------------
   /** 查询应用全局配置 */
@@ -279,7 +281,8 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.EXPORT_SM_DOWNLOAD]: '下载小文件外发的文件',
   [PermissionType.EXPORT_LG_APPROVE]: '通过大文件外发申请',
   [PermissionType.EXPORT_LG_REJECT]: '驳回大文件外发申请',
-  [PermissionType.EXPORT_LG_DOWNLOAD]: '下载大文件外发的文件',
+  [PermissionType.EXPORT_LG_DOWNLOAD_PENDING]: '下载大文件外发的文件（待审核）',
+  [PermissionType.EXPORT_LG_DOWNLOAD_RECORD]: '下载大文件外发的文件（审核记录）',
 
   [PermissionType.CONFIG_QUERY_APP]: '查询应用全局配置',
   [PermissionType.CONFIG_UPSERT_APP]: '创建/更新应用全局配置',

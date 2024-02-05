@@ -42,11 +42,11 @@ export const install: UserModule = ({ isClient, router }) => {
               return next('/denied')
             // 前往的页面没有权限 重定向到 有权限的第一个页面
             else if (!adminMenu.value.some(({ to }) => to === path))
-              return next(adminMenu.value[0].to)
+              return next(adminMenu.value[0].to!)
           }
           // 前往denied页面，有权限 重定向到 有权限的第一个页面
           else if (adminMenu.value.length) {
-            return next(adminMenu.value[0].to)
+            return next(adminMenu.value[0].to!)
           }
         }
       }
