@@ -14,6 +14,8 @@ interface Props {
 const props = defineProps<Props>()
 const emits = defineEmits(['update:type', 'callback'])
 
+const { zoomRatio } = useSysConfig()
+
 /** 对话框 */
 const dialog = computed({
   get() {
@@ -33,6 +35,9 @@ const initData: ICreateRootBodyDto = {
 }
 /** 数据资源表单 */
 const form = ref<ICreateRootBodyDto>(cloneDeep(initData))
+
+/** 提示框 */
+const tooltip = ref(false)
 
 /** Minio Data 桶名 */
 const dataBucket = computed(() => import.meta.env.VITE_MINIO_BUCKET_DATA)
@@ -113,8 +118,13 @@ async function confirm() {
             i-mingcute:information-line
             text-grey-4
             cursor-pointer
+            @click="() => {
+              if (zoomRatio < 1)
+                tooltip = true
+            }"
           >
             <q-tooltip
+              v-if="zoomRatio >= 1"
               id="add-data-root-tooltip"
               anchor="bottom right"
               self="top right"
@@ -178,6 +188,32 @@ async function confirm() {
             form.order = num
         }"
       />
+
+      <ZDialog
+        :model-value="tooltip && zoomRatio < 1"
+        title="资源ID"
+        @update:model-value="tooltip = false"
+      >
+        <div text-sm>
+          <div>
+            创建数据资源后，ID不可变
+          </div>
+          <div max-w-80 truncate>
+            样例数据路径：
+            <span
+              font-500 underline="~ offset-2"
+              v-text="`${dataBucket}/preview/${form.id || 'ID' }`"
+            />
+          </div>
+          <div max-w-80 truncate>
+            下载数据路径：
+            <span
+              font-500 underline="~ offset-2"
+              v-text="`${dataBucket}/download/${form.id || 'ID' }`"
+            />
+          </div>
+        </div>
+      </ZDialog>
     </div>
   </ZDialog>
 </template>
