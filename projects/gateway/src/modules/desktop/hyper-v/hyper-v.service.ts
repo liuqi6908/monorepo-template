@@ -1,0 +1,94 @@
+import { EventEmitter } from 'node:stream'
+import { Injectable } from '@nestjs/common'
+import { HttpService } from '@nestjs/axios'
+import { ConfigService } from '@nestjs/config'
+import type { AxiosResponse } from 'axios'
+import type { HyperVConfig } from 'src/config/_hyper-v.config'
+import { sha512 } from 'src/utils/encrypt/sha512'
+
+@Injectable()
+export class HyperVService extends EventEmitter {
+  private _oauth = {
+    token: '',
+    expireAt: 0,
+  }
+
+  constructor(
+    private readonly _cfgSrv: ConfigService,
+    private readonly _httpSrv: HttpService,
+  ) {
+    super()
+  }
+
+  /**
+   * 登录hyperV
+   * @returns
+   */
+  private async _login() {
+    const { host, user, password } = this._cfgSrv.get<HyperVConfig>('hyperV')
+
+    const getCfg = (token: string) => ({
+      config: {
+        baseURL: host,
+        headers: { Authorization: token },
+      },
+    })
+
+    if (this._oauth.token && this._oauth.expireAt > Date.now())
+      return getCfg(this._oauth.token)
+
+    const res = await this._httpSrv.axiosRef({
+      method: 'POST',
+      url: '/v1/auth/login',
+      data: {
+        accountName: user,
+        password: sha512(password),
+      },
+      baseURL: host,
+    })
+
+    const token = res.data?.data?.token
+
+    if (!token)
+      throw new Error('登录失败')
+
+    this._oauth = {
+      token,
+      expireAt: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    }
+
+    return getCfg(token)
+  }
+
+  /**
+   * 带会话的请求
+   * @param request
+   * @returns
+   */
+  public requestWithSession<T = any>(
+    request: (axiosCfg) => Promise<AxiosResponse<T>>,
+  ) {
+    return new Promise<T>((resolve, reject) => {
+      this._login().then(
+        ({ config }) =>
+          request(config)
+            .then(response => resolve(response.data))
+            .catch(reject),
+      ).catch(reject)
+    })
+  }
+
+  /**
+   * 获取云桌面虚拟机列表
+   */
+  public async vmList() {
+    const res = await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'Get',
+        url: '/v1/vm',
+      })
+    })
+    return res.data ?? []
+  }
+}

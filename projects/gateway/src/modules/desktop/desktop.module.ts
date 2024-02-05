@@ -11,6 +11,7 @@ import { ExportModule } from '../export/export.module'
 import { FileModule } from '../file/file.module'
 import { DesktopService } from './desktop.service'
 import { ZstackService } from './zstack/zstack.service'
+import { HyperVService } from './hyper-v/hyper-v.service'
 import { DesktopController } from './desktop.controller'
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
 import { DesktopRequestController } from './desktop-request/desktop-request.controller'
@@ -36,7 +37,7 @@ import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queu
     DesktopHostController,
     DesktopVmController,
   ],
-  providers: [DesktopService, DesktopRequestService, DesktopQueueHistoryService, ZstackService],
+  providers: [DesktopService, DesktopRequestService, DesktopQueueHistoryService, ZstackService, HyperVService],
   exports: [DesktopService, DesktopRequestService, DesktopQueueHistoryService],
 })
 export class DesktopModule {}

@@ -39,6 +39,7 @@ import { BatchUpdateDesktopFtpQuotaBodyDto } from './dto/update-desktop-ftp-quot
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
 import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queue-history.service'
 import { ZstackService } from './zstack/zstack.service'
+import { HyperVService } from './hyper-v/hyper-v.service'
 
 @ApiTags('Desktop | 云桌面')
 @Controller('desktop')
@@ -50,6 +51,7 @@ export class DesktopController {
     private readonly _desktopHisSrv: DesktopQueueHistoryService,
     private readonly _cfgSrv: ConfigService,
     private readonly _zstackSrv: ZstackService,
+    private readonly _hyperVSrv: HyperVService,
     private readonly _sysCfgSrv: SysConfigService,
     private readonly _fileSrv: FileService,
   ) {}
@@ -337,5 +339,7 @@ export class DesktopController {
     const { type } = this._cfgSrv.get<DesktopConfig>('desktop')
     if (type === 0)
       return await this._zstackSrv.vmList()
+    else if (type === 1)
+      return await this._hyperVSrv.vmList()
   }
 }
