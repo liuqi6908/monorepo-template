@@ -206,7 +206,7 @@ async function assignDataRole(id?: string) {
       @request="queryUserList"
     >
       <template #body-cell-dataRole="{ row, value }">
-        <q-td auto-width max-w="none!" class="data-role-cell">
+        <q-td text-center max-w="none!" class="data-role-cell">
           <div v-if="!value" text-center v-text="'—'" />
           <div v-else px20 text-center>
             {{ value }}
@@ -228,7 +228,7 @@ async function assignDataRole(id?: string) {
         </q-td>
       </template>
       <template #body-cell-action="{ row }">
-        <q-td auto-width>
+        <q-td text-center>
           <UserDetails :user="row" />
         </q-td>
       </template>
