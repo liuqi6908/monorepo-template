@@ -1,5 +1,5 @@
 import { EventEmitter } from 'node:stream'
-import { Injectable } from '@nestjs/common'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
 import type { AxiosResponse } from 'axios'
@@ -72,7 +72,18 @@ export class HyperVService extends EventEmitter {
       this._login().then(
         ({ config }) =>
           request(config)
-            .then(response => resolve(response.data))
+            .then((res) => {
+              const { code, msg, data } = res.data as any
+              if (code === 200) {
+                resolve(data)
+              }
+              else {
+                throw new HttpException(
+                  { status: code, message: msg },
+                  HttpStatus.BAD_REQUEST,
+                )
+              }
+            })
             .catch(reject),
       ).catch(reject)
     })
@@ -82,13 +93,28 @@ export class HyperVService extends EventEmitter {
    * 获取云桌面虚拟机列表
    */
   public async vmList() {
-    const res = await this.requestWithSession((cfg) => {
+    return await this.requestWithSession((cfg) => {
       return this._httpSrv.axiosRef({
         ...cfg,
         method: 'Get',
         url: '/v1/vm',
       })
     })
-    return res.data ?? []
+  }
+
+  /**
+   * 操作指定的虚拟机
+   * @param vmUUID
+   * @returns
+   */
+  public async operateVM(vmUUID: string, action: 'start' | 'stop' | 'reboot') {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'PUT',
+        url: `/v1/vm/${vmUUID}/action`,
+        data: { action },
+      })
+    })
   }
 }
