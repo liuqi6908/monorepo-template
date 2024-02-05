@@ -50,7 +50,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '批量开机虚拟机' })
   @HasPermission(PermissionType.DESKTOP_ON_OFF)
-  @Post('boot/batch')
+  @Post('batch/boot')
   public async batchStartVM(@Body() body: DesktopIdDto['desktopId'][]) {
     const desktops = await this._desktopSrv.repo().find({ where: { id: In(body) } })
     for (const desktop of desktops)
@@ -67,7 +67,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '批量关机虚拟机' })
   @HasPermission(PermissionType.DESKTOP_ON_OFF)
-  @Post('boot/shutdown')
+  @Post('batch/shutdown')
   public async batchStopVM(@Body() body: DesktopIdDto['desktopId'][]) {
     const desktops = await this._desktopSrv.repo().find({ where: { id: In(body) } })
     for (const desktop of desktops)
@@ -84,7 +84,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '批量重启虚拟机' })
   @HasPermission(PermissionType.DESKTOP_ON_OFF)
-  @Post('boot/reboot')
+  @Post('batch/reboot')
   public async batchRebootVM(@Body() body: DesktopIdDto['desktopId'][]) {
     const desktops = await this._desktopSrv.repo().find({ where: { id: In(body) } })
     for (const desktop of desktops)
