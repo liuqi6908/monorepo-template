@@ -33,6 +33,7 @@ const { isAdmin } = useSysConfig()
     :color="color"
     :text-color="textColor"
     :disable="disable"
+    no-caps
     v-bind="params"
   >
     <div flex="~ row items-center gap2">
