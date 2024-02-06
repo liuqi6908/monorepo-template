@@ -153,35 +153,39 @@ function scroll(id: string) {
 <template>
   <!-- Main -->
   <div flex="~ gap4" sm="gap6" lg="gap8" xl="gap10" relative>
-    <ZLoading :value="loading" />
-    <Empty v-if="!docHtml?.article" label="管理员正在配置中" />
+    <div v-if="loading" min-h-50 w-full style="height: calc(100vh - 200px)">
+      <ZLoading :value="loading" />
+    </div>
     <template v-else>
-      <!-- Toc -->
-      <div>
-        <q-scroll-area
-          sticky
-          :style="{
-            maxHeight,
-            height: `${height}px`,
-            width: `${width + 1}px`,
-            top: `${top}px`
-          }"
-        >
-          <ZMenu
-            ref="toc"
-            :model-value="value"
-            :list="docHtml.toc"
-            gap="0!"
-            @update:model-value="val => scroll(val)"
-          />
-        </q-scroll-area>
-      </div>
-      <!-- Content -->
-      <div
-        class="richtext-content"
-        pb4 flex="~ col 1 gap2" w0
-        v-html="docHtml?.article.innerHTML"
-      />
+      <Empty v-if="!docHtml?.article" label="管理员正在配置中" />
+      <template v-else>
+        <!-- Toc -->
+        <div>
+          <q-scroll-area
+            sticky
+            :style="{
+              maxHeight,
+              height: `${height}px`,
+              width: `${width + 1}px`,
+              top: `${top}px`
+            }"
+          >
+            <ZMenu
+              ref="toc"
+              :model-value="value"
+              :list="docHtml.toc"
+              gap="0!"
+              @update:model-value="val => scroll(val)"
+            />
+          </q-scroll-area>
+        </div>
+        <!-- Content -->
+        <div
+          class="richtext-content"
+          pb4 flex="~ col 1 gap2" w0
+          v-html="docHtml?.article.innerHTML"
+        />
+      </template>
     </template>
   </div>
 </template>
