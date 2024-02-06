@@ -62,7 +62,7 @@ watch(
         :b="color ? 'none' : '1px'"
         :style="{
           backgroundColor: active
-            ? (color ? color : 'var(grey-1)')
+            ? (color ? color : 'var(--grey-1)')
             : (color ? 'var(--white-5)' : 'transparent')
         }"
         @click="onClick"

@@ -167,13 +167,22 @@ const fillReplacedSvg = computed(() => {
       >
         <ZInput
           v-model="selectItem.color"
+          class="color-input"
           label="颜色"
           placeholder="请选择颜色"
           :params="{
             readonly: true,
           }"
           flex-1
-        />
+        >
+          <template #append>
+            <div
+              i-mingcute:close-line
+              text-sm cursor-pointer hidden
+              @click="selectItem.color = ''"
+            />
+          </template>
+        </ZInput>
         <ColorPicker v-model="selectItem.color" :disable="!isEdit" mb1.5 />
       </div>
       <!-- Mask -->
@@ -183,13 +192,22 @@ const fillReplacedSvg = computed(() => {
       >
         <ZInput
           v-model="selectItem.mask"
+          class="mask-input"
           label="遮罩"
           placeholder="请选择遮罩图层"
           :params="{
             readonly: true,
           }"
           flex-1
-        />
+        >
+          <template #append>
+            <div
+              i-mingcute:close-line
+              text-sm cursor-pointer hidden
+              @click="selectItem.mask = ''"
+            />
+          </template>
+        </ZInput>
         <ColorPicker
           v-model="selectItem.mask"
           :disable="!isEdit"
@@ -223,6 +241,18 @@ const fillReplacedSvg = computed(() => {
     :deep(svg) {
       width: 100%;
       height: 100%;
+    }
+  }
+}
+
+.z-input {
+  &.color-input, &.mask-input {
+    &:hover {
+      :deep(.q-field__append) {
+        > div {
+          display: block;
+        }
+      }
     }
   }
 }

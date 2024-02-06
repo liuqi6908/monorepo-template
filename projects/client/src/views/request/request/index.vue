@@ -40,7 +40,7 @@ const processSvg = computed(() => {
 
 <template>
   <div w-limited-1 py10 flex="~ col gap10">
-    <div v-html="processSvg" />
+    <div text-primary-1 v-html="processSvg" />
     <div
       p="y4 x6" flex="~ items-center justify-between gap4"
       bg="primary-1/8" text-lg font-600 min-h-20

@@ -23,7 +23,7 @@ const dialog = ref(false)
         b="2px primary-1" rounded-full
       >
         <h4 v-if="firstCharName" v-text="firstCharName" />
-        <div v-else v-html="user" />
+        <div v-else text-primary-1 v-html="user" />
       </div>
       <q-menu
         class="avatar-menu"
@@ -66,7 +66,7 @@ const dialog = ref(false)
         w10 h10 flex-center
         b="1.5px primary-1" rounded-full
       >
-        <div v-html="user" />
+        <div text-primary-1 v-html="user" />
       </div>
       <div font-500 v-text="'登录'" />
     </RouterLink>

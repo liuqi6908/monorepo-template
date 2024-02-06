@@ -23,7 +23,7 @@ const icons = {
   <div class="empty" h-full flex-center px4>
     <div flex="~ col gap16" relative bottom="10%">
       <div flex="center col gap6">
-        <div v-html="icons[icon]" />
+        <div text-primary-1 v-html="icons[icon]" />
         <div flex="~ col items-center gap2" text-center>
           <div
             text="lg grey-8"
