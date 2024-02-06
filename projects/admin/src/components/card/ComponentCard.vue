@@ -5,17 +5,15 @@ interface Props {
   color?: string
 }
 
-withDefaults(defineProps<Props>(), {
-  color: '#025CB9',
-})
+defineProps<Props>()
 </script>
 
 <template>
   <div
     py12 rounded-2 b="1px dashed"
     :style="{
-      borderColor: color,
-      backgroundColor: `${color}0d`,
+      borderColor: color ? color : 'var(--primary-1)',
+      backgroundColor: color ? `${color}0d` : 'var(--primary-1-bg)',
     }" cursor-pointer
     hover:border-solid
     flex="~ col items-center gap2"
