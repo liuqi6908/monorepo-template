@@ -82,7 +82,12 @@ export class HyperVService extends EventEmitter {
                 )
               }
             })
-            .catch(reject),
+            .catch((e) => {
+              const { status, message } = e.response ?? {}
+              if (status === 1001 || message === '签名校验失败')
+                this._oauth.token = ''
+              reject(e)
+            }),
       ).catch(reject)
     })
   }
