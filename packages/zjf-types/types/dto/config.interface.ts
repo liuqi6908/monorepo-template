@@ -91,4 +91,10 @@ export interface IConfigDto {
     /** 上传作品数量限制（0表示没有限制） */
     amount?: number
   }
+
+  /** 数据采购配置 */
+  [SysConfig.PURCHASE]?: {
+    /** 数据采购申请字数限制 */
+    works?: number
+  }
 }

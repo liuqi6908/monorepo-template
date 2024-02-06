@@ -18,6 +18,8 @@ export enum SysConfig {
   VERIFICATION = 'verification',
   /** 上传作品配置 */
   WORK = 'work',
+  /** 数据采购配置 */
+  PURCHASE = 'purchase',
 }
 
 /**
@@ -32,4 +34,5 @@ export const sysConfigDescriptions: Record<SysConfig, string> = {
   [SysConfig.NAV]: '首页导航栏配置',
   [SysConfig.VERIFICATION]: '身份认证上传配置',
   [SysConfig.WORK]: '上传作品配置',
+  [SysConfig.PURCHASE]: '数据采购配置',
 }

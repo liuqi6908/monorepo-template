@@ -53,6 +53,7 @@ export class SysConfigService implements OnModuleInit {
       || (version === SysConfig.EXPORT && !permissions.includes(PermissionType.CONFIG_UPSERT_EXPORT))
       || (version === SysConfig.VERIFICATION && !permissions.includes(PermissionType.CONFIG_UPSERT_VERIFICATION))
       || (version === SysConfig.WORK && !permissions.includes(PermissionType.CONFIG_UPSERT_WORK))
+      || (version === SysConfig.PURCHASE && !permissions.includes(PermissionType.CONFIG_UPSERT_PURCHASE))
     )
       responseError(ErrorCode.PERMISSION_DENIED)
   }

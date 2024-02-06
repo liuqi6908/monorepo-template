@@ -36,6 +36,7 @@ export class ConfigController {
     PermissionType.CONFIG_UPSERT_EXPORT,
     PermissionType.CONFIG_UPSERT_VERIFICATION,
     PermissionType.CONFIG_UPSERT_WORK,
+    PermissionType.CONFIG_UPSERT_PURCHASE,
   ])
   @ApiSuccessResponse(ConfigResDto)
   @Post()

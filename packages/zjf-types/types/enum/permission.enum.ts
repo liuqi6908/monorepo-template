@@ -190,6 +190,10 @@ export enum PermissionType {
   CONFIG_QUERY_WORK = 'config:query-work',
   /** 创建/更新作品管理配置 */
   CONFIG_UPSERT_WORK = 'config:upsert-work',
+  /** 查询数据采购配置 */
+  CONFIG_QUERY_PURCHASE = 'config:query-purchase',
+  /** 创建/更新数据采购配置 */
+  CONFIG_UPSERT_PURCHASE = 'config:upsert-purchase',
 
   // ------------------ 作品/成果 ---------------------
   /** 查询所有作品/成果 */
@@ -298,6 +302,8 @@ export const permissionDescriptions: Record<PermissionType, string> = {
   [PermissionType.CONFIG_UPSERT_VERIFICATION]: '创建/更新身份认证上传全局配置',
   [PermissionType.CONFIG_QUERY_WORK]: '查询作品管理全局配置',
   [PermissionType.CONFIG_UPSERT_WORK]: '创建/更新作品管理全局配置',
+  [PermissionType.CONFIG_QUERY_PURCHASE]: '查询数据采购配置',
+  [PermissionType.CONFIG_UPSERT_PURCHASE]: '创建/更新数据采购配置',
 
   [PermissionType.WORK_QUERY_ALL]: '查询所有作品/成果',
   [PermissionType.WORK_DOWNLOAD]: '下载指定作品/成果的附件',

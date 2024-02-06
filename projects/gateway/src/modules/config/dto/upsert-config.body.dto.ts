@@ -21,6 +21,7 @@ import {
   NAV_QUESTION_LABEL,
   NAV_REQUEST_DESC,
   NAV_REQUEST_LABEL,
+  PURCHASE_REQUEST_WORKS_LIMIT,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
   UPLOAD_WORK_DFT_AMOUNT_LIMIT,
   UPLOAD_WORK_DFT_SIZE_LIMIT,
@@ -122,4 +123,12 @@ export class UpsertConfigBodyDto extends VersionDto implements IUpsertConfigBody
     },
   })
   work?: IConfigDto[SysConfig.WORK]
+
+  @ApiPropertyOptional({
+    description: '数据采购配置',
+    example: {
+      works: PURCHASE_REQUEST_WORKS_LIMIT,
+    },
+  })
+  purchase?: IConfigDto[SysConfig.PURCHASE]
 }
