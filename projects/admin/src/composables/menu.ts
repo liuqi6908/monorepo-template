@@ -140,6 +140,11 @@ export function useMenu() {
           label: '采购管理',
           flag: role?.includes(PermissionType.DATA_SUGGEST_QUERY_ALL),
         },
+        {
+          id: 'purchaseConfig',
+          label: '数据采购配置管理',
+          flag: role?.includes(PermissionType.CONFIG_QUERY_PURCHASE),
+        },
       ],
       export: [
         {

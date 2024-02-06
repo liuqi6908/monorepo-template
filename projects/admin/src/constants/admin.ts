@@ -537,6 +537,7 @@ export const ADMIN_MENU_LIST: PermissionItem[] = [
     flag: getEnvVariable('VITE_DATA_PRE_PURCHASE', false),
     value: [
       PermissionType.DATA_SUGGEST_QUERY_ALL,
+      PermissionType.CONFIG_QUERY_PURCHASE,
     ],
     children: [
       {
@@ -552,6 +553,21 @@ export const ADMIN_MENU_LIST: PermissionItem[] = [
         ],
         value: [
           PermissionType.DATA_SUGGEST_DOWNLOAD,
+        ],
+      },
+      {
+        name: '只读访问数据采购配置',
+        value: [
+          PermissionType.CONFIG_QUERY_PURCHASE,
+        ],
+      },
+      {
+        name: '管理数据采购配置',
+        premise: [
+          PermissionType.CONFIG_QUERY_PURCHASE,
+        ],
+        value: [
+          PermissionType.CONFIG_UPSERT_PURCHASE,
         ],
       },
     ],
