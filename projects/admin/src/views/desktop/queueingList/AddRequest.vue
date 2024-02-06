@@ -17,8 +17,6 @@ const dialog = ref(false)
 /** 加载中 */
 const loading = ref(false)
 
-/** 选中的用户 */
-const user = ref<IUser>()
 /** 申请时长 */
 const duration = ref<typeof DESKTOP_REQUEST_DURATION_OPTION[0]>()
 
@@ -43,15 +41,17 @@ const cols = reactive<QTableColumn<IUser>[]>([
 const pagination = TABLE_PAGINATION('createdAt', true)
 /** 表格筛选字段 */
 const text = ref('')
+/** 多选 */
+const selected = ref<IUser[]>([])
 
 /** 禁用提交 */
-const disable = computed(() => !user.value || !duration.value)
+const disable = computed(() => !selected.value.length || !duration.value)
 
 watch(
   dialog,
   (newVal) => {
     if (newVal) {
-      user.value = undefined
+      selected.value = []
       duration.value = desktopRequest.value?.duration?.[0]
       text.value = ''
       pagination.value.sortBy = 'createdAt'
@@ -123,7 +123,7 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
     pagination.value.sortBy = sortBy
     pagination.value.descending = descending
     loading.value = false
-    user.value = undefined
+    selected.value = []
   }
 }
 
@@ -135,7 +135,7 @@ async function createRequest() {
     return
 
   const res = await createUserDesktopRequestApi({
-    userId: user.value!.id,
+    userId: selected.value[0].id,
     duration: duration.value!.value,
   })
   if (res) {
@@ -218,14 +218,33 @@ async function createRequest() {
           @request="queryUserList"
         >
           <template #header-selection>
-            选择
+            <q-checkbox
+              :model-value="
+                selected.length && rows?.length
+                ? (
+                  selected.length >= rows.filter(v => !v.desktopQueue).length
+                    ? true : null
+                )
+                : false
+              "
+              @update:model-value="(val) => {
+                if (val || val === null)
+                  selected = rows?.filter(v => !v.desktopQueue) ?? []
+                else
+                  selected = []
+              }"
+            />
           </template>
           <template #body-selection="{ row }">
-            <ZRadio
-              :model-value="user?.id"
-              :val="row.id"
+            <q-checkbox
+              :model-value="!!selected.find(v => v.id === row.id)"
               :disable="!!row.desktopQueue"
-              @update:model-value="user = row"
+              @update:model-value="(val) => {
+                if (val)
+                  selected.push(row)
+                else
+                  selected.splice(selected.findIndex(v => v.id === row.id), 1)
+              }"
             />
           </template>
           <template #body-cell-action="{ row }">
