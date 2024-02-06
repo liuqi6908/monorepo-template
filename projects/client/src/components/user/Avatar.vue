@@ -20,7 +20,7 @@ const dialog = ref(false)
     <template v-if="isLogin">
       <div
         w10 h10 flex-center
-        b="1.5px primary-1" rounded-full
+        b="2px primary-1" rounded-full
       >
         <h4 v-if="firstCharName" v-text="firstCharName" />
         <div v-else v-html="user" />

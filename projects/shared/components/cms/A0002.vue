@@ -45,7 +45,7 @@ const item = computed(() => props.list?.[0])
       </div>
       <div flex="~ 1 col gap8" p="y20 x10" lg="py29 pl20">
         <div flex="~ col gap4">
-          <div h2 w16 bg="#0E419C" />
+          <div h2 w16 bg-primary-1 />
           <h1 v-text="item.title" />
         </div>
         <div
