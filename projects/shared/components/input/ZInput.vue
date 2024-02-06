@@ -133,7 +133,7 @@ function valuePlusMinus(type: 'plus' |'minus') {
     &.q-textarea {
       .q-field__control {
         padding-right: 0;
-        height: auto;
+        height: auto !important;
 
         textarea {
           min-height: 48px;

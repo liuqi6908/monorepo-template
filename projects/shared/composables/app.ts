@@ -23,6 +23,7 @@ import {
   NAV_QUESTION_LABEL,
   NAV_REQUEST_DESC,
   NAV_REQUEST_LABEL,
+  PURCHASE_REQUEST_WORKS_LIMIT,
   SysConfig,
   UPLOAD_WORK_DFT_ACCEPT_LIMIT,
   UPLOAD_WORK_DFT_AMOUNT_LIMIT,
@@ -55,6 +56,8 @@ const nav = ref<IConfigDto[SysConfig.NAV]>()
 const verification = ref<IConfigDto[SysConfig.VERIFICATION]>()
 /** 上传作品配置 */
 const works = ref<IConfigDto[SysConfig.WORK]>()
+/** 数据采购配置 */
+const purchase = ref<IConfigDto[SysConfig.PURCHASE]>()
 
 /** 是否在管理后台 */
 const isAdmin = ref(false)
@@ -211,6 +214,20 @@ export function useSysConfig() {
   }
 
   /**
+   * 获取数据采购配置
+   */
+  async function getPurchaseConfig(useCache = true) {
+    if (useCache && purchase.value)
+      return
+    const {
+      works = PURCHASE_REQUEST_WORKS_LIMIT,
+    } = await getConfigApi(SysConfig.PURCHASE) || {}
+    purchase.value = {
+      works,
+    }
+  }
+
+  /**
    * 修改 APP Head
    */
   function updateAppHead(admin?: boolean) {
@@ -240,6 +257,7 @@ export function useSysConfig() {
     nav,
     verification,
     works,
+    purchase,
     getAppConfig,
     getDesktopRequestConfig,
     getDesktopConfig,
@@ -248,6 +266,7 @@ export function useSysConfig() {
     getNavConfig,
     getVerificationConfig,
     getWorkConfig,
+    getPurchaseConfig,
     updateAppHead,
     isAdmin,
     zoomRatio,
