@@ -50,7 +50,7 @@ onBeforeMount(async () => {
     <HomeExpand v-if="isShowHomeExpand" />
 
     <!-- 常见问题 -->
-    <div py20 bg="grey-2">
+    <div py20 :bg="questionProps?.[0]?.style === '2' ? 'grey-1' : 'grey-2'">
       <component
         :is="getComponentById('A0006')"
         :list="
