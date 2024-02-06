@@ -47,7 +47,7 @@ const rows = ref<QTableProps['rows']>([])
 /** 表格列 */
 const cols = reactive(cloneDeep(DESKTOP_REQUEST_TABLE_COLUMNS))
 /** 表格分页信息 */
-const pagination = TABLE_PAGINATION('requestAt', true)
+const pagination = TABLE_PAGINATION('queueAt')
 /** 单选 */
 const selected = ref<IDesktopQueue>()
 
