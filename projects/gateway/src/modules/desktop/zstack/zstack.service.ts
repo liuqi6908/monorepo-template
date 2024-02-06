@@ -22,7 +22,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 登录zstack
-   * @returns
    */
   private async _login() {
     const { host, user, password } = this._cfgSrv.get<ZstackConfig>('zstack')
@@ -69,8 +68,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 登出zstack
-   * @param uuid
-   * @returns
    */
   private _logout(uuid: string) {
     return this._httpSrv.axiosRef({
@@ -81,8 +78,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 带会话的请求
-   * @param request
-   * @returns
    */
   public requestWithSession<T = any>(
     request: (axiosCfg) => Promise<AxiosResponse<T>>,
@@ -99,8 +94,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 自定义查询
-   * @param query
-   * @returns
    */
   public zql(query: string) {
     return this.requestWithSession((cfg) => {
@@ -114,8 +107,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 获取指定物理机的 CPU、内存分配
-   * @param hostUuid
-   * @returns
    */
   public async getHostCpuMem(hostUuid: string) {
     // eslint-disable-next-line max-len
@@ -131,9 +122,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 获取指定物理机的时序数据
-   * @param hostUuid
-   * @param period
-   * @returns
    */
   public async getHostMonitor(hostUuid: string, period = 60) {
     // eslint-disable-next-line max-len
@@ -144,7 +132,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 获取全部物理机器的 CPU、内存分配
-   * @returns
    */
   public async getAllHostCpuMem() {
     const hosts = await this.getHostList()
@@ -159,7 +146,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 获取物理主机列表
-   * @returns
    */
   public async getHostList() {
     const zqlStr = 'query Host.uuid,name'
@@ -212,8 +198,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 开机指定的虚拟机
-   * @param vmUUID
-   * @returns
    */
   public async startVM(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
@@ -228,8 +212,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 关机指定的虚拟机
-   * @param vmUUID
-   * @returns
    */
   public async stopVM(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
@@ -244,8 +226,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 重启指定的虚拟机
-   * @param vmUUID
-   * @returns
    */
   public async rebootVM(vmUUID: string) {
     return await this.requestWithSession((cfg) => {
@@ -260,7 +240,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 云桌面总览
-   * @returns
    */
   public async vmOverview() {
     // eslint-disable-next-line max-len
@@ -273,7 +252,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 查询虚拟机状态
-   * @param vmUUID
    */
   public async getVMState(vmUUID: string) {
     const zqlStr = `query vminstance.state,uuid,hypervisorType,architecture,cpuNum,memorySize,platform,guestOsType,uuid,lastOpDate where uuid='${vmUUID}'`
@@ -283,9 +261,6 @@ export class ZstackService extends EventEmitter {
 
   /**
    * 获取指定虚拟机的详情
-   * @param vmUUID
-   * @param period
-   * @returns
    */
   public async getVMStateDetail(vmUUID: string, period = 60) {
     // eslint-disable-next-line max-len

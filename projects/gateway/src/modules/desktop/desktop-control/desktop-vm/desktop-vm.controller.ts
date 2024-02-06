@@ -31,7 +31,10 @@ export class DesktopVmController {
   @ApiOperation({ summary: '云桌面总览', description: '返回云主机总数、开机数量、关机数量' })
   @Get()
   public async getVMOverview() {
-    return await this._zstackSrv.vmOverview()
+    if (this._type === 0)
+      return await this._zstackSrv.vmOverview()
+    else if (this._type === 1)
+      return await this._hyperVSrv.vmOverview()
   }
 
   @ApiOperation({ summary: '获取指定虚拟机的状态' })
@@ -50,7 +53,10 @@ export class DesktopVmController {
   @ApiParam({ name: 'desktopId', description: '虚拟机ID' })
   @Get('detail/:desktopId')
   public async getVMDetail(@Param() param: DesktopIdDto) {
-    return await this._zstackSrv.getVMStateDetail(param.desktopId)
+    if (this._type === 0)
+      return await this._zstackSrv.getVMStateDetail(param.desktopId)
+    else if (this._type === 1)
+      return await this._hyperVSrv.getVMStateDetail(param.desktopId)
   }
 
   @ApiOperation({ summary: '开机指定的虚拟机' })

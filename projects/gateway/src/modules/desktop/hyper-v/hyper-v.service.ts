@@ -120,6 +120,19 @@ export class HyperVService extends EventEmitter {
   }
 
   /**
+   * 云桌面总览
+   */
+  public async vmOverview() {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: '/v1/vm/count',
+      })
+    })
+  }
+
+  /**
    * 查询虚拟机状态
    */
   public async getVMState(vmUUID: string) {
@@ -128,6 +141,19 @@ export class HyperVService extends EventEmitter {
         ...cfg,
         method: 'GET',
         url: `/v1/vm/${vmUUID}`,
+      })
+    })
+  }
+
+  /**
+   * 获取指定虚拟机的详情
+   */
+  public async getVMStateDetail(vmUUID: string) {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: `/v1/vm/${vmUUID}/detail`,
       })
     })
   }
