@@ -201,7 +201,12 @@ async function autoAssign() {
         <ZRadio
           :model-value="selected?.userId"
           :val="row.userId"
-          @update:model-value="selected = row"
+          @click="() => {
+            if (selected && selected.userId === row.userId)
+              selected = undefined
+            else
+              selected = row
+          }"
         />
       </template>
       <template #body-cell-attachments="{ row, value }">

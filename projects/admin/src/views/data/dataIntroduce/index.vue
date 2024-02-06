@@ -231,7 +231,12 @@ async function editReference() {
         <ZRadio
           :model-value="selected?.databaseId"
           :val="row.databaseId"
-          @update:model-value="selected = row"
+          @click="() => {
+            if (selected && selected.databaseId === row.databaseId)
+              selected = undefined
+            else
+              selected = row
+          }"
         />
       </template>
       <template #body-cell-status="{ row }">

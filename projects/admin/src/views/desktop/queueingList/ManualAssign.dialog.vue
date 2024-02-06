@@ -144,7 +144,12 @@ async function assignDesktop() {
         <ZRadio
           :model-value="desktop?.id"
           :val="row.id"
-          @update:model-value="desktop = row"
+          @click="() => {
+            if (desktop && desktop.id === row.id)
+              desktop = undefined
+            else
+              desktop = row
+          }"
         />
       </template>
     </ZTable>
