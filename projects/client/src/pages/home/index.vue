@@ -51,21 +51,18 @@ onBeforeMount(async () => {
 
     <!-- 常见问题 -->
     <div py20 bg="grey-2">
-      <div w-limited-1 flex="~ row wrap" gap="y10 x20">
-        <RouterLink
-          v-for="(item, index) in questionProps?.filter((_, i) => i < 4)"
-          :key="index"
-          :to="{
-            path: '/question',
-            query: {
-              index,
-            },
-          }"
-          flex-1 min-w-112
-        >
-          <QuestionCard v-bind="{ ...item }" />
-        </RouterLink>
-      </div>
+      <component
+        :is="getComponentById('A0006')"
+        :list="
+          questionProps?.map((v, i) => ({
+            ...v,
+            to: {
+              path: 'question',
+              query: { index: i }
+            }
+          }))?.filter((_, i) => i < 4)
+        "
+      />
     </div>
   </div>
 </template>
