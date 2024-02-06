@@ -8,6 +8,12 @@ const {
   isEdit,
 } = useEditCms()
 
+/** 样式的可选项 */
+const styleOptions = [
+  { label: '样式一', value: '1' },
+  { label: '样式二', value: '2' },
+]
+
 const img = ref<File>()
 const svg = ref<File>()
 
@@ -69,6 +75,15 @@ const fillReplacedSvg = computed(() => {
         :params="{
           readonly: !isEdit,
         }"
+      />
+      <!-- Style -->
+      <ZSelect
+        v-if="componentParams?.includes('style')"
+        :model-value="styleOptions.find(v => v.value === selectItem!.style)"
+        :options="styleOptions"
+        label="样式"
+        placeholder="请选择样式"
+        @update:model-value="val => selectItem!.style = val.value"
       />
       <!-- Img -->
       <div

@@ -21,7 +21,7 @@ export const CMS_COMPONENTS: CmsComponent = {
     component: markRaw(
       defineAsyncComponent(() => import('../components/cms/A0002.vue')),
     ),
-    param: ['title', 'img', 'richText'],
+    param: ['title', 'img', 'style', 'richText'],
   },
   A0003: {
     label: '问答',
