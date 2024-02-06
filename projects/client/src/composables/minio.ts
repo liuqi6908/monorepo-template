@@ -4,20 +4,27 @@ import { browser } from 'zjf-utils'
 import type { AxiosRequestConfig } from 'axios'
 import type { QNotifyUpdateOptions } from 'quasar'
 
-/** MinIo 客服端 */
-const client = createClient({
-  endPoint: import.meta.env.VITE_MINIO_ENDPOINT ?? 'localhost',
-  port: getEnvVariable('VITE_MINIO_PORT'),
-  useSSL: getEnvVariable('VITE_MINIO_USE_SSL', false),
-  accessKey: import.meta.env.VITE_MINIO_AK ?? '',
-  secretKey: import.meta.env.VITE_MINIO_SK ?? '',
-})
 /** FTP 文件上传桶名 */
 const bucket = import.meta.env.VITE_MINIO_BUCKET_FTP ?? ''
 
 export function useMinio() {
   const { userInfo } = useUser()
   const { desktopInfo } = useDesktop()
+
+  /**
+   * 获取Minio客户端
+   */
+  function getClient() {
+    const { isDesktop } = useUser()
+    const endPoint = isDesktop ? import.meta.env.VITE_MINIO_ENDPOINT_INTERNAL : import.meta.env.VITE_MINIO_ENDPOINT_EXTERNAL
+    return createClient({
+      endPoint,
+      port: getEnvVariable('VITE_MINIO_PORT'),
+      useSSL: getEnvVariable('VITE_MINIO_USE_SSL', false),
+      accessKey: import.meta.env.VITE_MINIO_AK ?? '',
+      secretKey: import.meta.env.VITE_MINIO_SK ?? '',
+    })
+  }
 
   /**
    * 基础路径
@@ -29,7 +36,7 @@ export function useMinio() {
    */
   async function uploadFile(file: File, notify: (props?: QNotifyUpdateOptions | undefined) => void) {
     // 获取临时上传的预签名 URL
-    const url = await client.presignedUrl('put', bucket, `${basePath.value}${file.name}`, 60)
+    const url = await getClient().presignedUrl('put', bucket, `${basePath.value}${file.name}`, 60)
 
     // 使用 Axios 上传文件，并监听上传进度
     const config: AxiosRequestConfig = {
@@ -48,36 +55,21 @@ export function useMinio() {
    * 删除文件
    */
   async function deleteFile(names: string[]) {
-    return await client.removeObjects(bucket, names)
+    return await getClient().removeObjects(bucket, names)
   }
 
   /**
    * 下载文件
    */
-  async function downloadFile(path: string, notify: (props?: QNotifyUpdateOptions | undefined) => void) {
+  async function downloadFile(path: string) {
     // 获取临时下载的预签名 URL
-    const url = await client.presignedUrl('get', bucket, path, 60)
-
-    // 使用 Axios 下载文件，并监听下载进度
-    const config: AxiosRequestConfig = {
-      responseType: 'blob',
-      onDownloadProgress: (progressEvent) => {
-        const percentCompleted = Math.round(progressEvent.loaded / (progressEvent.total ?? 1) * 100)
-        notify({
-          caption: `下载进度：${percentCompleted}%`,
-        })
-      },
-    }
-
-    const { data } = await $http.get(url, config)
-    const downloadUrl = URL.createObjectURL(new Blob([data]))
-    browser.downloadUrl(downloadUrl, path.split('/').pop())
-    URL.revokeObjectURL(downloadUrl)
+    const url = await getClient().presignedUrl('get', bucket, path, 60)
+    browser.downloadUrl(url, path.split('/').pop())
   }
 
   return {
-    client,
     basePath,
+    getClient,
     uploadFile,
     deleteFile,
     downloadFile,

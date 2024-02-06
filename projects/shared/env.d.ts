@@ -21,8 +21,10 @@ interface ImportMetaEnv {
   VITE_PRIVATE_KEY?: string
 
   /** ---------------- MINIO ---------------- */
-  /** MINIO访问地址 */
-  VITE_MINIO_ENDPOINT?: string
+  /** MINIO内网访问地址 */
+  VITE_MINIO_ENDPOINT_INTERNAL?: string
+  /** MINIO外网访问地址 */
+  VITE_MINIO_ENDPOINT_EXTERNAL?: string
   /** MINIO端口 */
   VITE_MINIO_PORT?: number
   /** MINIO AccessKey ID */

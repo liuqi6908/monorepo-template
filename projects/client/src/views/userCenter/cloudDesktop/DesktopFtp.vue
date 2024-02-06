@@ -150,32 +150,6 @@ function deleteSelectedFile() {
     await getFileList()
   }, '正在删除中...', '删除成功', '删除失败')
 }
-
-/**
- * 下载指定路径的文件
- */
-async function downloadFileByPath(path: string) {
-  const notify = Notify.create({
-    type: 'loading',
-    message: '正在下载中，请耐心等待...',
-    caption: '下载进度：0%'
-  })
-  try {
-    await downloadFile(path, notify)
-    notify({
-      type: 'success',
-      message: '下载成功',
-      caption: undefined
-    })
-  }
-  catch (_) {
-    notify({
-      type: 'danger',
-      message: '文件不存在',
-      caption: undefined
-    })
-  }
-}
 </script>
 
 <template>
@@ -294,7 +268,7 @@ async function downloadFileByPath(path: string) {
               :params="{
                 outline: true
               }"
-              @click="downloadFileByPath(props.row.name)"
+              @click="downloadFile(props.row.name)"
             />
           </q-td>
         </template>

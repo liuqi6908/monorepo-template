@@ -16,7 +16,8 @@ export default ({ mode }: any) => {
   const minio = loadEnv(mode, path.relative(__dirname, '../gateway'), 'MINIO')
   process.env = {
     ...process.env,
-    VITE_MINIO_ENDPOINT: minio.MINIO_ENDPOINT_INTERNAL || minio.MINIO_ENDPOINT_EXTERNAL,
+    VITE_MINIO_ENDPOINT_INTERNAL: minio.MINIO_ENDPOINT_INTERNAL,
+    VITE_MINIO_ENDPOINT_EXTERNAL: minio.MINIO_ENDPOINT_EXTERNAL,
     VITE_MINIO_PORT: minio.MINIO_PORT,
     VITE_MINIO_AK: minio.MINIO_AK,
     VITE_MINIO_SK: minio.MINIO_SK,
