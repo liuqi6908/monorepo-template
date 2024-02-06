@@ -39,6 +39,7 @@ declare global {
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
   const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
   const batchClearDesktopDataApi: typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']
+  const batchCreateUserDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchCreateUserDesktopRequestApi']
   const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
   const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
   const batchDeleteRoleApi: typeof import('../../../shared/api/role')['batchDeleteRoleApi']
@@ -77,7 +78,6 @@ declare global {
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
   const createUserApi: typeof import('../../../shared/api/user')['createUserApi']
-  const createUserDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['createUserDesktopRequestApi']
   const createVerificationApi: typeof import('../../../shared/api/verification')['createVerificationApi']
   const createWorkApi: typeof import('../../../shared/api/work')['createWorkApi']
   const customRef: typeof import('vue')['customRef']
@@ -519,6 +519,7 @@ declare module 'vue' {
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
+    readonly batchCreateUserDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchCreateUserDesktopRequestApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
@@ -557,7 +558,6 @@ declare module 'vue' {
     readonly createTemplatePromise: UnwrapRef<typeof import('@vueuse/core')['createTemplatePromise']>
     readonly createUnrefFn: UnwrapRef<typeof import('@vueuse/core')['createUnrefFn']>
     readonly createUserApi: UnwrapRef<typeof import('../../../shared/api/user')['createUserApi']>
-    readonly createUserDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['createUserDesktopRequestApi']>
     readonly createVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['createVerificationApi']>
     readonly createWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['createWorkApi']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
@@ -992,6 +992,7 @@ declare module '@vue/runtime-core' {
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
     readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
     readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
+    readonly batchCreateUserDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchCreateUserDesktopRequestApi']>
     readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
     readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
     readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
@@ -1030,7 +1031,6 @@ declare module '@vue/runtime-core' {
     readonly createTemplatePromise: UnwrapRef<typeof import('@vueuse/core')['createTemplatePromise']>
     readonly createUnrefFn: UnwrapRef<typeof import('@vueuse/core')['createUnrefFn']>
     readonly createUserApi: UnwrapRef<typeof import('../../../shared/api/user')['createUserApi']>
-    readonly createUserDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['createUserDesktopRequestApi']>
     readonly createVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['createVerificationApi']>
     readonly createWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['createWorkApi']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>

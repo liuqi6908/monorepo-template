@@ -134,8 +134,8 @@ async function createRequest() {
   if (disable.value)
     return
 
-  const res = await createUserDesktopRequestApi({
-    userId: selected.value[0].id,
+  const res = await batchCreateUserDesktopRequestApi({
+    id: selected.value!.map(v => v.id),
     duration: duration.value!.value,
   })
   if (res) {
@@ -227,6 +227,7 @@ async function createRequest() {
                 )
                 : false
               "
+              :disable="!rows?.filter(v => !v.desktopQueue).length"
               @update:model-value="(val) => {
                 if (val || val === null)
                   selected = rows?.filter(v => !v.desktopQueue) ?? []

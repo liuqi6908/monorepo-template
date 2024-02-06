@@ -1,7 +1,7 @@
 import type {
+  IBatchCreateUserDesktopRequestBodyDto,
   IBatchRejectDesktopReqBodyDto,
   ICreateDesktopRequestBodyDto,
-  ICreateUserDesktopRequestBodyDto,
   IDesktopQueue,
   IGetOwnDesktopReqResData,
   IPaginatedResData,
@@ -21,10 +21,10 @@ export function createDesktopRequestApi(body: ICreateDesktopRequestBodyDto) {
 }
 
 /**
- * 创建一个云桌面使用申请（管理员操作）
+ * 批量创建云桌面使用申请（管理员操作）
  */
-export function createUserDesktopRequestApi(body: ICreateUserDesktopRequestBodyDto) {
-  return $put<string>('/desktop-request/create', body)
+export function batchCreateUserDesktopRequestApi(body: IBatchCreateUserDesktopRequestBodyDto) {
+  return $put<string | number>('/desktop-request/create/batch', body)
 }
 
 /**
