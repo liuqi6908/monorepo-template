@@ -49,7 +49,7 @@ function handleSelect(flag: boolean | null, item: PermissionItem) {
       pr2 flex="~ col gap2"
     >
       <div
-        v-for="item in data.children"
+        v-for="item in data.children?.filter(v => v.flag !== false)"
         :key="item.name"
         flex="~ items-center justify-between gap4"
         p="r2 y3px" rounded-6px
