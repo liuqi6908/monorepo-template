@@ -1,14 +1,17 @@
 <script lang="ts" setup>
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 import { useResizeObserver } from '@vueuse/core'
 import type { CmsJson } from '../../types/cms.interface'
 
-defineProps<{
+const props = defineProps<{
   list?: CmsJson[]
 }>()
 
 const flexBox = ref<HTMLElement>()
 const linefeed = ref(false)
+
+/** 背景色 */
+const bgColor = computed(() => props.list?.[0]?.color || '#001020')
 
 useResizeObserver(flexBox, ([{ contentRect, target }]) => {
   const { width } = contentRect
@@ -26,8 +29,10 @@ useResizeObserver(flexBox, ([{ contentRect, target }]) => {
 <template>
   <div
     class="A0004"
-    text-grey-1 bg="#001020"
-    py36
+    text-grey-1 py36
+    :style="{
+      backgroundColor: bgColor
+    }"
   >
     <div
       v-if="list?.length"
