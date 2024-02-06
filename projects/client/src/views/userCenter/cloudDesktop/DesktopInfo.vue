@@ -29,6 +29,11 @@ const vmTable = computed(() => [
     value: vmInfo.value?.memorySize ? formatFileSize(vmInfo.value?.memorySize) : undefined
   },
   {
+    label: '可用内存',
+    value: vmInfo.value?.availableMemory ? formatFileSize(vmInfo.value?.availableMemory) : undefined,
+    flag: !!vmInfo.value?.availableMemory
+  },
+  {
     label: '平台',
     value: vmInfo.value?.platform
   },
@@ -42,7 +47,8 @@ const vmTable = computed(() => [
   },
   {
     label: '最后操作时间',
-    value: vmInfo.value?.lastOpDate ? moment(vmInfo.value?.lastOpDate, 'MMM D, YYYY h:mm:ss A').format('YYYY-MM-DD HH:mm:ss') : undefined
+    value: vmInfo.value?.lastOpDate ? moment(vmInfo.value?.lastOpDate, 'MMM D, YYYY h:mm:ss A').format('YYYY-MM-DD HH:mm:ss') : undefined,
+    flag: !!vmInfo.value?.lastOpDate
   },
 ])
 </script>
@@ -54,7 +60,7 @@ const vmTable = computed(() => [
         基本信息
       </div>
       <div
-        v-for="(item, index) in vmTable.filter((v, i) => i !== vmTable.length - 1 || !!v.value)"
+        v-for="(item, index) in vmTable.filter((v) => v.flag !== false)"
         :key="index"
         p="y6 x4" flex="~ 1 items-center gap2.5"
         :bg="index % 2 === 0 ? 'grey-1' : 'primary-1/6'"

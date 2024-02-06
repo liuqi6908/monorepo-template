@@ -107,6 +107,8 @@ export interface VMState {
   hypervisorType: string
   /** 内存 */
   memorySize: number
+  /** 可用内存 */
+  availableMemory: number
   /** CPU */
   cpuNum: number
   /** 最后操作时间 */
