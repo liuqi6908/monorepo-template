@@ -2,7 +2,8 @@
 import { computed } from 'vue'
 import type { CmsJson } from '../../../types/cms.interface'
 import icon from '../../../assets/icons/chat.svg?raw'
-import Card from './Card.vue'
+import Card1 from './Card1.vue'
+import Card2 from './Card2.vue'
 
 interface CmsItem extends CmsJson {
   to?: any
@@ -11,6 +12,9 @@ interface CmsItem extends CmsJson {
 const props = defineProps<{
   list?: CmsItem[]
 }>()
+
+/** 卡片样式 */
+const cardStyle = computed(() => props.list?.[0].style)
 
 /** 处理之后的数据 */
 const disposeData = computed(() => props.list?.map((item) => ({
@@ -37,8 +41,9 @@ function htmlDecodeByRegExp(htmlStr?: string) {
  * 替换svg的fill和stroke属性
  */
 function fillReplacedSvg(htmlStr?: string){
-  return htmlStr?.replace(/fill=".*?"/g, 'fill="currentColor"')
-    .replace(/stroke=".*?"/g, 'stroke="currentColor"') || icon
+  const color = cardStyle.value === '2' ? 'white' : 'currentColor'
+  return (htmlStr || icon).replace(/fill=".*?"/g, `fill="${color}"`)
+    .replace(/stroke=".*?"/g, `stroke="${color}"`)
 }
 </script>
 
@@ -46,7 +51,7 @@ function fillReplacedSvg(htmlStr?: string){
   <div
     class="A0006"
     w-limited-1 flex="~ row wrap"
-    gap="y10 x20"
+    gap-y10 :gap-x="cardStyle === '2' ? 10 : 20"
   >
     <template v-for="item in disposeData">
       <RouterLink
@@ -54,10 +59,12 @@ function fillReplacedSvg(htmlStr?: string){
         :to="item.to"
         flex-1 min-w-112
       >
-        <Card :item="item" />
+        <Card1 v-if="!cardStyle || cardStyle === '1'" :item="item" />
+        <Card2 v-else-if="cardStyle === '2'" :item="item" />
       </RouterLink>
       <div v-else flex-1 min-w-112>
-        <Card :item="item" />
+        <Card1 v-if="!cardStyle || cardStyle === '1'" :item="item" />
+        <Card2 v-else-if="cardStyle === '2'" :item="item" />
       </div>
     </template>
   </div>
