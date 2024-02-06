@@ -51,14 +51,11 @@ watch(
     :params="{
       readonly: true,
     }"
+    @click="isShowDate = true"
     v-bind="inputParams"
   >
     <template #prepend>
-      <div
-        w5 h5 cursor-pointer
-        hover:text-grey-8
-        i-carbon:calendar
-      >
+      <div w5 h5 i-carbon:calendar>
         <q-popup-proxy
           v-model="isShowDate"
           :offset="[120, 12]"
@@ -69,6 +66,16 @@ watch(
             :range="range"
             today-btn
             mask="YYYY-MM-DD"
+            :subtitle="value
+              ? (typeof value === 'string'
+                ? value
+                : (typeof value === 'object'
+                  ? `${value.from} 至 ${value.to}`
+                  : undefined
+                )
+              )
+              : undefined
+            "
             v-bind="dateParams"
           >
             <div flex="~ justify-end gap3">
