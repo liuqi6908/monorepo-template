@@ -131,13 +131,14 @@ async function autoAssign() {
 
   loading.value = true
   try {
-    // const res = await autoAssignApi(selected.value.id)
+    await autoCreateDesktopApi(selected.value.userId)
     Notify.create({
       type: 'success',
-      message: '操作成功',
+      message: '操作成功，该操作耗时较长，请耐心等待！',
     })
   }
   finally {
+    selected.value = undefined
     loading.value = false
   }
 }
@@ -243,7 +244,12 @@ async function autoAssign() {
       footer
       @ok="autoAssign"
     >
-      该操作将为已选的用户申请自动创建云桌面并分配，是否继续？
+      <div>
+        该操作将为已选的用户申请自动创建云桌面并分配，是否继续？
+      </div>
+      <div text="sm grey-6" mt2>
+        注：该操作耗时较长（平均时长五分钟），期间请勿为该用户申请重复分配云桌面！
+      </div>
     </ZDialog>
 
     <AttachmentsDialog

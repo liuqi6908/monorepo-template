@@ -8,6 +8,7 @@ import type {
   IQueryDto,
   IUpdateDesktopBodyDto,
   IUser,
+  IUserIdDto,
 } from 'zjf-types'
 import type { DesktopVM } from '../types/desktop.interface'
 import { useRequest } from '../composables/request'
@@ -26,6 +27,13 @@ export function isDesktopApi() {
  */
 export function createDesktopApi(body: ICreateDesktopBodyDto, config?: AxiosRequestConfig) {
   return $put<string>('/desktop', body, undefined, config)
+}
+
+/**
+ * 自动创建一个云桌面并分配
+ */
+export function autoCreateDesktopApi(userId: IUserIdDto['userId']) {
+  return $put<boolean>(`/desktop/${userId}`)
 }
 
 /**

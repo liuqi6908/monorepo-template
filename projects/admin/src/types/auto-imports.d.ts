@@ -34,6 +34,7 @@ declare global {
   const assignDesktopApi: typeof import('../../../shared/api/desktop')['assignDesktopApi']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const authToken: typeof import('../../../shared/composables/user')['authToken']
+  const autoCreateDesktopApi: typeof import('../../../shared/api/desktop')['autoCreateDesktopApi']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
   const batchApproveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']
   const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
@@ -514,6 +515,7 @@ declare module 'vue' {
     readonly assignDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['assignDesktopApi']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
+    readonly autoCreateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['autoCreateDesktopApi']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
@@ -987,6 +989,7 @@ declare module '@vue/runtime-core' {
     readonly assignDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['assignDesktopApi']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
+    readonly autoCreateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['autoCreateDesktopApi']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
     readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
     readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
