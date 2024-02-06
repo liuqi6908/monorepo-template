@@ -93,13 +93,39 @@ export class HyperVService extends EventEmitter {
   }
 
   /**
+   * 获取物理主机列表
+   */
+  public async getHostList() {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: '/v1/host',
+      })
+    })
+  }
+
+  /**
+   * 获取指定物理机的 CPU、内存分配
+   */
+  public async getHostCpuMem(hostUuid: string) {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: `/v1/host/${hostUuid}/usage`,
+      })
+    })
+  }
+
+  /**
    * 获取云桌面虚拟机列表
    */
   public async vmList() {
     return await this.requestWithSession((cfg) => {
       return this._httpSrv.axiosRef({
         ...cfg,
-        method: 'Get',
+        method: 'GET',
         url: '/v1/vm',
       })
     })
