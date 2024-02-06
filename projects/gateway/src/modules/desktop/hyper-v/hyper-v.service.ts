@@ -2,6 +2,7 @@ import { EventEmitter } from 'node:stream'
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
 import { HttpService } from '@nestjs/axios'
 import { ConfigService } from '@nestjs/config'
+import { omit } from 'zjf-utils'
 import type { AxiosResponse } from 'axios'
 import type { HyperVConfig } from 'src/config/_hyper-v.config'
 import { sha512 } from 'src/utils/encrypt/sha512'
@@ -114,6 +115,36 @@ export class HyperVService extends EventEmitter {
         ...cfg,
         method: 'GET',
         url: `/v1/host/${hostUuid}/usage`,
+      })
+    })
+  }
+
+  /**
+   * 获取指定物理机的时序数据
+   */
+  public async getHostMonitor(hostUuid: string) {
+    const res = await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: `/v1/host/${hostUuid}/detail`,
+      })
+    })
+    return {
+      ...omit(res, 'CPU'),
+      CPUUtilization: res.CPU,
+    }
+  }
+
+  /**
+   * 获取集群存储使用情况
+   */
+  public async getClusterStorage() {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: '/v1/host/ZJU/disk-usage',
       })
     })
   }

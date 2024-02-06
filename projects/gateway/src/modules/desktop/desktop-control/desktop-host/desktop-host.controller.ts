@@ -44,12 +44,18 @@ export class DesktopHostController {
   @ApiParam({ name: 'hostId', description: '物理机ID' })
   @Get('time-series/:hostId')
   public async getHostTimeSeries(@Param('hostId') hostId: string) {
-    return this._zstackSrv.getHostMonitor(hostId)
+    if (this._type === 0)
+      return await this._zstackSrv.getHostMonitor(hostId)
+    else if (this._type === 1)
+      return await this._hyperVSrv.getHostMonitor(hostId)
   }
 
   @ApiOperation({ summary: '获取集群整体的存储使用情况' })
   @Get('cluster/storage')
   public async getClusterStorage() {
-    return await this._zstackSrv.getClusterStorage()
+    if (this._type === 0)
+      return await this._zstackSrv.getClusterStorage()
+    else if (this._type === 1)
+      return await this._hyperVSrv.getClusterStorage()
   }
 }
