@@ -39,7 +39,7 @@ async function downloadTemplate() {
         const { uuid, name, ip } = v
         let accessUrl = '待管理员配置'
         if (VITE_DESKTOP_REMOTE_POST)
-          accessUrl = `${ip}:${VITE_DESKTOP_REMOTE_POST}`
+          accessUrl = ip ? `${ip}:${VITE_DESKTOP_REMOTE_POST}` : ''
         else if (VITE_DESKTOP_REMOTE_SAFE)
           accessUrl = VITE_DESKTOP_REMOTE_SAFE
         return [uuid, name, ip, accessUrl, `user-${name}`, getRandomPassword(), expiredDate]
