@@ -1,13 +1,14 @@
 import { In, LessThan, Repository } from 'typeorm'
 import { Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
-import { DesktopQueueStatus, ErrorCode } from 'zjf-types'
+import { DesktopQueueStatus, ErrorCode, VerificationStatus } from 'zjf-types'
 
 import type { User } from 'src/entities/user'
 import { responseError } from 'src/utils/response'
 import { DesktopQueue } from 'src/entities/desktop-queue'
 import { parseSqlError } from 'src/utils/sql-error/parse-sql-error'
 import { NotifyService } from 'src/modules/notify/notify.service'
+import { UserService } from 'src/modules/user/user.service'
 import type { UserIdDto } from 'src/dto/id/user.dto'
 import type { CreateDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
 
@@ -16,6 +17,7 @@ export class DesktopRequestService {
   constructor(
     @InjectRepository(DesktopQueue)
     private readonly _desktopQueueRepo: Repository<DesktopQueue>,
+    private readonly _userSrv: UserService,
     private readonly _notifySrv: NotifyService,
   ) {}
 
@@ -70,15 +72,22 @@ export class DesktopRequestService {
     duration: number,
   ) {
     try {
-      const insertRes = await this._desktopQueueRepo.insert({
+      const user = await this._userSrv.repo().findOne({
+        where: { id: userId },
+        relations: { verification: true },
+      })
+      if (!user)
+        responseError(ErrorCode.USER_NOT_FOUND)
+      else if (user.verification?.status !== VerificationStatus.APPROVED)
+        responseError(ErrorCode.AUTH_NOT_VERIFIED)
+      return (await this._desktopQueueRepo.insert({
         userId,
         attachments: [],
         requestAt: new Date(),
         queueAt: new Date(),
         status: DesktopQueueStatus.QUEUEING,
         duration,
-      })
-      return insertRes.identifiers[0].userId
+      })).identifiers[0].userId
     }
     catch (e) {
       const sqlErr = parseSqlError(e)
@@ -95,9 +104,7 @@ export class DesktopRequestService {
         }
         responseError(ErrorCode.COMMON_UNEXPECTED_ERROR)
       }
-      else if (sqlErr === SqlError.FOREIGN_KEY_CONSTRAINT_FAILS) {
-        responseError(ErrorCode.USER_NOT_FOUND)
-      }
+      throw e
     }
   }
 

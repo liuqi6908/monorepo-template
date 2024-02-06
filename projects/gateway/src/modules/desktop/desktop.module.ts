@@ -9,6 +9,7 @@ import { DesktopQueueHistory } from 'src/entities/desktop-queue-history'
 import { NotifyModule } from '../notify/notify.module'
 import { ExportModule } from '../export/export.module'
 import { FileModule } from '../file/file.module'
+import { UserModule } from '../user/user.module'
 import { DesktopService } from './desktop.service'
 import { ZstackService } from './zstack/zstack.service'
 import { HyperVService } from './hyper-v/hyper-v.service'
@@ -23,6 +24,7 @@ import { DesktopQueueHistoryService } from './desktop-queue-history/desktop-queu
   imports: [
     forwardRef(() => ExportModule),
     forwardRef(() => NotifyModule),
+    forwardRef(() => UserModule),
     HttpModule,
     FileModule,
     TypeOrmModule.forFeature([

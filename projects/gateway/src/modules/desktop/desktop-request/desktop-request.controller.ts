@@ -26,7 +26,7 @@ import { SysConfigService } from '../../config/config.service'
 import { DesktopRequestService } from './desktop-request.service'
 import { GetOwnDesktopReqResDto } from './dto/get-own-desktop-req.res.dto'
 import { BatchRejectDesktopReqBodyDto, RejectDesktopReqBodyDto } from './dto/reject-desktop-req.body.dto'
-import { CreateDesktopRequestBodyDto, CreateUserDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
+import { BatchCreateUserDesktopRequestBodyDto, CreateDesktopRequestBodyDto } from './dto/create-desktop-req.body.dto'
 
 @ApiTags('DesktopRequest | 云桌面申请')
 @Controller('desktop-request')
@@ -50,13 +50,23 @@ export class DesktopRequestController {
     return await this._desktopReqSrv.createRequest(user.id, body)
   }
 
-  @ApiOperation({ summary: '创建一个云桌面使用申请' })
+  @ApiOperation({ summary: '批量创建云桌面使用申请' })
   @HasPermission(PermissionType.DESKTOP_REQUEST_CREATE)
-  @Put('create')
-  async createRequest(
-    @Body() body: CreateUserDesktopRequestBodyDto,
-  ) {
-    return await this._desktopReqSrv.createUserRequest(body.userId, body.duration)
+  @Put('create/batch')
+  async batchCreateRequest(@Body() body: BatchCreateUserDesktopRequestBodyDto) {
+    const { id, duration } = body
+    if (id.length === 1)
+      return this._desktopReqSrv.createUserRequest(id[0], duration)
+
+    let success = 0
+    for (const item of id) {
+      try {
+        await this._desktopReqSrv.createUserRequest(item, duration)
+        success++
+      }
+      catch (_) {}
+    }
+    return success
   }
 
   @ApiOperation({ summary: '通过一个云桌面申请' })
