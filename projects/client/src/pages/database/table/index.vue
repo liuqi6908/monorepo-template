@@ -119,16 +119,21 @@ async function init() {
     // 预购数据
     if (isPurchased.value)
       return
-    // 不在云桌面 且 已通过认证，判断是否已申请云桌面
-    if (!isDesktop.value && isVerify.value) {
-      getRequestInfo()
-    }
-    // 在云桌面中，判断该表格文件是否存在
-    else if (isDesktop.value && tableName.value) {
-      isExist.value = await fileIsExistApi({
-        bucket: MinioBucket.DATA,
-        path: `/download/${rootId.value}/${tableName.value.nameEN}.zip`
-      })
+    // 已通过认证，判断是否已申请云桌面
+    if (isVerify.value) {
+      await getRequestInfo()
+
+      // 申请了云桌面
+      if (isApplyDesktop.value) {
+        isDesktop.value = await isDesktopApi()
+        // 在云桌面中，判断该表格文件是否存在
+        if (isDesktop.value && tableName.value) {
+          isExist.value = await fileIsExistApi({
+            bucket: MinioBucket.DATA,
+            path: `/download/${rootId.value}/${tableName.value.nameEN}.zip`
+          })
+        }
+      }
     }
   }
 }
@@ -243,14 +248,14 @@ async function downloadData() {
         @click="dialog = true"
       />
       <ZBtn
-        v-else-if="!isDesktop && !isApplyDesktop"
+        v-else-if="!isApplyDesktop"
         label="数据申请使用"
         :disable="!isLogin"
         size="big"
         @click="$router.push('/request')"
       />
       <RouterLink
-        v-else-if="!isDesktop && isApplyDesktop"
+        v-else-if="!isDesktop"
         to="/userCenter/cloudDesktop"
       >
         <ZBtn
@@ -285,7 +290,7 @@ async function downloadData() {
         />
         进行认证
       </div>
-      <div v-else-if="!isPurchased && isDesktop && !isExist" text-grey-5>
+      <div v-else-if="!isPurchased && isApplyDesktop && isDesktop && !isExist" text-grey-5>
         管理员正在配置中
       </div>
     </div>
