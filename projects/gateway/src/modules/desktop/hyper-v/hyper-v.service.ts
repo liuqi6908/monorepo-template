@@ -254,4 +254,33 @@ export class HyperVService extends EventEmitter {
     }
     catch (_) {}
   }
+
+  /**
+   * 创建虚拟机
+   */
+  public async createVM(user: string) {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'PUT',
+        url: '/v1/vm/create',
+        data: {
+          user,
+        },
+      })
+    })
+  }
+
+  /**
+   * 获取创建虚拟机任务状态
+   */
+  public async getTaskState(id: string) {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: `/v1/job/${id}`,
+      })
+    })
+  }
 }

@@ -14,6 +14,7 @@ import {
 import { hasIntersection, numberArrSum, omit } from 'zjf-utils'
 
 import type { Desktop } from 'src/entities/desktop'
+import { UserIdDto } from 'src/dto/id/user.dto'
 import { QueryDto, QueryResDto } from 'src/dto/query.dto'
 import { DesktopIdDto } from 'src/dto/id/desktop.dto'
 import { PasswordDto } from 'src/dto/password.dto'
@@ -29,6 +30,7 @@ import { comparePassword } from 'src/utils/encrypt/encrypt-password'
 import { NotifyService } from '../notify/notify.service'
 import { SysConfigService } from '../config/config.service'
 import { FileService } from '../file/file.service'
+import { UserService } from '../user/user.service'
 import { DesktopService } from './desktop.service'
 import { DesktopResDto } from './dto/desktop.res.dto'
 import { CreateDesktopBodyDto } from './dto/create-desktop.body.dto'
@@ -42,6 +44,8 @@ import { HyperVService } from './hyper-v/hyper-v.service'
 @ApiTags('Desktop | 云桌面')
 @Controller('desktop')
 export class DesktopController {
+  private _desktop: DesktopConfig
+
   constructor(
     private readonly _notifySrv: NotifyService,
     private readonly _desktopSrv: DesktopService,
@@ -50,8 +54,11 @@ export class DesktopController {
     private readonly _zstackSrv: ZstackService,
     private readonly _hyperVSrv: HyperVService,
     private readonly _sysCfgSrv: SysConfigService,
+    private readonly _userSrv: UserService,
     private readonly _fileSrv: FileService,
-  ) {}
+  ) {
+    this._desktop = this._cfgSrv.get<DesktopConfig>('desktop')
+  }
 
   @ApiOperation({ summary: '判断当前客户端是否在云桌面内使用' })
   @Get('is')
@@ -83,6 +90,59 @@ export class DesktopController {
         responseError(ErrorCode.DESKTOP_ID_EXISTS)
       throw e
     }
+  }
+
+  @ApiOperation({ summary: '自动创建一个云桌面并分配' })
+  @HasPermission(PermissionType.DESKTOP_CREATE_ASSIGN)
+  @Put(':userId')
+  public async autoCreateDesktop(@Param() param: UserIdDto) {
+    const { type, domainUser, port, safe } = this._desktop
+    if (type !== 1 || !domainUser)
+      return
+
+    const sysCfg = await this._sysCfgSrv.getConfig({ version: SysConfig.DESKTOP })
+    const { max = DESKTOP_MAX_COUNT } = sysCfg || {}
+    const count = await this._desktopSrv.repo().count({
+      where: {
+        disabled: false,
+      },
+    })
+    if (count >= max)
+      responseError(ErrorCode.DESKTOP_RESOURCE_ALLOCATED)
+
+    const { userId } = param
+    const user = await this._userSrv.repo().findOne({ where: { id: userId } })
+    if (!user)
+      responseError(ErrorCode.USER_NOT_FOUND)
+    const request = await this._desktopReqSrv.repo().findOne({ where: { userId } })
+    if (request?.status !== DesktopQueueStatus.QUEUEING)
+      responseError(ErrorCode.DESKTOP_REQUEST_QUEUE_ONLY)
+
+    const id = await this._hyperVSrv.createVM(user.account)
+    const interval = setInterval(async () => {
+      const res = await this._hyperVSrv.getTaskState(id)
+      if (typeof res === 'object') {
+        clearInterval(interval)
+        const { uuid, name, ip } = res
+        if (!uuid || !name || !ip)
+          return
+        await this._desktopSrv.createDesktop({
+          id: uuid,
+          name,
+          internalIp: ip,
+          accessUrl: port ? `${ip}:${port}` : safe,
+          account: user.account,
+          password: '您的登录密码',
+          expiredAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * request.duration),
+        })
+
+        this.assignDesktop({
+          desktopId: uuid,
+          userId: user.id,
+        })
+      }
+    }, 30 * 1000)
+    return true
   }
 
   @ApiOperation({ summary: '更新一个云桌面（无法更新一个已禁用的）' })
@@ -185,7 +245,7 @@ export class DesktopController {
   ) {
     const request = await this._desktopReqSrv.repo().findOne({ where: { userId: param.userId } })
     // 确认是否已是排队状态
-    if (request.status !== DesktopQueueStatus.QUEUEING)
+    if (request?.status !== DesktopQueueStatus.QUEUEING)
       responseError(ErrorCode.DESKTOP_REQUEST_QUEUE_ONLY)
     // 将云桌面分配，并更新用户的状态
     await this._desktopSrv.allocationDesktop(param, request.duration)
@@ -300,10 +360,9 @@ export class DesktopController {
   @HasPermission(PermissionType.DESKTOP_CREATE)
   @Get('vm-list')
   public async getVMList() {
-    const { type } = this._cfgSrv.get<DesktopConfig>('desktop')
-    if (type === 0)
+    if (this._desktop.type === 0)
       return await this._zstackSrv.vmList()
-    else if (type === 1)
+    else if (this._desktop.type === 1)
       return await this._hyperVSrv.vmList()
   }
 }
