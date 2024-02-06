@@ -21,7 +21,7 @@ export const defaultRoles: IRole[] = [
   {
     id: 'root',
     name: 'root',
-    description: '完整的访问权限',
+    description: '管理后台全部功能的管理权限',
     permissions: allPermissionNames.map(pn => getPermission(pn)),
   },
 ]
