@@ -11,9 +11,9 @@ import { VerificationController } from './verification.controller'
 @Module({
   imports: [
     TypeOrmModule.forFeature([VerificationHistory]),
+    forwardRef(() => DataModule),
     forwardRef(() => UserModule),
-    NotifyModule,
-    DataModule,
+    forwardRef(() => NotifyModule),
   ],
   providers: [VerificationService],
   exports: [VerificationService],

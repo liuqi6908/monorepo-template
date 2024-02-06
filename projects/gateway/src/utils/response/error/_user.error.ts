@@ -54,6 +54,14 @@ const _userErrors: ErrorMessageCollection = {
     httpStatus: HttpStatus.BAD_REQUEST,
     message: '用户手机号码不匹配',
   },
+  [ErrorCode.USER_NOT_DESKTOP]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '用户未分配云桌面',
+  },
+  [ErrorCode.USER_NOT_IN_DESKTOP]: {
+    httpStatus: HttpStatus.BAD_REQUEST,
+    message: '用户不在云桌面内',
+  },
 }
 
 export default _userErrors

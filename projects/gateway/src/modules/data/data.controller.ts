@@ -6,7 +6,7 @@ import { objectPick } from '@catsjuice/utils'
 import { Body, Controller, Delete, Get, Param, Patch, Put, Query, Req } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Throttle } from '@nestjs/throttler'
-import { ErrorCode, LogDataAction, MinioBucket, PermissionType, UploadType } from 'zjf-types'
+import { ErrorCode, LogDataAction, MinioBucket, PermissionType, UploadType, VerificationStatus } from 'zjf-types'
 import { isUTF8 } from 'zjf-utils'
 import type { FindOptionsWhere } from 'typeorm'
 
@@ -25,6 +25,7 @@ import { createDataDirectoryTree } from 'src/utils/data-directory-tree'
 import { responseParamsError } from 'src/utils/response/validate-exception-factory'
 
 import { FileService } from '../file/file.service'
+import { DesktopService } from '../desktop/desktop.service'
 import { DataService } from './data.service'
 import { CreateRootBodyDto } from './dto/create-root.body.dto'
 import { UpdateRootBodyDto } from './dto/update-root.body.dto'
@@ -39,6 +40,7 @@ import { UploadTableDataParamDto } from './dto/upload-table-data.param.dto'
 export class DataController {
   constructor(
     private readonly _dataSrv: DataService,
+    private readonly _desktopSrv: DesktopService,
     private readonly _fileSrv: FileService,
   ) {}
 
@@ -368,6 +370,21 @@ export class DataController {
     @Param() param: DataDirectoryIdDto,
     @Req() req: FastifyRequest,
   ) {
+    const { ip, user } = req.raw
+    if (!user?.id)
+      responseError(ErrorCode.AUTH_LOGIN_REQUIRED)
+    if (user.verification?.status !== VerificationStatus.APPROVED)
+      responseError(ErrorCode.AUTH_NOT_VERIFIED)
+    const desktop = await this._desktopSrv.repo().findOne({ where: { userId: user.id } })
+    if (!desktop)
+      responseError(ErrorCode.USER_NOT_DESKTOP)
+
+    const isDesktop = await this._desktopSrv.repo().exist({
+      where: { internalIp: ip.split(':').pop() },
+    })
+    if (!isDesktop)
+      responseError(ErrorCode.USER_NOT_IN_DESKTOP)
+
     const dataDirectory = await this._dataSrv.dirRepo().findOne({ where: { id: param.dataDirectoryId } })
     const dataRole = req.dataRole
     const dataRootId = dataDirectory?.rootId

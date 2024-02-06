@@ -7,6 +7,7 @@ import { DataDirectory } from 'src/entities/data-directory'
 
 import { FileModule } from '../file/file.module'
 import { LogModule } from '../log/log.module'
+import { DesktopModule } from '../desktop/desktop.module'
 import { DataService } from './data.service'
 import { DataController } from './data.controller'
 import { DataPermissionService } from './data-permission/data-permission.service'
@@ -14,6 +15,7 @@ import { DataPermissionController } from './data-permission/data-permission.cont
 
 @Module({
   imports: [
+    forwardRef(() => DesktopModule),
     forwardRef(() => LogModule),
     forwardRef(() => FileModule),
     TypeOrmModule.forFeature([

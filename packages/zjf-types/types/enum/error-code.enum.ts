@@ -72,6 +72,10 @@ export enum ErrorCode {
   USER_PHONE_NUMBER_EXISTS = 400012,
   /** 用户手机号不匹配 */
   USER_PHONE_NUMBER_NOT_MATCHED = 400013,
+  /** 用户未分配云桌面 */
+  USER_NOT_DESKTOP = 400014,
+  /** 用户不在云桌面内 */
+  USER_NOT_IN_DESKTOP = 400015,
 
   // ---- 身份认证相关错误码 ----
   /** 驳回原因必填 */
