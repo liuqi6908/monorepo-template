@@ -188,7 +188,7 @@ async function downloadFileByPath(path: string) {
       p="y2 x4" bg="alerts-error/8"
       text="sm center alerts-error" font-400
     >
-      注意：上传成功后请在云桌面中登录本平台进行数据下载！
+      注意：上传成功后请在云桌面中登录本平台进行数据下载！（仅限上传 zip、rar、7z 等压缩格式文件）
     </div>
     <div flex="~ col gap4" p4 bg-grey-2 relative>
       <ZLoading :value="loading" />
