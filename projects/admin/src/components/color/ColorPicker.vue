@@ -6,6 +6,7 @@ import 'vue3-colorpicker/style.css'
 interface Props {
   modelValue?: string
   disable?: boolean
+  gradientColor?: boolean
 }
 
 const props = defineProps<Props>()
@@ -61,7 +62,7 @@ function calibrationPickerPosition() {
       :gradient-color="value?.startsWith('rgb') ? '' : value"
       shape="circle"
       round-history
-      use-type="both"
+      :use-type="gradientColor ? 'both' : undefined"
       @update:gradient-color="(val: any) => value = val"
     />
 

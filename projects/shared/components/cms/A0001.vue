@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 import type { CmsJson } from '../../types/cms.interface'
 
 const props = defineProps<{
@@ -10,6 +10,9 @@ const props = defineProps<{
 const index = ref(0)
 /** 是否自动轮播 */
 const autoplay = ref(false)
+
+/** 导航颜色 */
+const color = computed(() => props.list?.[0].color)
 
 watch(
   () => props.list,
@@ -55,8 +58,13 @@ watch(
     </q-carousel-slide>
     <template #navigation-icon="{ active, onClick }">
       <div
-        rounded-full w3 h3 mx2 cursor-pointer
-        b="1px grey-1" :bg="active ? 'grey-1' : 'transparent'"
+        rounded-full w3 h3 mx2 cursor-pointer b-grey-1
+        :b="color ? 'none' : '1px'"
+        :style="{
+          backgroundColor: active
+            ? (color ? color : 'var(grey-1)')
+            : (color ? 'var(--white-5)' : 'transparent')
+        }"
         @click="onClick"
       />
     </template>

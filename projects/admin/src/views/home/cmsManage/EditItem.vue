@@ -160,6 +160,22 @@ const fillReplacedSvg = computed(() => {
           </div>
         </div>
       </div>
+      <!-- Color -->
+      <div
+        v-if="componentParams?.includes('color')"
+        flex="~ items-end gap4"
+      >
+        <ZInput
+          v-model="selectItem.color"
+          label="颜色"
+          placeholder="请选择颜色"
+          :params="{
+            readonly: true,
+          }"
+          flex-1
+        />
+        <ColorPicker v-model="selectItem.color" :disable="!isEdit" mb1.5 />
+      </div>
       <!-- Mask -->
       <div
         v-if="componentParams?.includes('mask')"
@@ -174,7 +190,12 @@ const fillReplacedSvg = computed(() => {
           }"
           flex-1
         />
-        <ColorPicker v-model="selectItem.mask" :disable="!isEdit" mb1.5 />
+        <ColorPicker
+          v-model="selectItem.mask"
+          :disable="!isEdit"
+          gradient-color
+          mb1.5
+        />
       </div>
       <!-- RichText -->
       <RichText
