@@ -12,7 +12,7 @@ export const CMS_COMPONENTS: CmsComponent = {
     component: markRaw(
       defineAsyncComponent(() => import('../components/cms/A0001.vue')),
     ),
-    param: ['list', 'title', 'img', 'mask', 'richText'],
+    param: ['list', 'title', 'img', 'color', 'mask', 'richText'],
   },
   A0002: {
     label: '图文',
@@ -39,7 +39,7 @@ export const CMS_COMPONENTS: CmsComponent = {
     component: markRaw(
       defineAsyncComponent(() => import('../components/cms/A0004.vue')),
     ),
-    param: ['list', 'title', 'richText'],
+    param: ['list', 'title', 'color', 'richText'],
   },
   A0005: {
     label: '富文本',

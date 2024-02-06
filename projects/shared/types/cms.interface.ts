@@ -3,7 +3,7 @@ import type { Component } from 'vue'
 /**
  * Cms 配置参数
  */
-export type CmsConfigParam = 'list' | 'title' | 'img' | 'svg' | 'mask' | 'style' | 'richText'
+export type CmsConfigParam = 'list' | 'title' | 'img' | 'svg' | 'color' | 'mask' | 'style' | 'richText'
 
 /**
  * Cms 组件 key
