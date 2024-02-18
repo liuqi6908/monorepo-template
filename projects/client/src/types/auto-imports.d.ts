@@ -90,6 +90,8 @@ declare global {
   const deleteWorkApi: typeof import('../../../shared/api/work')['deleteWorkApi']
   const downloadExportLgFileApi: typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']
   const downloadExportSmFileApi: typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']
+  const downloadOwnExportLgFileApi: typeof import('../../../shared/api/exportLg')['downloadOwnExportLgFileApi']
+  const downloadOwnExportSmFileApi: typeof import('../../../shared/api/exportSm')['downloadOwnExportSmFileApi']
   const downloadWorkFileApi: typeof import('../../../shared/api/work')['downloadWorkFileApi']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
@@ -562,6 +564,8 @@ declare module 'vue' {
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
     readonly downloadExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']>
     readonly downloadExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']>
+    readonly downloadOwnExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadOwnExportLgFileApi']>
+    readonly downloadOwnExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadOwnExportSmFileApi']>
     readonly downloadWorkFileApi: UnwrapRef<typeof import('../../../shared/api/work')['downloadWorkFileApi']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
@@ -1027,6 +1031,8 @@ declare module '@vue/runtime-core' {
     readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
     readonly downloadExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']>
     readonly downloadExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']>
+    readonly downloadOwnExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadOwnExportLgFileApi']>
+    readonly downloadOwnExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadOwnExportSmFileApi']>
     readonly downloadWorkFileApi: UnwrapRef<typeof import('../../../shared/api/work')['downloadWorkFileApi']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>

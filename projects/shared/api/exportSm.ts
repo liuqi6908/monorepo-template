@@ -34,9 +34,23 @@ export function queryOwnExportSmApi(body: IQueryDto<IFileExportSmall>) {
 /**
  * 下载小文件外发附件
  */
-export function downloadExportSmFileApi(id: string) {
+export function downloadExportSmFileApi(id: IFileExportSmall['id']) {
   return $get<Blob>(
     `/export-sm/file/${id}`,
+    undefined,
+    false,
+    {
+      responseType: 'blob',
+    },
+  )
+}
+
+/**
+ * 下载自己的小文件外发附件
+ */
+export function downloadOwnExportSmFileApi(id: IFileExportSmall['id']) {
+  return $get<Blob>(
+    `/export-sm/file/own/${id}`,
     undefined,
     false,
     {

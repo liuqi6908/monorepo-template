@@ -34,25 +34,37 @@ export function queryOwnExportLgApi(body: IQueryDto<IFileExportLarge>) {
 /**
  * 通过一个大文件外发申请
  */
-export function approveExportLgApi(id: string) {
+export function approveExportLgApi(id: IFileExportLarge['id']) {
   return $post<IFileExportLarge>(`/export-lg/approve/${id}`)
 }
 
 /**
  * 驳回一个大文件外发申请
  */
-export function rejectExportLgApi(id: string, body: {
-  reason: string
-}) {
+export function rejectExportLgApi(id: IFileExportLarge['id'], body: { reason: string }) {
   return $post<IFileExportLarge>(`/export-lg/reject/${id}`, body)
 }
 
 /**
  * 下载大文件外发附件
  */
-export function downloadExportLgFileApi(id: string) {
+export function downloadExportLgFileApi(id: IFileExportLarge['id']) {
   return $get<Blob>(
     `/export-lg/file/${id}`,
+    undefined,
+    false,
+    {
+      responseType: 'blob',
+    },
+  )
+}
+
+/**
+ * 下载自己的已通过大文件外发附件
+ */
+export function downloadOwnExportLgFileApi(id: IFileExportLarge['id']) {
+  return $get<Blob>(
+    `/export-lg/file/own/${id}`,
     undefined,
     false,
     {
