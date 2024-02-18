@@ -16,7 +16,7 @@ export function useMinio() {
    */
   function getClient() {
     const { isDesktop } = useUser()
-    const endPoint = isDesktop ? import.meta.env.VITE_MINIO_ENDPOINT_INTERNAL : import.meta.env.VITE_MINIO_ENDPOINT_EXTERNAL
+    const endPoint = isDesktop.value ? import.meta.env.VITE_MINIO_ENDPOINT_INTERNAL : import.meta.env.VITE_MINIO_ENDPOINT_EXTERNAL
     return createClient({
       endPoint,
       port: getEnvVariable('VITE_MINIO_PORT'),
