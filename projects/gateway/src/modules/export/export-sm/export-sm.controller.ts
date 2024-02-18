@@ -89,4 +89,22 @@ export class ExportSmController {
     res.header('Content-Type', 'application/octet-stream')
     return new StreamableFile(readable)
   }
+
+  @ApiOperation({ summary: '下载自己的小文件外发的附件' })
+  @IsLogin()
+  @ApiParam({ name: 'id', description: '小文件外发记录的唯一标识' })
+  @Get('file/own/:id')
+  public async downloadOwnExportSmFile(
+    @Req() req: FastifyRequest,
+    @Res({ passthrough: true }) res: any,
+    @Param('id') id: string,
+  ) {
+    const user = req.raw.user!
+    const feSm = await this._exportSrv.smRepo().findOne({ where: { id } })
+    if (!feSm)
+      responseError(ErrorCode.EXPORT_FILE_NOT_EXISTS)
+    if (feSm.founderId !== user.id)
+      responseError(ErrorCode.PERMISSION_DENIED)
+    return await this.downloadExportSmFile(res, id)
+  }
 }

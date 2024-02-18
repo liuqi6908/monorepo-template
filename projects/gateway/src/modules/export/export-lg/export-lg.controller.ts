@@ -1,6 +1,6 @@
 import { Body, Controller, Get, Param, Post, Put, Req, Res, StreamableFile } from '@nestjs/common'
 import { ApiBody, ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger'
-import { ErrorCode, MinioBucket, PermissionType } from 'zjf-types'
+import { ErrorCode, FileExportLargeStatus, MinioBucket, PermissionType } from 'zjf-types'
 
 import { getQuery } from 'src/utils/query'
 import { QueryDto } from 'src/dto/query.dto'
@@ -99,7 +99,8 @@ export class ExportLgController {
   @Get('file/:id')
   public async downloadExportLgFile(
     @Res({ passthrough: true }) res: any,
-    @Param('id') id: string) {
+    @Param('id') id: string,
+  ) {
     const feLg = await this._exportSrv.lgRepo().findOne({ where: { id } })
     if (!feLg)
       responseError(ErrorCode.EXPORT_NOT_EXISTS)
@@ -107,5 +108,23 @@ export class ExportLgController {
     res.header('Content-Disposition', `attachment; filename=${encodeURIComponent(feLg.fileName)}`)
     res.header('Content-Type', 'application/octet-stream')
     return new StreamableFile(readable)
+  }
+
+  @ApiOperation({ summary: '下载自己的已通过大文件外发的附件' })
+  @IsLogin()
+  @ApiParam({ name: 'id', description: '大文件外发记录的唯一标识' })
+  @Get('file/own/:id')
+  public async downloadOwnExportLgFile(
+    @Req() req: FastifyRequest,
+    @Res({ passthrough: true }) res: any,
+    @Param('id') id: string,
+  ) {
+    const user = req.raw.user!
+    const feLg = await this._exportSrv.lgRepo().findOne({ where: { id } })
+    if (!feLg)
+      responseError(ErrorCode.EXPORT_NOT_EXISTS)
+    if (feLg.founderId !== user.id || feLg.status !== FileExportLargeStatus.APPROVED)
+      responseError(ErrorCode.PERMISSION_DENIED)
+    return await this.downloadExportLgFile(res, id)
   }
 }
