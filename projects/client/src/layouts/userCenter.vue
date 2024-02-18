@@ -17,7 +17,7 @@ const dialog = ref(false)
       <div w-limited-1 flex="~ gap4" sm="gap6" lg="gap8" xl="gap10">
         <div pt10 flex="~ col gap2">
           <ZMenu
-            v-model="value"
+            :model-value="value"
             :list="
               USER_MENU_LIST.filter(v => v.userCenter && v.config !== false)
                 .map(({ name, to }) => ({
