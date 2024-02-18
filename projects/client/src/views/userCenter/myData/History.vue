@@ -1,6 +1,7 @@
 <script lang="ts" setup>
+import { Notify } from 'quasar'
 import { FileExportLargeStatus, fileExportLargeStatusDescriptions } from 'zjf-types'
-import { formatFileSize } from 'zjf-utils'
+import { browser, formatFileSize } from 'zjf-utils'
 import type { IFileExportSmall, IFileExportLarge, IFileExportBasic, IQueryDto } from 'zjf-types'
 import type { QTableColumn } from 'quasar'
 import moment from 'moment'
@@ -80,12 +81,19 @@ const tableCols = reactive<QTableColumn<ExportFile>[]>([
     label: '外发时间',
     field: row => moment(row.createdAt).format('YYYY-MM-DD HH:mm:ss'),
   },
+  {
+    name: 'action',
+    label: '附件',
+    field: 'id',
+  },
 ])
 /** 表格行信息 */
 const tableRows = ref<(ExportFile)[]>()
 
 /** 驳回原因 */
 const rejectReason = ref<string>()
+/** 下载对话框 */
+const downloadDialog = ref<IFileExportLarge>()
 
 onBeforeMount(() => {
   tableCols.forEach(v => v.align = 'center')
@@ -128,6 +136,31 @@ const filterTableRows = computed(() => {
       || row.fileName.toLowerCase().includes(text.value.toLowerCase())
     ))
 })
+
+/**
+ * 下载
+ */
+async function handleDownload() {
+  if (!downloadDialog.value)
+    return
+  loading.value = true
+  try {
+    const item = downloadDialog.value
+    let res: Blob
+    if (value.value === 'small')
+      res = await downloadOwnExportSmFileApi(item.id)
+    else
+      res = await downloadOwnExportLgFileApi(item.id)
+    browser.downloadBlob(res, item.fileName)
+    Notify.create({
+      type: 'success',
+      message: '下载成功',
+    })
+  }
+  finally {
+    loading.value = false
+  }
+}
 </script>
 
 <template>
@@ -165,31 +198,41 @@ const filterTableRows = computed(() => {
           noDataLabel: '暂无数据'
         }"
       >
-        <template #body-cell-note="props">
+        <template #body-cell-note="{ value }">
           <td>
             <div
               text-center max-w="50vw" min-w-60
               line-clamp-6 whitespace="pre-wrap!"
-              v-text="props.row.note || '无'"
+              v-text="value || '无'"
             />
           </td>
         </template>
-        <template #body-cell-status="props">
+        <template #body-cell-status="{ value }">
           <td>
-            <ExportStatus :status="props.row.status" />
+            <ExportStatus :status="value" />
           </td>
         </template>
-        <template #body-cell-rejectReason="props">
+        <template #body-cell-rejectReason="{ value }">
           <td text-center>
             <div
-              v-if="props.row.rejectReason"
+              v-if="value"
               text-primary-1 cursor-pointer
-              @click="rejectReason = props.row.rejectReason"
+              @click="rejectReason = value"
             >
               点击查看
             </div>
             <div v-else>—</div>
           </td>
+        </template>
+        <template #body-cell-action="{ row }">
+          <q-td text-center>
+            <ZBtn
+              label="下载"
+              size="small"
+              :disable="value === 'big' && row.status !== FileExportLargeStatus.APPROVED"
+              @click="downloadDialog = row"
+            />
+          </q-td>
         </template>
       </ZTable>
     </div>
@@ -205,6 +248,17 @@ const filterTableRows = computed(() => {
         min-h-20 style="max-height: calc(100vh - 200px)"
         v-text="rejectReason || '暂无驳回理由'"
       />
+    </ZDialog>
+
+    <!-- 下载对话框 -->
+    <ZDialog
+      :model-value="!!downloadDialog"
+      title="下载确认"
+      footer
+      @ok="handleDownload"
+      @update:model-value="downloadDialog = undefined"
+    >
+      该操作将下载{{ value === 'small' ? '小' : '大' }}文件外发附件，是否继续？
     </ZDialog>
   </div>
 </template>
