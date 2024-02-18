@@ -5,9 +5,9 @@ import Root from 'shared/views/data/database/index.vue'
 
 const { rootList, rootId, getRootList } = useDatabase()
 const { el, scrollTo } = useScrollApp()
-const { query } = useRoute()
 const { nav } = useSysConfig()
 const $router = useRouter()
+const $route = useRoute()
 const { height } = useAppHeader()
 
 /** 加载中 */
@@ -18,9 +18,10 @@ onBeforeMount(async () => {
   rootId.value = undefined
   try {
     await getRootList()
+    const { name, query } = $route
     if (rootList.value?.length)
       rootId.value = rootList.value.find(v => v.id === query.rootId)?.id || rootList.value[0].id
-    if (rootId.value && rootId.value !== query.rootId)
+    if (name === 'database' && rootId.value && rootId.value !== query.rootId)
       $router.push({ query: { rootId: rootId.value } })
   }
   finally {

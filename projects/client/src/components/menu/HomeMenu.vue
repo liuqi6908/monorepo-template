@@ -1,7 +1,17 @@
 <script lang="ts" setup>
+const $route = useRoute()
+const $router = useRouter()
 const { nav, getNavConfig } = useSysConfig()
 
-const value = ref<string>()
+const value = computed({
+  get() {
+    return $route.path
+  },
+  set(newVal) {
+    if (!$route.fullPath.startsWith(newVal))
+      $router.push(newVal)
+  }
+})
 
 /** 导航栏列表 */
 const navList = computed(() => [
@@ -29,14 +39,14 @@ onBeforeMount(getNavConfig)
 <template>
   <div flex="~ justify-center" b-b="1px grey-3">
     <q-tabs class="client-menu" v-model="value" max-w-full>
-      <q-route-tab
+      <q-tab
         v-for="item in navList"
         :key="item.to"
-        :to="item.to"
+        :name="item.to"
         px8 opacity100
       >
         <div text-base font-600 max-w-full truncate v-text="item.name" />
-      </q-route-tab>
+      </q-tab>
     </q-tabs>
   </div>
 </template>

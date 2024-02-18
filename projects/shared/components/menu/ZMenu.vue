@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { useVModel } from '@vueuse/core'
-
 export interface ZMenuProps {
   modelValue?: string | number
   list?: {
@@ -13,10 +11,8 @@ export interface ZMenuProps {
   }[]
 }
 
-const props = defineProps<ZMenuProps>()
+defineProps<ZMenuProps>()
 defineEmits(['update:modelValue'])
-
-const value = useVModel(props, 'modelValue')
 </script>
 
 <template>
@@ -24,16 +20,21 @@ const value = useVModel(props, 'modelValue')
     <q-item
       v-for="{ id, label, to } in list"
       :key="id"
-      :to="to"
-      :active="value === id"
+      :active="modelValue === id"
       active-class="bg-gray-2"
       clickable max-w-30 min-w-12 p="y2.5 x4"
       sm="max-w-36" lg="max-w-42" xl="max-w-50"
-      text-nowrap font-600 items-center
-      @click="value = id"
+      text-nowrap font-600 items-center select-none
+      @click="() => {
+        if(modelValue !== id) {
+          $emit('update:modelValue', id)
+          if (to)
+            $router.push(to)
+        }
+      }"
     >
       <div
-        :text="value === id ? 'primary-1' : 'grey-8'"
+        :text="modelValue === id ? 'primary-1' : 'grey-8'"
         truncate
       >
         {{ label }}

@@ -23,8 +23,8 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { rootId, rootData, databaseId, getDataByRootId } = useDatabase()
 const { isAdmin } = useSysConfig()
-const { query } = useRoute()
 const $router = useRouter()
+const $route = useRoute()
 
 /** 加载中 */
 const loading = ref(false)
@@ -34,9 +34,10 @@ onBeforeMount(async () => {
   try {
     databaseId.value = undefined
     await getDataByRootId(rootId.value)
+    const { name, query } = $route
     if (rootData.value?.length)
       databaseId.value = rootData.value.find(v => v.id === query.databaseId)?.id || rootData.value[0].id
-    if (databaseId.value && databaseId.value !== query.databaseId)
+    if ((isAdmin.value || name === 'database') && databaseId.value && databaseId.value !== query.databaseId)
       $router.push({ query: { rootId: rootId.value, databaseId: databaseId.value } })
   }
   finally {

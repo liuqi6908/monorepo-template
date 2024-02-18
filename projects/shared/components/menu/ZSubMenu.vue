@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { useVModel } from '@vueuse/core'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 export interface ZSubMenuProps {
   modelValue?: string | number
@@ -14,27 +15,39 @@ export interface ZSubMenuProps {
 }
 
 const props = defineProps<ZSubMenuProps>()
-defineEmits(['update:modelValue'])
+const emits = defineEmits(['update:modelValue'])
 
-const value = useVModel(props, 'modelValue')
+const $router = useRouter()
+
+const value = computed({
+  get() {
+    return props.modelValue
+  },
+  set(newVal) {
+    if (props.modelValue !== newVal) {
+      emits('update:modelValue', newVal)
+      const item = props.list?.find(v => v.id === newVal)
+      if (item?.to)
+        $router.push(item.to)
+    }
+  }
+})
 </script>
 
 <template>
   <q-tabs v-model="value" class="sub-menu">
-    <q-route-tab
-      v-for="item in list"
-      :key="item.id"
-      :name="item.id"
-      :to="item.to"
+    <q-tab
+      v-for="{ id, label } in list"
+      :key="id"
+      :name="id"
       px5 opacity100
-      @click="value = item.id"
     >
       <div
         text="base ellipsis" font-600
         max-w-full overflow-hidden
-        v-text="item.label"
+        v-text="label"
       />
-    </q-route-tab>
+    </q-tab>
   </q-tabs>
 </template>
 
