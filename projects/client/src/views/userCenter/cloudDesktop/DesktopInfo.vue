@@ -29,11 +29,6 @@ const vmTable = computed(() => [
     value: vmInfo.value?.memorySize ? formatFileSize(vmInfo.value?.memorySize) : undefined
   },
   {
-    label: '可用内存',
-    value: vmInfo.value?.availableMemory ? formatFileSize(vmInfo.value?.availableMemory) : undefined,
-    flag: !!vmInfo.value?.availableMemory
-  },
-  {
     label: '平台',
     value: vmInfo.value?.platform
   },
