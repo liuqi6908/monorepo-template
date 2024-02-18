@@ -89,6 +89,10 @@ const queryUserList: QTableProps['onRequest'] = async (props) => {
           type: '=',
           value: false,
         },
+        {
+          field: 'desktopQueue.userId',
+          type: 'IS NULL',
+        },
       ],
       sort: [
         {
@@ -204,6 +208,7 @@ async function createRequest() {
 
         <ZTable
           v-model:pagination="pagination"
+          v-model:selected="selected"
           :rows="rows"
           :cols="cols"
           :params="{
@@ -217,37 +222,6 @@ async function createRequest() {
           fixed-last-column
           @request="queryUserList"
         >
-          <template #header-selection>
-            <q-checkbox
-              :model-value="
-                selected.length && rows?.length
-                ? (
-                  selected.length >= rows.filter(v => !v.desktopQueue).length
-                    ? true : null
-                )
-                : false
-              "
-              :disable="!rows?.filter(v => !v.desktopQueue).length"
-              @update:model-value="(val) => {
-                if (val || val === null)
-                  selected = rows?.filter(v => !v.desktopQueue) ?? []
-                else
-                  selected = []
-              }"
-            />
-          </template>
-          <template #body-selection="{ row }">
-            <q-checkbox
-              :model-value="!!selected.find(v => v.id === row.id)"
-              :disable="!!row.desktopQueue"
-              @update:model-value="(val) => {
-                if (val)
-                  selected.push(row)
-                else
-                  selected.splice(selected.findIndex(v => v.id === row.id), 1)
-              }"
-            />
-          </template>
           <template #body-cell-action="{ row }">
             <q-td text-center>
               <UserDetails :user="row" />
