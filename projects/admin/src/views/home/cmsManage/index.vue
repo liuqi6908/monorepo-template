@@ -4,6 +4,8 @@ import { cloneDeep } from 'lodash'
 
 import ContentEditing from './ContentEditing.vue'
 
+const { active } = useMenu()
+const { byAbsolute } = usePosition()
 const { getComponentById } = useCms()
 const {
   addComponent,
@@ -20,6 +22,10 @@ const {
 
 /** 预览弹窗 */
 const previewDialog = ref(false)
+/** 首页问答区预览弹窗 */
+const questionPreviewDialog = ref(false)
+/** 预览菜单 */
+const previewMenu = ref(false)
 
 onBeforeMount(initPage)
 
@@ -93,6 +99,7 @@ async function saveCms() {
           </template>
         </ZBtn>
         <ZBtn
+          v-if="active !== 'question'"
           label="预览"
           text-color="primary-1"
           :params="{
@@ -104,6 +111,57 @@ async function saveCms() {
             <div w5 h5 i-mingcute:document-line />
           </template>
         </ZBtn>
+        <div v-else rounded-2>
+          <ZBtn
+            label="预览"
+            text-color="primary-1"
+            :params="{
+              outline: true,
+            }"
+          >
+            <template #left>
+              <div w5 h5 i-mingcute:document-line />
+            </template>
+            <template #icon>
+              <div
+                w5 h5 i-mingcute:down-line
+                transition
+                :style="{
+                  transform: previewMenu ? 'rotate(180deg)' : 'rotate(0deg)',
+                }"
+              />
+            </template>
+          </ZBtn>
+          <q-menu
+            v-model="previewMenu"
+            id="preview-question-menu"
+            class="more-menu"
+            @before-show="byAbsolute('preview-question-menu', [0, 6])"
+          >
+            <q-list>
+              <q-item
+                clickable
+                v-close-popup
+                w="106px!"
+                @click="questionPreviewDialog = true"
+              >
+                <q-item-section>
+                  首页问答区
+                </q-item-section>
+              </q-item>
+              <q-item
+                clickable
+                v-close-popup
+                w="106px!"
+                @click="previewDialog = true"
+              >
+                <q-item-section>
+                  问答页
+                </q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </div>
         <ZBtn
           v-if="isEdit"
           label="保存"
@@ -147,6 +205,25 @@ async function saveCms() {
         v-else
         :is="getComponentById(pageConfig.id)"
         :list="editData"
+      />
+    </ZDialog>
+
+    <!-- 首页问答区预览 -->
+    <ZDialog
+      v-if="pageConfig"
+      v-model="questionPreviewDialog"
+      title="首页问答区"
+      scroll
+      :params="{
+        fullWidth: true,
+        fullHeight: true,
+      }"
+    >
+      <component
+        :is="getComponentById('A0006')"
+        :list="
+          editData?.filter((_, i) => i < 4)
+        "
       />
     </ZDialog>
   </div>

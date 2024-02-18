@@ -72,4 +72,6 @@ interface ImportMetaEnv {
   VITE_DC_PREFIX?: string
 
   /** ---------------- 管理后台 ---------------- */
+  /** CMS 样式选项 */
+  VITE_CMS_STYLE?: string
 }
