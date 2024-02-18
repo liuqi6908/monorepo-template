@@ -83,7 +83,7 @@ export class ExportSmController {
   ) {
     const feSm = await this._exportSrv.smRepo().findOne({ where: { id } })
     if (!feSm?.path)
-      responseError(ErrorCode.EXPORT_FILE_NOT_EXISTS)
+      responseError(ErrorCode.EXPORT_NOT_EXISTS)
     const readable = await this._fileSrv.download(MinioBucket.PRIVATE, feSm.path)
     res.header('Content-Disposition', `attachment; filename=${encodeURIComponent(feSm.fileName)}`)
     res.header('Content-Type', 'application/octet-stream')
@@ -102,7 +102,7 @@ export class ExportSmController {
     const user = req.raw.user!
     const feSm = await this._exportSrv.smRepo().findOne({ where: { id } })
     if (!feSm)
-      responseError(ErrorCode.EXPORT_FILE_NOT_EXISTS)
+      responseError(ErrorCode.EXPORT_NOT_EXISTS)
     if (feSm.founderId !== user.id)
       responseError(ErrorCode.PERMISSION_DENIED)
     return await this.downloadExportSmFile(res, id)
