@@ -92,7 +92,7 @@ export class DesktopController {
     }
   }
 
-  @ApiOperation({ summary: '自动创建一个云桌面并分配' })
+  @ApiOperation({ summary: '自动创建一个云桌面并分配（异步执行，返回任务ID）' })
   @HasPermission(PermissionType.DESKTOP_CREATE_ASSIGN)
   @Put(':userId')
   public async autoCreateDesktop(@Param() param: UserIdDto) {
@@ -141,8 +141,15 @@ export class DesktopController {
           userId: user.id,
         })
       }
-    }, 30 * 1000)
-    return true
+    }, 10 * 1000)
+    return id
+  }
+
+  @ApiOperation({ summary: '根据任务ID查询自动创建云桌面进度' })
+  @HasPermission(PermissionType.DESKTOP_CREATE_ASSIGN)
+  @Get('task/:id')
+  public async getTaskState(@Param('id') id: string) {
+    return await this._hyperVSrv.getTaskState(id)
   }
 
   @ApiOperation({ summary: '更新一个云桌面（无法更新一个已禁用的）' })
