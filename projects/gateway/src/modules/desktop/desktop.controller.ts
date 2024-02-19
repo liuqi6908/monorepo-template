@@ -141,6 +141,9 @@ export class DesktopController {
           userId: user.id,
         })
       }
+      else if (res.includes('失败')) {
+        clearInterval(interval)
+      }
     }, 10 * 1000)
     return id
   }

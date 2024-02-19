@@ -149,6 +149,8 @@ async function autoAssign() {
             })
           }
           else {
+            if (res.includes('失败'))
+              throw new Error(res)
             notify({
               caption: res,
             })
