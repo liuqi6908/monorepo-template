@@ -52,23 +52,18 @@ const isDesktop = ref(false)
 /** 加载中 */
 const loading = ref(false)
 
-/** 是否已发送请求 */
-let isFetched = false
-
 export function useUser($router?: Router) {
   const { isAdmin } = useSysConfig()
 
   const instance = getCurrentInstance()
-  if (instance) {
-    if (!$router)
-      $router = useRouter()
+  if (!$router && instance)
+    $router = useRouter()
 
-    if (!isFetched) {
-      isFetched = true;
-      (async () => {
-        isDesktop.value = await isDesktopApi()
-      })()
-    }
+  /**
+   * 判断用户是否在云桌面中
+   */
+  async function userIsDesktop() {
+    isDesktop.value = await isDesktopApi()
   }
 
   /**
@@ -280,6 +275,7 @@ export function useUser($router?: Router) {
     loading,
     latestVerify,
     verifyStatus,
+    userIsDesktop,
     loginByPassword,
     loginByEmailCode,
     loginByPhoneCode,

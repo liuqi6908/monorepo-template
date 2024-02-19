@@ -6,9 +6,11 @@ const $route = useRoute()
 const { width } = useWindowSize()
 const { isAdmin, zoomRatio, getAppConfig, updateAppHead } = useSysConfig()
 const { el, scrollTo } = useScrollApp()
+const { userIsDesktop } = useUser()
 
 onBeforeMount(async () => {
   isAdmin.value = false
+  userIsDesktop()
   // 设置网站标题和logo
   await getAppConfig()
   updateAppHead()
