@@ -23,9 +23,9 @@ export function getDesktopInfoChangedHTML(desktop: Desktop) {
         .appendChild(
           HtmlTag.create('span').text('您好！用户'),
           HtmlTag.create('span').text(`【${getUserName(desktop.user)}】`).style({ fontWeight: '500' }).color(DANGER),
-          HtmlTag.create('span').text('，管理员修改了您的云桌面信息，最新登录方式如下：'),
+          HtmlTag.create('span').text('，管理员修改了您的云桌面信息。'),
         ),
-      getDesktopConnectInfo(desktop),
+      getDesktopConnectInfo(),
       HtmlTag.create('div').indent().text('如有其他疑问，可微信扫码联系客服！'),
       footer,
     )

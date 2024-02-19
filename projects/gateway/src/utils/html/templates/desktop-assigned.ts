@@ -35,7 +35,7 @@ export function getDesktopAssignedHTML(desktop: Desktop) {
         .appendChild(
           HtmlTag.create('span').text('您好！用户'),
           HtmlTag.create('span').text(`【${getUserName(desktop.user)}】`).color(DANGER).style({ fontWeight: '500' }),
-          HtmlTag.create('span').text('您提交的云桌面申请已经通过，管理员已经为您分配好云桌面。'),
+          HtmlTag.create('span').text('，您提交的云桌面申请已经通过，管理员已经为您分配好云桌面。'),
         ),
       getDesktopConnectInfo(),
       HtmlTag.create('div').indent().text('如有其他疑问，可微信扫码联系客服！'),

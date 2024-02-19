@@ -20,12 +20,11 @@ export function getDesktopExpireAdminHTML(desktop: Desktop) {
         .div()
         .indent()
         .appendChild(
-          HtmlTag.span('用户【'),
-          HtmlTag.span(getUserName(desktop.user)).color(DANGER).bold(500),
-          HtmlTag.span('】（云桌面账号【'),
-          HtmlTag.span(`${desktop.account}`).color(DANGER).bold(500),
-          HtmlTag.span('】）'),
-          HtmlTag.span('即将于'),
+          HtmlTag.span('用户'),
+          HtmlTag.span(`【${getUserName(desktop.user)}】`).color(DANGER).bold(500),
+          HtmlTag.span('（云桌面账号'),
+          HtmlTag.span(`【${desktop.account}】`).color(DANGER).bold(500),
+          HtmlTag.span('）即将于'),
           HtmlTag.span(`【${expiredAt}】`).color(DANGER).bold(500),
           HtmlTag.span('到期，请及时处理！'),
         ),
