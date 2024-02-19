@@ -5,27 +5,27 @@ import type { ICreateRootBodyDto } from 'zjf-types'
 export class CreateRootBodyDto implements ICreateRootBodyDto {
   @ApiProperty({
     description: '资源ID（由用户提供，以便在对象存储中上传数据时对应起来）',
-    maxLength: 40,
+    maxLength: 20,
   })
   @IsString()
-  @MaxLength(40, { message: '资源ID最大长度为40个字符' })
+  @MaxLength(20, { message: '资源ID最大长度为20个字符' })
   id: string
 
   @ApiProperty({
     description: '中文名',
     example: '自建数据库',
-    maxLength: 20,
+    maxLength: 50,
   })
   @IsString()
-  @MaxLength(20, { message: '中文名最大长度为20个字符' })
+  @MaxLength(50, { message: '中文名最大长度为50个字符' })
   nameZH: string
 
   @ApiProperty({
     description: '英文名',
-    maxLength: 40,
+    maxLength: 50,
   })
   @IsString()
-  @MaxLength(40, { message: '英文名最大长度为40个字符' })
+  @MaxLength(50, { message: '英文名最大长度为50个字符' })
   nameEN: string
 
   @ApiProperty({ required: false, description: '排序', example: 1 })
