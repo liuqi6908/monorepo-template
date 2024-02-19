@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 import { cloneDeep } from 'lodash'
-import { PermissionType, MinioBucket } from 'zjf-types'
+import { PermissionType, MinioBucket, DESKTOP_FTP_QUOTA } from 'zjf-types'
 import { formatFileSize, fileSizeToBytes, hasIntersection, FILE_SIZE_UNITS } from 'zjf-utils'
 import type { QTableColumn, QTableProps } from 'quasar'
 import type { IDesktop } from 'zjf-types'
@@ -11,6 +11,7 @@ import UserDetails from '~/views/user/UserDetails.vue'
 import FtpQuota from './FtpQuota.vue'
 
 const { adminRole } = useUser()
+const { desktopFtp, getDesktopFtpConfig } = useSysConfig()
 
 const zTable = ref<InstanceType<typeof ZTable>>()
 
@@ -53,13 +54,13 @@ const cols = reactive<QTableColumn<IDesktop>[]>([
     label: '已用配额',
     field: row => {
       const value = usedQuota.value[row.id]
-      return value ? formatFileSize(value) : undefined
+      return formatFileSize(value ?? 0)
     },
   },
   {
     name: 'quota',
     label: '可上传配额',
-    field: row => row.ftpQuota ? formatFileSize(row.ftpQuota) : undefined,
+    field: row => formatFileSize(row.ftpQuota ?? desktopFtp.value?.ftpQuota ?? DESKTOP_FTP_QUOTA),
   },
 ])
 /** 表格分页信息 */
@@ -74,6 +75,7 @@ onBeforeMount(() => {
   cols.splice(5, 1)
   cols.forEach(v => v.align = 'center')
   getUsedQuota()
+  getDesktopFtpConfig()
 })
 
 /**
