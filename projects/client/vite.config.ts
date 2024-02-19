@@ -14,6 +14,7 @@ import Components from 'unplugin-vue-components/vite'
 
 export default ({ mode }: any) => {
   const minio = loadEnv(mode, path.relative(__dirname, '../gateway'), 'MINIO')
+
   process.env = {
     ...process.env,
     VITE_MINIO_ENDPOINT_INTERNAL: minio.MINIO_ENDPOINT_INTERNAL,

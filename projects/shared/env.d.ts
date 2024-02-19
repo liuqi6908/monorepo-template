@@ -33,6 +33,10 @@ interface ImportMetaEnv {
   VITE_MINIO_SK?: string
   /** 是否使用SSL */
   VITE_MINIO_USE_SSL?: boolean
+  /** PUBLIC桶名 */
+  VITE_MINIO_BUCKET_PUBLIC?: string
+  /** PRIVATE桶名 */
+  VITE_MINIO_BUCKET_PRIVATE?: string
   /** DATA桶名 */
   VITE_MINIO_BUCKET_DATA?: string
   /** FTP桶名 */

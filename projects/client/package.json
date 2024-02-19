@@ -26,7 +26,6 @@
     "@vueuse/head": "^1.1.26",
     "axios": "^1.4.0",
     "echarts": "^5.4.3",
-    "minio-vite-js": "^0.0.6",
     "moment": "^2.29.4",
     "nprogress": "^0.2.0",
     "quasar": "^2.12.3",

@@ -1,4 +1,4 @@
-import { computed, getCurrentInstance, onMounted, ref } from 'vue'
+import { computed, getCurrentInstance, ref } from 'vue'
 import { useStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
@@ -62,13 +62,12 @@ export function useUser($router?: Router) {
   if (instance) {
     if (!$router)
       $router = useRouter()
-    if (!isAdmin.value) {
-      onMounted(async () => {
-        if (!isFetched) {
-          isFetched = true
-          isDesktop.value = await isDesktopApi()
-        }
-      })
+
+    if (!isFetched) {
+      isFetched = true;
+      (async () => {
+        isDesktop.value = await isDesktopApi()
+      })()
     }
   }
 

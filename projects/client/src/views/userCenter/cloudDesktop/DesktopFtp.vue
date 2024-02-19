@@ -9,7 +9,7 @@ import type { FileItem } from 'shared/types/file.interface'
 const { isDesktop } = useUser()
 const { desktopFtp, getDesktopFtpConfig } = useSysConfig()
 const { desktopInfo } = useDesktop()
-const { basePath, uploadFile, deleteFile, downloadFile } = useMinio()
+const { basePath, uploadFile, downloadFile, deleteFile } = useFtp()
 
 /** 加载中 */
 const loading = ref(false)

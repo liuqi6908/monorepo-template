@@ -7,7 +7,7 @@ const rsa = new JSEncrypt()
  */
 export function rsaEncrypt(
   password: string,
-  publicKey: string = (import.meta as any).env.VITE_PUBLIC_KEY ?? '',
+  publicKey: string = import.meta.env.VITE_PUBLIC_KEY ?? '',
   key = 'zjfUsO',
 ) {
   rsa.setPublicKey(publicKey)
@@ -25,7 +25,7 @@ export function rsaEncrypt(
  */
 export function rsaDecrypt(
   hash: string,
-  privateKey: string = (import.meta as any).env.VITE_PRIVATE_KEY ?? '',
+  privateKey: string = import.meta.env.VITE_PRIVATE_KEY ?? '',
   key = 'zjfUsO',
 ) {
   try {

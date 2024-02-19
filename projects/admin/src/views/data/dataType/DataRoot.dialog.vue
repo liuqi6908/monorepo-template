@@ -2,6 +2,7 @@
 import { cloneDeep } from 'lodash'
 import { Notify } from 'quasar'
 import { pick, validateNameEn, validateNameZh } from 'zjf-utils'
+import { MinioBucket } from 'zjf-types'
 import type { IDataDirectory, ICreateRootBodyDto } from 'zjf-types'
 
 export type Type = 'add' | 'edit'
@@ -15,6 +16,7 @@ const props = defineProps<Props>()
 const emits = defineEmits(['update:type', 'callback'])
 
 const { zoomRatio } = useSysConfig()
+const { minioConfig } = useMinio()
 
 /** 对话框 */
 const dialog = computed({
@@ -40,7 +42,7 @@ const form = ref<ICreateRootBodyDto>(cloneDeep(initData))
 const tooltip = ref(false)
 
 /** Minio Data 桶名 */
-const dataBucket = computed(() => import.meta.env.VITE_MINIO_BUCKET_DATA)
+const dataBucket = computed(() => minioConfig[MinioBucket.DATA])
 
 watch(
   dialog,

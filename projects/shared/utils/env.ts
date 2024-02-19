@@ -9,7 +9,7 @@ import { parseBoolRaw } from 'zjf-utils'
 export function getEnvVariable<T extends keyof ImportMetaEnv, S extends ImportMetaEnv[T]>(
   name: T, defaultValue?: S,
 ): S extends undefined ? ImportMetaEnv[T] : Exclude<ImportMetaEnv[T], undefined> {
-  const value = (import.meta as any).env[name]
+  const value = import.meta.env[name]
   if (!value)
     return defaultValue as any
 
