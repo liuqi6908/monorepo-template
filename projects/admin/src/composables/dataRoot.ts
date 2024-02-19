@@ -1,5 +1,6 @@
-import { MinioBucket } from 'zjf-types'
-import type { IDataDirectory } from 'zjf-types'
+import { Notify } from 'quasar'
+import { MinioBucket, UploadType } from 'zjf-types'
+import type { IDataDirectory, IUploadTableDataParamDto } from 'zjf-types'
 
 export type Resource = Record<
   IDataDirectory['id'],
@@ -20,6 +21,8 @@ const previewResource = ref<Resource>({})
 const downloadResource = ref<Resource>({})
 
 export function useDataRoot() {
+  const { uploadFile } = useMinio()
+
   /**
    * 查询数据资源列表
    */
@@ -89,6 +92,31 @@ export function useDataRoot() {
     })
   }
 
+  /**
+   * 上传表格 预览/下载 数据
+   */
+  async function uploadTableData(param: IUploadTableDataParamDto, file: File, notify = true) {
+    const { filename, dataRootId, uploadType } = param
+    const ext = filename.split('.').pop()
+    if (
+      (uploadType === UploadType.PREVIEW && ext !== 'csv')
+      || (uploadType === UploadType.DOWNLOAD && ext !== 'zip')
+    ) {
+      const message = '文件类型不允许'
+      if (notify) {
+        Notify.create({
+          type: 'danger',
+          message,
+        })
+      }
+      throw new Error(message)
+    }
+
+    const path = `${uploadType}/${dataRootId}/${filename}`
+    await uploadFile(MinioBucket.DATA, path, file)
+    return filename
+  }
+
   return {
     loading,
     dataList,
@@ -98,5 +126,6 @@ export function useDataRoot() {
     queryDataList,
     getPreviewUploadStatus,
     getDownloadUploadStatus,
+    uploadTableData,
   }
 }

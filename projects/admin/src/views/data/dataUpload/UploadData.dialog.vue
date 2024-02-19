@@ -28,7 +28,7 @@ const props = defineProps<{
 defineEmits(['update:id'])
 
 const { adminRole } = useUser()
-const { loading, dataList, previewResource, downloadResource } = useDataRoot()
+const { loading, dataList, previewResource, downloadResource, uploadTableData } = useDataRoot()
 
 /** 是否可以编辑（上传数据） */
 const isEdit = computed(() => adminRole.value?.includes(PermissionType.DATA_UPLOAD_TABLE) && !!props.id)
@@ -163,7 +163,7 @@ async function uploadTableDataFile(type: UploadType, file?: File, name?: string)
 
   try {
     loading.value = true
-    await uploadTableDataApi({
+    await uploadTableData({
       dataRootId: id,
       uploadType: type,
       filename: `${name}.${fileType}`
@@ -211,22 +211,20 @@ async function batchUploadTableDataFile(type: UploadType, files?: File[]) {
     }
 
     try {
-      await uploadTableDataApi(
+      await uploadTableData(
         {
           dataRootId: id,
           uploadType: type,
           filename: name
         },
         file,
-        {
-          headers: { notify: false }
-        }
+        false,
       )
       success++
       handlerUpload(type, name.split('.')[0])
     }
     catch (e: any) {
-      error[name] = e.response?.data?.message || '未知错误'
+      error[name] = e.message || '未知错误'
     }
     finally {
       notify({
