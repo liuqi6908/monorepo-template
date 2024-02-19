@@ -32,7 +32,7 @@ const captchaInput = ref<InstanceType<typeof CaptchaInput>>()
 
 onBeforeMount(async () => {
   try {
-    const loginInfo = JSON.parse(localStorage.getItem(REMEMBER_LOGIN_INFO_KEY) || '{}')
+    const loginInfo = JSON.parse(localStorage?.getItem(REMEMBER_LOGIN_INFO_KEY) ?? '{}')
     if (loginInfo.userCode && loginInfo.password) {
       userCode.value = loginInfo.userCode
       password.value = rsaDecrypt(loginInfo.password)

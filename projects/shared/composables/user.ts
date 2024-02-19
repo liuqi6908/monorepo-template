@@ -1,5 +1,5 @@
 import { computed, getCurrentInstance, ref } from 'vue'
-import { useStorage } from '@vueuse/core'
+import { isClient, useStorage } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 import { VerificationStatus } from 'zjf-types'
 import { Notify } from 'quasar'
@@ -81,7 +81,7 @@ export function useUser($router?: Router) {
         ...body,
         password: rsaEncrypt(body.password),
       })
-      if (res) {
+      if (res && isClient) {
         if (remember) {
           localStorage.setItem(
             REMEMBER_LOGIN_INFO_KEY,
@@ -204,7 +204,7 @@ export function useUser($router?: Router) {
     authToken.value = sign.access_token
     userInfo.value = user
     await getOwnProfile(undefined, false)
-    $router?.push(localStorage.getItem(LEADING_PAGE_KEY) || '/')
+    $router?.push(localStorage?.getItem(LEADING_PAGE_KEY) ?? '/')
   }
 
   /**

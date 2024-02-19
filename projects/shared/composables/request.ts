@@ -40,7 +40,7 @@ export function useRequest() {
     useCache && cache.set(cacheKey, response.data)
 
     if (isResponseData)
-      return response.data
+      return response?.data
     else
       return response as any
   }

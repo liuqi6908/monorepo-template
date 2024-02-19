@@ -7,9 +7,9 @@ import { LEADING_PAGE_KEY } from '../constants/storage'
 const { width } = useWindowSize()
 const { app } = useSysConfig()
 
-const leadingPage = localStorage.getItem(LEADING_PAGE_KEY)
+const leadingPage = localStorage?.getItem(LEADING_PAGE_KEY) ?? '/'
 
-onBeforeUnmount(() => localStorage.removeItem(LEADING_PAGE_KEY))
+onBeforeUnmount(() => localStorage?.removeItem(LEADING_PAGE_KEY))
 </script>
 
 <template>
@@ -27,7 +27,7 @@ onBeforeUnmount(() => localStorage.removeItem(LEADING_PAGE_KEY))
         flex="~ gap2 items-center"
         absolute top-12 left-12
         cursor-pointer min-w-113
-        @click="$router.push(leadingPage || '/')"
+        @click="$router.push(leadingPage)"
       >
         <h2 v-text="app?.name" />
         <template v-if="app?.nameEn">
