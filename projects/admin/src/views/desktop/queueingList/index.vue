@@ -131,11 +131,42 @@ async function autoAssign() {
 
   loading.value = true
   try {
-    await autoCreateDesktopApi(selected.value.userId)
-    Notify.create({
-      type: 'success',
-      message: '操作成功，该操作耗时较长，请耐心等待！',
-    })
+    const id = await autoCreateDesktopApi(selected.value.userId)
+    if (id) {
+      const notify = Notify.create({
+        type: 'loading',
+        message: '该操作耗时较长，请耐心等待...',
+      })
+      const { pause } = useIntervalFn(async () => {
+        try {
+          const res = await getTaskStateApi(id)
+          if (typeof res === 'object') {
+            pause()
+            notify({
+              type: 'success',
+              message: '创建云桌面成功，请刷新页面查看自动分配情况',
+              caption: undefined,
+            })
+          }
+          else {
+            notify({
+              caption: res,
+            })
+          }
+        }
+        catch (_) {
+          pause()
+          notify({
+            type: 'danger',
+            message: '创建云桌面失败',
+            caption: undefined,
+          })
+        }
+      }, 10 * 1000, {
+        immediate: true,
+        immediateCallback: true,
+      })
+    }
   }
   finally {
     selected.value = undefined

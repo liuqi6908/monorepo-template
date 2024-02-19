@@ -132,6 +132,7 @@ declare global {
   const getRolesApi: typeof import('../../../shared/api/role')['getRolesApi']
   const getRootListApi: typeof import('../../../shared/api/data')['getRootListApi']
   const getTableDownloadLinkApi: typeof import('../../../shared/api/data')['getTableDownloadLinkApi']
+  const getTaskStateApi: typeof import('../../../shared/api/desktop')['getTaskStateApi']
   const getUsername: typeof import('../../../shared/utils/username')['getUsername']
   const getVMDetailApi: typeof import('../../../shared/api/desktopVm')['getVMDetailApi']
   const getVMListApi: typeof import('../../../shared/api/desktop')['getVMListApi']
@@ -606,6 +607,7 @@ declare module 'vue' {
     readonly getRolesApi: UnwrapRef<typeof import('../../../shared/api/role')['getRolesApi']>
     readonly getRootListApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootListApi']>
     readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../../shared/api/data')['getTableDownloadLinkApi']>
+    readonly getTaskStateApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getTaskStateApi']>
     readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
     readonly getVMDetailApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMDetailApi']>
     readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getVMListApi']>
@@ -1073,6 +1075,7 @@ declare module '@vue/runtime-core' {
     readonly getRolesApi: UnwrapRef<typeof import('../../../shared/api/role')['getRolesApi']>
     readonly getRootListApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootListApi']>
     readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../../shared/api/data')['getTableDownloadLinkApi']>
+    readonly getTaskStateApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getTaskStateApi']>
     readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
     readonly getVMDetailApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMDetailApi']>
     readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getVMListApi']>

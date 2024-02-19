@@ -30,10 +30,17 @@ export function createDesktopApi(body: ICreateDesktopBodyDto, config?: AxiosRequ
 }
 
 /**
- * 自动创建一个云桌面并分配
+ * 自动创建一个云桌面并分配（异步执行，返回任务ID）
  */
 export function autoCreateDesktopApi(userId: IUserIdDto['userId']) {
-  return $put<boolean>(`/desktop/${userId}`)
+  return $put<string>(`/desktop/${userId}`)
+}
+
+/**
+ * 根据任务ID查询自动创建云桌面进度
+ */
+export function getTaskStateApi(id: string) {
+  return $get<string | object>(`/desktop/task/${id}`)
 }
 
 /**
