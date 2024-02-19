@@ -123,14 +123,14 @@ export class DesktopController {
       const res = await this._hyperVSrv.getTaskState(id)
       if (typeof res === 'object') {
         clearInterval(interval)
-        const { uuid, name, ip } = res
+        const { uuid, name, ip, loginAddr } = res
         if (!uuid || !name || !ip)
           return
         await this._desktopSrv.createDesktop({
           id: uuid,
           name,
           internalIp: ip,
-          accessUrl: port ? `${ip}:${port}` : safe,
+          accessUrl: loginAddr || (port ? `${ip}:${port}` : safe),
           account: user.account,
           password: '您的登录密码',
           expiredAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * request.duration),
