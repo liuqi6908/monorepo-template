@@ -119,6 +119,7 @@ declare global {
   const getDataPreviewByTableApi: typeof import('../../../shared/api/data')['getDataPreviewByTableApi']
   const getDataRoleListApi: typeof import('../../../shared/api/dataPermission')['getDataRoleListApi']
   const getDataRoleNamesApi: typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']
+  const getDataSearchApi: typeof import('../../../shared/api/data')['getDataSearchApi']
   const getDbIntroApi: typeof import('../../../shared/api/file')['getDbIntroApi']
   const getDesktopRequestAttachmentsUrl: typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']
   const getEnvVariable: typeof import('../../../shared/utils/env')['getEnvVariable']
@@ -604,6 +605,7 @@ declare module 'vue' {
     readonly getDataPreviewByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataPreviewByTableApi']>
     readonly getDataRoleListApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleListApi']>
     readonly getDataRoleNamesApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']>
+    readonly getDataSearchApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataSearchApi']>
     readonly getDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['getDbIntroApi']>
     readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
     readonly getEnvVariable: UnwrapRef<typeof import('../../../shared/utils/env')['getEnvVariable']>
@@ -1082,6 +1084,7 @@ declare module '@vue/runtime-core' {
     readonly getDataPreviewByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataPreviewByTableApi']>
     readonly getDataRoleListApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleListApi']>
     readonly getDataRoleNamesApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']>
+    readonly getDataSearchApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataSearchApi']>
     readonly getDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['getDbIntroApi']>
     readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
     readonly getEnvVariable: UnwrapRef<typeof import('../../../shared/utils/env')['getEnvVariable']>

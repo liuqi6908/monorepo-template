@@ -5,13 +5,14 @@ import type {
   IDataDirectory,
   IDataField,
   IDataRootIdDto,
+  IDataSearchBodyDto,
   IUpdateRootBodyDto,
   IUploadDirectoryQueryDto,
   IUploadTableDataParamDto,
 } from 'zjf-types'
 import { useRequest } from '../composables/request'
 
-const { $delete, $get, $patch, $put } = useRequest()
+const { $delete, $get, $patch, $post, $put } = useRequest()
 
 /**
  * 创建一个根节点（数据大类）
@@ -129,4 +130,11 @@ export function uploadTableDataApi(param: IUploadTableDataParamDto, file: File, 
  */
 export function getTableDownloadLinkApi(dataDirectoryId: IDataDirectory['id']) {
   return $get<string>(`/data/download/link/${dataDirectoryId}`)
+}
+
+/**
+ * 全局搜索数据资源
+ */
+export function getDataSearchApi(body: IDataSearchBodyDto) {
+  return $post<(IDataDirectory | IDataField)[]>('/data/search', body)
 }
