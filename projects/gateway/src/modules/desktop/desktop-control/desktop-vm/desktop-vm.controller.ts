@@ -13,7 +13,6 @@ import { DesktopService } from '../../desktop.service'
 import { ZstackService } from '../../zstack/zstack.service'
 import { HyperVService } from '../../hyper-v/hyper-v.service'
 
-@VerifiedRequired()
 @ApiTags('DesktopVm | 云桌面虚拟机')
 @Controller('desktop-vm')
 export class DesktopVmController {
@@ -29,6 +28,7 @@ export class DesktopVmController {
   }
 
   @ApiOperation({ summary: '云桌面总览', description: '返回云主机总数、开机数量、关机数量' })
+  @VerifiedRequired()
   @Get()
   public async getVMOverview() {
     if (this._type === 0)
@@ -39,6 +39,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '获取指定虚拟机的状态' })
   @AllowDesktopOperate()
+  @VerifiedRequired()
   @ApiParam({ name: 'desktopId', description: '虚拟机ID' })
   @Get(':desktopId')
   public async getVMState(@Param() param: DesktopIdDto) {
@@ -50,6 +51,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '获取指定虚拟机的详情' })
   @AllowDesktopOperate()
+  @VerifiedRequired()
   @ApiParam({ name: 'desktopId', description: '虚拟机ID' })
   @Get('detail/:desktopId')
   public async getVMDetail(@Param() param: DesktopIdDto) {
@@ -61,6 +63,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '开机指定的虚拟机' })
   @AllowDesktopOperate()
+  @VerifiedRequired()
   @Post('boot/:desktopId')
   public async startVM(@Param() param: DesktopIdDto) {
     if (this._type === 0)
@@ -85,6 +88,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '关机指定的虚拟机' })
   @AllowDesktopOperate()
+  @VerifiedRequired()
   @Post('shutdown/:desktopId')
   public async stopVM(@Param() param: DesktopIdDto) {
     if (this._type === 0)
@@ -109,6 +113,7 @@ export class DesktopVmController {
 
   @ApiOperation({ summary: '重启指定的虚拟机' })
   @AllowDesktopOperate()
+  @VerifiedRequired()
   @Post('reboot/:desktopId')
   public async rebootVM(@Param() param: DesktopIdDto) {
     if (this._type === 0)
@@ -129,5 +134,28 @@ export class DesktopVmController {
       catch (_) { }
     })
     return desktops.length
+  }
+
+  @ApiOperation({
+    summary: '获取云桌面虚拟机列表',
+    description: '返回所有云桌面虚拟机的 id、name、ip',
+  })
+  @HasPermission(PermissionType.DESKTOP_CREATE)
+  @Get('list/info')
+  public async getVMList() {
+    if (this._type === 0)
+      return await this._zstackSrv.vmList()
+    else if (this._type === 1)
+      return await this._hyperVSrv.vmList()
+  }
+
+  @ApiOperation({
+    summary: '获取云桌面虚拟机状态列表',
+  })
+  @HasPermission(PermissionType.DESKTOP_QUERY)
+  @Get('list/state')
+  public async getVMStateList() {
+    if (this._type === 1)
+      return await this._hyperVSrv.vmStateList()
   }
 }

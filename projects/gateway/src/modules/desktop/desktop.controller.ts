@@ -38,7 +38,6 @@ import { UpdateDesktopBodyDto } from './dto/update-desktop.body.dto'
 import { AssignDesktopParamDto } from './dto/assign-desktop.param.dto'
 import { BatchUpdateDesktopFtpQuotaBodyDto } from './dto/update-desktop-ftp-quota.body.dto'
 import { DesktopRequestService } from './desktop-request/desktop-request.service'
-import { ZstackService } from './zstack/zstack.service'
 import { HyperVService } from './hyper-v/hyper-v.service'
 
 @ApiTags('Desktop | 云桌面')
@@ -51,7 +50,6 @@ export class DesktopController {
     private readonly _desktopSrv: DesktopService,
     private readonly _desktopReqSrv: DesktopRequestService,
     private readonly _cfgSrv: ConfigService,
-    private readonly _zstackSrv: ZstackService,
     private readonly _hyperVSrv: HyperVService,
     private readonly _sysCfgSrv: SysConfigService,
     private readonly _userSrv: UserService,
@@ -361,18 +359,5 @@ export class DesktopController {
     if (desktop?.password.includes('登录密码'))
       return desktop
     return omit(desktop, 'password')
-  }
-
-  @ApiOperation({
-    summary: '获取云桌面虚拟机列表',
-    description: '返回所有云桌面虚拟机的 id、name、ip',
-  })
-  @HasPermission(PermissionType.DESKTOP_CREATE)
-  @Get('vm-list')
-  public async getVMList() {
-    if (this._desktop.type === 0)
-      return await this._zstackSrv.vmList()
-    else if (this._desktop.type === 1)
-      return await this._hyperVSrv.vmList()
   }
 }

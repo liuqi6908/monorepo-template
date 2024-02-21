@@ -163,6 +163,19 @@ export class HyperVService extends EventEmitter {
   }
 
   /**
+   * 获取云桌面虚拟机状态列表
+   */
+  public async vmStateList() {
+    return await this.requestWithSession((cfg) => {
+      return this._httpSrv.axiosRef({
+        ...cfg,
+        method: 'GET',
+        url: '/v1/vm/state',
+      })
+    })
+  }
+
+  /**
    * 操作指定的虚拟机
    */
   public async operateVM(vmUUID: string, action: 'start' | 'stop' | 'reboot') {
