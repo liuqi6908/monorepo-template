@@ -3,11 +3,11 @@ import * as Papa from 'papaparse'
 import * as iconv from 'iconv-lite'
 import { In, IsNull, Not } from 'typeorm'
 import { objectPick } from '@catsjuice/utils'
-import { Body, Controller, Delete, Get, Param, Patch, Put, Query, Req } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, Req } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
 import { Throttle } from '@nestjs/throttler'
 import { ErrorCode, LogDataAction, MinioBucket, PermissionType, UploadType, VerificationStatus } from 'zjf-types'
-import { isUTF8 } from 'zjf-utils'
+import { hasIntersection, isUTF8 } from 'zjf-utils'
 import type { FindOptionsWhere } from 'typeorm'
 
 import { DataRootIdDto } from 'src/dto/id/data-root.dto'
@@ -28,6 +28,7 @@ import { FileService } from '../file/file.service'
 import { DesktopService } from '../desktop/desktop.service'
 import { DataService } from './data.service'
 import { CreateRootBodyDto } from './dto/create-root.body.dto'
+import { DataSearchBodyDto } from './dto/data-search.body.dto'
 import { UpdateRootBodyDto } from './dto/update-root.body.dto'
 import { GetDataListResDto } from './dto/get-data-list.res.dto'
 import { GetDataFieldListResDto } from './dto/get-field-list.res.dto'
@@ -418,6 +419,74 @@ export class DataController {
       if (e.message.match(/Not Found/))
         responseError(ErrorCode.FILE_NOT_FOUND)
       throw e
+    }
+  }
+
+  @ApiOperation({ summary: '全局搜索数据资源' })
+  @ApiSuccessResponse(GetDataListResDto)
+  @DataRoleCheck('viewDirectories')
+  @Post('search')
+  public async getDataSearch(
+    @Body() body: DataSearchBodyDto,
+    @Req() req: FastifyRequest,
+  ) {
+    const { level, value } = body
+
+    if (![1, 2, 3, 4, 5].includes(level)) {
+      responseParamsError([{
+        property: 'level',
+        constraints: { body: 'level 为 1-5 之间的整数' },
+      }])
+    }
+
+    const dataRole = req.dataRole
+    const allowedScopes = dataRole === '*'
+      ? undefined
+      : dataRole
+        .viewDirectories
+        .map(d => d.id)
+
+    // 数据资源
+    if (level < 5) {
+      const qb = this._dataSrv.dirQB()
+        .where({ level })
+        .andWhere(
+          'dd.nameZH LIKE :value',
+          { value: `%${value}%` },
+        )
+        .orderBy('dd.order')
+        .leftJoinAndSelect('dd.parent', `parent${level}`)
+      for (let i = level; i > 1; i--)
+        qb.leftJoinAndSelect(`parent${i}.parent`, `parent${i - 1}`)
+
+      return (await qb.getMany())
+        .filter((node) => {
+          return !allowedScopes
+            || (!node.path?.length && allowedScopes.includes(node.id))
+            || (node.path?.length && hasIntersection(node.path, allowedScopes))
+        })
+    }
+    // 字段
+    else {
+      const qb = this._dataSrv.fieldQB()
+        .where(
+          'df.nameZH LIKE :value',
+          { value: `%${value}%` },
+        )
+        .orderBy('df.order')
+        .leftJoinAndSelect('df.directory', 'dd')
+        .leftJoinAndSelect('dd.parent', 'parent4')
+      for (let i = 4; i > 1; i--)
+        qb.leftJoinAndSelect(`parent${i}.parent`, `parent${i - 1}`)
+
+      return (await qb.getMany())
+        .filter((field) => {
+          const node = field.directory
+          return !!node && (!allowedScopes
+            || (!node.path?.length && allowedScopes.includes(node.id))
+            || (node.path?.length && hasIntersection(node.path, allowedScopes))
+          )
+        })
     }
   }
 }
