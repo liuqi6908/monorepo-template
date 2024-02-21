@@ -80,7 +80,7 @@
           font-size: 20px;
         }
 
-        input, textarea {
+        input, textarea, .q-field__native > span {
           font-size: 16px;
           line-height: 24px;
         }
@@ -96,7 +96,7 @@
           font-size: 18px;
         }
 
-        input, textarea {
+        input, textarea, .q-field__native > span {
           font-size: 16px;
           line-height: 24px;
         }
@@ -112,7 +112,7 @@
           font-size: 16px;
         }
 
-        input, textarea {
+        input, textarea, .q-field__native > span {
           font-size: 14px;
           line-height: 20px;
         }
@@ -130,7 +130,7 @@
             font-size: 16px;
           }
 
-          input, textarea {
+          input, textarea, .q-field__native > span {
             font-size: 14px;
             line-height: 20px;
           }

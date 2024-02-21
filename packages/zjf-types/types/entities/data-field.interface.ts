@@ -1,3 +1,5 @@
+import type { IDataDirectory } from './data-directory.interface'
+
 /**
  * 数据字段说明
  */
@@ -10,6 +12,8 @@ export interface IDataField {
   nameEN: string
   /** 字段说明 */
   description: string
+  /** 所属的目录 */
+  directory?: IDataDirectory
   /** 所属的目录 id */
   directoryId: string
   /** 字段排序 */

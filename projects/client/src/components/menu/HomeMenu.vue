@@ -8,7 +8,7 @@ const value = computed({
     return $route.path
   },
   set(newVal) {
-    if (!$route.fullPath.startsWith(newVal))
+    if ($route.path !== newVal)
       $router.push(newVal)
   }
 })
@@ -75,7 +75,7 @@ onBeforeMount(getNavConfig)
           content: '';
           width: 100%;
           height: 100%;
-          background: #F99E34;
+          background: var(--secondary-1);
         }
       }
     }

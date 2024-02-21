@@ -2,6 +2,7 @@
 import bg from '~/assets/bg/database.webp'
 import type { ZMenuProps } from 'shared/components/menu/ZMenu.vue'
 import Root from 'shared/views/data/database/index.vue'
+import DataSearch from '~/views/database/DataSearch.vue'
 
 const { rootList, rootId, getRootList } = useDatabase()
 const { el, scrollTo } = useScrollApp()
@@ -9,6 +10,7 @@ const { nav } = useSysConfig()
 const $router = useRouter()
 const $route = useRoute()
 const { height } = useAppHeader()
+const { isLogin } = useUser()
 
 /** 加载中 */
 const loading = ref(false)
@@ -50,7 +52,13 @@ watch(rootId, () => scrollTo(0))
 
 <template>
   <div>
-    <Banner text-grey-1 :img="bg" :title="nav?.databaseDesc" />
+    <div relative>
+      <Banner text-grey-1 :img="bg" :title="nav?.databaseDesc" />
+      <DataSearch
+        v-if="isLogin"
+        absolute-x-center z-1 bottom-7
+      />
+    </div>
     <div pb20>
       <Empty v-if="!menu?.length" icon="database" />
       <div v-else w-limited-1 flex="~ gap4" sm="gap6" lg="gap8" xl="gap10">

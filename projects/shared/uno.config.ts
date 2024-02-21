@@ -44,6 +44,7 @@ export default defineConfig({
   theme: {
     colors: {
       primary: { 1: '#0E419C', 2: '#004C9A' },
+      secondary: { 1: '#F99E34' },
       grey: { 1: '#FFFFFF', 2: '#F5F7FA', 3: '#D4DDEA', 4: '#A6B1C2', 5: '#6E7686', 6: '#575E6A', 7: '#373C48', 8: '#292D36' },
       gray: { 1: '#FFFFFF', 2: '#F5F7FA', 3: '#D4DDEA', 4: '#A6B1C2', 5: '#6E7686', 6: '#575E6A', 7: '#373C48', 8: '#292D36' },
       alerts: { success: '#22B07D', error: '#F44336', warning: '#FFBA2F' },

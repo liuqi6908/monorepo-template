@@ -199,7 +199,6 @@ async function downloadData() {
           <ZTable
             :rows="fieldRows"
             :cols="fieldsCols"
-            :disablePagination="!!fieldRows?.length"
             :params="{
               noDataLabel: '管理员正在配置中'
             }"
