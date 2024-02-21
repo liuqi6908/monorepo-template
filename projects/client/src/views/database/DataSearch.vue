@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import type { RouteLocationRaw } from 'vue-router'
 import type { IDataDirectory, IDataField } from 'zjf-types'
+import search from '~/assets/empty/search.svg?raw'
 
 const { zoomRatio } = useSysConfig()
 const $router = useRouter()
@@ -132,8 +133,9 @@ function goToRouter(data: IDataDirectory | IDataField) {
         >
           <q-list min-h-40>
             <ZLoading :value="loading" />
-            <div v-if="!searchResults.length" absolute-center>
-              暂无数据
+            <div v-if="!searchResults.length" py4 flex="~ col items-center gap4">
+              <div v-html="search" />
+              暂无搜索结果
             </div>
             <template v-else>
               <q-item
