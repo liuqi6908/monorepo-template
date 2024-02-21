@@ -1,10 +1,11 @@
 <script lang="ts" setup>
 import { Notify } from 'quasar'
 import { cloneDeep } from 'lodash'
-import { PermissionType } from 'zjf-types'
+import { PermissionType, desktopStatusDescriptions } from 'zjf-types'
 import { hasIntersection, validatePassword } from 'zjf-utils'
 import type { QTableProps } from 'quasar'
 import type { IDesktop } from 'zjf-types'
+import type { DesktopVMState } from 'shared/types/desktop.interface'
 
 import ZTable from '~/components/table/ZTable.vue'
 import UserDetails from '~/views/user/UserDetails.vue'
@@ -54,10 +55,28 @@ const rows = ref<QTableProps['rows']>([])
 const cols = reactive(cloneDeep(DESKTOP_TABLE_COLUMNS))
 /** 表格分页信息 */
 const pagination = TABLE_PAGINATION('createdAt', true)
+/** 云桌面状态 */
+const desktopState = ref<DesktopVMState[]>([])
 /** 多选 */
 const selected = ref<IDesktop[]>()
 
 onBeforeMount(() => {
+  useIntervalFn(queryDesktopVMStateList, 10 * 1000, {
+    immediate: true,
+    immediateCallback: true,
+  })
+
+  if (getEnvVariable('VITE_DESKTOP_ON_OFF')) {
+    cols.push({
+      name: 'state',
+      label: '云桌面状态',
+      field: (row) => {
+        const item = desktopState.value.find(v => v.uuid === row.id)
+        if (item)
+          return desktopStatusDescriptions[item.state]
+      }
+    })
+  }
   if (adminRole.value?.includes(PermissionType.DESKTOP_UPDATE)) {
     cols.push({
       name: 'action',
@@ -119,6 +138,13 @@ const queryDesktopList: QTableProps['onRequest'] = async (props) => {
     loading.value = false
     selected.value = undefined
   }
+}
+
+/**
+ * 查询云桌面虚拟机状态列表
+ */
+async function queryDesktopVMStateList() {
+  desktopState.value = await getVMStateListApi()
 }
 
 /**
@@ -200,6 +226,7 @@ async function operateVM() {
       type: 'success',
       message: '操作成功',
     })
+    setTimeout(queryDesktopVMStateList, 1000);
   }
   finally {
     selected.value = undefined

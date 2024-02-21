@@ -10,7 +10,6 @@ import type {
   IUser,
   IUserIdDto,
 } from 'zjf-types'
-import type { DesktopVM } from '../types/desktop.interface'
 import { useRequest } from '../composables/request'
 
 const { $delete, $get, $patch, $post, $put } = useRequest()
@@ -118,11 +117,4 @@ export function batchClearDesktopDataApi(body: IDesktop['id'][]) {
  */
 export function getOwnDesktopApi() {
   return $get<IDesktop>('/desktop/own')
-}
-
-/**
- * 获取云桌面虚拟机列表
- */
-export function getVMListApi() {
-  return $get<DesktopVM[]>('/desktop/vm-list')
 }

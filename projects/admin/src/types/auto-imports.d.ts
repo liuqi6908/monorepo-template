@@ -142,9 +142,10 @@ declare global {
   const getTaskStateApi: typeof import('../../../shared/api/desktop')['getTaskStateApi']
   const getUsername: typeof import('../../../shared/utils/username')['getUsername']
   const getVMDetailApi: typeof import('../../../shared/api/desktopVm')['getVMDetailApi']
-  const getVMListApi: typeof import('../../../shared/api/desktop')['getVMListApi']
+  const getVMListApi: typeof import('../../../shared/api/desktopVm')['getVMListApi']
   const getVMOverviewApi: typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']
   const getVMStateApi: typeof import('../../../shared/api/desktopVm')['getVMStateApi']
+  const getVMStateListApi: typeof import('../../../shared/api/desktopVm')['getVMStateListApi']
   const getVerifyAttachmentsUrl: typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
@@ -628,9 +629,10 @@ declare module 'vue' {
     readonly getTaskStateApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getTaskStateApi']>
     readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
     readonly getVMDetailApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMDetailApi']>
-    readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getVMListApi']>
+    readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMListApi']>
     readonly getVMOverviewApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']>
     readonly getVMStateApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateApi']>
+    readonly getVMStateListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateListApi']>
     readonly getVerifyAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
@@ -1107,9 +1109,10 @@ declare module '@vue/runtime-core' {
     readonly getTaskStateApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getTaskStateApi']>
     readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
     readonly getVMDetailApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMDetailApi']>
-    readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getVMListApi']>
+    readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMListApi']>
     readonly getVMOverviewApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']>
     readonly getVMStateApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateApi']>
+    readonly getVMStateListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateListApi']>
     readonly getVerifyAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>

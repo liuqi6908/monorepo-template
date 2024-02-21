@@ -10,6 +10,14 @@ export interface DesktopVM {
 }
 
 /**
+ * 云桌面虚拟机状态
+ */
+export interface DesktopVMState {
+  uuid: string
+  state: DesktopStatus
+}
+
+/**
  * 云桌面物理机
  */
 export interface DesktopHost {

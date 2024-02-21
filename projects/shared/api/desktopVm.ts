@@ -1,5 +1,7 @@
 import type { IDesktop } from 'zjf-types'
 import type {
+  DesktopVM,
+  DesktopVMState,
   VMDetail,
   VMOverview,
   VMState,
@@ -69,4 +71,25 @@ export function rebootVMApi(desktopId: IDesktop['id']) {
  */
 export function batchRebootVMApi(body: IDesktop['id'][]) {
   return $post('/desktop-vm/batch/reboot', body)
+}
+
+/**
+ * 获取云桌面虚拟机列表
+ */
+export function getVMListApi() {
+  return $get<DesktopVM[]>('/desktop-vm/list/info')
+}
+
+/**
+ * 获取云桌面虚拟机状态列表
+ */
+export function getVMStateListApi() {
+  return $get<DesktopVMState[]>(
+    '/desktop-vm/list/state', undefined, undefined,
+    {
+      headers: {
+        notify: false,
+      },
+    },
+  )
 }
