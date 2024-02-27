@@ -1,9 +1,12 @@
-<script setup></script>
+<script setup lang="ts"></script>
 
 <template>
-  <div />
+  <div>
+    首页
+  </div>
 </template>
 
 <route lang="yaml">
-redirect: /home
+meta:
+  layout: home
 </route>

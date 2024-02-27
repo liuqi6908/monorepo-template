@@ -1,7 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-import { useRouter } from 'vue-router'
 import { $http } from '../api'
-import { pubRouter } from './pubRouter'
 
 const cache = new Map<string, any>()
 
@@ -9,9 +7,6 @@ export function useRequest() {
   const requestControllers = new Set<AbortController>()
 
   function newController() {
-    if (!pubRouter.value)
-      pubRouter.value = useRouter()
-
     const abortController = new AbortController()
     const signal = abortController.signal
     requestControllers.add(abortController)

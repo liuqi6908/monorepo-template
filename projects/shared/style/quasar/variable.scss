@@ -1,6 +1,5 @@
 :root {
   --q-primary: var(--primary-1);
-  --q-secondary: var(--secondary-1);
   --q-success: var(--alerts-success);
   --q-error: var(--alerts-error);
   --q-warning: var(--alerts-warning);
@@ -29,7 +28,7 @@
 }
 
 /* 通知色 */
-$alerts: primary-1, primary-2, alerts-success, alerts-error, alerts-warning;
+$alerts: primary-1, alerts-success, alerts-error, alerts-warning;
 
 @each $alert in $alerts {
   .text-#{$alert} {
@@ -38,13 +37,5 @@ $alerts: primary-1, primary-2, alerts-success, alerts-error, alerts-warning;
 
   .bg-#{$alert} {
     background: var(--#{$alert}) !important;
-  }
-
-  .text-#{$alert}-bg {
-    color: var(--#{$alert}-bg) !important;
-  }
-
-  .bg-#{$alert}-bg {
-    background: var(--#{$alert}-bg) !important;
   }
 }

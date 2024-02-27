@@ -1,49 +1,12 @@
 <script setup lang="ts">
-import { isClient } from '@vueuse/core'
+const { updateAppHead } = useApp()
 
-const { width } = useWindowSize()
-const { isAdmin, zoomRatio ,getAppConfig, updateAppHead } = useSysConfig()
-const $router = useRouter()
-const { userIsDesktop } = useUser()
-
-onBeforeMount(async () => {
-  isAdmin.value = true
-  $router.replace({ query: undefined })
-  userIsDesktop()
-  // 设置网站标题和logo
-  await getAppConfig()
-  updateAppHead(true)
+onBeforeMount(() => {
+  const { VITE_ADMIN_APP_NAME, VITE_ADMIN_APP_ICON } = import.meta.env
+  updateAppHead(VITE_ADMIN_APP_NAME, VITE_ADMIN_APP_ICON)
 })
-
-/** 监听窗口大小，缩放页面 */
-watch(
-  width,
-  (newVal) => {
-    if (isClient) {
-      nextTick(() => {
-        const body = document.body
-        if (body) {
-          if (newVal < APP_MIN_WIDTH) {
-            const ratio = zoomRatio.value
-            body.style.transform = `scale(${ratio})`
-            body.style.width = `${100 / ratio}%`
-            body.style.height = `${100 / ratio}%`
-          }
-          else {
-            body.style.transform = ''
-            body.style.width = '100%'
-            body.style.height = '100%'
-          }
-        }
-      })
-    }
-  },
-  {
-    immediate: true,
-  },
-)
 </script>
 
 <template>
-  <RouterView full />
+  <RouterView />
 </template>

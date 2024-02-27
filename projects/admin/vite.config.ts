@@ -13,33 +13,21 @@ import WebfontDownload from 'vite-plugin-webfont-dl'
 import Components from 'unplugin-vue-components/vite'
 
 export default ({ mode }: any) => {
-  const minio = loadEnv(mode, path.relative(__dirname, '../gateway'), 'MINIO')
-  const desktop = loadEnv(mode, path.relative(__dirname, '../gateway'), 'DESKTOP')
-
   process.env = {
     ...process.env,
-    VITE_MINIO_ENDPOINT_INTERNAL: minio.MINIO_ENDPOINT_INTERNAL,
-    VITE_MINIO_ENDPOINT_EXTERNAL: minio.MINIO_ENDPOINT_EXTERNAL,
-    VITE_MINIO_PORT: minio.MINIO_PORT,
-    VITE_MINIO_AK: minio.MINIO_AK,
-    VITE_MINIO_SK: minio.MINIO_SK,
-    VITE_MINIO_USE_SSL: minio.MINIO_USE_SSL,
-    VITE_MINIO_BUCKET_DATA: minio.MINIO_BUCKET_DATA,
-    VITE_DESKTOP_REMOTE_POST: desktop.DESKTOP_REMOTE_PORT,
-    VITE_DESKTOP_REMOTE_SAFE: desktop.DESKTOP_REMOTE_SAFE,
     ...loadEnv(mode, path.relative(__dirname, '../shared')),
     VITE_MODE: mode,
   }
 
   return defineConfig({
-    base: process.env.VITE_BASE_ADMIN,
+    base: process.env.VITE_ADMIN_BASE,
     define: {
       'process.env': {},
     },
 
     server: {
       host: '0.0.0.0',
-      port: Number.parseInt(process.env.VITE_PORT_ADMIN || '3333', 10),
+      port: Number.parseInt(process.env.VITE_ADMIN_PORT || '3333', 10),
       proxy: {
         [process.env.VITE_API_BASE as string]: {
           target: process.env.VITE_PROXY_TARGET,
@@ -83,9 +71,6 @@ export default ({ mode }: any) => {
         ],
         dts: 'src/types/auto-imports.d.ts',
         dirs: [
-          'src/constants',
-          'src/composables',
-          'src/utils',
           '../shared/api',
           '../shared/composables',
           '../shared/constants',

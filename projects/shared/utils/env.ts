@@ -1,4 +1,4 @@
-import { parseBoolRaw } from 'zjf-utils'
+import { parseBoolRaw } from './parseBoolRaw'
 
 /**
  * 辅助函数，用于根据传入的变量名获取环境变量并进行类型转换

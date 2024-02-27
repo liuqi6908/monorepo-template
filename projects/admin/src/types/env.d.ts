@@ -1,1 +1,1 @@
-import 'shared/env.d.ts'
+import 'shared/import.d.ts'

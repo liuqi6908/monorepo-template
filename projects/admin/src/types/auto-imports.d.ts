@@ -6,58 +6,11 @@
 export {}
 declare global {
   const $http: typeof import('../../../shared/api/index')['$http']
-  const ADMIN_MENU_LIST: typeof import('../constants/admin')['ADMIN_MENU_LIST']
-  const API_BASE_URL: typeof import('../../../shared/constants/app')['API_BASE_URL']
-  const APP_MIN_WIDTH: typeof import('../../../shared/constants/app')['APP_MIN_WIDTH']
   const AUTH_TOKEN_KEY: typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']
-  const CMS_COMPONENTS: typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']
-  const CMS_CONFIG: typeof import('../../../shared/constants/cms')['CMS_CONFIG']
-  const COLLEGE_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']
-  const DATA_TABLE_COLUMNS: typeof import('../constants/table')['DATA_TABLE_COLUMNS']
-  const DESKTOP_REQUEST_TABLE_COLUMNS: typeof import('../constants/table')['DESKTOP_REQUEST_TABLE_COLUMNS']
-  const DESKTOP_TABLE_COLUMNS: typeof import('../constants/table')['DESKTOP_TABLE_COLUMNS']
-  const EXPORT_TABLE_COLUMNS: typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']
   const EffectScope: typeof import('vue')['EffectScope']
-  const ID_CARD_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']
-  const LEADING_PAGE_KEY: typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']
-  const NAME_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['NAME_REQUIREMENTS_DESC']
-  const NUMBER_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['NUMBER_REQUIREMENTS_DESC']
-  const REJECT_REASON_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/audit')['REJECT_REASON_REQUIREMENTS_DESC']
-  const REMEMBER_LOGIN_INFO_KEY: typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']
-  const RichTextProcessor: typeof import('../../../shared/utils/richText')['RichTextProcessor']
-  const SCHOOL_REQUIREMENTS_DESC: typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']
-  const TABLE_PAGINATION: typeof import('../constants/table')['TABLE_PAGINATION']
-  const USER_TABLE_COLUMNS: typeof import('../constants/table')['USER_TABLE_COLUMNS']
-  const approveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']
-  const approveExportLgApi: typeof import('../../../shared/api/exportLg')['approveExportLgApi']
-  const approveVerificationApi: typeof import('../../../shared/api/verification')['approveVerificationApi']
-  const assignDesktopApi: typeof import('../../../shared/api/desktop')['assignDesktopApi']
   const asyncComputed: typeof import('@vueuse/core')['asyncComputed']
   const authToken: typeof import('../../../shared/composables/user')['authToken']
-  const autoCreateDesktopApi: typeof import('../../../shared/api/desktop')['autoCreateDesktopApi']
   const autoResetRef: typeof import('@vueuse/core')['autoResetRef']
-  const batchApproveDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']
-  const batchApproveVerificationApi: typeof import('../../../shared/api/verification')['batchApproveVerificationApi']
-  const batchCancelVerificationApi: typeof import('../../../shared/api/verification')['batchCancelVerificationApi']
-  const batchClearDesktopDataApi: typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']
-  const batchCreateUserDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchCreateUserDesktopRequestApi']
-  const batchDeleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']
-  const batchDeleteDesktopApi: typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']
-  const batchDeleteRoleApi: typeof import('../../../shared/api/role')['batchDeleteRoleApi']
-  const batchDeleteRootApi: typeof import('../../../shared/api/data')['batchDeleteRootApi']
-  const batchDeleteUserPasswordApi: typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']
-  const batchRebootVMApi: typeof import('../../../shared/api/desktopVm')['batchRebootVMApi']
-  const batchRejectDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']
-  const batchRejectVerificationApi: typeof import('../../../shared/api/verification')['batchRejectVerificationApi']
-  const batchStartVMApi: typeof import('../../../shared/api/desktopVm')['batchStartVMApi']
-  const batchStopDesktopApi: typeof import('../../../shared/api/desktop')['batchStopDesktopApi']
-  const batchStopVMApi: typeof import('../../../shared/api/desktopVm')['batchStopVMApi']
-  const batchUpdateDesktopFtpQuotaApi: typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']
-  const batchUpdateUserDataRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']
-  const batchUpdateUserRoleApi: typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']
-  const cancelVerificationApi: typeof import('../../../shared/api/verification')['cancelVerificationApi']
-  const checkDesktopExpireManuallyApi: typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']
-  const clearDataByRootIdApi: typeof import('../../../shared/api/data')['clearDataByRootIdApi']
   const computed: typeof import('vue')['computed']
   const computedAsync: typeof import('@vueuse/core')['computedAsync']
   const computedEager: typeof import('@vueuse/core')['computedEager']
@@ -66,103 +19,34 @@ declare global {
   const controlledComputed: typeof import('@vueuse/core')['controlledComputed']
   const controlledRef: typeof import('@vueuse/core')['controlledRef']
   const createApp: typeof import('vue')['createApp']
-  const createDataSuggestApi: typeof import('../../../shared/api/dataSuggest')['createDataSuggestApi']
-  const createDesktopApi: typeof import('../../../shared/api/desktop')['createDesktopApi']
-  const createDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['createDesktopRequestApi']
   const createEventHook: typeof import('@vueuse/core')['createEventHook']
   const createGlobalState: typeof import('@vueuse/core')['createGlobalState']
   const createInjectionState: typeof import('@vueuse/core')['createInjectionState']
   const createReactiveFn: typeof import('@vueuse/core')['createReactiveFn']
   const createReusableTemplate: typeof import('@vueuse/core')['createReusableTemplate']
-  const createRootApi: typeof import('../../../shared/api/data')['createRootApi']
   const createSharedComposable: typeof import('@vueuse/core')['createSharedComposable']
   const createTemplatePromise: typeof import('@vueuse/core')['createTemplatePromise']
   const createUnrefFn: typeof import('@vueuse/core')['createUnrefFn']
-  const createUserApi: typeof import('../../../shared/api/user')['createUserApi']
-  const createVerificationApi: typeof import('../../../shared/api/verification')['createVerificationApi']
-  const createWorkApi: typeof import('../../../shared/api/work')['createWorkApi']
   const customRef: typeof import('vue')['customRef']
   const debouncedRef: typeof import('@vueuse/core')['debouncedRef']
   const debouncedWatch: typeof import('@vueuse/core')['debouncedWatch']
   const defineAsyncComponent: typeof import('vue')['defineAsyncComponent']
   const defineComponent: typeof import('vue')['defineComponent']
-  const deleteDataRoleApi: typeof import('../../../shared/api/dataPermission')['deleteDataRoleApi']
-  const deleteDataSuggestApi: typeof import('../../../shared/api/dataSuggest')['deleteDataSuggestApi']
-  const deleteDesktopApi: typeof import('../../../shared/api/desktop')['deleteDesktopApi']
-  const deleteRoleApi: typeof import('../../../shared/api/role')['deleteRoleApi']
-  const deleteRootApi: typeof import('../../../shared/api/data')['deleteRootApi']
-  const deleteUserApi: typeof import('../../../shared/api/user')['deleteUserApi']
-  const deleteWorkApi: typeof import('../../../shared/api/work')['deleteWorkApi']
-  const downloadExportLgFileApi: typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']
-  const downloadExportSmFileApi: typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']
-  const downloadOwnExportLgFileApi: typeof import('../../../shared/api/exportLg')['downloadOwnExportLgFileApi']
-  const downloadOwnExportSmFileApi: typeof import('../../../shared/api/exportSm')['downloadOwnExportSmFileApi']
-  const downloadTableData: typeof import('../utils/download')['downloadTableData']
-  const downloadWorkFileApi: typeof import('../../../shared/api/work')['downloadWorkFileApi']
   const eagerComputed: typeof import('@vueuse/core')['eagerComputed']
   const effectScope: typeof import('vue')['effectScope']
-  const exportLgApi: typeof import('../../../shared/api/exportLg')['exportLgApi']
-  const exportSmApi: typeof import('../../../shared/api/exportSm')['exportSmApi']
   const extendRef: typeof import('@vueuse/core')['extendRef']
-  const fileIsExistApi: typeof import('../../../shared/api/file')['fileIsExistApi']
-  const getAccessLast7DaysApi: typeof import('../../../shared/api/log')['getAccessLast7DaysApi']
-  const getAccessTodayApi: typeof import('../../../shared/api/log')['getAccessTodayApi']
-  const getAccessTotalApi: typeof import('../../../shared/api/log')['getAccessTotalApi']
-  const getAllDataListApi: typeof import('../../../shared/api/data')['getAllDataListApi']
-  const getCaptchaImgApi: typeof import('../../../shared/api/auth')['getCaptchaImgApi']
-  const getClusterStorageApi: typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']
-  const getCmsApi: typeof import('../../../shared/api/cms')['getCmsApi']
-  const getConfigApi: typeof import('../../../shared/api/config')['getConfigApi']
   const getCurrentInstance: typeof import('vue')['getCurrentInstance']
   const getCurrentScope: typeof import('vue')['getCurrentScope']
-  const getDataByDataRootIdApi: typeof import('../../../shared/api/data')['getDataByDataRootIdApi']
-  const getDataPreviewByTableApi: typeof import('../../../shared/api/data')['getDataPreviewByTableApi']
-  const getDataRoleListApi: typeof import('../../../shared/api/dataPermission')['getDataRoleListApi']
-  const getDataRoleNamesApi: typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']
-  const getDataSearchApi: typeof import('../../../shared/api/data')['getDataSearchApi']
-  const getDbIntroApi: typeof import('../../../shared/api/file')['getDbIntroApi']
-  const getDesktopRequestAttachmentsUrl: typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']
   const getEnvVariable: typeof import('../../../shared/utils/env')['getEnvVariable']
-  const getFieldsByTableApi: typeof import('../../../shared/api/data')['getFieldsByTableApi']
-  const getFolderFilesApi: typeof import('../../../shared/api/file')['getFolderFilesApi']
-  const getHostAllocationApi: typeof import('../../../shared/api/desktopHost')['getHostAllocationApi']
-  const getHostListApi: typeof import('../../../shared/api/desktopHost')['getHostListApi']
-  const getHostTimeSeriesApi: typeof import('../../../shared/api/desktopHost')['getHostTimeSeriesApi']
-  const getLatestVerificationApi: typeof import('../../../shared/api/verification')['getLatestVerificationApi']
-  const getLogActionsApi: typeof import('../../../shared/api/log')['getLogActionsApi']
-  const getLogMappingApi: typeof import('../../../shared/api/log')['getLogMappingApi']
-  const getLogTargetsApi: typeof import('../../../shared/api/log')['getLogTargetsApi']
-  const getOwnDesktopApi: typeof import('../../../shared/api/desktop')['getOwnDesktopApi']
-  const getOwnDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['getOwnDesktopRequestApi']
-  const getOwnProfileApi: typeof import('../../../shared/api/user')['getOwnProfileApi']
-  const getPublicFileApi: typeof import('../../../shared/api/file')['getPublicFileApi']
-  const getRolesApi: typeof import('../../../shared/api/role')['getRolesApi']
-  const getRootListApi: typeof import('../../../shared/api/data')['getRootListApi']
-  const getTableDownloadLinkApi: typeof import('../../../shared/api/data')['getTableDownloadLinkApi']
-  const getTaskStateApi: typeof import('../../../shared/api/desktop')['getTaskStateApi']
-  const getUsername: typeof import('../../../shared/utils/username')['getUsername']
-  const getVMDetailApi: typeof import('../../../shared/api/desktopVm')['getVMDetailApi']
-  const getVMListApi: typeof import('../../../shared/api/desktopVm')['getVMListApi']
-  const getVMOverviewApi: typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']
-  const getVMStateApi: typeof import('../../../shared/api/desktopVm')['getVMStateApi']
-  const getVMStateListApi: typeof import('../../../shared/api/desktopVm')['getVMStateListApi']
-  const getVerifyAttachmentsUrl: typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']
   const h: typeof import('vue')['h']
   const ignorableWatch: typeof import('@vueuse/core')['ignorableWatch']
   const inject: typeof import('vue')['inject']
+  const injectLocal: typeof import('@vueuse/core')['injectLocal']
   const isDefined: typeof import('@vueuse/core')['isDefined']
-  const isDesktopApi: typeof import('../../../shared/api/desktop')['isDesktopApi']
   const isProxy: typeof import('vue')['isProxy']
   const isReactive: typeof import('vue')['isReactive']
   const isReadonly: typeof import('vue')['isReadonly']
   const isRef: typeof import('vue')['isRef']
-  const loadingNotify: typeof import('../../../shared/utils/notify')['loadingNotify']
-  const logClusterAnalysisApi: typeof import('../../../shared/api/log')['logClusterAnalysisApi']
-  const loginByEmailCodeApi: typeof import('../../../shared/api/auth')['loginByEmailCodeApi']
-  const loginByEmailLinkApi: typeof import('../../../shared/api/auth')['loginByEmailLinkApi']
-  const loginByPasswordApi: typeof import('../../../shared/api/auth')['loginByPasswordApi']
-  const loginByPhoneCodeApi: typeof import('../../../shared/api/auth')['loginByPhoneCodeApi']
-  const logoutApi: typeof import('../../../shared/api/auth')['logoutApi']
   const makeDestructurable: typeof import('@vueuse/core')['makeDestructurable']
   const markRaw: typeof import('vue')['markRaw']
   const nextTick: typeof import('vue')['nextTick']
@@ -178,7 +62,6 @@ declare global {
   const onKeyStroke: typeof import('@vueuse/core')['onKeyStroke']
   const onLongPress: typeof import('@vueuse/core')['onLongPress']
   const onMounted: typeof import('vue')['onMounted']
-  const onRejected: typeof import('../../../shared/utils/uploadFile')['onRejected']
   const onRenderTracked: typeof import('vue')['onRenderTracked']
   const onRenderTriggered: typeof import('vue')['onRenderTriggered']
   const onScopeDispose: typeof import('vue')['onScopeDispose']
@@ -186,25 +69,10 @@ declare global {
   const onStartTyping: typeof import('@vueuse/core')['onStartTyping']
   const onUnmounted: typeof import('vue')['onUnmounted']
   const onUpdated: typeof import('vue')['onUpdated']
+  const parseBoolRaw: typeof import('../../../shared/utils/parseBoolRaw')['parseBoolRaw']
   const pausableWatch: typeof import('@vueuse/core')['pausableWatch']
   const provide: typeof import('vue')['provide']
-  const proxyQueryEsApi: typeof import('../../../shared/api/log')['proxyQueryEsApi']
-  const pubRouter: typeof import('../../../shared/composables/pubRouter')['pubRouter']
-  const queryAllExportLgApi: typeof import('../../../shared/api/exportLg')['queryAllExportLgApi']
-  const queryAllExportSmApi: typeof import('../../../shared/api/exportSm')['queryAllExportSmApi']
-  const queryAllVerificationsApi: typeof import('../../../shared/api/verification')['queryAllVerificationsApi']
-  const queryAllWorksApi: typeof import('../../../shared/api/work')['queryAllWorksApi']
-  const queryDataRoleDetailsApi: typeof import('../../../shared/api/dataPermission')['queryDataRoleDetailsApi']
-  const queryDataSuggestApi: typeof import('../../../shared/api/dataSuggest')['queryDataSuggestApi']
-  const queryDataSuggestByIdApi: typeof import('../../../shared/api/dataSuggest')['queryDataSuggestByIdApi']
-  const queryDesktopApi: typeof import('../../../shared/api/desktop')['queryDesktopApi']
-  const queryDesktopPasswordApi: typeof import('../../../shared/api/desktop')['queryDesktopPasswordApi']
-  const queryDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['queryDesktopRequestApi']
-  const queryLogByDslApi: typeof import('../../../shared/api/log')['queryLogByDslApi']
-  const queryOwnExportLgApi: typeof import('../../../shared/api/exportLg')['queryOwnExportLgApi']
-  const queryOwnExportSmApi: typeof import('../../../shared/api/exportSm')['queryOwnExportSmApi']
-  const queryOwnWorksApi: typeof import('../../../shared/api/work')['queryOwnWorksApi']
-  const queryUserListApi: typeof import('../../../shared/api/user')['queryUserListApi']
+  const provideLocal: typeof import('@vueuse/core')['provideLocal']
   const reactify: typeof import('@vueuse/core')['reactify']
   const reactifyObject: typeof import('@vueuse/core')['reactifyObject']
   const reactive: typeof import('vue')['reactive']
@@ -212,31 +80,18 @@ declare global {
   const reactiveOmit: typeof import('@vueuse/core')['reactiveOmit']
   const reactivePick: typeof import('@vueuse/core')['reactivePick']
   const readonly: typeof import('vue')['readonly']
-  const rebootVMApi: typeof import('../../../shared/api/desktopVm')['rebootVMApi']
-  const recoverUserApi: typeof import('../../../shared/api/user')['recoverUserApi']
   const ref: typeof import('vue')['ref']
   const refAutoReset: typeof import('@vueuse/core')['refAutoReset']
   const refDebounced: typeof import('@vueuse/core')['refDebounced']
   const refDefault: typeof import('@vueuse/core')['refDefault']
   const refThrottled: typeof import('@vueuse/core')['refThrottled']
   const refWithControl: typeof import('@vueuse/core')['refWithControl']
-  const registerApi: typeof import('../../../shared/api/auth')['registerApi']
-  const rejectDesktopRequestApi: typeof import('../../../shared/api/desktopRequest')['rejectDesktopRequestApi']
-  const rejectExportLgApi: typeof import('../../../shared/api/exportLg')['rejectExportLgApi']
-  const rejectVerificationApi: typeof import('../../../shared/api/verification')['rejectVerificationApi']
   const resolveComponent: typeof import('vue')['resolveComponent']
   const resolveRef: typeof import('@vueuse/core')['resolveRef']
   const resolveUnref: typeof import('@vueuse/core')['resolveUnref']
-  const rsaDecrypt: typeof import('../../../shared/utils/rsa')['rsaDecrypt']
-  const rsaEncrypt: typeof import('../../../shared/utils/rsa')['rsaEncrypt']
-  const sendEmailCodeApi: typeof import('../../../shared/api/email')['sendEmailCodeApi']
-  const sendPhoneCodeApi: typeof import('../../../shared/api/phone')['sendPhoneCodeApi']
   const shallowReactive: typeof import('vue')['shallowReactive']
   const shallowReadonly: typeof import('vue')['shallowReadonly']
   const shallowRef: typeof import('vue')['shallowRef']
-  const showUploadResult: typeof import('../utils/notify')['showUploadResult']
-  const startVMApi: typeof import('../../../shared/api/desktopVm')['startVMApi']
-  const stopVMApi: typeof import('../../../shared/api/desktopVm')['stopVMApi']
   const syncRef: typeof import('@vueuse/core')['syncRef']
   const syncRefs: typeof import('@vueuse/core')['syncRefs']
   const templateRef: typeof import('@vueuse/core')['templateRef']
@@ -253,35 +108,12 @@ declare global {
   const tryOnMounted: typeof import('@vueuse/core')['tryOnMounted']
   const tryOnScopeDispose: typeof import('@vueuse/core')['tryOnScopeDispose']
   const tryOnUnmounted: typeof import('@vueuse/core')['tryOnUnmounted']
-  const unbindOwnEmailApi: typeof import('../../../shared/api/user')['unbindOwnEmailApi']
-  const unbindOwnPhoneApi: typeof import('../../../shared/api/user')['unbindOwnPhoneApi']
   const unref: typeof import('vue')['unref']
   const unrefElement: typeof import('@vueuse/core')['unrefElement']
   const until: typeof import('@vueuse/core')['until']
-  const updateDesktopApi: typeof import('../../../shared/api/desktop')['updateDesktopApi']
-  const updateIntermediateTableApi: typeof import('../../../shared/api/data')['updateIntermediateTableApi']
-  const updateOwnEmailApi: typeof import('../../../shared/api/user')['updateOwnEmailApi']
-  const updateOwnPasswordByEmailCodeApi: typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']
-  const updateOwnPasswordByOldPasswordApi: typeof import('../../../shared/api/user')['updateOwnPasswordByOldPasswordApi']
-  const updateOwnPasswordByPhoneCodeApi: typeof import('../../../shared/api/user')['updateOwnPasswordByPhoneCodeApi']
-  const updateOwnPhoneApi: typeof import('../../../shared/api/user')['updateOwnPhoneApi']
-  const updateOwnProfileApi: typeof import('../../../shared/api/user')['updateOwnProfileApi']
-  const updateReferenceApi: typeof import('../../../shared/api/data')['updateReferenceApi']
-  const updateRootApi: typeof import('../../../shared/api/data')['updateRootApi']
-  const updateUserDataRoleApi: typeof import('../../../shared/api/user')['updateUserDataRoleApi']
-  const updateUserRoleApi: typeof import('../../../shared/api/user')['updateUserRoleApi']
-  const updateWorkApi: typeof import('../../../shared/api/work')['updateWorkApi']
-  const uploadDbIntroApi: typeof import('../../../shared/api/file')['uploadDbIntroApi']
-  const uploadDesktopRequestAttachmentsApi: typeof import('../../../shared/api/file')['uploadDesktopRequestAttachmentsApi']
-  const uploadPublicFileApi: typeof import('../../../shared/api/file')['uploadPublicFileApi']
-  const uploadTableDataApi: typeof import('../../../shared/api/data')['uploadTableDataApi']
-  const uploadVerifyAttachmentsApi: typeof import('../../../shared/api/file')['uploadVerifyAttachmentsApi']
-  const upsertCmsApi: typeof import('../../../shared/api/cms')['upsertCmsApi']
-  const upsertConfigApi: typeof import('../../../shared/api/config')['upsertConfigApi']
-  const upsertDataRoleApi: typeof import('../../../shared/api/dataPermission')['upsertDataRoleApi']
-  const upsertRoleApi: typeof import('../../../shared/api/role')['upsertRoleApi']
   const useActiveElement: typeof import('@vueuse/core')['useActiveElement']
   const useAnimate: typeof import('@vueuse/core')['useAnimate']
+  const useApp: typeof import('../../../shared/composables/app')['useApp']
   const useArrayDifference: typeof import('@vueuse/core')['useArrayDifference']
   const useArrayEvery: typeof import('@vueuse/core')['useArrayEvery']
   const useArrayFilter: typeof import('@vueuse/core')['useArrayFilter']
@@ -305,8 +137,8 @@ declare global {
   const useBrowserLocation: typeof import('@vueuse/core')['useBrowserLocation']
   const useCached: typeof import('@vueuse/core')['useCached']
   const useClipboard: typeof import('@vueuse/core')['useClipboard']
+  const useClipboardItems: typeof import('@vueuse/core')['useClipboardItems']
   const useCloned: typeof import('@vueuse/core')['useCloned']
-  const useCms: typeof import('../../../shared/composables/cms')['useCms']
   const useColorMode: typeof import('@vueuse/core')['useColorMode']
   const useConfirmDialog: typeof import('@vueuse/core')['useConfirmDialog']
   const useCounter: typeof import('@vueuse/core')['useCounter']
@@ -316,8 +148,6 @@ declare global {
   const useCurrentElement: typeof import('@vueuse/core')['useCurrentElement']
   const useCycleList: typeof import('@vueuse/core')['useCycleList']
   const useDark: typeof import('@vueuse/core')['useDark']
-  const useDataRoot: typeof import('../composables/dataRoot')['useDataRoot']
-  const useDatabase: typeof import('../../../shared/composables/database')['useDatabase']
   const useDateFormat: typeof import('@vueuse/core')['useDateFormat']
   const useDebounce: typeof import('@vueuse/core')['useDebounce']
   const useDebounceFn: typeof import('@vueuse/core')['useDebounceFn']
@@ -330,7 +160,6 @@ declare global {
   const useDocumentVisibility: typeof import('@vueuse/core')['useDocumentVisibility']
   const useDraggable: typeof import('@vueuse/core')['useDraggable']
   const useDropZone: typeof import('@vueuse/core')['useDropZone']
-  const useEditCms: typeof import('../composables/editCms')['useEditCms']
   const useElementBounding: typeof import('@vueuse/core')['useElementBounding']
   const useElementByPoint: typeof import('@vueuse/core')['useElementByPoint']
   const useElementHover: typeof import('@vueuse/core')['useElementHover']
@@ -367,8 +196,6 @@ declare global {
   const useMediaQuery: typeof import('@vueuse/core')['useMediaQuery']
   const useMemoize: typeof import('@vueuse/core')['useMemoize']
   const useMemory: typeof import('@vueuse/core')['useMemory']
-  const useMenu: typeof import('../composables/menu')['useMenu']
-  const useMinio: typeof import('../../../shared/composables/minio')['useMinio']
   const useMounted: typeof import('@vueuse/core')['useMounted']
   const useMouse: typeof import('@vueuse/core')['useMouse']
   const useMouseInElement: typeof import('@vueuse/core')['useMouseInElement']
@@ -388,7 +215,6 @@ declare global {
   const usePointer: typeof import('@vueuse/core')['usePointer']
   const usePointerLock: typeof import('@vueuse/core')['usePointerLock']
   const usePointerSwipe: typeof import('@vueuse/core')['usePointerSwipe']
-  const usePosition: typeof import('../composables/position')['usePosition']
   const usePreferredColorScheme: typeof import('@vueuse/core')['usePreferredColorScheme']
   const usePreferredContrast: typeof import('@vueuse/core')['usePreferredContrast']
   const usePreferredDark: typeof import('@vueuse/core')['usePreferredDark']
@@ -399,7 +225,6 @@ declare global {
   const useRefHistory: typeof import('@vueuse/core')['useRefHistory']
   const useRequest: typeof import('../../../shared/composables/request')['useRequest']
   const useResizeObserver: typeof import('@vueuse/core')['useResizeObserver']
-  const useRole: typeof import('../composables/role')['useRole']
   const useRoute: typeof import('vue-router')['useRoute']
   const useRouter: typeof import('vue-router')['useRouter']
   const useScreenOrientation: typeof import('@vueuse/core')['useScreenOrientation']
@@ -410,7 +235,6 @@ declare global {
   const useSeoMeta: typeof import('@vueuse/head')['useSeoMeta']
   const useSessionStorage: typeof import('@vueuse/core')['useSessionStorage']
   const useShare: typeof import('@vueuse/core')['useShare']
-  const useSidebar: typeof import('../composables/sidebar')['useSidebar']
   const useSlots: typeof import('vue')['useSlots']
   const useSorted: typeof import('@vueuse/core')['useSorted']
   const useSpeechRecognition: typeof import('@vueuse/core')['useSpeechRecognition']
@@ -421,7 +245,6 @@ declare global {
   const useStyleTag: typeof import('@vueuse/core')['useStyleTag']
   const useSupported: typeof import('@vueuse/core')['useSupported']
   const useSwipe: typeof import('@vueuse/core')['useSwipe']
-  const useSysConfig: typeof import('../../../shared/composables/app')['useSysConfig']
   const useTemplateRefsList: typeof import('@vueuse/core')['useTemplateRefsList']
   const useTextDirection: typeof import('@vueuse/core')['useTextDirection']
   const useTextSelection: typeof import('@vueuse/core')['useTextSelection']
@@ -454,17 +277,6 @@ declare global {
   const useWindowFocus: typeof import('@vueuse/core')['useWindowFocus']
   const useWindowScroll: typeof import('@vueuse/core')['useWindowScroll']
   const useWindowSize: typeof import('@vueuse/core')['useWindowSize']
-  const validateAdminRoleDesc: typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleDesc']
-  const validateAdminRoleName: typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleName']
-  const validateCollege: typeof import('../../../shared/utils/validator/verification')['validateCollege']
-  const validateDataRoleDesc: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']
-  const validateDataRoleName: typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']
-  const validateDataRootId: typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']
-  const validateIdCard: typeof import('../../../shared/utils/validator/verification')['validateIdCard']
-  const validateName: typeof import('../../../shared/utils/validator/verification')['validateName']
-  const validateNumber: typeof import('../../../shared/utils/validator/verification')['validateNumber']
-  const validateRejectReason: typeof import('../../../shared/utils/validator/audit')['validateRejectReason']
-  const validateSchool: typeof import('../../../shared/utils/validator/verification')['validateSchool']
   const watch: typeof import('vue')['watch']
   const watchArray: typeof import('@vueuse/core')['watchArray']
   const watchAtMost: typeof import('@vueuse/core')['watchAtMost']
@@ -493,58 +305,11 @@ import { UnwrapRef } from 'vue'
 declare module 'vue' {
   interface ComponentCustomProperties {
     readonly $http: UnwrapRef<typeof import('../../../shared/api/index')['$http']>
-    readonly ADMIN_MENU_LIST: UnwrapRef<typeof import('../constants/admin')['ADMIN_MENU_LIST']>
-    readonly API_BASE_URL: UnwrapRef<typeof import('../../../shared/constants/app')['API_BASE_URL']>
-    readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
-    readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
-    readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
-    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']>
-    readonly DATA_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DATA_TABLE_COLUMNS']>
-    readonly DESKTOP_REQUEST_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DESKTOP_REQUEST_TABLE_COLUMNS']>
-    readonly DESKTOP_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DESKTOP_TABLE_COLUMNS']>
-    readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']>
-    readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
-    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NAME_REQUIREMENTS_DESC']>
-    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NUMBER_REQUIREMENTS_DESC']>
-    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['REJECT_REASON_REQUIREMENTS_DESC']>
-    readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
-    readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
-    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']>
-    readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
-    readonly USER_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['USER_TABLE_COLUMNS']>
-    readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
-    readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
-    readonly approveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['approveVerificationApi']>
-    readonly assignDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['assignDesktopApi']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
-    readonly autoCreateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['autoCreateDesktopApi']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
-    readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
-    readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
-    readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
-    readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
-    readonly batchCreateUserDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchCreateUserDesktopRequestApi']>
-    readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
-    readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
-    readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
-    readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
-    readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
-    readonly batchRebootVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchRebootVMApi']>
-    readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
-    readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
-    readonly batchStartVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStartVMApi']>
-    readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
-    readonly batchStopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStopVMApi']>
-    readonly batchUpdateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']>
-    readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
-    readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
-    readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
-    readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
-    readonly clearDataByRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['clearDataByRootIdApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -553,103 +318,34 @@ declare module 'vue' {
     readonly controlledComputed: UnwrapRef<typeof import('@vueuse/core')['controlledComputed']>
     readonly controlledRef: UnwrapRef<typeof import('@vueuse/core')['controlledRef']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
-    readonly createDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['createDataSuggestApi']>
-    readonly createDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['createDesktopApi']>
-    readonly createDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['createDesktopRequestApi']>
     readonly createEventHook: UnwrapRef<typeof import('@vueuse/core')['createEventHook']>
     readonly createGlobalState: UnwrapRef<typeof import('@vueuse/core')['createGlobalState']>
     readonly createInjectionState: UnwrapRef<typeof import('@vueuse/core')['createInjectionState']>
     readonly createReactiveFn: UnwrapRef<typeof import('@vueuse/core')['createReactiveFn']>
     readonly createReusableTemplate: UnwrapRef<typeof import('@vueuse/core')['createReusableTemplate']>
-    readonly createRootApi: UnwrapRef<typeof import('../../../shared/api/data')['createRootApi']>
     readonly createSharedComposable: UnwrapRef<typeof import('@vueuse/core')['createSharedComposable']>
     readonly createTemplatePromise: UnwrapRef<typeof import('@vueuse/core')['createTemplatePromise']>
     readonly createUnrefFn: UnwrapRef<typeof import('@vueuse/core')['createUnrefFn']>
-    readonly createUserApi: UnwrapRef<typeof import('../../../shared/api/user')['createUserApi']>
-    readonly createVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['createVerificationApi']>
-    readonly createWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['createWorkApi']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly debouncedRef: UnwrapRef<typeof import('@vueuse/core')['debouncedRef']>
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly deleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['deleteDataRoleApi']>
-    readonly deleteDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['deleteDataSuggestApi']>
-    readonly deleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['deleteDesktopApi']>
-    readonly deleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['deleteRoleApi']>
-    readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
-    readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
-    readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
-    readonly downloadExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']>
-    readonly downloadExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']>
-    readonly downloadOwnExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadOwnExportLgFileApi']>
-    readonly downloadOwnExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadOwnExportSmFileApi']>
-    readonly downloadTableData: UnwrapRef<typeof import('../utils/download')['downloadTableData']>
-    readonly downloadWorkFileApi: UnwrapRef<typeof import('../../../shared/api/work')['downloadWorkFileApi']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
-    readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
-    readonly exportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['exportSmApi']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
-    readonly fileIsExistApi: UnwrapRef<typeof import('../../../shared/api/file')['fileIsExistApi']>
-    readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
-    readonly getAccessTodayApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTodayApi']>
-    readonly getAccessTotalApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTotalApi']>
-    readonly getAllDataListApi: UnwrapRef<typeof import('../../../shared/api/data')['getAllDataListApi']>
-    readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/auth')['getCaptchaImgApi']>
-    readonly getClusterStorageApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']>
-    readonly getCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['getCmsApi']>
-    readonly getConfigApi: UnwrapRef<typeof import('../../../shared/api/config')['getConfigApi']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly getDataByDataRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataByDataRootIdApi']>
-    readonly getDataPreviewByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataPreviewByTableApi']>
-    readonly getDataRoleListApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleListApi']>
-    readonly getDataRoleNamesApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']>
-    readonly getDataSearchApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataSearchApi']>
-    readonly getDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['getDbIntroApi']>
-    readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
     readonly getEnvVariable: UnwrapRef<typeof import('../../../shared/utils/env')['getEnvVariable']>
-    readonly getFieldsByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getFieldsByTableApi']>
-    readonly getFolderFilesApi: UnwrapRef<typeof import('../../../shared/api/file')['getFolderFilesApi']>
-    readonly getHostAllocationApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getHostAllocationApi']>
-    readonly getHostListApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getHostListApi']>
-    readonly getHostTimeSeriesApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getHostTimeSeriesApi']>
-    readonly getLatestVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['getLatestVerificationApi']>
-    readonly getLogActionsApi: UnwrapRef<typeof import('../../../shared/api/log')['getLogActionsApi']>
-    readonly getLogMappingApi: UnwrapRef<typeof import('../../../shared/api/log')['getLogMappingApi']>
-    readonly getLogTargetsApi: UnwrapRef<typeof import('../../../shared/api/log')['getLogTargetsApi']>
-    readonly getOwnDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getOwnDesktopApi']>
-    readonly getOwnDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['getOwnDesktopRequestApi']>
-    readonly getOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['getOwnProfileApi']>
-    readonly getPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['getPublicFileApi']>
-    readonly getRolesApi: UnwrapRef<typeof import('../../../shared/api/role')['getRolesApi']>
-    readonly getRootListApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootListApi']>
-    readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../../shared/api/data')['getTableDownloadLinkApi']>
-    readonly getTaskStateApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getTaskStateApi']>
-    readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
-    readonly getVMDetailApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMDetailApi']>
-    readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMListApi']>
-    readonly getVMOverviewApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']>
-    readonly getVMStateApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateApi']>
-    readonly getVMStateListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateListApi']>
-    readonly getVerifyAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
+    readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
-    readonly isDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['isDesktopApi']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
-    readonly loadingNotify: UnwrapRef<typeof import('../../../shared/utils/notify')['loadingNotify']>
-    readonly logClusterAnalysisApi: UnwrapRef<typeof import('../../../shared/api/log')['logClusterAnalysisApi']>
-    readonly loginByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByEmailCodeApi']>
-    readonly loginByEmailLinkApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByEmailLinkApi']>
-    readonly loginByPasswordApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByPasswordApi']>
-    readonly loginByPhoneCodeApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByPhoneCodeApi']>
-    readonly logoutApi: UnwrapRef<typeof import('../../../shared/api/auth')['logoutApi']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
@@ -665,7 +361,6 @@ declare module 'vue' {
     readonly onKeyStroke: UnwrapRef<typeof import('@vueuse/core')['onKeyStroke']>
     readonly onLongPress: UnwrapRef<typeof import('@vueuse/core')['onLongPress']>
     readonly onMounted: UnwrapRef<typeof import('vue')['onMounted']>
-    readonly onRejected: UnwrapRef<typeof import('../../../shared/utils/uploadFile')['onRejected']>
     readonly onRenderTracked: UnwrapRef<typeof import('vue')['onRenderTracked']>
     readonly onRenderTriggered: UnwrapRef<typeof import('vue')['onRenderTriggered']>
     readonly onScopeDispose: UnwrapRef<typeof import('vue')['onScopeDispose']>
@@ -673,25 +368,10 @@ declare module 'vue' {
     readonly onStartTyping: UnwrapRef<typeof import('@vueuse/core')['onStartTyping']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly parseBoolRaw: UnwrapRef<typeof import('../../../shared/utils/parseBoolRaw')['parseBoolRaw']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
-    readonly proxyQueryEsApi: UnwrapRef<typeof import('../../../shared/api/log')['proxyQueryEsApi']>
-    readonly pubRouter: UnwrapRef<typeof import('../../../shared/composables/pubRouter')['pubRouter']>
-    readonly queryAllExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryAllExportLgApi']>
-    readonly queryAllExportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['queryAllExportSmApi']>
-    readonly queryAllVerificationsApi: UnwrapRef<typeof import('../../../shared/api/verification')['queryAllVerificationsApi']>
-    readonly queryAllWorksApi: UnwrapRef<typeof import('../../../shared/api/work')['queryAllWorksApi']>
-    readonly queryDataRoleDetailsApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['queryDataRoleDetailsApi']>
-    readonly queryDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestApi']>
-    readonly queryDataSuggestByIdApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestByIdApi']>
-    readonly queryDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopApi']>
-    readonly queryDesktopPasswordApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopPasswordApi']>
-    readonly queryDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['queryDesktopRequestApi']>
-    readonly queryLogByDslApi: UnwrapRef<typeof import('../../../shared/api/log')['queryLogByDslApi']>
-    readonly queryOwnExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryOwnExportLgApi']>
-    readonly queryOwnExportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['queryOwnExportSmApi']>
-    readonly queryOwnWorksApi: UnwrapRef<typeof import('../../../shared/api/work')['queryOwnWorksApi']>
-    readonly queryUserListApi: UnwrapRef<typeof import('../../../shared/api/user')['queryUserListApi']>
+    readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -699,31 +379,18 @@ declare module 'vue' {
     readonly reactiveOmit: UnwrapRef<typeof import('@vueuse/core')['reactiveOmit']>
     readonly reactivePick: UnwrapRef<typeof import('@vueuse/core')['reactivePick']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
-    readonly rebootVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['rebootVMApi']>
-    readonly recoverUserApi: UnwrapRef<typeof import('../../../shared/api/user')['recoverUserApi']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refAutoReset: UnwrapRef<typeof import('@vueuse/core')['refAutoReset']>
     readonly refDebounced: UnwrapRef<typeof import('@vueuse/core')['refDebounced']>
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
-    readonly registerApi: UnwrapRef<typeof import('../../../shared/api/auth')['registerApi']>
-    readonly rejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['rejectDesktopRequestApi']>
-    readonly rejectExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['rejectExportLgApi']>
-    readonly rejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['rejectVerificationApi']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
-    readonly rsaDecrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaDecrypt']>
-    readonly rsaEncrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaEncrypt']>
-    readonly sendEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/email')['sendEmailCodeApi']>
-    readonly sendPhoneCodeApi: UnwrapRef<typeof import('../../../shared/api/phone')['sendPhoneCodeApi']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
-    readonly showUploadResult: UnwrapRef<typeof import('../utils/notify')['showUploadResult']>
-    readonly startVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['startVMApi']>
-    readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
@@ -740,35 +407,12 @@ declare module 'vue' {
     readonly tryOnMounted: UnwrapRef<typeof import('@vueuse/core')['tryOnMounted']>
     readonly tryOnScopeDispose: UnwrapRef<typeof import('@vueuse/core')['tryOnScopeDispose']>
     readonly tryOnUnmounted: UnwrapRef<typeof import('@vueuse/core')['tryOnUnmounted']>
-    readonly unbindOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['unbindOwnEmailApi']>
-    readonly unbindOwnPhoneApi: UnwrapRef<typeof import('../../../shared/api/user')['unbindOwnPhoneApi']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
-    readonly updateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopApi']>
-    readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../../shared/api/data')['updateIntermediateTableApi']>
-    readonly updateOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnEmailApi']>
-    readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
-    readonly updateOwnPasswordByOldPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByOldPasswordApi']>
-    readonly updateOwnPasswordByPhoneCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByPhoneCodeApi']>
-    readonly updateOwnPhoneApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPhoneApi']>
-    readonly updateOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnProfileApi']>
-    readonly updateReferenceApi: UnwrapRef<typeof import('../../../shared/api/data')['updateReferenceApi']>
-    readonly updateRootApi: UnwrapRef<typeof import('../../../shared/api/data')['updateRootApi']>
-    readonly updateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserDataRoleApi']>
-    readonly updateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserRoleApi']>
-    readonly updateWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['updateWorkApi']>
-    readonly uploadDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDbIntroApi']>
-    readonly uploadDesktopRequestAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDesktopRequestAttachmentsApi']>
-    readonly uploadPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadPublicFileApi']>
-    readonly uploadTableDataApi: UnwrapRef<typeof import('../../../shared/api/data')['uploadTableDataApi']>
-    readonly uploadVerifyAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadVerifyAttachmentsApi']>
-    readonly upsertCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['upsertCmsApi']>
-    readonly upsertConfigApi: UnwrapRef<typeof import('../../../shared/api/config')['upsertConfigApi']>
-    readonly upsertDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['upsertDataRoleApi']>
-    readonly upsertRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['upsertRoleApi']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
+    readonly useApp: UnwrapRef<typeof import('../../../shared/composables/app')['useApp']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
@@ -792,8 +436,8 @@ declare module 'vue' {
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
+    readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
-    readonly useCms: UnwrapRef<typeof import('../../../shared/composables/cms')['useCms']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
@@ -803,8 +447,6 @@ declare module 'vue' {
     readonly useCurrentElement: UnwrapRef<typeof import('@vueuse/core')['useCurrentElement']>
     readonly useCycleList: UnwrapRef<typeof import('@vueuse/core')['useCycleList']>
     readonly useDark: UnwrapRef<typeof import('@vueuse/core')['useDark']>
-    readonly useDataRoot: UnwrapRef<typeof import('../composables/dataRoot')['useDataRoot']>
-    readonly useDatabase: UnwrapRef<typeof import('../../../shared/composables/database')['useDatabase']>
     readonly useDateFormat: UnwrapRef<typeof import('@vueuse/core')['useDateFormat']>
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
@@ -817,7 +459,6 @@ declare module 'vue' {
     readonly useDocumentVisibility: UnwrapRef<typeof import('@vueuse/core')['useDocumentVisibility']>
     readonly useDraggable: UnwrapRef<typeof import('@vueuse/core')['useDraggable']>
     readonly useDropZone: UnwrapRef<typeof import('@vueuse/core')['useDropZone']>
-    readonly useEditCms: UnwrapRef<typeof import('../composables/editCms')['useEditCms']>
     readonly useElementBounding: UnwrapRef<typeof import('@vueuse/core')['useElementBounding']>
     readonly useElementByPoint: UnwrapRef<typeof import('@vueuse/core')['useElementByPoint']>
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
@@ -854,8 +495,6 @@ declare module 'vue' {
     readonly useMediaQuery: UnwrapRef<typeof import('@vueuse/core')['useMediaQuery']>
     readonly useMemoize: UnwrapRef<typeof import('@vueuse/core')['useMemoize']>
     readonly useMemory: UnwrapRef<typeof import('@vueuse/core')['useMemory']>
-    readonly useMenu: UnwrapRef<typeof import('../composables/menu')['useMenu']>
-    readonly useMinio: UnwrapRef<typeof import('../../../shared/composables/minio')['useMinio']>
     readonly useMounted: UnwrapRef<typeof import('@vueuse/core')['useMounted']>
     readonly useMouse: UnwrapRef<typeof import('@vueuse/core')['useMouse']>
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
@@ -875,7 +514,6 @@ declare module 'vue' {
     readonly usePointer: UnwrapRef<typeof import('@vueuse/core')['usePointer']>
     readonly usePointerLock: UnwrapRef<typeof import('@vueuse/core')['usePointerLock']>
     readonly usePointerSwipe: UnwrapRef<typeof import('@vueuse/core')['usePointerSwipe']>
-    readonly usePosition: UnwrapRef<typeof import('../composables/position')['usePosition']>
     readonly usePreferredColorScheme: UnwrapRef<typeof import('@vueuse/core')['usePreferredColorScheme']>
     readonly usePreferredContrast: UnwrapRef<typeof import('@vueuse/core')['usePreferredContrast']>
     readonly usePreferredDark: UnwrapRef<typeof import('@vueuse/core')['usePreferredDark']>
@@ -886,7 +524,6 @@ declare module 'vue' {
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
     readonly useRequest: UnwrapRef<typeof import('../../../shared/composables/request')['useRequest']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
-    readonly useRole: UnwrapRef<typeof import('../composables/role')['useRole']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
     readonly useScreenOrientation: UnwrapRef<typeof import('@vueuse/core')['useScreenOrientation']>
@@ -897,7 +534,6 @@ declare module 'vue' {
     readonly useSeoMeta: UnwrapRef<typeof import('@vueuse/head')['useSeoMeta']>
     readonly useSessionStorage: UnwrapRef<typeof import('@vueuse/core')['useSessionStorage']>
     readonly useShare: UnwrapRef<typeof import('@vueuse/core')['useShare']>
-    readonly useSidebar: UnwrapRef<typeof import('../composables/sidebar')['useSidebar']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSorted: UnwrapRef<typeof import('@vueuse/core')['useSorted']>
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>
@@ -908,7 +544,6 @@ declare module 'vue' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
-    readonly useSysConfig: UnwrapRef<typeof import('../../../shared/composables/app')['useSysConfig']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
     readonly useTextSelection: UnwrapRef<typeof import('@vueuse/core')['useTextSelection']>
@@ -941,17 +576,6 @@ declare module 'vue' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly validateAdminRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleDesc']>
-    readonly validateAdminRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleName']>
-    readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
-    readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
-    readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
-    readonly validateDataRootId: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']>
-    readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
-    readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
-    readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
-    readonly validateRejectReason: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['validateRejectReason']>
-    readonly validateSchool: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateSchool']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
@@ -973,58 +597,11 @@ declare module 'vue' {
 declare module '@vue/runtime-core' {
   interface ComponentCustomProperties {
     readonly $http: UnwrapRef<typeof import('../../../shared/api/index')['$http']>
-    readonly ADMIN_MENU_LIST: UnwrapRef<typeof import('../constants/admin')['ADMIN_MENU_LIST']>
-    readonly API_BASE_URL: UnwrapRef<typeof import('../../../shared/constants/app')['API_BASE_URL']>
-    readonly APP_MIN_WIDTH: UnwrapRef<typeof import('../../../shared/constants/app')['APP_MIN_WIDTH']>
     readonly AUTH_TOKEN_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['AUTH_TOKEN_KEY']>
-    readonly CMS_COMPONENTS: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_COMPONENTS']>
-    readonly CMS_CONFIG: UnwrapRef<typeof import('../../../shared/constants/cms')['CMS_CONFIG']>
-    readonly COLLEGE_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['COLLEGE_REQUIREMENTS_DESC']>
-    readonly DATA_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DATA_TABLE_COLUMNS']>
-    readonly DESKTOP_REQUEST_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DESKTOP_REQUEST_TABLE_COLUMNS']>
-    readonly DESKTOP_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['DESKTOP_TABLE_COLUMNS']>
-    readonly EXPORT_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['EXPORT_TABLE_COLUMNS']>
     readonly EffectScope: UnwrapRef<typeof import('vue')['EffectScope']>
-    readonly ID_CARD_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['ID_CARD_REQUIREMENTS_DESC']>
-    readonly LEADING_PAGE_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['LEADING_PAGE_KEY']>
-    readonly NAME_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NAME_REQUIREMENTS_DESC']>
-    readonly NUMBER_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['NUMBER_REQUIREMENTS_DESC']>
-    readonly REJECT_REASON_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['REJECT_REASON_REQUIREMENTS_DESC']>
-    readonly REMEMBER_LOGIN_INFO_KEY: UnwrapRef<typeof import('../../../shared/constants/storage')['REMEMBER_LOGIN_INFO_KEY']>
-    readonly RichTextProcessor: UnwrapRef<typeof import('../../../shared/utils/richText')['RichTextProcessor']>
-    readonly SCHOOL_REQUIREMENTS_DESC: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['SCHOOL_REQUIREMENTS_DESC']>
-    readonly TABLE_PAGINATION: UnwrapRef<typeof import('../constants/table')['TABLE_PAGINATION']>
-    readonly USER_TABLE_COLUMNS: UnwrapRef<typeof import('../constants/table')['USER_TABLE_COLUMNS']>
-    readonly approveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['approveDesktopRequestApi']>
-    readonly approveExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['approveExportLgApi']>
-    readonly approveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['approveVerificationApi']>
-    readonly assignDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['assignDesktopApi']>
     readonly asyncComputed: UnwrapRef<typeof import('@vueuse/core')['asyncComputed']>
     readonly authToken: UnwrapRef<typeof import('../../../shared/composables/user')['authToken']>
-    readonly autoCreateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['autoCreateDesktopApi']>
     readonly autoResetRef: UnwrapRef<typeof import('@vueuse/core')['autoResetRef']>
-    readonly batchApproveDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchApproveDesktopRequestApi']>
-    readonly batchApproveVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchApproveVerificationApi']>
-    readonly batchCancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchCancelVerificationApi']>
-    readonly batchClearDesktopDataApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchClearDesktopDataApi']>
-    readonly batchCreateUserDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchCreateUserDesktopRequestApi']>
-    readonly batchDeleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['batchDeleteDataRoleApi']>
-    readonly batchDeleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchDeleteDesktopApi']>
-    readonly batchDeleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['batchDeleteRoleApi']>
-    readonly batchDeleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['batchDeleteRootApi']>
-    readonly batchDeleteUserPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['batchDeleteUserPasswordApi']>
-    readonly batchRebootVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchRebootVMApi']>
-    readonly batchRejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['batchRejectDesktopRequestApi']>
-    readonly batchRejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['batchRejectVerificationApi']>
-    readonly batchStartVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStartVMApi']>
-    readonly batchStopDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchStopDesktopApi']>
-    readonly batchStopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['batchStopVMApi']>
-    readonly batchUpdateDesktopFtpQuotaApi: UnwrapRef<typeof import('../../../shared/api/desktop')['batchUpdateDesktopFtpQuotaApi']>
-    readonly batchUpdateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserDataRoleApi']>
-    readonly batchUpdateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['batchUpdateUserRoleApi']>
-    readonly cancelVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['cancelVerificationApi']>
-    readonly checkDesktopExpireManuallyApi: UnwrapRef<typeof import('../../../shared/api/desktop')['checkDesktopExpireManuallyApi']>
-    readonly clearDataByRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['clearDataByRootIdApi']>
     readonly computed: UnwrapRef<typeof import('vue')['computed']>
     readonly computedAsync: UnwrapRef<typeof import('@vueuse/core')['computedAsync']>
     readonly computedEager: UnwrapRef<typeof import('@vueuse/core')['computedEager']>
@@ -1033,103 +610,34 @@ declare module '@vue/runtime-core' {
     readonly controlledComputed: UnwrapRef<typeof import('@vueuse/core')['controlledComputed']>
     readonly controlledRef: UnwrapRef<typeof import('@vueuse/core')['controlledRef']>
     readonly createApp: UnwrapRef<typeof import('vue')['createApp']>
-    readonly createDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['createDataSuggestApi']>
-    readonly createDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['createDesktopApi']>
-    readonly createDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['createDesktopRequestApi']>
     readonly createEventHook: UnwrapRef<typeof import('@vueuse/core')['createEventHook']>
     readonly createGlobalState: UnwrapRef<typeof import('@vueuse/core')['createGlobalState']>
     readonly createInjectionState: UnwrapRef<typeof import('@vueuse/core')['createInjectionState']>
     readonly createReactiveFn: UnwrapRef<typeof import('@vueuse/core')['createReactiveFn']>
     readonly createReusableTemplate: UnwrapRef<typeof import('@vueuse/core')['createReusableTemplate']>
-    readonly createRootApi: UnwrapRef<typeof import('../../../shared/api/data')['createRootApi']>
     readonly createSharedComposable: UnwrapRef<typeof import('@vueuse/core')['createSharedComposable']>
     readonly createTemplatePromise: UnwrapRef<typeof import('@vueuse/core')['createTemplatePromise']>
     readonly createUnrefFn: UnwrapRef<typeof import('@vueuse/core')['createUnrefFn']>
-    readonly createUserApi: UnwrapRef<typeof import('../../../shared/api/user')['createUserApi']>
-    readonly createVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['createVerificationApi']>
-    readonly createWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['createWorkApi']>
     readonly customRef: UnwrapRef<typeof import('vue')['customRef']>
     readonly debouncedRef: UnwrapRef<typeof import('@vueuse/core')['debouncedRef']>
     readonly debouncedWatch: UnwrapRef<typeof import('@vueuse/core')['debouncedWatch']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('vue')['defineAsyncComponent']>
     readonly defineComponent: UnwrapRef<typeof import('vue')['defineComponent']>
-    readonly deleteDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['deleteDataRoleApi']>
-    readonly deleteDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['deleteDataSuggestApi']>
-    readonly deleteDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['deleteDesktopApi']>
-    readonly deleteRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['deleteRoleApi']>
-    readonly deleteRootApi: UnwrapRef<typeof import('../../../shared/api/data')['deleteRootApi']>
-    readonly deleteUserApi: UnwrapRef<typeof import('../../../shared/api/user')['deleteUserApi']>
-    readonly deleteWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['deleteWorkApi']>
-    readonly downloadExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadExportLgFileApi']>
-    readonly downloadExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadExportSmFileApi']>
-    readonly downloadOwnExportLgFileApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['downloadOwnExportLgFileApi']>
-    readonly downloadOwnExportSmFileApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['downloadOwnExportSmFileApi']>
-    readonly downloadTableData: UnwrapRef<typeof import('../utils/download')['downloadTableData']>
-    readonly downloadWorkFileApi: UnwrapRef<typeof import('../../../shared/api/work')['downloadWorkFileApi']>
     readonly eagerComputed: UnwrapRef<typeof import('@vueuse/core')['eagerComputed']>
     readonly effectScope: UnwrapRef<typeof import('vue')['effectScope']>
-    readonly exportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['exportLgApi']>
-    readonly exportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['exportSmApi']>
     readonly extendRef: UnwrapRef<typeof import('@vueuse/core')['extendRef']>
-    readonly fileIsExistApi: UnwrapRef<typeof import('../../../shared/api/file')['fileIsExistApi']>
-    readonly getAccessLast7DaysApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessLast7DaysApi']>
-    readonly getAccessTodayApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTodayApi']>
-    readonly getAccessTotalApi: UnwrapRef<typeof import('../../../shared/api/log')['getAccessTotalApi']>
-    readonly getAllDataListApi: UnwrapRef<typeof import('../../../shared/api/data')['getAllDataListApi']>
-    readonly getCaptchaImgApi: UnwrapRef<typeof import('../../../shared/api/auth')['getCaptchaImgApi']>
-    readonly getClusterStorageApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getClusterStorageApi']>
-    readonly getCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['getCmsApi']>
-    readonly getConfigApi: UnwrapRef<typeof import('../../../shared/api/config')['getConfigApi']>
     readonly getCurrentInstance: UnwrapRef<typeof import('vue')['getCurrentInstance']>
     readonly getCurrentScope: UnwrapRef<typeof import('vue')['getCurrentScope']>
-    readonly getDataByDataRootIdApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataByDataRootIdApi']>
-    readonly getDataPreviewByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataPreviewByTableApi']>
-    readonly getDataRoleListApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleListApi']>
-    readonly getDataRoleNamesApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['getDataRoleNamesApi']>
-    readonly getDataSearchApi: UnwrapRef<typeof import('../../../shared/api/data')['getDataSearchApi']>
-    readonly getDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['getDbIntroApi']>
-    readonly getDesktopRequestAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getDesktopRequestAttachmentsUrl']>
     readonly getEnvVariable: UnwrapRef<typeof import('../../../shared/utils/env')['getEnvVariable']>
-    readonly getFieldsByTableApi: UnwrapRef<typeof import('../../../shared/api/data')['getFieldsByTableApi']>
-    readonly getFolderFilesApi: UnwrapRef<typeof import('../../../shared/api/file')['getFolderFilesApi']>
-    readonly getHostAllocationApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getHostAllocationApi']>
-    readonly getHostListApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getHostListApi']>
-    readonly getHostTimeSeriesApi: UnwrapRef<typeof import('../../../shared/api/desktopHost')['getHostTimeSeriesApi']>
-    readonly getLatestVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['getLatestVerificationApi']>
-    readonly getLogActionsApi: UnwrapRef<typeof import('../../../shared/api/log')['getLogActionsApi']>
-    readonly getLogMappingApi: UnwrapRef<typeof import('../../../shared/api/log')['getLogMappingApi']>
-    readonly getLogTargetsApi: UnwrapRef<typeof import('../../../shared/api/log')['getLogTargetsApi']>
-    readonly getOwnDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getOwnDesktopApi']>
-    readonly getOwnDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['getOwnDesktopRequestApi']>
-    readonly getOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['getOwnProfileApi']>
-    readonly getPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['getPublicFileApi']>
-    readonly getRolesApi: UnwrapRef<typeof import('../../../shared/api/role')['getRolesApi']>
-    readonly getRootListApi: UnwrapRef<typeof import('../../../shared/api/data')['getRootListApi']>
-    readonly getTableDownloadLinkApi: UnwrapRef<typeof import('../../../shared/api/data')['getTableDownloadLinkApi']>
-    readonly getTaskStateApi: UnwrapRef<typeof import('../../../shared/api/desktop')['getTaskStateApi']>
-    readonly getUsername: UnwrapRef<typeof import('../../../shared/utils/username')['getUsername']>
-    readonly getVMDetailApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMDetailApi']>
-    readonly getVMListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMListApi']>
-    readonly getVMOverviewApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMOverviewApi']>
-    readonly getVMStateApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateApi']>
-    readonly getVMStateListApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['getVMStateListApi']>
-    readonly getVerifyAttachmentsUrl: UnwrapRef<typeof import('../../../shared/api/file')['getVerifyAttachmentsUrl']>
     readonly h: UnwrapRef<typeof import('vue')['h']>
     readonly ignorableWatch: UnwrapRef<typeof import('@vueuse/core')['ignorableWatch']>
     readonly inject: UnwrapRef<typeof import('vue')['inject']>
+    readonly injectLocal: UnwrapRef<typeof import('@vueuse/core')['injectLocal']>
     readonly isDefined: UnwrapRef<typeof import('@vueuse/core')['isDefined']>
-    readonly isDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['isDesktopApi']>
     readonly isProxy: UnwrapRef<typeof import('vue')['isProxy']>
     readonly isReactive: UnwrapRef<typeof import('vue')['isReactive']>
     readonly isReadonly: UnwrapRef<typeof import('vue')['isReadonly']>
     readonly isRef: UnwrapRef<typeof import('vue')['isRef']>
-    readonly loadingNotify: UnwrapRef<typeof import('../../../shared/utils/notify')['loadingNotify']>
-    readonly logClusterAnalysisApi: UnwrapRef<typeof import('../../../shared/api/log')['logClusterAnalysisApi']>
-    readonly loginByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByEmailCodeApi']>
-    readonly loginByEmailLinkApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByEmailLinkApi']>
-    readonly loginByPasswordApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByPasswordApi']>
-    readonly loginByPhoneCodeApi: UnwrapRef<typeof import('../../../shared/api/auth')['loginByPhoneCodeApi']>
-    readonly logoutApi: UnwrapRef<typeof import('../../../shared/api/auth')['logoutApi']>
     readonly makeDestructurable: UnwrapRef<typeof import('@vueuse/core')['makeDestructurable']>
     readonly markRaw: UnwrapRef<typeof import('vue')['markRaw']>
     readonly nextTick: UnwrapRef<typeof import('vue')['nextTick']>
@@ -1145,7 +653,6 @@ declare module '@vue/runtime-core' {
     readonly onKeyStroke: UnwrapRef<typeof import('@vueuse/core')['onKeyStroke']>
     readonly onLongPress: UnwrapRef<typeof import('@vueuse/core')['onLongPress']>
     readonly onMounted: UnwrapRef<typeof import('vue')['onMounted']>
-    readonly onRejected: UnwrapRef<typeof import('../../../shared/utils/uploadFile')['onRejected']>
     readonly onRenderTracked: UnwrapRef<typeof import('vue')['onRenderTracked']>
     readonly onRenderTriggered: UnwrapRef<typeof import('vue')['onRenderTriggered']>
     readonly onScopeDispose: UnwrapRef<typeof import('vue')['onScopeDispose']>
@@ -1153,25 +660,10 @@ declare module '@vue/runtime-core' {
     readonly onStartTyping: UnwrapRef<typeof import('@vueuse/core')['onStartTyping']>
     readonly onUnmounted: UnwrapRef<typeof import('vue')['onUnmounted']>
     readonly onUpdated: UnwrapRef<typeof import('vue')['onUpdated']>
+    readonly parseBoolRaw: UnwrapRef<typeof import('../../../shared/utils/parseBoolRaw')['parseBoolRaw']>
     readonly pausableWatch: UnwrapRef<typeof import('@vueuse/core')['pausableWatch']>
     readonly provide: UnwrapRef<typeof import('vue')['provide']>
-    readonly proxyQueryEsApi: UnwrapRef<typeof import('../../../shared/api/log')['proxyQueryEsApi']>
-    readonly pubRouter: UnwrapRef<typeof import('../../../shared/composables/pubRouter')['pubRouter']>
-    readonly queryAllExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryAllExportLgApi']>
-    readonly queryAllExportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['queryAllExportSmApi']>
-    readonly queryAllVerificationsApi: UnwrapRef<typeof import('../../../shared/api/verification')['queryAllVerificationsApi']>
-    readonly queryAllWorksApi: UnwrapRef<typeof import('../../../shared/api/work')['queryAllWorksApi']>
-    readonly queryDataRoleDetailsApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['queryDataRoleDetailsApi']>
-    readonly queryDataSuggestApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestApi']>
-    readonly queryDataSuggestByIdApi: UnwrapRef<typeof import('../../../shared/api/dataSuggest')['queryDataSuggestByIdApi']>
-    readonly queryDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopApi']>
-    readonly queryDesktopPasswordApi: UnwrapRef<typeof import('../../../shared/api/desktop')['queryDesktopPasswordApi']>
-    readonly queryDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['queryDesktopRequestApi']>
-    readonly queryLogByDslApi: UnwrapRef<typeof import('../../../shared/api/log')['queryLogByDslApi']>
-    readonly queryOwnExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['queryOwnExportLgApi']>
-    readonly queryOwnExportSmApi: UnwrapRef<typeof import('../../../shared/api/exportSm')['queryOwnExportSmApi']>
-    readonly queryOwnWorksApi: UnwrapRef<typeof import('../../../shared/api/work')['queryOwnWorksApi']>
-    readonly queryUserListApi: UnwrapRef<typeof import('../../../shared/api/user')['queryUserListApi']>
+    readonly provideLocal: UnwrapRef<typeof import('@vueuse/core')['provideLocal']>
     readonly reactify: UnwrapRef<typeof import('@vueuse/core')['reactify']>
     readonly reactifyObject: UnwrapRef<typeof import('@vueuse/core')['reactifyObject']>
     readonly reactive: UnwrapRef<typeof import('vue')['reactive']>
@@ -1179,31 +671,18 @@ declare module '@vue/runtime-core' {
     readonly reactiveOmit: UnwrapRef<typeof import('@vueuse/core')['reactiveOmit']>
     readonly reactivePick: UnwrapRef<typeof import('@vueuse/core')['reactivePick']>
     readonly readonly: UnwrapRef<typeof import('vue')['readonly']>
-    readonly rebootVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['rebootVMApi']>
-    readonly recoverUserApi: UnwrapRef<typeof import('../../../shared/api/user')['recoverUserApi']>
     readonly ref: UnwrapRef<typeof import('vue')['ref']>
     readonly refAutoReset: UnwrapRef<typeof import('@vueuse/core')['refAutoReset']>
     readonly refDebounced: UnwrapRef<typeof import('@vueuse/core')['refDebounced']>
     readonly refDefault: UnwrapRef<typeof import('@vueuse/core')['refDefault']>
     readonly refThrottled: UnwrapRef<typeof import('@vueuse/core')['refThrottled']>
     readonly refWithControl: UnwrapRef<typeof import('@vueuse/core')['refWithControl']>
-    readonly registerApi: UnwrapRef<typeof import('../../../shared/api/auth')['registerApi']>
-    readonly rejectDesktopRequestApi: UnwrapRef<typeof import('../../../shared/api/desktopRequest')['rejectDesktopRequestApi']>
-    readonly rejectExportLgApi: UnwrapRef<typeof import('../../../shared/api/exportLg')['rejectExportLgApi']>
-    readonly rejectVerificationApi: UnwrapRef<typeof import('../../../shared/api/verification')['rejectVerificationApi']>
     readonly resolveComponent: UnwrapRef<typeof import('vue')['resolveComponent']>
     readonly resolveRef: UnwrapRef<typeof import('@vueuse/core')['resolveRef']>
     readonly resolveUnref: UnwrapRef<typeof import('@vueuse/core')['resolveUnref']>
-    readonly rsaDecrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaDecrypt']>
-    readonly rsaEncrypt: UnwrapRef<typeof import('../../../shared/utils/rsa')['rsaEncrypt']>
-    readonly sendEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/email')['sendEmailCodeApi']>
-    readonly sendPhoneCodeApi: UnwrapRef<typeof import('../../../shared/api/phone')['sendPhoneCodeApi']>
     readonly shallowReactive: UnwrapRef<typeof import('vue')['shallowReactive']>
     readonly shallowReadonly: UnwrapRef<typeof import('vue')['shallowReadonly']>
     readonly shallowRef: UnwrapRef<typeof import('vue')['shallowRef']>
-    readonly showUploadResult: UnwrapRef<typeof import('../utils/notify')['showUploadResult']>
-    readonly startVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['startVMApi']>
-    readonly stopVMApi: UnwrapRef<typeof import('../../../shared/api/desktopVm')['stopVMApi']>
     readonly syncRef: UnwrapRef<typeof import('@vueuse/core')['syncRef']>
     readonly syncRefs: UnwrapRef<typeof import('@vueuse/core')['syncRefs']>
     readonly templateRef: UnwrapRef<typeof import('@vueuse/core')['templateRef']>
@@ -1220,35 +699,12 @@ declare module '@vue/runtime-core' {
     readonly tryOnMounted: UnwrapRef<typeof import('@vueuse/core')['tryOnMounted']>
     readonly tryOnScopeDispose: UnwrapRef<typeof import('@vueuse/core')['tryOnScopeDispose']>
     readonly tryOnUnmounted: UnwrapRef<typeof import('@vueuse/core')['tryOnUnmounted']>
-    readonly unbindOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['unbindOwnEmailApi']>
-    readonly unbindOwnPhoneApi: UnwrapRef<typeof import('../../../shared/api/user')['unbindOwnPhoneApi']>
     readonly unref: UnwrapRef<typeof import('vue')['unref']>
     readonly unrefElement: UnwrapRef<typeof import('@vueuse/core')['unrefElement']>
     readonly until: UnwrapRef<typeof import('@vueuse/core')['until']>
-    readonly updateDesktopApi: UnwrapRef<typeof import('../../../shared/api/desktop')['updateDesktopApi']>
-    readonly updateIntermediateTableApi: UnwrapRef<typeof import('../../../shared/api/data')['updateIntermediateTableApi']>
-    readonly updateOwnEmailApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnEmailApi']>
-    readonly updateOwnPasswordByEmailCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByEmailCodeApi']>
-    readonly updateOwnPasswordByOldPasswordApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByOldPasswordApi']>
-    readonly updateOwnPasswordByPhoneCodeApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPasswordByPhoneCodeApi']>
-    readonly updateOwnPhoneApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnPhoneApi']>
-    readonly updateOwnProfileApi: UnwrapRef<typeof import('../../../shared/api/user')['updateOwnProfileApi']>
-    readonly updateReferenceApi: UnwrapRef<typeof import('../../../shared/api/data')['updateReferenceApi']>
-    readonly updateRootApi: UnwrapRef<typeof import('../../../shared/api/data')['updateRootApi']>
-    readonly updateUserDataRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserDataRoleApi']>
-    readonly updateUserRoleApi: UnwrapRef<typeof import('../../../shared/api/user')['updateUserRoleApi']>
-    readonly updateWorkApi: UnwrapRef<typeof import('../../../shared/api/work')['updateWorkApi']>
-    readonly uploadDbIntroApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDbIntroApi']>
-    readonly uploadDesktopRequestAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadDesktopRequestAttachmentsApi']>
-    readonly uploadPublicFileApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadPublicFileApi']>
-    readonly uploadTableDataApi: UnwrapRef<typeof import('../../../shared/api/data')['uploadTableDataApi']>
-    readonly uploadVerifyAttachmentsApi: UnwrapRef<typeof import('../../../shared/api/file')['uploadVerifyAttachmentsApi']>
-    readonly upsertCmsApi: UnwrapRef<typeof import('../../../shared/api/cms')['upsertCmsApi']>
-    readonly upsertConfigApi: UnwrapRef<typeof import('../../../shared/api/config')['upsertConfigApi']>
-    readonly upsertDataRoleApi: UnwrapRef<typeof import('../../../shared/api/dataPermission')['upsertDataRoleApi']>
-    readonly upsertRoleApi: UnwrapRef<typeof import('../../../shared/api/role')['upsertRoleApi']>
     readonly useActiveElement: UnwrapRef<typeof import('@vueuse/core')['useActiveElement']>
     readonly useAnimate: UnwrapRef<typeof import('@vueuse/core')['useAnimate']>
+    readonly useApp: UnwrapRef<typeof import('../../../shared/composables/app')['useApp']>
     readonly useArrayDifference: UnwrapRef<typeof import('@vueuse/core')['useArrayDifference']>
     readonly useArrayEvery: UnwrapRef<typeof import('@vueuse/core')['useArrayEvery']>
     readonly useArrayFilter: UnwrapRef<typeof import('@vueuse/core')['useArrayFilter']>
@@ -1272,8 +728,8 @@ declare module '@vue/runtime-core' {
     readonly useBrowserLocation: UnwrapRef<typeof import('@vueuse/core')['useBrowserLocation']>
     readonly useCached: UnwrapRef<typeof import('@vueuse/core')['useCached']>
     readonly useClipboard: UnwrapRef<typeof import('@vueuse/core')['useClipboard']>
+    readonly useClipboardItems: UnwrapRef<typeof import('@vueuse/core')['useClipboardItems']>
     readonly useCloned: UnwrapRef<typeof import('@vueuse/core')['useCloned']>
-    readonly useCms: UnwrapRef<typeof import('../../../shared/composables/cms')['useCms']>
     readonly useColorMode: UnwrapRef<typeof import('@vueuse/core')['useColorMode']>
     readonly useConfirmDialog: UnwrapRef<typeof import('@vueuse/core')['useConfirmDialog']>
     readonly useCounter: UnwrapRef<typeof import('@vueuse/core')['useCounter']>
@@ -1283,8 +739,6 @@ declare module '@vue/runtime-core' {
     readonly useCurrentElement: UnwrapRef<typeof import('@vueuse/core')['useCurrentElement']>
     readonly useCycleList: UnwrapRef<typeof import('@vueuse/core')['useCycleList']>
     readonly useDark: UnwrapRef<typeof import('@vueuse/core')['useDark']>
-    readonly useDataRoot: UnwrapRef<typeof import('../composables/dataRoot')['useDataRoot']>
-    readonly useDatabase: UnwrapRef<typeof import('../../../shared/composables/database')['useDatabase']>
     readonly useDateFormat: UnwrapRef<typeof import('@vueuse/core')['useDateFormat']>
     readonly useDebounce: UnwrapRef<typeof import('@vueuse/core')['useDebounce']>
     readonly useDebounceFn: UnwrapRef<typeof import('@vueuse/core')['useDebounceFn']>
@@ -1297,7 +751,6 @@ declare module '@vue/runtime-core' {
     readonly useDocumentVisibility: UnwrapRef<typeof import('@vueuse/core')['useDocumentVisibility']>
     readonly useDraggable: UnwrapRef<typeof import('@vueuse/core')['useDraggable']>
     readonly useDropZone: UnwrapRef<typeof import('@vueuse/core')['useDropZone']>
-    readonly useEditCms: UnwrapRef<typeof import('../composables/editCms')['useEditCms']>
     readonly useElementBounding: UnwrapRef<typeof import('@vueuse/core')['useElementBounding']>
     readonly useElementByPoint: UnwrapRef<typeof import('@vueuse/core')['useElementByPoint']>
     readonly useElementHover: UnwrapRef<typeof import('@vueuse/core')['useElementHover']>
@@ -1334,8 +787,6 @@ declare module '@vue/runtime-core' {
     readonly useMediaQuery: UnwrapRef<typeof import('@vueuse/core')['useMediaQuery']>
     readonly useMemoize: UnwrapRef<typeof import('@vueuse/core')['useMemoize']>
     readonly useMemory: UnwrapRef<typeof import('@vueuse/core')['useMemory']>
-    readonly useMenu: UnwrapRef<typeof import('../composables/menu')['useMenu']>
-    readonly useMinio: UnwrapRef<typeof import('../../../shared/composables/minio')['useMinio']>
     readonly useMounted: UnwrapRef<typeof import('@vueuse/core')['useMounted']>
     readonly useMouse: UnwrapRef<typeof import('@vueuse/core')['useMouse']>
     readonly useMouseInElement: UnwrapRef<typeof import('@vueuse/core')['useMouseInElement']>
@@ -1355,7 +806,6 @@ declare module '@vue/runtime-core' {
     readonly usePointer: UnwrapRef<typeof import('@vueuse/core')['usePointer']>
     readonly usePointerLock: UnwrapRef<typeof import('@vueuse/core')['usePointerLock']>
     readonly usePointerSwipe: UnwrapRef<typeof import('@vueuse/core')['usePointerSwipe']>
-    readonly usePosition: UnwrapRef<typeof import('../composables/position')['usePosition']>
     readonly usePreferredColorScheme: UnwrapRef<typeof import('@vueuse/core')['usePreferredColorScheme']>
     readonly usePreferredContrast: UnwrapRef<typeof import('@vueuse/core')['usePreferredContrast']>
     readonly usePreferredDark: UnwrapRef<typeof import('@vueuse/core')['usePreferredDark']>
@@ -1366,7 +816,6 @@ declare module '@vue/runtime-core' {
     readonly useRefHistory: UnwrapRef<typeof import('@vueuse/core')['useRefHistory']>
     readonly useRequest: UnwrapRef<typeof import('../../../shared/composables/request')['useRequest']>
     readonly useResizeObserver: UnwrapRef<typeof import('@vueuse/core')['useResizeObserver']>
-    readonly useRole: UnwrapRef<typeof import('../composables/role')['useRole']>
     readonly useRoute: UnwrapRef<typeof import('vue-router')['useRoute']>
     readonly useRouter: UnwrapRef<typeof import('vue-router')['useRouter']>
     readonly useScreenOrientation: UnwrapRef<typeof import('@vueuse/core')['useScreenOrientation']>
@@ -1377,7 +826,6 @@ declare module '@vue/runtime-core' {
     readonly useSeoMeta: UnwrapRef<typeof import('@vueuse/head')['useSeoMeta']>
     readonly useSessionStorage: UnwrapRef<typeof import('@vueuse/core')['useSessionStorage']>
     readonly useShare: UnwrapRef<typeof import('@vueuse/core')['useShare']>
-    readonly useSidebar: UnwrapRef<typeof import('../composables/sidebar')['useSidebar']>
     readonly useSlots: UnwrapRef<typeof import('vue')['useSlots']>
     readonly useSorted: UnwrapRef<typeof import('@vueuse/core')['useSorted']>
     readonly useSpeechRecognition: UnwrapRef<typeof import('@vueuse/core')['useSpeechRecognition']>
@@ -1388,7 +836,6 @@ declare module '@vue/runtime-core' {
     readonly useStyleTag: UnwrapRef<typeof import('@vueuse/core')['useStyleTag']>
     readonly useSupported: UnwrapRef<typeof import('@vueuse/core')['useSupported']>
     readonly useSwipe: UnwrapRef<typeof import('@vueuse/core')['useSwipe']>
-    readonly useSysConfig: UnwrapRef<typeof import('../../../shared/composables/app')['useSysConfig']>
     readonly useTemplateRefsList: UnwrapRef<typeof import('@vueuse/core')['useTemplateRefsList']>
     readonly useTextDirection: UnwrapRef<typeof import('@vueuse/core')['useTextDirection']>
     readonly useTextSelection: UnwrapRef<typeof import('@vueuse/core')['useTextSelection']>
@@ -1421,17 +868,6 @@ declare module '@vue/runtime-core' {
     readonly useWindowFocus: UnwrapRef<typeof import('@vueuse/core')['useWindowFocus']>
     readonly useWindowScroll: UnwrapRef<typeof import('@vueuse/core')['useWindowScroll']>
     readonly useWindowSize: UnwrapRef<typeof import('@vueuse/core')['useWindowSize']>
-    readonly validateAdminRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleDesc']>
-    readonly validateAdminRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/adminRole')['validateAdminRoleName']>
-    readonly validateCollege: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateCollege']>
-    readonly validateDataRoleDesc: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleDesc']>
-    readonly validateDataRoleName: UnwrapRef<typeof import('../../../shared/utils/validator/dataRole')['validateDataRoleName']>
-    readonly validateDataRootId: UnwrapRef<typeof import('../../../shared/utils/validator/dataRoot')['validateDataRootId']>
-    readonly validateIdCard: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateIdCard']>
-    readonly validateName: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateName']>
-    readonly validateNumber: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateNumber']>
-    readonly validateRejectReason: UnwrapRef<typeof import('../../../shared/utils/validator/audit')['validateRejectReason']>
-    readonly validateSchool: UnwrapRef<typeof import('../../../shared/utils/validator/verification')['validateSchool']>
     readonly watch: UnwrapRef<typeof import('vue')['watch']>
     readonly watchArray: UnwrapRef<typeof import('@vueuse/core')['watchArray']>
     readonly watchAtMost: UnwrapRef<typeof import('@vueuse/core')['watchAtMost']>
