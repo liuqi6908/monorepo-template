@@ -1,4 +1,4 @@
-interface ImportMetaEnv {
+interface Env extends ImportMetaEnv {
   /** ---------------- 仅开发模式 ---------------- */
   /** 客户端启动端口 */
   VITE_CLIENT_PORT?: number
@@ -8,6 +8,7 @@ interface ImportMetaEnv {
   VITE_CLIENT_APP_NAME?: string
   /** 客户端APP图标路径 */
   VITE_CLIENT_APP_ICON?: string
+
   /** 管理后台启动端口 */
   VITE_ADMIN_PORT?: number
   /** 管理后台基础路径 */
@@ -24,7 +25,7 @@ interface ImportMetaEnv {
 }
 
 interface ImportMeta {
-  env: ImportMetaEnv
+  env: Env
 }
 
 declare module '*?raw' {

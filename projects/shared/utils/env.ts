@@ -6,9 +6,9 @@ import { parseBoolRaw } from './parseBoolRaw'
  * @param defaultValue 默认值
  * @returns 转换后的环境变量
  */
-export function getEnvVariable<T extends keyof ImportMetaEnv, S extends ImportMetaEnv[T]>(
+export function getEnvVariable<T extends keyof Env, S extends Env[T]>(
   name: T, defaultValue?: S,
-): S extends undefined ? ImportMetaEnv[T] : Exclude<ImportMetaEnv[T], undefined> {
+): S extends undefined ? Env[T] : Exclude<Env[T], undefined> {
   const value = import.meta.env[name]
   if (!value)
     return defaultValue as any

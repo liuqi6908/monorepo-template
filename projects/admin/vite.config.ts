@@ -20,14 +20,14 @@ export default ({ mode }: any) => {
   }
 
   return defineConfig({
-    base: process.env.VITE_ADMIN_BASE,
+    base: process.env.VITE_ADMIN_BASE || '/',
     define: {
       'process.env': {},
     },
 
     server: {
       host: '0.0.0.0',
-      port: Number.parseInt(process.env.VITE_ADMIN_PORT || '3333', 10),
+      port: Number.parseInt(process.env.VITE_ADMIN_PORT || '3333'),
       proxy: {
         [process.env.VITE_API_BASE as string]: {
           target: process.env.VITE_PROXY_TARGET,
