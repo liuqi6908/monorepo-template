@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { authToken } from '../composables/user'
 
 const $http = axios.create({
   baseURL: import.meta.env.VITE_API_BASE,
@@ -10,9 +9,7 @@ const $http = axios.create({
  */
 $http.interceptors.request.use(
   (config) => {
-    const { headers, url = '' } = config
-    if (authToken.value && !headers.Authorization)
-      headers.Authorization = `Bearer ${authToken.value.trim()}`
+    const { url = '' } = config
 
     const baseURLWhiteList = ['http', '//']
     if (baseURLWhiteList.some(prefix => url.startsWith(prefix)))

@@ -4,6 +4,7 @@
     "Attributify",
     "execa",
     "Fastify",
+    "fontawesome",
     "iconify",
     "mingcute",
     "nprogress",
@@ -15,6 +16,7 @@
     "unocss",
     "unplugin",
     "vite",
+    "vitepress",
     "vueuse",
     "Webfont"
   ],

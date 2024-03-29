@@ -66,7 +66,6 @@ export default ({ mode }: any) => {
         imports: [
           'vue',
           'vue-router',
-          '@vueuse/head',
           '@vueuse/core',
         ],
         dts: 'src/types/auto-imports.d.ts',
