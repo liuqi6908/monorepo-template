@@ -10,7 +10,7 @@ export class ThrottlerExceptionFilter implements ExceptionFilter {
 
     const customError = {
       status: exception.getStatus(),
-      message: '请求过于频繁，请稍后再试。',
+      message: '请求过于频繁，请稍后再试',
     }
 
     response.status(customError.status)

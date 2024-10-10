@@ -1,5 +1,5 @@
-import { HttpStatus } from '@nestjs/common'
 import { ErrorCode } from 'types'
+import { HttpStatus } from '@nestjs/common'
 
 const _permissionErrors: ErrorMessageCollection = {
   [ErrorCode.PERMISSION_DENIED]: {

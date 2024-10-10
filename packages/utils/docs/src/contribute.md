@@ -2,11 +2,11 @@
 
 ## 准备
 
-安装Node（满足workspace的版本要求）和pnpm， 并安装相关依赖
+安装 Node（满足 `workspace` 的版本要求）和 pnpm，并安装相关依赖
 
 ## 目录结构
 
-```dir
+```txt
 .
 ├── dist                        // 构建后的产物，暴露给外部使用
 │   ├── cjs                     // CommonJS，主要用于服务器端的开发

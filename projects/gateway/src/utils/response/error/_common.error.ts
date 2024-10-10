@@ -1,7 +1,7 @@
-import { HttpStatus } from '@nestjs/common'
 import { ErrorCode } from 'types'
+import { HttpStatus } from '@nestjs/common'
 
-const _commonError: ErrorMessageCollection = {
+const _commonErrors: ErrorMessageCollection = {
   [ErrorCode.COMMON_UNEXPECTED_ERROR]: {
     httpStatus: HttpStatus.INTERNAL_SERVER_ERROR,
     message: '发生未知错误',
@@ -24,4 +24,4 @@ const _commonError: ErrorMessageCollection = {
   },
 }
 
-export default _commonError
+export default _commonErrors

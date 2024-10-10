@@ -1,9 +1,10 @@
 const fs = require('node:fs')
 const path = require('node:path')
+
 const ts = require('typescript')
 
-const esmDir = path.join(__dirname, '..', 'dist/esm')
 const srcDir = path.join(__dirname, '..', 'src')
+const esmDir = path.join(__dirname, '..', 'dist/esm')
 const docsSrcDir = path.join(__dirname, '..', 'docs', 'src')
 const utilJsonPath = path.join(
   __dirname,
@@ -21,7 +22,7 @@ const utilsJson = []
  * @return {string[]} 文件名称列表
  */
 async function listDir(dir) {
-  return await fs.promises.readdir(dir)
+  return fs.promises.readdir(dir)
 }
 
 /**
@@ -172,7 +173,7 @@ function parseDTS(dts) {
             ))?.comment
             ?? ''
           let type = param.type
-            ? param.type.getText(sourceFile)?.replace('|', '\\|')
+            ? param.type.getText(sourceFile)?.replace(/\|/g, '\\|')
             : 'any'
           if (param.type && param.questionToken)
             type += ' \\| undefined'

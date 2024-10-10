@@ -10,8 +10,47 @@
             "link": "/browser/download/downloadCsv"
           },
           {
+            "text": "downloadJson",
+            "link": "/browser/download/downloadJson"
+          },
+          {
             "text": "downloadUrl",
             "link": "/browser/download/downloadUrl"
+          }
+        ]
+      },
+      {
+        "text": "encrypt",
+        "items": [
+          {
+            "text": "aes",
+            "items": [
+              {
+                "text": "decrypt",
+                "link": "/browser/encrypt/aes/decrypt"
+              },
+              {
+                "text": "encrypt",
+                "link": "/browser/encrypt/aes/encrypt"
+              }
+            ]
+          },
+          {
+            "text": "rsa",
+            "items": [
+              {
+                "text": "client",
+                "link": "/browser/encrypt/rsa/client"
+              },
+              {
+                "text": "decrypt",
+                "link": "/browser/encrypt/rsa/decrypt"
+              },
+              {
+                "text": "encrypt",
+                "link": "/browser/encrypt/rsa/encrypt"
+              }
+            ]
           }
         ]
       }
@@ -21,11 +60,57 @@
     "text": "common",
     "items": [
       {
+        "text": "ip",
+        "items": [
+          {
+            "text": "getClientIp",
+            "link": "/common/ip/getClientIp"
+          },
+          {
+            "text": "getIpType",
+            "link": "/common/ip/getIpType"
+          }
+        ]
+      },
+      {
+        "text": "is",
+        "items": [
+          {
+            "text": "date",
+            "link": "/common/is/date"
+          },
+          {
+            "text": "exist",
+            "link": "/common/is/exist"
+          },
+          {
+            "text": "ipAddress",
+            "link": "/common/is/ipAddress"
+          },
+          {
+            "text": "ipv4",
+            "link": "/common/is/ipv4"
+          },
+          {
+            "text": "ipv6",
+            "link": "/common/is/ipv6"
+          },
+          {
+            "text": "object",
+            "link": "/common/is/object"
+          }
+        ]
+      },
+      {
         "text": "object",
         "items": [
           {
             "text": "entries",
             "link": "/common/object/entries"
+          },
+          {
+            "text": "fromEntries",
+            "link": "/common/object/fromEntries"
           },
           {
             "text": "keys",
@@ -38,6 +123,10 @@
           {
             "text": "pick",
             "link": "/common/object/pick"
+          },
+          {
+            "text": "values",
+            "link": "/common/object/values"
           }
         ]
       },
@@ -47,6 +136,19 @@
           {
             "text": "parseBoolRaw",
             "link": "/common/parser/parseBoolRaw"
+          },
+          {
+            "text": "parseIntRaw",
+            "link": "/common/parser/parseIntRaw"
+          }
+        ]
+      },
+      {
+        "text": "validator",
+        "items": [
+          {
+            "text": "path.validator",
+            "link": "/common/validator/path.validator"
           }
         ]
       }

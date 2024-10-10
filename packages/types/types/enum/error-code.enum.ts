@@ -2,6 +2,7 @@
  * 错误码
  */
 export enum ErrorCode {
+  // ---------- 通用错误码 ----------
   /** 未知错误 */
   COMMON_UNEXPECTED_ERROR = 100001,
   /** 参数校验错误 */
@@ -13,9 +14,9 @@ export enum ErrorCode {
   /** 已废弃的功能 */
   COMMON_DEPRECATED = 100005,
 
-  // ---- 权限相关错误码 ----
+  // ---------- 权限相关错误码 ----------
   /** 没有相关权限 */
-  PERMISSION_DENIED = 300001,
+  PERMISSION_DENIED = 200001,
 }
 
 export type ErrorMessageCollection = Partial<
@@ -24,7 +25,6 @@ export type ErrorMessageCollection = Partial<
     {
       httpStatus: import('@nestjs/common').HttpStatus
       message: string
-      detail?: any
     }
   >
 >

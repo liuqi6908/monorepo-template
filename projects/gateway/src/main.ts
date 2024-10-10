@@ -1,24 +1,24 @@
 import * as path from 'node:path'
-import * as dotenvFlow from 'dotenv-flow'
-import { parseBoolRaw, validatePath } from 'utils'
-import { Logger, ValidationPipe } from '@nestjs/common'
-import { ConfigService } from '@nestjs/config'
-import { NestFactory } from '@nestjs/core'
-import { FastifyAdapter } from '@nestjs/platform-fastify'
-import compression from '@fastify/compress'
-import fmp from '@fastify/multipart'
 
+import fmp from '@fastify/multipart'
+import * as dotenvFlow from 'dotenv-flow'
+import { NestFactory } from '@nestjs/core'
+import compression from '@fastify/compress'
+import { ConfigService } from '@nestjs/config'
+import { Logger, ValidationPipe } from '@nestjs/common'
+import { FastifyAdapter } from '@nestjs/platform-fastify'
+import { parseBoolRaw, parseIntRaw, validatePath } from 'utils'
 import type { NestFastifyApplication } from '@nestjs/platform-fastify'
 
-import registerSwagger from './bootstrap/register-swagger'
 import { AppModule } from './app.module'
-import { getExceptionFactory } from './utils/response/validate-exception-factory'
+import { exceptionFactory } from './utils'
+import registerSwagger from './bootstrap/register-swagger'
 
 async function bootstrap() {
-  // add env
-  dotenvFlow.config({ path: '../shared' })
-
   const logger = new Logger('Bootstrap')
+
+  // 添加环境变量
+  dotenvFlow.config({ path: '../shared' })
 
   const app = await NestFactory.create<NestFastifyApplication>(
     AppModule,
@@ -28,10 +28,10 @@ async function bootstrap() {
   // eslint-disable-next-line @typescript-eslint/no-require-imports
   const packageJson = await require(path.join(__dirname, '../package.json'))
   const cfgSrv = app.get(ConfigService)
-  const globalPrefix = validatePath(cfgSrv.get('SERVER_BASE_PATH') || '/')
+  const globalPrefix = validatePath(cfgSrv.get('app.basePath'))
   app.setGlobalPrefix(globalPrefix)
 
-  // Register Swagger
+  // 注册 Swagger
   if (parseBoolRaw(cfgSrv.get('SWAGGER_ENABLED')))
     await registerSwagger(app, cfgSrv, globalPrefix, packageJson.version)
 
@@ -47,15 +47,15 @@ async function bootstrap() {
 
   /** 启用 validation */
   app.useGlobalPipes(
-    new ValidationPipe({ exceptionFactory: getExceptionFactory() }),
+    new ValidationPipe({ exceptionFactory }),
   )
 
-  // Global variables
+  // 全局 variables
   globalThis.prefix = globalPrefix
   globalThis.version = packageJson.version
 
-  // Start server
-  await app.listen(Number.parseInt(cfgSrv.get('SERVER_PORT')) || 3000, '::')
+  // 启动服务
+  await app.listen(parseIntRaw(cfgSrv.get('SERVER_PORT'), 2148), '::')
   logger.log(`App is running on ${await app.getUrl()}`)
 }
 bootstrap()

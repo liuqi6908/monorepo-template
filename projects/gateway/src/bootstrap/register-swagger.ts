@@ -1,5 +1,6 @@
 import { validatePath } from 'utils'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+
 import type { ConfigService } from '@nestjs/config'
 import type { INestApplication } from '@nestjs/common'
 import type { SwaggerCustomOptions } from '@nestjs/swagger'
@@ -13,21 +14,22 @@ export default async function registerSwagger(
   globalPrefix: string,
   version: string,
 ) {
+  const title = cfgSrv.get('SWAGGER_TITLE') || 'API'
+
   const swaggerConfig = new DocumentBuilder()
     .addBearerAuth()
     .setVersion(version)
-    .setTitle(cfgSrv.get('SWAGGER_TITLE'))
-    .setDescription(cfgSrv.get('SWAGGER_DESC'))
+    .setTitle(title)
+    .setDescription(cfgSrv.get('SWAGGER_DESC') || 'API DOCS')
     .addServer('/')
-    .addServer(cfgSrv.get('SWAGGER_SERVER_HOST'))
     .build()
+
   const cssUrl = validatePath(`${globalPrefix}/assets/swagger.css`)
   const jsRaw = validatePath(`${globalPrefix}/assets/swagger.js`)
 
   const opt: SwaggerCustomOptions = {
     swaggerOptions: {
       filter: true,
-      // useUnsafeMarkdown: true,
       persistAuthorization: true,
       showCommonExtensions: true,
       displayRequestDuration: true,
@@ -38,8 +40,8 @@ export default async function registerSwagger(
     customCssUrl: cssUrl,
     customJs: jsRaw,
     useGlobalPrefix: true,
-    customSiteTitle: cfgSrv.get('SWAGGER_TITLE'),
+    customSiteTitle: title,
   }
   const document = SwaggerModule.createDocument(app, swaggerConfig)
-  SwaggerModule.setup(cfgSrv.get('SWAGGER_PATH'), app, document, opt)
+  SwaggerModule.setup(cfgSrv.get('SWAGGER_PATH') || '/docs', app, document, opt)
 }

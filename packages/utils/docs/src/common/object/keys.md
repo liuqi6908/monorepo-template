@@ -19,4 +19,4 @@ Object.keys 的类型安全版本
 
 | 类型 | 描述 |
 | --- | --- |
-| `(`${keyof T & undefined}` \| `${keyof T & null}` \| `${keyof T & string}` \| `${keyof T & number}` \| `${keyof T & false}` \| `${keyof T & true}`)[]` | Object.keys(obj) 的结果 |
+| `(keyof T)[]` | Object.keys(obj) 的结果 |

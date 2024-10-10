@@ -1,3 +1,5 @@
+export * from './ip'
+export * from './is'
 export * from './object'
 export * from './parser'
 export * from './validator'

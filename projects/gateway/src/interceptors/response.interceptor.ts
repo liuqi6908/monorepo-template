@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common'
 import { catchError, map } from 'rxjs'
-import type { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common'
 import type { Observable } from 'rxjs'
-import { responseSuccess } from '../utils/response'
+import { Injectable } from '@nestjs/common'
+import { responseSuccess } from 'src/utils'
+import type { CallHandler, ExecutionContext, NestInterceptor } from '@nestjs/common'
 
 @Injectable()
 export class ResponseInterceptor implements NestInterceptor {

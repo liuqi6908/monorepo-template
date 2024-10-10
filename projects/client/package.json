@@ -11,23 +11,22 @@
     "typecheck": "vue-tsc --noEmit"
   },
   "dependencies": {
-    "@quasar/extras": "^1.16.9",
+    "@quasar/extras": "^1.16.5",
     "@unocss/reset": "^0.58.5",
     "@vueuse/core": "^10.9.0",
     "axios": "^1.4.0",
     "lodash": "^4.17.21",
     "nprogress": "^0.2.0",
-    "quasar": "^2.15.1",
+    "quasar": "^2.14.6",
     "shared": "workspace:^",
     "types": "workspace:^",
     "utils": "workspace:^",
-    "vue": "^3.4.21",
+    "vue": "^3.3.4",
     "vue-router": "^4.3.0"
   },
   "devDependencies": {
-    "@iconify-json/mdi": "^1.1.54",
     "@iconify-json/mingcute": "^1.1.7",
-    "@quasar/vite-plugin": "^1.6.0",
+    "@quasar/vite-plugin": "^1.4.1",
     "@types/lodash": "^4.14.196",
     "@types/node": "^18.16.18",
     "@types/nprogress": "^0.2.2",

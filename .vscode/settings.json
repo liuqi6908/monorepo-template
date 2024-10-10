@@ -1,16 +1,19 @@
 {
   "cSpell.words": [
     "antfu",
-    "Attributify",
+    "attributify",
     "execa",
-    "Fastify",
+    "fastify",
     "fontawesome",
     "iconify",
+    "jsencrypt",
     "mingcute",
     "nestjs",
+    "nocheck",
     "nprogress",
+    "opblock",
+    "scrollarea",
     "shiki",
-    "sizecheck",
     "taze",
     "typecheck",
     "unhead",
@@ -19,7 +22,7 @@
     "vite",
     "vitepress",
     "vueuse",
-    "Webfont"
+    "webfont"
   ],
   "prettier.enable": false,
   "editor.codeActionsOnSave": {

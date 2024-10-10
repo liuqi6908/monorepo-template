@@ -4,5 +4,5 @@
  * @returns Object.keys(obj) 的结果
  */
 export function objectKeys<T extends object>(obj: T) {
-  return Object.keys(obj) as Array<`${keyof T & (string | number | boolean | null | undefined)}`>
+  return Object.keys(obj) as Array<keyof T>
 }
